@@ -1,0 +1,54 @@
+{
+    "essential" : {
+            "graphic_data_url": "data.csv",
+        
+            "dateFormat":"",
+        
+            "legendLabels" : ["Under occupied","Standard occupied","Over occupied"],
+        
+            "sourceText":["2011 Census, Office for National Statistics"],
+            "sourceURL":["http://www.ons.gov.uk/ons/rel/census/2011-census-analysis/overcrowding-and-under-occupation-in-england-and-wales/index.html"],
+        
+            "annotationChart": [],
+            "annotationBullet": [],
+            "annotationXY":[
+                ["Light rail  and tram ","68.4"],
+                ["Underground","20"]
+            ],
+            "annotationAlign":[
+                "middle",
+                "middle"
+            ],
+        
+            "circles" : false,    
+            "annotationCXCY":[
+                ["Rail","68.4"],
+                ["Underground","73"]
+            ],
+        
+            "yAxisLabel":"%",
+            "xAxisScale":"auto_zero_max",   
+            "xAxisBreak": true,
+            "xAxisBreak_sm_md_lg": [65,65,65]            
+    },
+    "optional" : {
+            "margin_sm": [20, 10, 35, 60],
+            "margin_md": [20, 5, 35, 60],
+            "margin_lg": [20, 5, 35, 60],
+        
+            "aspectRatio_sm" : [16,10],
+            "aspectRatio_md" : [16,7],
+            "aspectRatio_lg" : [16,5],
+        
+            "mobileBreakpoint" : 610, 
+            
+            "yAxisTextFormat_sm_md_lg" : ["%y", "%Y", "%b %y"], 
+                
+            "y_num_ticks_sm_md_lg" : [4,2,2],    
+            "x_num_ticks_sm_md_lg" : [6,8,10],
+            "centre_line" : false,
+            "centre_line_value" : 0
+    }
+}
+
+

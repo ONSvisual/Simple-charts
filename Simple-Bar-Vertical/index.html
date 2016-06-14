@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <title></title>
+
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" href="../lib/globalStyle.css" />
+    <style type="text/css">
+    	.bar_pos { fill: #F5942F; }
+        .bar_neg { fill: #7BCAE2; }
+        
+	
+		.background0 { background: #F5942F; }
+        .background1 { background: #7BCAE2; }        
+    
+    </style>
+</head>
+<body>
+
+	<div id="graphic">
+    	<img src="fallback.png" alt="[Chart]" />
+    </div>
+	    
+    <div id="keypoints">
+        <p></p>
+    </div>
+
+   <div class="footer">        
+   </div>
+    
+    <script src="../lib/jquery.js" type="text/javascript"></script>
+    <script src="../lib/d3.v3.5.17.min.js" type="text/javascript"></script>
+    <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+    <script src="../lib/pym.js" type="text/javascript"></script>
+    <script>
+
+		var graphic = $('#graphic');
+		var keypoints = $('#keypoints');
+		var footer = $(".footer");
+		var pymChild = null;
+
+		function drawGraphic(width) {
+		   var threshold_md = 788;
+		   var threshold_sm = dvc.optional.mobileBreakpoint; 
+		  
+		  	//set variables for chart dimensions dependent on width of #graphic
+		    if (graphic.width() < threshold_sm) {        	
+		            var margin = {top: dvc.optional.margin_sm[0], right: dvc.optional.margin_sm[1], bottom: dvc.optional.margin_sm[2], left: dvc.optional.margin_sm[3]}; 
+					var chart_width = graphic.width() - margin.left - margin.right;
+		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
+		    } else if (graphic.width() < threshold_md){
+		        	var margin = {top: dvc.optional.margin_md[0], right: dvc.optional.margin_md[1], bottom: dvc.optional.margin_md[2], left: dvc.optional.margin_md[3]}; 
+					var chart_width = graphic.width() - margin.left - margin.right;
+		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
+		  	} else {
+		        	var margin = {top: dvc.optional.margin_lg[0], right: dvc.optional.margin_lg[1], bottom: dvc.optional.margin_lg[2], left: dvc.optional.margin_lg[3]}
+					var chart_width = graphic.width() - margin.left - margin.right;
+		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
+			}
+
+		    // clear out existing graphics
+		    graphic.empty();
+			keypoints.empty();
+			footer.empty();
+			
+			var x = d3.scale.ordinal()
+				.rangeRoundBands([0, chart_width], .1)
+				
+				
+		    var y = d3.scale.linear()
+		        .range([ height, 0]);
+
+		    x.domain(graphic_data.map(function(d) { return d.date; }));
+
+		    var xAxis = d3.svg.axis()
+		        .scale(x)
+		        .orient("bottom")
+		        .tickFormat(function(d,i) {
+		            //specify date format for x axis depending on #graphic width
+		            if (graphic.width() <= threshold_sm) {
+		                return i % 4 ? "" : '\u2019' + d.substring(2,4);
+		            } else if (graphic.width() <= threshold_md){
+		                return i % 2 ? "" :  d;
+		            } else {
+		                return i % 1 ? "" :  '\u2019' + d.substring(2,4);
+		            }
+		        })
+				//.tickPadding(5)
+		    
+	        //specify number of ticks on x axis and whether 1st and last data point labels are included
+	  //       if(graphic.width()<threshold_sm){		
+	  //           xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[0]).concat( x.domain() ));
+	  //       } else if (graphic.width() <= threshold_md){
+			// 	xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[1])/*.concat( x.domain() )*/);
+			// } else {
+	  //           xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[2])/*.concat( x.domain() )*/);		
+	  //       }
+		    
+		    var yAxis = d3.svg.axis()
+		        .scale(y)
+		        .orient('left');
+		    			    
+			//specify number or ticks on y axis
+			if (graphic.width() <= threshold_sm) {
+				yAxis.ticks(dvc.optional.y_num_ticks_sm_md_lg[0])
+			 } else if (graphic.width() <= threshold_md){
+				yAxis.ticks(dvc.optional.y_num_ticks_sm_md_lg[1])
+			 } else {
+				yAxis.ticks(dvc.optional.y_num_ticks_sm_md_lg[2])
+			 }
+				
+		    //gridlines
+		    var y_axis_grid = function() { return yAxis; }
+
+		    var bar = d3.svg.line()
+		        .x(function(d) { return x(d.date); })
+		        .y(function(d) { return y(d.amt); });
+
+		    // parse data into columns
+		    var bars = {};
+		    for (var column in graphic_data[0]) {
+		        if (column == 'date') continue;
+		        bars[column] = graphic_data.map(function(d) {
+		            return {
+		                'date': d.date,
+		                'amt': d[column]
+		            };
+		        });
+		    }
+
+		 //    var startDate = new Date(bars["growth"][0].date);
+			// var endDate = new Date(bars["growth"][bars["growth"].length-1].date);
+			// var everyDate = d3.time.day.range(startDate, endDate);
+			// var barWidth = chart_width/((everyDate
+			// 	.length/365))-1;	
+
+			
+		  	//y domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
+	   		if (dvc.essential.yAxisScale == "auto_zero_max"){
+			   var yDomain = [
+								0,
+								d3.max(d3.entries(bars), function(c) {
+									return d3.max(c.value, function(v) {
+										var n = v.amt;
+										return Math.ceil(n);
+									});
+								})
+							 ];
+			} else if (dvc.essential.yAxisScale == "auto_min_max"){
+				var yDomain = [
+								d3.min(d3.entries(bars), function(c) {
+									return d3.min(c.value, function(v) {
+										var n = v.amt;
+										return Math.floor(n);
+									});
+								}),
+							
+								d3.max(d3.entries(bars), function(c) {
+									return d3.max(c.value, function(v) {
+										var n = v.amt;
+										return Math.ceil(n);
+									});
+								})
+					 		];
+			} else {
+			   var yDomain = dvc.essential.yAxisScale;
+		    }
+				 
+		    y.domain(yDomain);
+		    
+			//create legend
+			if(dvc.essential.legendLabels.length > 1){
+			var legend = d3.select('#graphic').append('ul')
+			                .attr('class', 'key')
+			            .selectAll('g')
+			                .data(dvc.essential.legendLabels)
+			            .enter().append('li')
+
+				    legend.append('b')
+						 .attr("class",function(d,i){return "background" + i})
+				    
+					legend.append('label')
+				         .html(function(d,i) { return dvc.essential.legendLabels[i]; });						
+			}
+
+			//y axis label
+			d3.select('#graphic').append("p")
+		                .attr('class', 'unit')
+		  		        .text(function(d,i) { return dvc.essential.yAxisLabel; });
+
+		    //create svg for chart
+		    var svg = d3.select('#graphic').append('svg')
+				        .attr("width", chart_width + margin.left + margin.right)
+				        .attr("height", height + margin.top + margin.bottom +30)
+				        .append("g")
+				        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+				
+					svg.append("rect")
+						.attr("class","svgRect")
+						.attr("width", chart_width)
+						.attr("height", height)
+			    
+				    svg.append('g')
+				        .attr('class', 'y axis')
+				        .call(yAxis);
+
+				    svg.append('g')
+				        .attr('class', 'y grid')
+				        .call(y_axis_grid()
+				            .tickSize(-chart_width, 0, 0)
+				            .tickFormat('')
+				        );
+					
+					//create x axis, if y axis doesn't start at 0 drop x axis accordingly	
+					svg.append('g')
+				        .attr('class', 'x axis')
+				        .attr('transform', function(d){ 
+				        			if(yDomain[0] != 0){
+										return 'translate(0,' + (height + 30) + ')'
+									} else {
+										return 'translate(0,' + height  + ')'
+									}
+							})
+				        .call(xAxis);
+
+				     //d3.selectAll(".tick.major").attr("transform, "translate(barWidth,0)))
+				
+				//create icon to symbolise break in y axis if required					
+				if(yDomain[0] > 0 && dvc.essential.yAxisBreak == true){
+					var paths = svg.append("defs")
+								.append("g")
+								.attr("id","icon")
+								.append("g");
+								
+							paths.append("polyline")
+								 .attr("points", "2.881,9.54 7.94,5.061 12.341,9.54 17.77,5.061")
+								 .attr("stroke", "#666")
+								 .attr("fill", "none")
+							paths.append("polyline")
+								.attr("points", "2.881,14.54 7.94,10.061 12.341,14.54 17.77,10.061")
+								.attr("stroke", "#666")
+								.attr("fill", "none");
+				  
+						//specify position of icon				  
+						svg.append("g").attr("id","iconpath")
+								.attr("transform","translate(-10,3)")
+								.append("use")
+								.attr("xlink:href","#icon")
+								.attr("x", x(x.domain()[0]))
+								.attr("y", function(){ 
+									if (graphic.width() < threshold_sm) {
+										return y(dvc.essential.yAxisBreak_sm_md_lg[0])
+									} else if (graphic.width() < threshold_md){
+										return y(dvc.essential.yAxisBreak_sm_md_lg[1])
+									} else {
+										return y(dvc.essential.yAxisBreak_sm_md_lg[2])
+									}
+								});
+				}
+
+							
+						
+			svg.append('g').attr("class","bars").selectAll('rect')
+					.data(bars["growth"])
+					.enter()
+					.append('rect')
+					.attr('class', function(d, i) {
+			                if ( d.amt <0 ) { 
+								return 'bar bar_neg'; 
+							} else { 
+								return 'bar bar_pos'; 
+							}
+
+			            })
+					.attr("width", x.rangeBand())
+					.attr("x", function(d) { return x(d.date); })
+					.attr("y", function(d) { return y(Math.max(0, d.amt)); })
+					.attr("height", function(d) { return 0 + Math.abs(y(d.amt) - y(0)); });
+					
+					//create centre line if required
+					if (dvc.optional.centre_line == true){
+						svg.append("line")
+							.attr("id","centreline")
+							.attr('y1',y(dvc.optional.centre_line_value))
+							.attr('y2',y(dvc.optional.centre_line_value))
+							.attr('x1',0)
+							.attr('x2',chart_width);
+					} else if(yDomain[0] <0){
+						svg.append("line")
+							.attr("id","centreline")
+							.attr('y1',y(0))
+							.attr('y2',y(0))
+							.attr('x1',0)
+							.attr('x2',chart_width);
+					}  	
+					
+			writeAnnotation();
+							
+			function writeAnnotation(){
+			
+				if (graphic.width() < threshold_sm) {
+					
+						dvc.essential.annotationBullet.forEach(function(d,i) {
+						
+							d3.select("#keypoints").append("svg")
+								.attr("width","20px")
+								.attr("height","20px")
+								.attr("class","circles")
+								.append("circle")
+								.attr("class", "annocirc" + (i))
+								.attr("r", "2")
+								.attr('cy',"12px")
+								.attr("cx", "10px");
+							
+							d3.select("#keypoints").append("p").text(dvc.essential.annotationBullet[i]);
+						
+						})// end foreach
+				}		
+				else {
+					
+						dvc.essential.annotationChart.forEach(function(d,i) {	
+						
+							// draw annotation text based on content of var annotationArray ...
+							svg.append("text")
+								.text(dvc.essential.annotationChart[i])
+								.attr("class","annotext" + i)
+								.attr("text-anchor", dvc.essential.annotationAlign[i])
+								.attr('y',y(dvc.essential.annotationXY[i][1]))
+								.attr('x',x(dvc.essential.annotationXY[i][0]));
+										
+							d3.selectAll(".annotext" + (i))
+								.each(insertLinebreaks)
+								.each(createBackRect);	
+								
+								
+							function insertLinebreaks() {
+								
+								var str = this;
+			
+								var el1 = dvc.essential.annotationChart[i];
+								var el = el1.data;
+						
+								var words = el1.split('  ');
+								
+								d3.select(this/*str*/).text('');
+							
+								for (var j = 0; j < words.length; j++) {
+									var tspan = d3.select(this).append('tspan').text(words[j]);
+									if (j > 0)
+										tspan.attr('x', x(dvc.essential.annotationXY[i][0])).attr('dy', '22');													
+								}
+							};					
+													
+							function createBackRect() {
+								
+							var BBox = this.getBBox()
+											
+									svg.insert("rect", ".annotext" + (i))
+										.attr("width", BBox.width)
+										.attr("height", BBox.height)
+										.attr("x", BBox.x)
+										.attr("y", BBox.y)
+										.attr("fill", "white")
+										.attr("opacity", 0.4);
+										
+							}; // end function createBackRect()
+
+							
+						});	// end foreach 		
+					
+				} // end else ... 
+				
+				return;
+				
+			}// end function writeAnnotation()
+							
+			//create link to source				
+			d3.select(".footer").append("p")
+				.text("Source: ")
+				.append("a")
+				.attr("href", dvc.essential.sourceURL)
+				.attr("target", "_blank")
+				.html(dvc.essential.sourceText);
+						
+			//use pym to calculate chart dimensions	
+		    if (pymChild) {
+		        pymChild.sendHeight();
+		    }
+		}
+
+		//check whether browser can cope with svg	
+		if (Modernizr.svg) {
+		   //load config 
+			d3.json("config.json", function(error, config) {
+			dvc=config
+
+				//load chart data
+				d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+					graphic_data = data;
+					
+					// graphic_data.forEach(function(d) {
+					// 	d.date = d3.time.format(dvc.essential.dateFormat).parse(d.date); 
+						
+					// });
+
+					names = d3.keys(/*data*/graphic_data[0]).filter(function(key) { return key !== "state"; });
+			  
+					/*data*/graphic_data.forEach(function(d) {
+					  d.ages = names.map(function(name) { return {name: name, value: +d[name]}; });	
+					}); 
+						
+						//use pym to create iframed chart dependent on specified variables
+						pymChild = new pym.Child({ renderCallback: drawGraphic});
+					});
+			})
+
+		} else {
+			 //use pym to create iframe containing fallback image (which is set as default)
+			 pymChild = new pym.Child();
+			if (pymChild) {
+		        pymChild.sendHeight();
+		    }
+		}
+    </script>
+</body>
+</html>

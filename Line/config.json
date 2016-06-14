@@ -1,0 +1,60 @@
+{
+    "essential" : {
+            "graphic_data_url": "data.csv",
+        
+            "dateFormat":"%b-%y",
+        
+            "legendLabels" : ["Legend label 1", "Legend label 2"],
+        
+            "sourceText":["Labour Market Statistics, February 2015, Table A02"],
+            "sourceURL":["http://www.ons.gov.uk/ons/publications/re-reference-tables.html?edition=tcm%3A77-350752"],
+        
+            "annotationChart": [
+                "The three troughs are due to the economic downturns  in the early 1980s, early 1990s and late 2000s.",
+                "Claws in  your leg"
+            ],
+            "annotationBullet": [
+                "The three troughs are due to the economic downturns in the early  1980s, early 1990s and late 2000s. The most recent downturn had  less impact on the employment rate than previous downturns",
+                "Claws in your leg. Purr for no reason"
+            ],
+            "annotationXY":[
+                ["Jul-00","67"],
+                ["Jul-08","73.7"]
+            ],
+            "annotationAlign":[
+                "middle",
+                "middle"
+            ],
+        
+            "circles" : true,    
+            "annotationCXCY":[
+                ["Apr-93","68.4"],
+                ["Apr-08","73"]
+            ],
+        
+            "yAxisLabel":"%",
+            "yAxisScale":"auto_min_max",   
+            "yAxisBreak": true,
+            "yAxisBreak_sm_md_lg": [65,65,65]            
+    },
+    "optional" : {
+            "margin_sm": [20, 10, 35, 30],
+            "margin_md": [20, 10, 35, 30],
+            "margin_lg": [20, 10, 35, 30],
+        
+            "aspectRatio_sm" : [16,13],
+            "aspectRatio_md" : [16,12],
+            "aspectRatio_lg" : [16,10],
+        
+            "mobileBreakpoint" : 610, 
+            
+            "xAxisTextFormat_sm_md_lg" : ["%y", "%Y", "%b %y"], 
+                
+            "x_num_ticks_sm_md_lg" : [7,17,17],    
+            "y_num_ticks_sm_md_lg" : [6,8,10],
+            "centre_line" : true,
+            "centre_line_value" : 0
+    }
+}
+
+

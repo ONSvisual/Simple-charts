@@ -198,4 +198,11 @@
 		}
 		
 		
-		
+		#downloadshare:hover {
+			cursor:pointer;
+			cursor:hand;
+		}
+		#embedShare:hover {
+			cursor:pointer;
+			cursor:hand;
+		}

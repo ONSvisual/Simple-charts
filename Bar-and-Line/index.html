@@ -25,7 +25,6 @@
 		
         #graphic .axis line {
             fill: none;
-            stroke: none;
             shape-rendering: crispEdges;
         }
 		
@@ -52,11 +51,16 @@
 
     <!-- Define the source -->
    <div class="footer"> </div>    
-
+   <div id="footer"> </div> 
     
     <script src="../lib/d3.v3.5.17.min.js" type="text/javascript"></script>
     <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
-    <script src="../lib/pym.js" type="text/javascript"></script>
+    <script src="../lib/pym.js" type="text/javascript"></script>   
+	<script src="../lib/d3-jetpack.js" type="text/javascript"></script>
+	<script src="../lib/swoopy-drag.js" type="text/javascript"></script>
+    <script src="../lib/saveSvgAsPng.js" type="text/javascript"></script>
+    <script src="../lib/footer.js" type="text/javascript"></script>
+    
     <script>
     
 	
@@ -65,13 +69,12 @@
 	var footer = d3.select(".footer");
 	var pymChild = null;
 	
-	var lineColourArray = [ "none" , "#F5942F",/* "#E73F40", "#7BCAE2"*/ ]; // some (porobably usually the first 'X' depeding on how many lines are shown) may need to be "none" to avoid lines and bars being crawn for the same data
-	var legendColourArray = [ "#274796" , "#F5942F"/*, "#E73F40", "#7BCAE2"*/ ]; // this one defines colours of the legend. Needs to be the length of the number of data variable streams displayed on graph.
-
+	
 	function drawGraphic(width) {
 	
 		var threshold_md = 788;
 		var threshold_sm = dvc.optional.mobileBreakpoint; 
+		
 	  
 		//set variables for chart dimensions dependent on width of #graphic
 		if (parseInt(graphic.style("width") )< threshold_sm) {        	
@@ -93,12 +96,33 @@
 		keypoints.selectAll("*").remove();
 		footer.selectAll("*").remove();
 	
+	
+	var startDate = new Date(graphic_data[0].date);
+	var endDate = new Date(graphic_data[graphic_data.length-1].date);
+	
+	var endDate = endDate.setFullYear(endDate.getFullYear() + 1);
+	
+	var everyDate = d3.time.day.range(startDate, endDate);
+	var barWidth = chart_width/((everyDate.length/365))-5;
+	
+	var everyYear = d3.time.year.range(startDate, endDate);
+
+	timeFormat = d3.time.format("%Y");
+	
+	everyDateFormat = []	;
+	
+	for(i=0; i< everyDate.length; i++) {
+		
+		everyDateFormat.push(timeFormat(everyDate[i]));
+			
+	}
+	
 
     var x = d3.time.scale().range([0, chart_width]);
 	
+	var xOrdDomain = everyDateFormat;
 	
-	var xOrdDomain = ["1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013"];
-
+	
 	var xOrd = d3.scale.ordinal()
 		.rangePoints([0, chart_width])
 		.domain(xOrdDomain);
@@ -108,7 +132,7 @@
 		.scale(xOrd)
 		.orient("bottom")
 		.tickFormat(function(d,i) {
-            	if (chart_width/*width*/ <= /*mobile_threshold*/dvc.optional.mobileBreakpoint) {
+            	if (chart_width <= dvc.optional.mobileBreakpoint) {
                 	
 						str = d;
 						return i % 2 ? "": '\u2019' + str.substring(2,4); 
@@ -132,7 +156,7 @@
         .scale(x)
         .orient("bottom")
         .tickFormat(function(d,i) {
-            if (width <= /*mobile_threshold*/dvc.optional.mobileBreakpoint) {
+            if (width <= dvc.optional.mobileBreakpoint) {
                 var fmt = d3.time.format('%y');
                 return '\u2019' + fmt(d);
             } else {
@@ -148,8 +172,8 @@
     
     var yAxis = d3.svg.axis()
         .scale(y)
-        .orient('left')/*
-        .ticks(num_ticks)*/;
+        .orient('left')
+		.tickSize(-chart_width - barWidth, 0, 0);
 		
 
 					
@@ -162,9 +186,6 @@
 		yAxis.ticks(dvc.optional.y_num_ticks_sm_md_lg[2])
 	 }	
 	 
-	 	
-
-    var y_axis_grid = function() { return yAxis; }
 
     var line = d3.svg.line()
         .x(function(d) { return x(d.date); })
@@ -182,32 +203,34 @@
         });
     }		
 		
-	var legend = d3.select('#graphic').append('ul')
-                .attr('class', 'key')
-            .selectAll('g')
-                .data(d3.entries(lines))
-            .enter().append('li')
-                .attr('class', function(d, i) { return 'key-item key-' + i + ' ' + d.key.replace(' ', '-').toLowerCase(); });
-			legend.append('b').attr("class", "legendBlocks").style("background-color", function(d,i) { return legendColourArray[i]; }).style("opacity", 0.75);
-        legend.append('label')
-            .text(function(d,i) { return dvc.essential.legendLabels[i]; });
 
-	//y axis label
-	d3.select('#graphic').append("p")
-				.attr('class', 'unit')
-				.text(function(d,i) { return dvc.essential.yAxisLabel; });	
+		 var legend = d3.select('#graphic').append('svg')
+				.attr("width", chart_width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+				.append("g")
+				.attr("id", "legend")
+								
+		 svg = d3.select('svg')
+				.attr("id","chart")
+				.style("background-color","#fff")
+				.attr("width", chart_width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+				.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-    var svg = d3.select('#graphic').append('svg')
-        .attr("width", chart_width/*width*/ + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    		 createLegend();
+
+
+	svg.append("text")
+		 .attr('class', 'unit')
+		 .attr('transform',"translate(" + -margin.left + "," + eval(-margin.top + (lineNo+2)*20) + ")") 
+		 .attr("font-size","12px")
+		 .attr("fill","#666")
+		 .text(function(d,i) { return dvc.essential.yAxisLabel});
+		
 
     x.domain(d3.extent(graphic_data, function(d) { return d.date; }));
 
-
-			
-	
 	//y domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
 	if (dvc.essential.yAxisScale == "auto_zero_max"){
 	   var yDomain = [
@@ -215,7 +238,7 @@
 						d3.max(d3.entries(lines), function(c) {
 							return d3.max(c.value, function(v) {
 								var n = v.amt;
-								return /*Math.ceil(n)*/Math.ceil(n/100)*100;
+								return Math.ceil(n/100)*100;
 							});
 						})
 					 ];
@@ -233,7 +256,7 @@
 						d3.max(d3.entries(lines), function(c) {
 							return d3.max(c.value, function(v) {
 								var n = v.amt;
-								return /*Math.ceil(n)*/Math.ceil(n/100)*100;
+								return Math.ceil(n/100)*100;
 							});
 						})
 					];
@@ -250,13 +273,40 @@
 	    .attr("id", "yAxis")
         .call(yAxis);
 
-    svg.append('g')
-        .attr('class', 'y grid')
-        .call(y_axis_grid()
-            .tickSize(-chart_width/*width*/, 0, 0)
-            .tickFormat('')
-        );
-		
+
+	d3.select(".x").select("path").style("stroke", "#666") 
+
+						//create vertical line if required
+						if (dvc.optional.vertical_line == true){
+											dvc.optional.annotateLineX1_Y1_X2_Y2.forEach(function(d,i) {
+												
+										svg.append("line")	.attr('x1',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateLineX1_Y1_X2_Y2[i][0][0])))
+												.attr('x2',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][0])))
+										.style('stroke', '#888')
+										.style('stroke-width', 2)
+											//.style('stroke-dasharray', '5 5') 						.attr('y1',y(dvc.optional.annotateLineX1_Y1_X2_Y2[i][0][1]))
+						.attr('y2',y(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][1]));
+								})
+						} 
+						
+						//create rectangle if required
+						if (dvc.optional.annotateRect == true){
+							
+							dvc.optional.annotateRectX_Y.forEach(function(d,i) {
+								
+							svg.append("rect")
+								.attr('x',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateRectX_Y[i][0][0]))  )
+								.attr('y',y(dvc.optional.annotateRectX_Y[i][0][1]))
+								.attr('height',y( dvc.optional.annotateRectX_Y[i][1][1] ) - y(dvc.optional.annotateRectX_Y[i][0][1])  ) 
+								.attr('width',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateRectX_Y[i][1][0])) - x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateRectX_Y[i][0][0])))
+								.style('fill', dvc.optional.lineColor_opcty[i][0] )
+								.style('stroke-width', 2)
+								.style('opacity', dvc.optional.lineColor_opcty[i][1] );						
+								
+							})
+						} 
+
+
 
     svg.append('g').attr("class","lines")
 		.selectAll('path')
@@ -270,14 +320,47 @@
                 return line(d.value);
             })
 			.style("stroke" , function(d,i){
-				return lineColourArray[i];
-			});
+				if(i != 0){
+					return dvc.essential.colour_palette[i];
+				} else {
+					return "none"	
+				}
+			})
+			.style("stroke-width" , "2px");
+			
+	if(dvc.essential.markers == true) {
 
+		j=0;
+		for (var column in graphic_data[0]) {
+			if (column == 'date') continue;
 	
-	var startDate = new Date(lines[dvc.essential.legendLabels[0]][0].date);
-	var endDate = new Date(lines[dvc.essential.legendLabels[1]][lines[dvc.essential.legendLabels[1]].length-2].date);
-	var everyDate = d3.time.day.range(startDate, endDate);
-	var barWidth = chart_width/((everyDate.length/365))-5;
+			svg.append("g")
+				.selectAll("circle")
+				.data(graphic_data)
+				.enter()
+				.append('circle')
+				.attr("cx", function(d,i){
+					return x(d.date);
+				})
+				.attr("cy", function(d,i){
+					return y(d[column]);
+				})
+				.attr("r", 3)
+				.attr("stroke", function(d,i){
+					if(j != 0){
+						return dvc.essential.colour_palette[j];
+					} else {
+						return "none"	
+					}
+				})
+				.attr("stroke-width","2px")
+				.attr("fill","#fff");
+		  
+		 j++  
+		}
+		
+		
+	};
 	
 	svg.append('g')
         .attr('class', 'x axis')
@@ -289,7 +372,7 @@
 	svg.append('g')
 		.attr("class","bars")
 		.selectAll('rect')
-		.data(lines[/*"data1"*/dvc.essential.legendLabels[0]])
+		.data(lines[dvc.essential.legendLabels[0]])
 		.enter()
 		.append('rect')
 		.attr('class', 'bar')
@@ -303,8 +386,6 @@
 			else {return (y(0) - y(d.amt))}
 		})
 		.attr('width',barWidth)
-		.attr('stroke',"white")
-		.attr('padding',"1px")
 		.attr("fill", "#274796")
 		.attr('opacity'	, 0.9);
 			
@@ -322,26 +403,28 @@
 		.selectAll("line")
 		.style("display", function(d, i){ 
 			return i % 1 ? "none": ""
-		
 	})	
 		
 	d3.selectAll(".bars").attr('transform', 'translate('+ barWidth/2 + ',0)')	
 	d3.selectAll(".lines").attr('transform', 'translate('+ (barWidth/2) + ',0)')
+	d3.selectAll("circle").attr('transform', 'translate('+ (barWidth/2) + ',0)')
 	
 	//get the lines existing length
-	gridlength = d3.select(".grid line").attr("x2");
+	//gridlength = d3.select(".grid line").attr("x2");
 	
-	d3.selectAll(".grid line").attr("x2", gridlength*1+barWidth); 	
+	//d3.selectAll(".grid line").attr("x2", gridlength*1+barWidth); 	
 
 	
-	svg.append("line")
-		.attr("id","ordline")
-		.attr('y1',y(0))
-		.attr('y2',y(0))
-		.attr('x1',x(x.domain()[0]))
-		.attr('x2',gridlength*1+barWidth/*x(x.domain()[1])*/);
+//	svg.append("line")
+//		.attr("id","ordline")
+//		.attr('y1',y(0))
+//		.attr('y2',y(0))
+//		.attr('x1',x(x.domain()[0]))
+//		.attr('x2',gridlength*1+barWidth);
+		
 		
 				
+							
 
 				//create centre line if required
 				if (dvc.optional.centre_line == true){
@@ -350,115 +433,235 @@
 						.attr('y1',y(dvc.optional.centre_line_value))
 						.attr('y2',y(dvc.optional.centre_line_value))
 						.attr('x1',0)
-						.attr('x2',/*chart_width+margin.left*/x.range()[1]+margin.left);
+						.attr('x2',x.range()[1]+margin.left);
 				} else if(yDomain[0] <0){
 					svg.append("line")
 						.attr("id","centreline")
 						.attr('y1',y(0))
 						.attr('y2',y(0))
 						.attr('x1',0)
-						.attr('x2',/*chart_width+margin.left*/x.range()[1]+margin.left);
+						.attr('x2',x.range()[1]+margin.left);
 				} 	
+			
+			
+			function createLegend(){
+			
+							prevX= 0;
+							prevY= 0;
+							lineNo = 0;
+							lineNoOld = 0;
+					
+						dvc.essential.legendLabels.forEach(function(d,i) {	
+						
+							// draw legend text based on content of var legendLabels ...
+							var_group= d3.select("#legend").append("g")
+							
+							var_group.append("rect")
+								.attr("class","rect" + i)
+								.attr("fill", dvc.essential.colour_palette[i])
+								.attr("x", 0)
+								.attr("y", 0)
+								.attr("width", function(d){ 
+									if(dvc.essential.legendStyle=="rect"){
+										return 15;
+									} else {
+										return 20;
+									}
+								})
+								.attr("height", function(d){ 
+									if(dvc.essential.legendStyle=="rect"){
+										return 15;
+									} else {
+										return 3;
+									}
+								})
+							
+							var_group.append("text")
+								.text(dvc.essential.legendLabels[i])
+								.attr("class","legend" + i)
+								.attr("text-anchor", "start")
+								.style("font-size", "12px")
+								.style("fill", "#666")
+								.attr('y',15)
+								.attr('x',0);
+							
+							
+										
+							d3.selectAll(".legend" + (i))
+								.each(calcPosition);	
+								
+												
+													
+							function calcPosition() {
+							
+								
+							var BBox = this.getBBox()
+							
+								
+												
+								d3.select(".legend" + (i))
+										.attr("y",function(d){ 
+													if((prevX+BBox.width +50)>parseInt(graphic.style("width")) ){
+														lineNoOld = lineNo;
+														lineNo=lineNo + 1;
+														prevX = 0;
+													}
+												return eval((lineNo*20) + 20);
+										})
+										.attr("x",function(d){ return prevX+25;})
+										
+										
+								d3.select(".rect" + (i))
+										.attr("y",function(d){ 
+												
+												if((prevX+BBox.width +50)>parseInt(graphic.style("width")) ){
+													lineNoOld = lineNo;
+													lineNo=lineNo + 1;
+													prevX = 0;
+												}
+													
+												if(dvc.essential.legendStyle=="rect"){
+													return eval((lineNo*20)+5);
+												} else {
+													return eval((lineNo*20)+12);
+													
+												}	
+										})
+										.attr("x",function(d){ return prevX; })
+								
+								prevX = prevX + BBox.width +50
+								
+								
+								
+								//d3.select("#chart").attr("transform", "translate(" + margin.left + "," +( margin.top + eval((lineNo+1)*margin.top))+ ")")
+								
+							}; // end function calcPosition()
+						});	// end foreach 	
+			}// end function createLegend()
+
+			
+			
 							
 			writeAnnotation();
 							
 			function writeAnnotation(){
 			
-				if (parseInt(graphic.style("width") ) < threshold_sm) {
-					
-						dvc.essential.annotationBullet.forEach(function(d,i) {
-						
-							d3.select("#keypoints").append("svg")
-								.attr("width","20px")
-								.attr("height","20px")
-								.attr("class","circles")
-								.append("circle")
-								.attr("class", "annocirc" + (i))
-								.attr("r", "2")
-								.attr('cy',"12px")
-								.attr("cx", "10px");
-							
-							d3.select("#keypoints").append("p").text(dvc.essential.annotationBullet[i]);
-						
-						})// end foreach
-				}		
-				else {
-					
-						dvc.essential.annotationChart.forEach(function(d,i) {	
-						
-							// draw annotation text based on content of var annotationArray ...
-							svg.append("text")
-								.text(dvc.essential.annotationChart[i])
-								.attr("class","annotext" + i)
-								.attr("text-anchor", dvc.essential.annotationAlign[i])
-								.attr('y',y(dvc.essential.annotationXY[i][1]))
-								.attr('x',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.essential.annotationXY[i][0])));
+				if (parseInt(graphic.style("width"))< threshold_sm) {
+				
+					dvc.essential.annotationBullet.forEach(function(d,i) {
 										
-							d3.selectAll(".annotext" + (i))
-								.each(insertLinebreaks)
-								.each(createBackRect);	
-								
-								
-							function insertLinebreaks() {
-								
-								var str = this;
-			
-								var el1 = dvc.essential.annotationChart[i];
-								var el = el1.data;
-						
-								var words = el1.split('  ');
-								
-								d3.select(this/*str*/).text('');
-							
-								for (var j = 0; j < words.length; j++) {
-									var tspan = d3.select(this).append('tspan').text(words[j]);
-									if (j > 0)
-										tspan.attr('x', x(d3.time.format(dvc.essential.dateFormat).parse(dvc.essential.annotationXY[i][0]))).attr('dy', '22');													
-								}
-							};					
-													
-							function createBackRect() {
-								
-							var BBox = this.getBBox()
+					d3.select("#keypoints").append("svg")
+							.attr("width","15px")
+							.attr("height","15px")
+							.attr("class","circles")
+							.append("circle")
+							.attr("class", "annocirc" + (i))
+							.attr("r", "2")
+							.attr('cy',"9px")
+							.attr("cx", "10px");
 											
-									svg.insert("rect", ".annotext" + (i))
-										.attr("width", BBox.width)
-										.attr("height", BBox.height)
-										.attr("x", BBox.x)
-										.attr("y", BBox.y)
-										.attr("fill", "white")
-										.attr("opacity", 0.4);
+					d3.select("#keypoints")
+							.append("p")
+							.style("font-size","12px")
+							.style("font-weight",400)
+							.text(dvc.essential.annotationBullet[i]);
+									
+							
+				})// end foreach
+				
+				}		
+								
+				else {
+									
+					annotations = dvc.essential.annotationsChart;
+									
+					// For elements with time series
+					for(i=0; i < annotations.length  ;i++) {
+						annotations[i].xVal = new Date(annotations[i].xVal);
+					}
 										
-							}; // end function createBackRect()
-						
-						
-							// draw circles, if var 'dvc.essential.circles' is set to true
-							if ( dvc.essential.circles == true ) {
+					var swoopy = d3.swoopyDrag()
+						.x(function(d){ return x(d.xVal) })
+						.y(function(d){ return y(d.yVal) })
+						.draggable(dvc.essential.draggable)
+						.annotations(annotations);
+											
+											
+					var swoopySel = svg.append('g').attr("class","annotations").call(swoopy);
+										
+					svg.append('marker')
+						.attr('id', 'arrow')
+						.attr('viewBox', '-10 -10 20 20')
+						.attr('markerWidth', 20)
+						.attr('markerHeight', 20)
+						.attr('orient', 'auto')
+						.append('path')
+						.attr('d', 'M-6.75,-6.75 L 0,0 L -6.75,6.75')
+						.attr('fill','#808080');
+										
+					swoopySel.selectAll('path').attr('marker-end', 'url(#arrow)');
+										
+										
+					d3.selectAll(".annotations path")
+						.style("stroke","#808080")
+						.attr("fill","none");
+														
+					swoopySel.selectAll('text')
+						.attr('font-size','13px')
+    					.attr("font-size",  "13px")
+    					.attr("font-weight", 500)
+						.each(function(d,i){
+							d3.select(this)
+								.text('')//clear existing text
+								.tspans(d3.wordwrap(d.text, dvc.essential.wordwrap[i])) //wrap after xx char
+							});
+											
+											
+					swoopySel.selectAll('text')
+						.each(function(d,i){	
+							d3.select(this).selectAll('tspan')									
+								.attr("text-anchor",dvc.essential.annoAlign[i]);
+							});				
+						} // end else ... 
 								
-								svg.append("circle")
-									.attr("class", "annocirc" + (i))
-									.attr('cy',y(dvc.essential.annotationCXCY[i][1]))
-									.attr('cx',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.essential.annotationCXCY[i][0])))
-									.attr("r", "3");
-								
-							} // end if ... 
-							
-						});	// end foreach 		
-					
-				} // end else ... 
+					return;
 				
-				return;
-				
-			}// end function writeAnnotation()
-							
+				}// end function writeAnnotation()
+
+
+		
+			legendHeight = d3.select("#legend").node().getBBox().height;
+	
+			svgHeight = d3.select('#graphic').select('svg').attr("height");
+	
+			d3.select('#graphic').select('svg').attr("height", +svgHeight + +legendHeight + 30);
+	
 			//create link to source				
-			d3.select(".footer").append("p")
+			d3.select('#graphic').select('svg')
+				.append("g")
+				.attr("id", "source")
+				.append("text")
+				.attr("text-anchor", "start")
+				.style("font-size", "12px")
+				.style("fill", "#666")
+				.attr('y',height + margin.top + margin.bottom + +legendHeight + 20)
+				.attr('x', 0)
 				.text("Source: ")
 				.append("a")
-				.attr("href", dvc.essential.sourceURL)
+				.style("fill", "#4774CC")
+				.attr("xlink:href", dvc.essential.sourceURL)
 				.attr("target", "_blank")
 				.html(dvc.essential.sourceText);
-							
+
+		//Fix CSS
+			
+			d3.selectAll("path").attr("fill","none");
+			
+			d3.selectAll("text").attr("font-family","'Open Sans', sans-serif");
+			
+			d3.selectAll(".y text").attr("font-size","12px").attr("fill","#666");
+		
+			d3.selectAll(".y line").attr("stroke","#CCC").attr("stroke-width","1px").style("shape-rendering","crispEdges");
 						
 
     if (pymChild) {

@@ -2,23 +2,16 @@
 <html lang="en">
 
 <head>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-    <title></title>
-
+	<title>Simple VERTICAL</title>
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
     <link rel="stylesheet" href="../lib/globalStyle.css" />
-    <style type="text/css">
-    	.bar_pos { fill: #F5942F; }
-        .bar_neg { fill: #7BCAE2; }
-        
+	<style type="text/css">
 	
-		.background0 { background: #F5942F; }
-        .background1 { background: #7BCAE2; }        
-    
+	
     </style>
 </head>
 <body>
@@ -31,18 +24,20 @@
         <p></p>
     </div>
 
-   <div class="footer">        
+   <div id="footer">        
    </div>
     
-    <script src="../lib/jquery.js" type="text/javascript"></script>
     <script src="../lib/d3.v3.5.17.min.js" type="text/javascript"></script>
     <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
     <script src="../lib/pym.js" type="text/javascript"></script>
+	<script src="../lib/saveSvgAsPng.js" type="text/javascript"></script>
+    <script src="../lib/footer.js"></script>
+
     <script>
 
-		var graphic = $('#graphic');
-		var keypoints = $('#keypoints');
-		var footer = $(".footer");
+		var graphic = d3.select('#graphic');
+		var keypoints = d3.select('#keypoints');
+		var footer = d3.select(".footer");
 		var pymChild = null;
 
 		function drawGraphic(width) {
@@ -50,24 +45,25 @@
 		   var threshold_sm = dvc.optional.mobileBreakpoint; 
 		  
 		  	//set variables for chart dimensions dependent on width of #graphic
-		    if (graphic.width() < threshold_sm) {        	
+		    if (parseInt(graphic.style("width"))< threshold_sm) {        	
 		            var margin = {top: dvc.optional.margin_sm[0], right: dvc.optional.margin_sm[1], bottom: dvc.optional.margin_sm[2], left: dvc.optional.margin_sm[3]}; 
-					var chart_width = graphic.width() - margin.left - margin.right;
+					var chart_width = parseInt(graphic.style("width"))- margin.left - margin.right;
 		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
-		    } else if (graphic.width() < threshold_md){
+		    } else if (parseInt(graphic.style("width"))< threshold_md){
 		        	var margin = {top: dvc.optional.margin_md[0], right: dvc.optional.margin_md[1], bottom: dvc.optional.margin_md[2], left: dvc.optional.margin_md[3]}; 
-					var chart_width = graphic.width() - margin.left - margin.right;
+					var chart_width = parseInt(graphic.style("width"))- margin.left - margin.right;
 		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
 		  	} else {
 		        	var margin = {top: dvc.optional.margin_lg[0], right: dvc.optional.margin_lg[1], bottom: dvc.optional.margin_lg[2], left: dvc.optional.margin_lg[3]}
-					var chart_width = graphic.width() - margin.left - margin.right;
+					var chart_width = parseInt(graphic.style("width"))- margin.left - margin.right;
 		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
 			}
 
 		    // clear out existing graphics
-		    graphic.empty();
-			keypoints.empty();
-			footer.empty();
+		    graphic.selectAll("*").remove();
+			keypoints.selectAll("*").remove();
+			footer.selectAll("*").remove();
+
 			
 			var x = d3.scale.ordinal()
 				.rangeRoundBands([0, chart_width], .1)
@@ -83,9 +79,9 @@
 		        .orient("bottom")
 		        .tickFormat(function(d,i) {
 		            //specify date format for x axis depending on #graphic width
-		            if (graphic.width() <= threshold_sm) {
+		            if (parseInt(graphic.style("width"))<= threshold_sm) {
 		                return i % 4 ? "" : '\u2019' + d.substring(2,4);
-		            } else if (graphic.width() <= threshold_md){
+		            } else if (parseInt(graphic.style("width"))<= threshold_md){
 		                return i % 2 ? "" :  d;
 		            } else {
 		                return i % 1 ? "" :  '\u2019' + d.substring(2,4);
@@ -94,9 +90,9 @@
 				//.tickPadding(5)
 		    
 	        //specify number of ticks on x axis and whether 1st and last data point labels are included
-	  //       if(graphic.width()<threshold_sm){		
+	  //       if(parseInt(graphic.style("width"))<threshold_sm){		
 	  //           xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[0]).concat( x.domain() ));
-	  //       } else if (graphic.width() <= threshold_md){
+	  //       } else if (parseInt(graphic.style("width"))<= threshold_md){
 			// 	xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[1])/*.concat( x.domain() )*/);
 			// } else {
 	  //           xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[2])/*.concat( x.domain() )*/);		
@@ -107,9 +103,9 @@
 		        .orient('left');
 		    			    
 			//specify number or ticks on y axis
-			if (graphic.width() <= threshold_sm) {
+			if (parseInt(graphic.style("width"))<= threshold_sm) {
 				yAxis.ticks(dvc.optional.y_num_ticks_sm_md_lg[0])
-			 } else if (graphic.width() <= threshold_md){
+			 } else if (parseInt(graphic.style("width"))<= threshold_md){
 				yAxis.ticks(dvc.optional.y_num_ticks_sm_md_lg[1])
 			 } else {
 				yAxis.ticks(dvc.optional.y_num_ticks_sm_md_lg[2])
@@ -173,64 +169,38 @@
 		    }
 				 
 		    y.domain(yDomain);
-		    
-			//create legend
-			if(dvc.essential.legendLabels.length > 1){
-			var legend = d3.select('#graphic').append('ul')
-			                .attr('class', 'key')
-			            .selectAll('g')
-			                .data(dvc.essential.legendLabels)
-			            .enter().append('li')
-
-				    legend.append('b')
-						 .attr("class",function(d,i){return "background" + i})
-				    
-					legend.append('label')
-				         .html(function(d,i) { return dvc.essential.legendLabels[i]; });						
-			}
-
-			//y axis label
-			d3.select('#graphic').append("p")
-		                .attr('class', 'unit')
-		  		        .text(function(d,i) { return dvc.essential.yAxisLabel; });
+	    
+		
 
 		    //create svg for chart
 		    var svg = d3.select('#graphic').append('svg')
-				        .attr("width", chart_width + margin.left + margin.right)
-				        .attr("height", height + margin.top + margin.bottom +30)
-				        .append("g")
-				        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-				
-					svg.append("rect")
-						.attr("class","svgRect")
-						.attr("width", chart_width)
-						.attr("height", height)
-			    
-				    svg.append('g')
-				        .attr('class', 'y axis')
-				        .call(yAxis);
+				.attr("id","chart")
+				.style("background-color","#fff")
+				.attr("width", chart_width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom +30)
+				.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-				    svg.append('g')
-				        .attr('class', 'y grid')
-				        .call(y_axis_grid()
-				            .tickSize(-chart_width, 0, 0)
-				            .tickFormat('')
-				        );
+			   svg.append('g')
+					.attr('class', 'y axis')
+					.call(yAxis.tickSize(-chart_width, 0))
+
+				 
 					
-					//create x axis, if y axis doesn't start at 0 drop x axis accordingly	
-					svg.append('g')
-				        .attr('class', 'x axis')
-				        .attr('transform', function(d){ 
-				        			if(yDomain[0] != 0){
-										return 'translate(0,' + (height + 30) + ')'
-									} else {
-										return 'translate(0,' + height  + ')'
-									}
-							})
-				        .call(xAxis);
+				//create x axis, if y axis doesn't start at 0 drop x axis accordingly	
+				svg.append('g')
+					.attr('class', 'x axis')
+					.attr('transform', function(d){ 
+								if(yDomain[0] != 0){
+									return 'translate(0,' + (height + 30) + ')'
+								} else {
+									return 'translate(0,' + height  + ')'
+								}
+						})
+					.call(xAxis);
 
-				     //d3.selectAll(".tick.major").attr("transform, "translate(barWidth,0)))
-				
+				 d3.select(".x").select("path").style("stroke", "#666")	
+					 
 				//create icon to symbolise break in y axis if required					
 				if(yDomain[0] > 0 && dvc.essential.yAxisBreak == true){
 					var paths = svg.append("defs")
@@ -254,9 +224,9 @@
 								.attr("xlink:href","#icon")
 								.attr("x", x(x.domain()[0]))
 								.attr("y", function(){ 
-									if (graphic.width() < threshold_sm) {
+									if (parseInt(graphic.style("width"))< threshold_sm) {
 										return y(dvc.essential.yAxisBreak_sm_md_lg[0])
-									} else if (graphic.width() < threshold_md){
+									} else if (parseInt(graphic.style("width"))< threshold_md){
 										return y(dvc.essential.yAxisBreak_sm_md_lg[1])
 									} else {
 										return y(dvc.essential.yAxisBreak_sm_md_lg[2])
@@ -270,14 +240,7 @@
 					.data(bars["growth"])
 					.enter()
 					.append('rect')
-					.attr('class', function(d, i) {
-			                if ( d.amt <0 ) { 
-								return 'bar bar_neg'; 
-							} else { 
-								return 'bar bar_pos'; 
-							}
-
-			            })
+					.attr("fill", function(d) { return dvc.essential.colour_palette[0]})
 					.attr("width", x.rangeBand())
 					.attr("x", function(d) { return x(d.date); })
 					.attr("y", function(d) { return y(Math.max(0, d.amt)); })
@@ -304,7 +267,7 @@
 							
 			function writeAnnotation(){
 			
-				if (graphic.width() < threshold_sm) {
+				if (parseInt(graphic.style("width"))< threshold_sm) {
 					
 						dvc.essential.annotationBullet.forEach(function(d,i) {
 						
@@ -318,7 +281,11 @@
 								.attr('cy',"12px")
 								.attr("cx", "10px");
 							
-							d3.select("#keypoints").append("p").text(dvc.essential.annotationBullet[i]);
+							d3.select("#keypoints")
+								.append("p")
+								.style("font-size","12px")
+								.style("font-weight",400)
+								.text(dvc.essential.annotationBullet[i]);
 						
 						})// end foreach
 				}		
@@ -335,6 +302,10 @@
 								.attr('x',x(dvc.essential.annotationXY[i][0]));
 										
 							d3.selectAll(".annotext" + (i))
+								.attr('font-size','13px')
+								.attr("fill", "#666")
+    							.attr("font-size",  "13px")
+    							.attr("font-weight", 500)
 								.each(insertLinebreaks)
 								.each(createBackRect);	
 								
@@ -379,15 +350,77 @@
 				return;
 				
 			}// end function writeAnnotation()
-							
-			//create link to source				
-			d3.select(".footer").append("p")
-				.text("Source: ")
-				.append("a")
-				.attr("href", dvc.essential.sourceURL)
-				.attr("target", "_blank")
-				.html(dvc.essential.sourceText);
+			
+			if (dvc.optional.vertical_line == true){
+					dvc.optional.annotateLineX1_Y1_X2_Y2.forEach(function(d,i) {
+						svg.append("line")	
+							.attr('x1',x(dvc.optional.annotateLineX1_Y1_X2_Y2[i][0][0]))
+							.attr('x2',x(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][0]))
+							.style('stroke', '#888')
+							.style('stroke-width', 2)
+							.attr('y2',y(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][1]));
+					})
+				} 
+				
+			if (dvc.optional.annotateRect == true){
+					
+					dvc.optional.annotateRectX_Y.forEach(function(d,i) {
 						
+						svg.append("rect")
+							.attr('x',x(dvc.optional.annotateRectX_Y[i][0][0]))
+							.attr('y',y(dvc.optional.annotateRectX_Y[i][0][1]))
+							.attr('height',y( dvc.optional.annotateRectX_Y[i][1][1] ) - y(dvc.optional.annotateRectX_Y[i][0][1])) 
+							.attr('width',x(dvc.optional.annotateRectX_Y[i][1][0]) - x(dvc.optional.annotateRectX_Y[i][0][0]))
+							.style('fill', dvc.optional.lineColor_opcty[i][0] )
+							.style('stroke-width', 2)
+							.style('opacity', dvc.optional.lineColor_opcty[i][1] );						
+						
+					})
+				} 
+			
+
+		
+		d3.select('#graphic').select('svg')
+			.append("g")
+			.attr("id", "source")
+			.append("text")
+			.attr("text-anchor", "start")
+			.style("font-size", "12px")
+			.style("fill", "#666")
+			.attr('y',height + margin.top + margin.bottom+30-5)
+			.attr('x',0)
+			.text("Source: ")
+			.append("a")
+			.style("fill", "#4774CC")
+			.attr("xlink:href", dvc.essential.sourceURL)
+			.attr("target", "_blank")
+			.html(dvc.essential.sourceText);
+
+			
+			lineNo = 0;
+			 				
+			svg.append("text")
+				 .attr('class', 'unit')
+				 .attr('transform',"translate(" + -margin.left + "," + eval(-margin.top + (lineNo+1)*20) + ")")  	
+				 .attr("font-size","12px")
+				 .attr("fill","#666")
+				 .text(function(d,i) { return dvc.essential.yAxisLabel});
+				 
+				 
+			
+
+			d3.selectAll("path").attr("fill","none");
+						
+			d3.selectAll("text").attr("font-family","'Open Sans', sans-serif");
+						
+			d3.selectAll(".y text").attr("font-size","12px").attr("fill","#666");
+			d3.selectAll(".x text").attr("font-size","12px").attr("fill","#666"); // dates - timelines
+						
+			d3.selectAll(".y line")
+				.attr("stroke","#CCC")
+				.attr("stroke-width","1px")
+				.style("shape-rendering","crispEdges");
+			
 			//use pym to calculate chart dimensions	
 		    if (pymChild) {
 		        pymChild.sendHeight();

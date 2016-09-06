@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="../lib/globalStyle.css" />
     <style type="text/css">
+	
     	.line_pos { fill: #F5942F; }
         .line_neg { fill: #7BCAE2; }
          .circle1 { fill: #7BCAE2; }
@@ -21,6 +22,7 @@
 		.background0 { background: #F5942F; }
         .background1 { background: #7BCAE2; }        
     	
+		
 		/*#circle1{ fill:#7BCAE2;!important }*/
     </style>
 </head>
@@ -98,30 +100,7 @@
 				xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[2])
 			 }
 				
-		    //gridlines
-		    var x_axis_grid = function() { return xAxis; }
 
-		   //helper classes for generating path data
-		  /*var line = d3.svg.line()
-		        		.y(function(d,i) { return y(d.name); })
-		        		.x(function(d,i) { return x(d.mymax); });*/
-						
-
-		    // parse data into columns
-		   /*  var bars = {};
-		    for (var column in graphic_data[0]) {
-		       // if (column == 'name') continue;
-			   
-		        bars[column] = graphic_data.map(function(d,i) {  //console.log( d+ " " +i);
-		            return {
-		               // 'name': d.name,
-		                'smal': d.imin,  //[column]
-						'bigg': +d.imax,
-						'amedian': +d.median
-		            };
-		        });
-		   }*/
-			  
 		          lines = graphic_data.map(function(d,i) {  //console.log(d + " " +i); 
 		            return {  
 					//	lines.x: csv.column_headings	
@@ -131,11 +110,6 @@
 						'mymedian': +d.median
 		            };
 		        });
-		   // }
-			// This lets me see the data
-					/*lines.forEach(function(d,i) {
-														console.log(i+": "+d.name+" "+d.mymedian);
-														}); */
 				
 				var memax = d3.max(lines, function(d){
 													return d.mymax;
@@ -154,7 +128,6 @@
 																		})
 												/dvc.essential.xAxisScaleDivisor)*dvc.essential.xAxisScaleDivisor ];
 										
-					//var yDomain = [	0, Math.ceil(d3.max(dvc.yData)/dvc.config.essential.yAxisScaleDivisor)*dvc.config.essential.yAxisScaleDivisor ];
 					
 					}
 					else if (dvc.essential.xAxisScale == "auto_min_max" )
@@ -162,11 +135,11 @@
 					var xDomain = [ Math.floor(d3.min(lines, function(d){
 															return d.mymin;
 																		})
-												/dvc.essential.xAxisScaleDivisor)*dvc.essential.xAxisScaleDivisor,
+												/dvc.essential.xAxisScaleDivisor*dvc.essential.xAxisScaleDivisor) ,
 									Math.ceil(d3.max(lines, function(d){
 															return d.mymax;
 																		})
-												/dvc.essential.xAxisScaleDivisor)*dvc.essential.xAxisScaleDivisor
+												/dvc.essential.xAxisScaleDivisor*dvc.essential.xAxisScaleDivisor)
 												 ];
 										
 					/*var yDomain = [ Math.floor(d3.min(dvc.yData)/dvc.essential.yAxisScaleDivisor)*dvc.essential.yAxisScaleDivisor , Math.ceil(d3.max(dvc.yData)/dvc.essential.yAxisScaleDivisor)*dvc.essential.yAxisScaleDivisor ];*/
@@ -177,74 +150,46 @@
 									
 					}	
 									
-								
-			//console.log(d3.min(dvc.xData) + " :" + d3.max(dvc.xData));
-				console.log(xDomain);
-			//console.log(d3.min(dvc.yData) + " :" + d3.max(dvc.yData));				
-				//console.log(yDomain);
-				
-				
-				//var mrtsTicks = calcOptimumTicks(memin,memax);
-				//console.log("min,max,ticks: "+mrtsTicks);
-				
-		  	//y domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
-	   		/*if (dvc.essential.xAxisScale == "auto_zero_max"){
-			   var xDomain = [0,mrtsTicks[1]];
-							 
-			} else if (dvc.essential.xAxisScale == "auto_min_max"){
-				var xDomain = [mrtsTicks[0],mrtsTicks[1]];
-			} else {
-			   var xDomain = dvc.essential.xAxisScale;
-		    }
-			*/	 
-		    x.domain(xDomain);
+				console.log(xDomain);				
+			    x.domain(xDomain);
 			
-			
-			
-			//create legend
-			if(dvc.essential.legendLabels.length > 1){
-			var legend = d3.select('#graphic').append('ul')
-			                .attr('class', 'key')
-			            .selectAll('g')
-			                .data(dvc.essential.legendLabels)
-			            .enter().append('li')
+			// sort these hardwired numbers maybe through the dimensions above
+				    var legend = d3.select('#graphic').append('svg')
+							.attr("width", chart_width + margin.left + margin.right)
+							.attr("height", height + margin.top + margin.bottom + 30)
+							.append("g")
+							.attr("id", "legend")
+					
+					//create svg for chart						
+					 var svg = d3.select('svg')
+							.attr("id","chart")
+							.style("background-color","#fff")
+							.attr("width", chart_width + margin.left + margin.right)
+							.attr("height", height + margin.top + margin.bottom +80)
+							.append("g")
+							.attr("transform", "translate(" + margin.left + "," + (margin.top+40) + ")")
 
-				    legend.append('b')
-						 .attr("class",function(d,i){return "background" + i})
-				    
-					legend.append('label')
-				         .html(function(d,i) { return dvc.essential.legendLabels[i]; });						
-			}
 
-			
-		    //create svg for chart
-		    var svg = d3.select('#graphic').append('svg')
-				        .attr("width", chart_width + margin.left + margin.right)
-				        .attr("height", height + margin.top + margin.bottom +30)
-				        .append("g")
-				        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 				
 					svg.append("rect")
 						.attr("class","svgRect")
+						.style("fill", "#fff")
 						.attr("width", chart_width)
 						.attr("height", height);
 			    
 				    svg.append('g')
 				        .attr('class', 'x axis')
 				        .attr("transform", "translate(0, "+height+")")
-				        .call(xAxis).append("text")
+				        .call(xAxis.tickSize(-height, 0)
+)
+						
+					svg.select(".x.axis")
+					   	 .append("text")
 						 .attr("y", 25)
 						 .attr("x",chart_width)
 						 .attr("dy", ".71em")
 						 .style("text-anchor", "end")
 						 .text(dvc.essential.xAxisLabel);
-
-				    svg.append('g')
-				        .attr('class', 'x grid')
-				        .call(x_axis_grid()
-				            .tickSize(height, 0, 0)
-				            .tickFormat('')
-				        );
 					
 					//create y axis, if x axis doesn't start at 0 drop x axis accordingly	
 					svg.append('g')
@@ -257,6 +202,17 @@
 									}
 							})
 				        .call(yAxis);
+						
+						d3.select(".y.axis").selectAll("line").remove();
+						
+						svg.append("text")
+							 .attr('class', 'unit')
+							 .attr('transform',"translate(" + -margin.left + "," + eval(-margin.top) + ")")// + (lineNo+1)*20 or -10
+							 .attr("font-size","12px")
+							 .attr("fill","#666")
+							 .text(dvc.essential.yAxisLabel);
+							 
+							 
 		
 		tieFight();
 									
@@ -315,7 +271,6 @@
 					.attr('cy',function(d,i) {return y(d.name); }) 
 					.attr('r', ball*1.5);
 					}
-				
 			}
 					
 					
@@ -436,7 +391,116 @@
 				
 				
 			}// end function writeAnnotation()
+			
+			
+			createLegend();			
+			
+function createLegend(){
+			
+							var prevX= 0;
+							var prevY= 0;
+							lineNo = 0;
+							var lineNoOld = 0;
+					
+						dvc.essential.legendLabels.forEach(function(d,i) {	
+						
+							// draw legend text based on content of var legendLabels ...
+							var_group= d3.select("#legend").append("g")
 							
+							var_group.append("rect")
+								.attr("class","rect" + i)
+								.attr("fill", dvc.essential.colour_palette[i])
+								.attr("x", 0)
+								.attr("y", 0)
+								.attr("width", function(d){ 
+									if(dvc.essential.legendStyle=="rect"){
+										return 15;
+									} else {
+										return 20;
+									}
+								})
+								.attr("height", function(d){ 
+									if(dvc.essential.legendStyle=="rect"){
+										return 15;
+									} else {
+										return 3;
+									}
+								})
+							
+							var_group.append("text")
+								.text(dvc.essential.legendLabels[i])
+								.attr("class","legend" + i)
+								.attr("text-anchor", "start")
+								.style("font-size", "12px")
+								.style("fill", "#666")
+								.attr('y',15)
+								.attr('x',0);
+							
+
+							d3.selectAll(".legend" + (i))
+								.each(calcPosition);	
+													
+							function calcPosition() {
+							
+								
+							var BBox = this.getBBox()
+							
+								
+							//prevY =BBox.width 	
+								d3.select(".legend" + (i))
+										.attr("y",function(d){ 
+													if((prevX+BBox.width +50)>parseInt(graphic.style("width")) ){
+														lineNoOld = lineNo;
+														lineNo=lineNo + 1;
+														prevX = 0;
+													}
+												return eval((lineNo*20) + 20);
+										})
+										.attr("x",function(d){ return prevX+25;})
+										
+										
+								d3.select(".rect" + (i))
+										.attr("y",function(d){ 
+												
+												if((prevX+BBox.width +50)>parseInt(graphic.style("width")) ){
+													lineNoOld = lineNo;
+													lineNo=lineNo + 1;
+													prevX = 0;
+												}
+													
+												if(dvc.essential.legendStyle=="rect"){
+													return eval((lineNo*20)+5);
+												} else {
+													return eval((lineNo*20)+12);
+													
+												}	
+										})
+										.attr("x",function(d){ return prevX; })
+								
+								prevX = prevX + BBox.width +50
+								
+
+								
+							}; // end function calcPosition()
+						});	// end foreach 	
+			}// end function createLegend()
+		
+		// css fix
+			d3.selectAll("path").attr("fill","none");
+			
+			d3.selectAll("text").attr("font-family","'Open Sans', sans-serif");
+						
+			d3.selectAll(".x text").attr("font-size","12px").attr("fill","#666");
+			d3.selectAll(".y text").attr("font-size","12px").attr("fill","#666");
+						
+			d3.selectAll(".y line")
+					.attr("stroke","#CCC")
+					.attr("stroke-width","1px")
+					.style("shape-rendering","crispEdges");
+					
+					
+					
+								
 			//create link to source				
 			d3.select(".footer").append("p")
 				.text("Source: ")
@@ -478,3 +542,5 @@
     </script>
 </body>
 </html>
+
+

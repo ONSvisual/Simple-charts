@@ -10,15 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-    <link rel="stylesheet" href="../lib/globalStyle.css" />
+    <link rel="stylesheet" href="../lib/globalStyle.css" /> 
     <style type="text/css">
-    	.bar_pos { fill: #F5942F; }
-        .bar_neg { fill: #7BCAE2; }
-        
-	
-		.background0 { background: #F5942F; }
-        .background1 { background: #7BCAE2; }        
     
+	
+	
     </style>
 </head>
 <body>
@@ -33,10 +29,15 @@
 
    <div class="footer">        
    </div>
+   
+   <div id="footer"></div>
     
     <script src="../lib/d3.v3.5.17.min.js" type="text/javascript"></script>
     <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
     <script src="../lib/pym.js" type="text/javascript"></script>
+    <script src="../lib/footer.js"></script>
+    <script src="../lib/saveSvgAsPng.js" type="text/javascript"></script>
+
     <script>
 
 		var graphic = d3.select('#graphic');
@@ -52,15 +53,15 @@
 		    if (parseInt(graphic.style("width")) < threshold_sm) {        	
 		            var margin = {top: dvc.optional.margin_sm[0], right: dvc.optional.margin_sm[1], bottom: dvc.optional.margin_sm[2], left: dvc.optional.margin_sm[3]}; 
 					var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
+		            var height = dvc.essential.barHeight_sm_md_lg[0] * graphic_data.length - margin.top - margin.bottom;
 		    } else if (parseInt(graphic.style("width")) < threshold_md){
 		        	var margin = {top: dvc.optional.margin_md[0], right: dvc.optional.margin_md[1], bottom: dvc.optional.margin_md[2], left: dvc.optional.margin_md[3]}; 
 					var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
+		            var height = dvc.essential.barHeight_sm_md_lg[0] * graphic_data.length - margin.top - margin.bottom;
 		  	} else {
 		        	var margin = {top: dvc.optional.margin_lg[0], right: dvc.optional.margin_lg[1], bottom: dvc.optional.margin_lg[2], left: dvc.optional.margin_lg[3]}
 					var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
+		            var height = dvc.essential.barHeight_sm_md_lg[0] * graphic_data.length - margin.top - margin.bottom;
 			}
 
 		    // clear out existing graphics
@@ -82,7 +83,8 @@
 		    
 		    var xAxis = d3.svg.axis()
 		        .scale(x)
-		        .orient('bottom');
+		        .orient('bottom')
+				.tickSize(-height, 0, 0);
 		    			    
 			//specify number or ticks on x axis
 			if (parseInt(graphic.style("width")) <= threshold_sm) {
@@ -93,9 +95,7 @@
 				xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[2])
 			 }
 				
-		    //gridlines
-		    var x_axis_grid = function() { return xAxis; }
-
+				
 		    var bar = d3.svg.line()
 		        .y(function(d) { return y(d.name); })
 		        .x(function(d) { return x(d.amt); });
@@ -145,24 +145,29 @@
 				 
 		    x.domain(xDomain);
 		    
-			//create legend
-			if(dvc.essential.legendLabels.length > 1){
-			var legend = d3.select('#graphic').append('ul')
-			                .attr('class', 'key')
-			            .selectAll('g')
-			                .data(dvc.essential.legendLabels)
-			            .enter().append('li')
-
-				    legend.append('b')
-						 .attr("class",function(d,i){return "background" + i})
-				    
-					legend.append('label')
-				         .html(function(d,i) { return dvc.essential.legendLabels[i]; });						
-			}
+			d3.select("#buttonid").on("click",function(){saveSvgAsPng(document.getElementById("chart"), "diagram.png")});
+			
+			d3.select('#graphic').select('svg')
+                .append("g")
+                .attr("id", "source")
+                .append("text")
+                .attr("text-anchor", "start")
+                .style("font-size", "12px")
+                .style("fill", "#666")
+                .attr('y',height + margin.top + margin.bottom-10)
+                .attr('x',0)
+                .text("Source: ")
+                .append("a")
+                .style("fill", "#4774CC")
+                .attr("href", dvc.essential.sourceURL)
+                .attr("target", "_blank")
+                .html(dvc.essential.sourceText);
 
 			
 		    //create svg for chart
 		    var svg = d3.select('#graphic').append('svg')
+						.attr("id","chart")
+        				.style("background-color","#fff")
 				        .attr("width", chart_width + margin.left + margin.right)
 				        .attr("height", height + margin.top + margin.bottom +30)
 				        .append("g")
@@ -172,6 +177,7 @@
 						.attr("class","svgRect")
 						.attr("width", chart_width)
 						.attr("height", height)
+						.attr("fill","transparent")
 			    
 				    svg.append('g')
 				        .attr('class', 'x axis')
@@ -181,14 +187,10 @@
 						 .attr("x",chart_width)
 						 .attr("dy", ".71em")
 						 .style("text-anchor", "start")
+						 .attr("font-size","12px")
+ 						 .attr("fill","#666")
 						 .text(dvc.essential.xAxisLabel);
 
-				    svg.append('g')
-				        .attr('class', 'x grid')
-				        .call(x_axis_grid()
-				            .tickSize(height, 0, 0)
-				            .tickFormat('')
-				        );
 					
 					//create y axis, if x axis doesn't start at 0 drop x axis accordingly	
 					svg.append('g')
@@ -206,14 +208,7 @@
 					.data(bars["value"])
 					.enter()
 					.append('rect')
-					.attr('class', function(d, i) {
-			                if ( d.amt <0 ) { 
-								return 'bar bar_neg'; 
-							} else { 
-								return 'bar bar_pos'; 
-							}
-
-			            })
+					.attr("fill", function(d,i){return dvc.essential.colour_palette})
 					.attr("width", function(d) { return 0 + Math.abs(x(d.amt) - x(0)); })
 					.attr("x", function(d) { return x(Math.min(0, d.amt)); })
 					.attr("y", function(d) { return y(d.name); })
@@ -256,7 +251,12 @@
 								.attr('cy',"12px")
 								.attr("cx", "10px");
 							
-							d3.select("#keypoints").append("p").text(dvc.essential.annotationBullet[i]);
+							d3.select("#keypoints").append("p").text(dvc.essential.annotationBullet[i])
+								.attr("font-family","'Open Sans', sans-serif")
+								.attr("font-size","13px")
+								.attr("color","#666")
+								.attr("font-weight","500");
+							
 						
 						})// end foreach
 				}		
@@ -270,7 +270,11 @@
 								.attr("class","annotext" + i)
 								.attr("text-anchor", dvc.essential.annotationAlign[i])
 								.attr('y',y(dvc.essential.annotationXY[i][1]))
-								.attr('x',x(dvc.essential.annotationXY[i][0]));
+								.attr('x',x(dvc.essential.annotationXY[i][0]))
+								.attr("font-family","'Open Sans', sans-serif")
+								.attr("font-size","13px")
+								.attr("fill","#666")
+								.attr("font-weight","500");
 										
 							d3.selectAll(".annotext" + (i))
 								.each(insertLinebreaks)
@@ -315,6 +319,58 @@
 				
 				// If you have labels rather than years then you can split the lines using a double space (in the CSV file).
 			
+			if (dvc.optional.vertical_line == true){
+					dvc.optional.annotateLineX1_Y1_X2_Y2.forEach(function(d,i) {
+						
+				svg.append("line")    .attr('x1',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateLineX1_Y1_X2_Y2[i][0][0])))
+						.attr('x2',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][0])))
+				.style('stroke', '#888')
+				.style('stroke-width', 2)
+				.attr('font-size','13px')
+					//.style('stroke-dasharray', '5 5')                         .attr('y1',y(dvc.optional.annotateLineX1_Y1_X2_Y2[i][0][1]))
+			.attr('y2',y(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][1]));
+			})
+			} 
+			
+			d3.selectAll("path").attr("fill","none");
+			
+			d3.selectAll(".x line")
+				.attr("stroke","#CCC")
+				.attr("stroke-width","1px")
+				.attr("shape-rendering","crispEdges");
+			
+
+						
+			d3.selectAll("text").attr("font-family","'Open Sans', sans-serif");
+						
+			d3.selectAll(".y text").attr("font-size","12px").attr("fill","#666");
+			d3.selectAll(".x text").attr("font-size","12px").attr("fill","#666"); // dates - timelines
+						
+			d3.selectAll(".y line")
+			.attr("stroke","#CCC")
+			.attr("stroke-width","1px")
+			.style("shape-rendering","crispEdges");
+			
+			
+			
+			if (dvc.optional.annotateRect == true){
+                    
+                    dvc.optional.annotateRectX_Y.forEach(function(d,i) {
+                        
+                    svg.append("rect")
+                        .attr('x',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateRectX_Y[i][0][0]))  )
+                        .attr('y',y(dvc.optional.annotateRectX_Y[i][0][1]))
+                        .attr('height',y( dvc.optional.annotateRectX_Y[i][1][1] ) - y(dvc.optional.annotateRectX_Y[i][0][1])  ) 
+                        .attr('width',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateRectX_Y[i][1][0])) - x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateRectX_Y[i][0][0])))
+                        .style('fill', dvc.optional.lineColor_opcty[i][0] )
+                        .style('stroke-width', 2)
+                        .style('opacity', dvc.optional.lineColor_opcty[i][1] );                        
+                        
+                    })
+                } 
+			
+			d3.select(".y").select("path").style("stroke", "#666")
+			
 			
 				function insertLinebreaksLabels() {
 								var str = this.textContent;
@@ -336,14 +392,28 @@
 				
 				
 			}// end function writeAnnotation()
+												
 							
-			//create link to source				
-			d3.select(".footer").append("p")
-				.text("Source: ")
-				.append("a")
-				.attr("href", dvc.essential.sourceURL)
-				.attr("target", "_blank")
-				.html(dvc.essential.sourceText);
+			 d3.select('#graphic').select('svg')
+					.append("g")
+					.attr("id", "source")
+					.append("text")
+					.attr("text-anchor", "start")
+					.style("font-size", "12px")
+					.style("fill", "#666")
+					.attr('y',height + margin.top + margin.bottom+28)
+					.attr('x',0)
+					.text("Source: ")
+					.append("a")
+					.style("fill", "#4774CC")
+					.attr("xlink:href", dvc.essential.sourceURL)
+					.attr("target", "_blank")
+					.html(dvc.essential.sourceText);
+					
+					
+	
+				
+				d3.selectAll("text").attr("font-family","'Open Sans', sans-serif");
 						
 			//use pym to calculate chart dimensions	
 		    if (pymChild) {

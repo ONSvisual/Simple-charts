@@ -3,25 +3,31 @@
 		
 			"GraphType" : "clusterBar" , 
 			
-            "graphic_data_url": "Cluster.csv",
+            "graphic_data_url": "data.csv",
+        
+            "colour_palette": [ "#274796" , "pink", "#E73F40", "#7BCAE2" ],
         
             "dateFormat":"%Y-%y",
         
             "legendLabels" :[ "Education for under-fives" , "Primary education" , "Secondary education" , "Tertiary education" ],
-			
+			"legendStyle": "rect",
 			"sourceText":["Source information"],
             "sourceURL":["http://www.ons.gov.uk/ons"],
         
             "annotationChart": [
-                "The proportion of spending on each education category  has remained broadly stable over the past five years"
+                "The proportion of spending on each education category  has remained broadly stable over the past five years",
+                "asdasd"
             ],
             "annotationBullet": [
-                "annotationBullet1"
+                "annotationBullet1",
+                "Asdffs"
             ],
             "annotationXY":[
-                [30, "2013-14"]
+                [30, "2013-14"],
+                [5, "2011-12"]
             ],
             "annotationAlign":[
+                "start",
                 "start"
             ],
         
@@ -31,15 +37,15 @@
                 ["Apr-08","73"]
             ],
         
-            "yAxisLabel":"%",
-            "yAxisScale":[0,50],  
-            "yAxisBreak": false,
-            "yAxisBreak_sm_md_lg": [65,65,65]            
+            "xAxisLabel":"%",
+            "xAxisScale":[0,50],
+            "barHeight_sm_md_lg" : [60,70,80]
+
     },
     "optional" : {
             "margin_sm": [40, 10, 35, 60],
-            "margin_md": [40, 10, 35, 60],
-            "margin_lg": [40, 10, 35, 60],
+            "margin_md": [20, 10, 55, 60],
+            "margin_lg": [20, 10, 65, 60],
         
             "aspectRatio_sm" : [16,13],
             "aspectRatio_md" : [16,12],

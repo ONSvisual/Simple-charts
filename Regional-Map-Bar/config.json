@@ -1,0 +1,53 @@
+{
+    "essential" : {
+           
+            "colour_palette":[
+                "#fee391",
+                "#fec44f",
+                "#fe9929",
+                "#ec7014"
+            ],
+       
+            "sourceText":["Really long source Labour Market Statistics, February 2015, Table A02"],
+            "sourceURL":["http://www.ons.gov.uk/ons/publications/re-reference-tables.html?edition=tcm%3A77-350752"],
+        
+            "annotationChart": [
+                "Annotation  about London"
+            ],
+            "annotationBullet": [
+                "Annotation  about London"
+            ],
+            "annotationXY":[
+                ["2.4","London"]
+            ],
+            "annotationAlign":[
+                "middle"
+            ],
+        
+            "barHeight_sm_md_lg" : [30,30,30],
+        
+            "xAxisLabel":"%",
+            "xAxisScale":"auto_zero_max"            
+    },
+    "optional" : {
+            "display_average": "yes",
+            "average": 2.1,
+            "margin_sm": [25, 20, 35, 115],
+            "margin_md": [25, 20, 35, 115],
+            "margin_lg": [25, 20, 35, 115],
+        
+            "aspectRatio_sm" : [4,7],
+            "aspectRatio_md" : [1,1],
+            "aspectRatio_lg" : [16,10],
+            "number_breaks" : 4,
+            "breaks_choice" : [1, 1.5, 2, 2.5, 3],
+            "mobileBreakpoint" : 550, 
+                           
+            "x_num_ticks_sm_md_lg" : [6,8,10],
+           
+            "centre_line" : false,
+            "centre_line_value" : 0
+    }
+}
+
+

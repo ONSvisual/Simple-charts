@@ -50,15 +50,17 @@
         <p></p>
     </div>
 
+
    <div class="footer">        
    </div>
-   
+<!--   
    <div id="footer"></div>
+-->
     
     <script src="../lib/d3.v3.5.17.min.js" type="text/javascript"></script>
     <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
     <script src="../lib/pym.js" type="text/javascript"></script>
-    <script src="../lib/footer.js"></script>
+<!--    <script src="../lib/footer.js"></script>-->
     <script src="../lib/saveSvgAsPng.js" type="text/javascript"></script>
     <script src="../lib/topojson.js"></script>
     <script src="../lib/queue.js" charset="utf-8"></script>
@@ -68,7 +70,7 @@
 
 		var graphic = d3.select('#graphic');
 		var keypoints = d3.select('#keypoints');
-		var footer = d3.select(".footer");
+		//var footer = d3.select(".footer");
 		var pymChild = null;
 		dvc = {};		
 		dvc.scale = 1;
@@ -102,7 +104,7 @@
 		    // clear out existing graphics
 		    graphic.selectAll("*").remove();
 			keypoints.selectAll("*").remove();
-			footer.selectAll("*").remove();
+			//footer.selectAll("*").remove();
 			
 			
 			center = [map_width / 2, height / 2];

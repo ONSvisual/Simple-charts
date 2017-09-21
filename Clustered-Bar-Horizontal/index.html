@@ -283,8 +283,8 @@
 								
 								svg.append("circle")
 									.attr("class", "annocirc" + (i))
-									.attr('cy',y(dvc.essential.annotationCXCY[i][1]))
-									.attr('cx',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.essential.annotationCXCY[i][0])))
+									.attr('cy',y0(dvc.essential.annotationCXCY[i][1]))
+									.attr('cx',x(dvc.essential.annotationCXCY[i][0]))
 									.attr("r", "3");
 								
 							} // end if ... 
@@ -418,9 +418,9 @@
 		
 				svg.append("text")
 				 .attr('class', 'unit')
-				 .attr('transform',"translate(" + chart_width + "," + (height+margin.bottom) + ")")  	
+				 .attr('transform',"translate(" + (chart_width-margin.left/10) + "," + (height+margin.bottom/1.5) + ")")  	
 				 .attr("font-size","12px")
-				 .attr("fill","#666")
+				 .attr("fill","#666666")
 				 .text(function(d,i) { return dvc.essential.xAxisLabel});
 
 			

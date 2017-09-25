@@ -43,12 +43,9 @@
             "wordwrap":[30,20,10],
             "annoAlign": ["middle","middle","end"],
             "annotationBullet" : ["Some other annotation","Some more annotation"],
-            "markers": false,
-            "circles" : true,    
+            "markers": false,   
             "yAxisLabel":"yAxisUnit",
-            "yAxisScale":"auto_zero_max",   
-            "yAxisBreak": true,
-            "yAxisBreak_sm_md_lg": [65,65,65]            
+            "yAxisScale":"auto_zero_max"           
     },
     "optional" : {
             "margin_sm": [60, 50, 0, 40],
@@ -71,7 +68,7 @@
             "annotateRectX_Y" : [[["2004", 200],["2007", 0]], [["2007", 900],["2014", 0]]],
             "lineColor_opcty" : [["#888", 0.2], ["#888", 0.4]],
             "centre_line" : false,
-            "centre_line_value" : 0
+            "centre_line_value" : 100
     }
 }
 

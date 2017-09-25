@@ -27,15 +27,10 @@
                 "start"
             ],
         
-            "circles" : false,    
-            "annotationCXCY":[
-                ["Apr-93","68.4"],
-                ["Apr-08","73"]
-            ],
+
         
             "yAxisLabel":"%",
             "yAxisScale":[0,50],   
-            "yAxisBreak": false,
             "yAxisBreak_sm_md_lg": [65,65,65]
 
     },

@@ -2,8 +2,6 @@
     "essential" : {
             "graphic_data_url": "data.csv",
         
-            "dateFormat":"%Y",
-
             "legendStyle": "rect",
 			
             "legendLabels":[ "variable1" ,	"variable2" ,	"variable3" ],
@@ -36,13 +34,8 @@
                 "rgb(179, 179, 179)",
                 "rgb(224, 224, 224)",
                 "rgb(240, 240, 240)" 
-            ],
-        
-            "circles" : true,    
-            "annotationCXCY":[
-                [0,0],
-                [-50,50]
-            ]          
+            ]
+   
     },
     "optional" : {
             "margin_sm": [10, 50, 35, 40],

@@ -78,18 +78,6 @@
 			.sort(null)
 			.value(function(d) { return d.value; });
 		
-		var lines = {};
-		
-		for (var column in graphic_data[0]) {
-			if (column == 'date') continue;
-			lines[column] = graphic_data.map(function(d) {
-				return {
-					'date': d.date,
-					'amt': d[column]
-				};
-			});
-		}
-			
 		var legend = d3.select('#graphic').append('svg')
 			.attr("width", chart_width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom +30)
@@ -159,17 +147,7 @@
 						d3.select("#keypoints").append("p").text(dvc.essential.annotationBullet[i]);
 				
 				
-					// draw circles, if var 'dvc.essential.circles' is set to true
-					if ( dvc.essential.circles == true ) {
-						
-						svg.append("circle")
-							.attr("class", "annocirc_graph")
-							.attr("id", "annocirc_graph" + (i))
-							.attr('cy',dvc.essential.annotationCXCY[i][1])
-							.attr('cx',dvc.essential.annotationCXCY[i][0])
-							.attr("r", "3");
-						
-					} // end if ... 
+
 					
 					})// end foreach
 			}		

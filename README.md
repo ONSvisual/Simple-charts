@@ -5,3 +5,6 @@ Here you'll find our chart templates and in the [wiki](https://github.com/ONSvis
 ## Getting started
 
 Download the files. Each folder has a template in it, running off core libraries in the folder lib and images in images. Each visualisation is customisable using the options in the `config.json` file. It reads data from a `data.csv` file. 
+
+## See them in action
+[Tie Fighter](https://onsvisual.github.io/Simple-charts/TieFighter/)

@@ -3,15 +3,12 @@
             "graphic_data_url": "data.csv",
         
             "colour_palette": [ "#274796"],
-        
-            "dateFormat":"%Y",
-        
-       
+
             "sourceText":["Labour Market Statistics, February 2015, Table A02"],
             "sourceURL":["http://www.ons.gov.uk/ons/publications/re-reference-tables.html?edition=tcm%3A77-350752"],
         
             "annotationChart": [
-                "Bar annotation  lksdfekjhb  tr kud sy ",
+                "Bar annotation  with words are  the best",
                 "Claws in your leg"
             ],
             "annotationBullet": [
@@ -45,13 +42,13 @@
             "mobileBreakpoint" : 510, 
                            
             "x_num_ticks_sm_md_lg" : [6,8,10],
-            "vertical_line" : true,
-            "annotateLineX1_Y1_X2_Y2":[ [["2004",225],["2004",0]], [["2007",250],["2007",0]], [["2014",225],["2014",0]] ],
+            "vertical_line" : false,
+            "annotateLineX1_Y1_X2_Y2":[ [[25,"South East"],[25,"East"]]],
             "annotateRect" : true,
-            "annotateRectX_Y" : [ [["Jan-94", 200],["Jan-96", 0]], [["Jul-04", 180],["Jul-06", 40]] ],
-            "lineColor_opcty" : [["#888", 0.2], ["#888", 0.4]],
+            "annotateRectX_Y" : [ [[40, "South West"],[75, "West Midlands"]]],
+            "lineColor_opcty" : [["#888", 0.2]],
             "centre_line" : false,
-            "centre_line_value" : 0
+            "centre_line_value" : 10
     }
 }
 

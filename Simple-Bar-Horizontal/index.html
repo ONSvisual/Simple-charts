@@ -322,8 +322,8 @@
 			if (dvc.optional.vertical_line == true){
 					dvc.optional.annotateLineX1_Y1_X2_Y2.forEach(function(d,i) {
 						
-				svg.append("line")    .attr('x1',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateLineX1_Y1_X2_Y2[i][0][0])))
-						.attr('x2',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][0])))
+				svg.append("line")    .attr('x1',x(dvc.optional.annotateLineX1_Y1_X2_Y2[i][0][0]))
+						.attr('x2',x(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][0]))
 				.style('stroke', '#888')
 				.style('stroke-width', 2)
 				.attr('font-size','13px')
@@ -358,10 +358,10 @@
                     dvc.optional.annotateRectX_Y.forEach(function(d,i) {
                         
                     svg.append("rect")
-                        .attr('x',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateRectX_Y[i][0][0]))  )
+                        .attr('x',x(dvc.optional.annotateRectX_Y[i][0][0])  )
                         .attr('y',y(dvc.optional.annotateRectX_Y[i][0][1]))
                         .attr('height',y( dvc.optional.annotateRectX_Y[i][1][1] ) - y(dvc.optional.annotateRectX_Y[i][0][1])  ) 
-                        .attr('width',x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateRectX_Y[i][1][0])) - x(d3.time.format(dvc.essential.dateFormat).parse(dvc.optional.annotateRectX_Y[i][0][0])))
+                        .attr('width',x(dvc.optional.annotateRectX_Y[i][1][0]) - x(dvc.optional.annotateRectX_Y[i][0][0]))
                         .style('fill', dvc.optional.lineColor_opcty[i][0] )
                         .style('stroke-width', 2)
                         .style('opacity', dvc.optional.lineColor_opcty[i][1] );                        

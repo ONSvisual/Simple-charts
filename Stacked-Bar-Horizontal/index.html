@@ -169,7 +169,7 @@ function drawGraphic(width) {
 		 .attr("x",chart_width)
 		 .attr("dy", ".71em")
 		 .style("text-anchor", "end")
-		 .text(dvc.essential.yAxisLabel);
+		 .text(dvc.essential.xAxisLabel);
 
     svg.append('g')
         .attr('class', 'x grid')
@@ -185,13 +185,13 @@ function drawGraphic(width) {
       .attr("class", "g bars")
       .attr("transform", function(d) { return "translate(0," + y(d.cat) + ")"; });
 
-	group.selectAll("rect")
+	  group.selectAll("rect")
       .data(function(d) { return d.vars; })
       .enter().append("rect")
 	  .attr("class",function(d,i){return "bar-" + i})
       .attr("height", y.rangeBand())
 	  .attr("x", function(d) { 
-	  console.log("0 " + d.x1);
+	  //console.log("0 " + d.x1);
 			if (d.x1 >=0){
 				return x(d.x0);
 			} else {
@@ -199,7 +199,7 @@ function drawGraphic(width) {
 			}	  
 			})
 	  .attr("width", function(d) { 
-	  			console.log("0 " + d.x0);
+	  			//console.log("0 " + d.x0);
 			if (d.x1 >=0){
 				return Math.abs(x(d.x0) - x(d.x1));
 			} else {
@@ -244,8 +244,8 @@ function drawGraphic(width) {
 							.text(dvc.essential.annotationChart[i])
 							.attr("class","annotext" + i)
 							.attr("text-anchor", dvc.essential.annotationAlign[i])
-							.attr('x',x(dvc.essential.annotationXY[i][1]))
-							.attr('y', y(dvc.essential.annotationXY[i][0]));
+							.attr('x',x(dvc.essential.annotationXY[i][0]))
+							.attr('y', y(dvc.essential.annotationXY[i][1]));
 									
 						d3.selectAll(".annotext" + (i))
 							.each(insertLinebreaks)
@@ -290,8 +290,8 @@ function drawGraphic(width) {
 							
 							svg.append("circle")
 								.attr("class", "annocirc" + (i))
-								.attr('cx',x(dvc.essential.annotationCXCY[i][1]))
-								.attr('cy', y(dvc.essential.annotationCXCY[i][0]))
+								.attr('cx',x(dvc.essential.annotationCXCY[i][0]))
+								.attr('cy', y(dvc.essential.annotationCXCY[i][1]))
 								.attr("r", "3");
 							
 						} // end if ... 

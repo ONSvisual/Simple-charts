@@ -9,24 +9,23 @@
             "sourceText":["2011 Census, Office for National Statistics"],
             "sourceURL":["http://www.ons.gov.uk/ons/rel/census/2011-census-analysis/overcrowding-and-under-occupation-in-england-and-wales/index.html"],
         
-            "annotationChart": [],
-            "annotationBullet": [],
+            "annotationChart": ["Example annotation"],
+            "annotationBullet": ["Example annotation"],
             "annotationXY":[
-                ["Light rail  and tram ","68.4"],
-                ["Underground","20"]
+                [50,"Private  rented" ]
+ 
             ],
             "annotationAlign":[
-                "middle",
                 "middle"
             ],
         
             "circles" : false,    
             "annotationCXCY":[
-                ["Rail","68.4"],
-                ["Underground","73"]
+                ["60","Social  rented"]
+
             ],
         
-            "yAxisLabel":"%",
+            "xAxisLabel":"%",
             "xAxisScale":"auto_zero_max",   
             "xAxisBreak": true,
             "xAxisBreak_sm_md_lg": [65,65,65]            
@@ -42,12 +41,8 @@
         
             "mobileBreakpoint" : 610, 
             
-            "yAxisTextFormat_sm_md_lg" : ["%y", "%Y", "%b %y"], 
-                
-            "y_num_ticks_sm_md_lg" : [4,2,2],    
-            "x_num_ticks_sm_md_lg" : [6,8,10],
-            "centre_line" : false,
-            "centre_line_value" : 0
+            "x_num_ticks_sm_md_lg" : [6,8,10]
+
     }
 }
 

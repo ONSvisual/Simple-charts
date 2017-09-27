@@ -2,11 +2,11 @@
     "essential" : {
             "graphic_data_url": "data.csv",
         
-            "dateFormat":"%Y",
+            "dateFormat":"",
         
             "legendLabels" : ["median","min / max"],
             "legendStyle": "rect",
-            "colour_palette": [ "#274796" , "green", "#E73F40", "#7BCAE2" ],
+            "colour_palette": [ "#F5942F" , "#7BCAE2"],
         
             "sourceText":["Labour Market Statistics, February 2015, Table A02"],
             "sourceURL":["http://www.ons.gov.uk/ons/publications/re-reference-tables.html?edition=tcm%3A77-350752"],
@@ -27,9 +27,8 @@
         
             "xAxisLabel":"Amount",
             "yAxisLabel":"Regions and Countries",
-            "xAxisScale":"auto_min_max",
-            "xAxisScaleDivisor": 50,
-            "yAxisScaleDivisor": 100
+            "xAxisScale":"auto_min_max"
+
     },
     "optional" : {
             "margin_sm": [5, 20, 5, 135],

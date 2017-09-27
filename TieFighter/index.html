@@ -125,22 +125,15 @@
 					if (dvc.essential.xAxisScale == "auto_zero_max" ){
 					var xDomain = [	0, Math.ceil(d3.max(lines, function(d){
 															return d.mymax;
-																		})
-												/dvc.essential.xAxisScaleDivisor)*dvc.essential.xAxisScaleDivisor ];
+																		}))];
 										
 					
 					}
 					else if (dvc.essential.xAxisScale == "auto_min_max" )
 					{
-					var xDomain = [ Math.floor(d3.min(lines, function(d){
-															return d.mymin;
-																		})
-												/dvc.essential.xAxisScaleDivisor*dvc.essential.xAxisScaleDivisor) ,
-									Math.ceil(d3.max(lines, function(d){
-															return d.mymax;
-																		})
-												/dvc.essential.xAxisScaleDivisor*dvc.essential.xAxisScaleDivisor)
-												 ];
+					var xDomain = [ Math.floor(d3.min(lines, function(d){return d.mymin;})),
+									Math.ceil(d3.max(lines, function(d){return d.mymax;}))
+								  ];
 										
 					/*var yDomain = [ Math.floor(d3.min(dvc.yData)/dvc.essential.yAxisScaleDivisor)*dvc.essential.yAxisScaleDivisor , Math.ceil(d3.max(dvc.yData)/dvc.essential.yAxisScaleDivisor)*dvc.essential.yAxisScaleDivisor ];*/
 									

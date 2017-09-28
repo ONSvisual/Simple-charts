@@ -45,7 +45,7 @@
    </div>
     
 
-    <script src="../lib/d3.v3.5.17.min.js" type="text/javascript"></script>
+    <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js" type="text/javascript"></script>
     <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
     <script src="../lib/pym.js" type="text/javascript"></script>
     <script>
@@ -83,10 +83,10 @@ function drawGraphic(width) {
 	footer.selectAll("*").remove();
 			
 	
-	var x = d3.scale.ordinal()
-		.rangeRoundBands([0, chart_width], .1);
+	var x = d3.scaleBand()
+		.rangeRound([0, chart_width], .1);
 	
-	var y = d3.scale.linear()
+	var y = d3.scaleLinear()
 		.rangeRound([height, 0]);
 
     var formatAsPercentage = d3.formatPrefix('%',0);
@@ -99,13 +99,13 @@ function drawGraphic(width) {
         .tickFormat(function(d,i) {
 			if(dvc.essential.dateFormat!=""){
             	if(chart_width <= threshold_sm){
-					var fmt = d3.time.format(dvc.optional.xAxisTextFormat_sm_md_lg[0]);
+					var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[0]);
 					return i%dvc.optional.x_num_ticks_sm_md_lg[0] ?" ": '\u2019' + fmt(d);
 				} else if (width <= threshold_md) {
-        			var fmt = d3.time.format(dvc.optional.xAxisTextFormat_sm_md_lg[1]);
+        			var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[1]);
 					return i%dvc.optional.x_num_ticks_sm_md_lg[1] ?" ": '\u2019' + fmt(d);
 				} else {
-					var fmt = d3.time.format(dvc.optional.xAxisTextFormat_sm_md_lg[2]);
+					var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[2]);
 					return i%dvc.optional.x_num_ticks_sm_md_lg[2] ?" ": str/*fmt(d)*/;
             	}
 			} else {return d}
@@ -115,9 +115,7 @@ function drawGraphic(width) {
 
 	d3.selectAll(".tick").selectAll("line").attr("transform", "translate(30,0)");
 
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient('left')
+    var yAxis = d3.axisLeft(y)
 
 	if (parseInt(graphic.style("width")) <= threshold_sm) {
 			yAxis.ticks(dvc.optional.y_num_ticks_sm_md_lg[0])
@@ -198,7 +196,7 @@ function drawGraphic(width) {
       .data(function(d) { return d.vars; })
       .enter().append("rect")
 	  .attr("class",function(d,i){return "bar-" + i})
-      .attr("width", x.rangeBand())
+      .attr("width", x.bandwidth())
       .attr("y", function(d) { 
 	  		if (d.y2 >=0){
 				return y(d.y1);
@@ -253,7 +251,7 @@ function drawGraphic(width) {
 							.attr("text-anchor", dvc.essential.annotationAlign[i])
 							.attr('y',y(dvc.essential.annotationXY[i][1]))
 							.attr('x',function(){ if(dvc.essential.dateFormat!=""){
-										return x(d3.time.format(dvc.essential.dateFormat).parse(dvc.essential.annotationXY[i][0]))
+										return x(d3.timeParse(dvc.essential.dateFormat)(dvc.essential.annotationXY[i][0]))
 								} else {
 										return x(dvc.essential.annotationXY[i][0])
 								}})
@@ -277,7 +275,7 @@ function drawGraphic(width) {
 								var tspan = d3.select(this).append('tspan').text(words[j]);
 								if (j > 0)
 									tspan.attr('x', function(){ if(dvc.essential.dateFormat!=""){
-										return x(d3.time.format(dvc.essential.dateFormat).parse(dvc.essential.annotationXY[i][0]))
+										return x(d3.timeParse(dvc.essential.dateFormat).(dvc.essential.annotationXY[i][0]))
 										} else {
 										return x(dvc.essential.annotationXY[i][0])
 										}})			
@@ -307,7 +305,7 @@ function drawGraphic(width) {
 								.attr("class", "annocirc" + (i))
 								.attr('cy',y(dvc.essential.annotationCXCY[i][1]))
 								.attr('cx', function(){ if(dvc.essential.dateFormat!=""){
-										return x(d3.time.format(dvc.essential.dateFormat).parse(dvc.essential.annotationCXCY[i][0]))
+										return x(d3.timeParse(dvc.essential.dateFormat)(dvc.essential.annotationCXCY[i][0]))
 								} else {
 										return x(dvc.essential.annotationCXCY[i][0])
 								}})

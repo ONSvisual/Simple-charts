@@ -29,7 +29,7 @@
     <!-- Define the source -->
    	<div id="footer"> </div> 
 
-    <script src="../lib/d3.v3.5.17.min.js" type="text/javascript"></script>
+    <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js" type="text/javascript"></script>
     <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
     <script src="../lib/pym.js" type="text/javascript"></script>
 	<script src="../lib/saveSvgAsPng.js" type="text/javascript"></script>
@@ -72,19 +72,17 @@
 	
 		var num_ticks = 10;
 	
-		var color = d3.scale.ordinal().range(dvc.essential.colour_palette);
+		var color = d3.scaleOrdinal().range(dvc.essential.colour_palette);
 	
 		// vertical
-		y0 = d3.scale.ordinal().rangeRoundBands([0, height], .1);
-		var y1 = d3.scale.ordinal();		
-		var x = d3.scale.linear().range([0 , chart_width]);
+		y0 = d3.scaleBand().rangeRound([0, height]);
+		var y1 = d3.scaleBand();		
+		var x = d3.scaleLinear().range([0 , chart_width]);
 	
 
-		var parseDate = d3.time.format("%Y").parse;
+		var parseDate = d3.timeParse("%Y");
 
-		var xAxis = d3.svg.axis()
-			.scale(x)
-			.orient("bottom");		
+		var xAxis = d3.axisBottom(x);		
 				
 				
 		 var legend = d3.select('#graphic').append('svg')
@@ -106,7 +104,7 @@
 	
 		// vertical
 		y0.domain(graphic_data.map(function(d) { return d.state; }));
-		y1.domain(ageNames).rangeRoundBands([0, y0.rangeBand()]);
+		y1.domain(ageNames).range([0, y0.bandwidth()]);
 		
 		//x domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
 		if (dvc.essential.xAxisScale == "auto_zero_max"){
@@ -119,18 +117,16 @@
 		
 		x.domain(xDomain);		
 		
-		var yAxis = d3.svg.axis()
-			.scale(y0)
-			.orient("left")
+		var yAxis = d3.axisLeft(y0)
 			.tickFormat(function(d,i) {
 
 				//specify date format for x axis depending on #graphic width
 				if (parseInt(graphic.style("width")) <= threshold_sm) {
-					var fmt = d3.time.format(dvc.optional.xAxisTextFormat_sm_md_lg[0]);	 
+					var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[0]);	 
 				} else if (parseInt(graphic.style("width")) <= threshold_md){
-					var fmt = d3.time.format(dvc.optional.xAxisTextFormat_sm_md_lg[1]);
+					var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[1]);
 				} else {
-					var fmt = d3.time.format(dvc.optional.xAxisTextFormat_sm_md_lg[2]);
+					var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[2]);
 				}
 				
 				if ( dvc.essential.GraphType == "clusterBar" ) { return d; } /* new code */
@@ -234,7 +230,7 @@
 								.text(dvc.essential.annotationChart[i])
 								.attr("class","annotext" + i)
 								.attr("text-anchor", dvc.essential.annotationAlign[i])
-								.attr('y',y0(d3.time.format(dvc.essential.dateFormat).parse(dvc.essential.annotationXY[i][1])))						
+								.attr('y',y0(d3.timeParse(dvc.essential.dateFormat)(dvc.essential.annotationXY[i][1])))						
 								.attr('x',x(dvc.essential.annotationXY[i][0]));
 										
 							d3.selectAll(".annotext" + (i))
@@ -432,7 +428,7 @@
 			  	.attr("width",function(d) { return x(d.value);} )
 			  	.attr("x", function(d) { return 0; })
 			  	.attr("y", function(d) { return  y1(d.name); })
-			  	.attr("height", function(d) { return y1.rangeBand(); })
+			  	.attr("height", function(d) { return y1.bandwidth(); })
 			  	.style("fill", function(d) { return color(d.name); })
 			  	.style("opacity", 0.75);
 	

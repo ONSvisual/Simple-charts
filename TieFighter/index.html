@@ -13,17 +13,17 @@
     <link rel="stylesheet" href="../lib/globalStyle.css" />
     <style type="text/css">
 	
-    	.line_pos { fill: #F5942F; }
-        .line_neg { fill: #7BCAE2; }
-         .circle1 { fill: #7BCAE2; }
-		 .circle2 { fill: #C33; }
-		 .med { fill: #F5942F; }
-		 
 		.background0 { background: #F5942F; }
-        .background1 { background: #7BCAE2; }        
-    	
+        .background1 { background: #7BCAE2; }    
+		#triangleEnd{
+			fill:black;
+		}
+
+		#triangleStart{
+			fill:black;	
+		}
 		
-		/*#circle1{ fill:#7BCAE2;!important }*/
+	
     </style>
 </head>
 <body>
@@ -100,7 +100,7 @@
 		          lines = graphic_data.map(function(d,i) {  //console.log(d + " " +i); 
 		            return {  
 					//	lines.x: csv.column_headings	
-		                'name': d.name,   // might not need since we mappe it in y.domain earlier
+		                'name': d.name,   // might not need since we mapped it in y.domain earlier
 		                'mymin': +d.imin,   // + changes string to numeric.
 						'mymax': +d.imax,
 						'mymedian': +d.median
@@ -158,8 +158,6 @@
 							.append("g")
 							.attr("transform", "translate(" + margin.left + "," + (margin.top+40) + ")")
 
-
-				
 					svg.append("rect")
 						.attr("class","svgRect")
 						.style("fill", "#fff")
@@ -169,9 +167,11 @@
 				    svg.append('g')
 				        .attr('class', 'x axis')
 				        .attr("transform", "translate(0, "+height+")")
-				        .call(xAxis.tickSize(-height, 0)
-)
+				        .call(xAxis.tickSize(-height, 0))
+						.selectAll("line")
+						.style("stroke","#E5E6E7");
 						
+	
 					svg.select(".x.axis")
 					   	 .append("text")
 						 .attr("y", 25)
@@ -179,6 +179,8 @@
 						 .attr("dy", ".71em")
 						 .style("text-anchor", "end")
 						 .text(dvc.essential.xAxisLabel);
+						 
+
 					
 					//create y axis, if x axis doesn't start at 0 drop x axis accordingly	
 					svg.append('g')
@@ -200,8 +202,38 @@
 							 .attr("font-size","12px")
 							 .attr("fill","#666")
 							 .text(dvc.essential.yAxisLabel);
+
+							 
+						var paths = svg.append("defs")
+
+							
 							 
 							 
+						svg.append("defs").append("marker")
+								.attr("id","triangleStart")
+				                .attr("viewBox", "0 0 20 20")
+				                .attr("refX", 0)
+				                .attr("refY", 5)
+				                .attr("markerUnits", "strokeWidth")
+				                .attr("markerWidth", 20)
+				                .attr("markerHeight", 20)
+				                .attr("orient", "auto")
+				                .append("path")
+				                .attr("d", "M 0 5 L 10 10 L 10 0 z")
+								.style("fill",'#414042');						
+	
+						svg.append("defs").append("marker")
+								.attr("id","triangleEnd")
+				                .attr("viewBox", "0 0 20 20")
+				                .attr("refX", 10)
+				                .attr("refY", 5)
+				                .attr("markerUnits", "strokeWidth")
+				                .attr("markerWidth", 20)
+				                .attr("markerHeight", 20)
+				                .attr("orient", "auto")
+				                .append("path")
+				                .attr("d", "M 10 5 L 0 0 L 0 10 z")
+								.style("fill","#414042");
 		
 		tieFight();
 									
@@ -213,14 +245,10 @@
 					.data(lines) //  ["value"]
 					.enter()
 					.append('line')
-					.attr('class', function(d, i) { 
-			                if ( d.mymin <0 ) { 
-								return 'tiefighter line_neg'; 
-							} else { 
-								return 'tiefighter line_pos'; 
-							}
-			            })
-					.style("stroke","#abc")
+					.attr('class', 'tiefighter')
+					//.attr("marker-end",  "url(#triangleEnd)")
+					//.attr("marker-start",  "url(#triangleStart)")
+					.style("stroke","#414042")
 					.attr('y1', function(d,i) { //console.log("y1 "+i+" "+y(d.name));	
 												return y(d.name); })
 					.attr('y2', function(d) { return y(d.name); })
@@ -228,38 +256,78 @@
 												return x(d.mymin); })  //d.mymin
 					.attr('x2', function(d) { return x(d.mymax); });
 
+			// this code looks to draw arrows on the lines if specified in the 		
+			if(dvc.essential.arrows=="start"){
+			d3.select("g.line").selectAll("line")
+			.attr("marker-start",  "url(#triangleStart)")
+			}else if (dvc.essential.arrows=="end"){
+			d3.select("g.line").selectAll("line")
+			.attr("marker-end",  "url(#triangleEnd)")
+			}else if (dvc.essential.arrows=="both"){
+			d3.select("g.line").selectAll("line")
+			.attr("marker-end",  "url(#triangleEnd)")
+			.attr("marker-start",  "url(#triangleStart)")
+			}else{}		
+			
+					
+
 					//svg.selectAll('.tiefighter')//.append("svg")
 					svg.append('g').selectAll('.circle')
 					.data(lines)
 					.enter()
 					.append('circle')
-					.attr("class","circle1")
+					.attr('class',"circlemin")
+					.attr("fill",dvc.essential.colour_palette[0])
 					.attr('cx',function(d,i) { return x(d.mymin); }) 
 					.attr('cy',function(d,i) {return y(d.name); }) 
 					.attr('r', ball);
 					
+					// if only drawing two dots, make the second dot a different colour
+					if(dvc.essential.minmaxonly=="true")
+					{
 					svg.append('g').selectAll('.circle')
 					.data(lines)
 					.enter()
 					.append('circle')
-					.attr("class","circle1")  // make it .circle2 for different end colour
+					.attr('class',"circlemax")
+					.attr("fill",dvc.essential.colour_palette[1])  
 					.attr('cx',function(d,i) { return x(d.mymax); }) 
 					.attr('cy',function(d,i) {return y(d.name); }) 
 					.attr('r', ball); // (1/lines.length)*40);
-				
-				
-				columnH = d3.keys(graphic_data[0]).filter(function(key) { return key;});
-				if (columnH[3] == "median")
-				{
-					svg.append('g').selectAll('.med')
+					}else{
+					svg.append('g').selectAll('.circle')
 					.data(lines)
 					.enter()
 					.append('circle')
-					.attr("class","med")
-					.attr('cx',function(d,i) { return x(d.mymedian); }) 
+					.attr('class',"circlemax")
+					.attr("fill",dvc.essential.colour_palette[0]) 
+					.attr('cx',function(d,i) { return x(d.mymax); }) 
 					.attr('cy',function(d,i) {return y(d.name); }) 
-					.attr('r', ball*1.5);
+					.attr('r', ball); // (1/lines.length)*40);
 					}
+					
+					//if not only drawing two dots, draw the median dot.
+					if(dvc.essential.minmaxonly=="true"){}else{
+						columnH = d3.keys(graphic_data[0]).filter(function(key) { return key;});
+						if (columnH[3] == "median")
+						{
+							svg.append('g').selectAll('.med')
+							.data(lines)
+							.enter()
+							.append('circle')
+							.attr("class","circlemed")
+							.attr("fill",dvc.essential.colour_palette[1])
+							.attr('cx',function(d,i) { return x(d.mymedian); }) 
+							.attr('cy',function(d,i) {return y(d.name); }) 
+							.attr('r', ball*1.5);
+							}
+					}
+				
+									
+	
+				
+				
+				
 			}
 					
 					
@@ -272,15 +340,9 @@
 							.attr('x1',x(dvc.optional.centre_line_value))
 							.attr('x2',x(dvc.optional.centre_line_value));
 					
-					} else if(xDomain[0] <0){
-						//svg.append("line")
-						svg.append("line")
-							.attr("id","centreline")
-							.attr('y1',0)
-							.attr('y2',height)
-							.attr('x1',x(0))
-							.attr('x2',x(0));
-					}  	
+					} else {}
+			
+					
 					
 			writeAnnotation();
 							

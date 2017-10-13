@@ -13,7 +13,7 @@
                 "xVal": "2003-06-23T00:00:00.000Z",
                 "yVal": 900,
                 "path": "",
-                "text": "T-bone hamburger swine pancetta kielbasa, ribeye boudin bresaola chicken. Flank andouille drumstick kielbasa biltong pancetta",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
                 "textOffset": [
                   0,
                   0
@@ -23,7 +23,7 @@
                 "xVal": "1995-06-23T00:00:00.000Z",
                 "yVal": 700,
                 "path": "",
-                "text": "Flank andouille drumstick kielbasa biltong pancetta",
+                "text": "sed do eiusmod tempor i",
                 "textOffset": [
                     0,
                     0
@@ -33,7 +33,7 @@
                 "xVal": "2011-06-01T00:00:00.000Z",
                 "yVal": 700,
                 "path": "",
-                "text": "Versicolor",
+                "text": "incididunt ut labore et dolor",
                 "textOffset": [
                   0,
                   0
@@ -42,7 +42,7 @@
             ],
             "wordwrap":[30,20,10],
             "annoAlign": ["middle","middle","end"],
-            "annotationBullet" : ["Some other annotation","Some more annotation"],
+            "annotationBullet" : ["An annotation","Another annotation"],
             "markers": false,   
             "yAxisLabel":"yAxisUnit",
             "yAxisScale":"auto_zero_max"           

@@ -1,6 +1,6 @@
 # Welcome to the ONS chart template repo
 
-Here you'll find our chart templates and in the [wiki](https://github.com/ONSvisual/Simple-charts/wiki) instructions on how to use the templates. These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisual/Simple-charts/) if that your thing. 
+Here you'll find our chart templates and in the [wiki](https://github.com/ONSvisual/Simple-charts/wiki) instructions on how to use the templates. These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisual/Simple-charts/) if that's your thing. 
 
 ## Getting started
 

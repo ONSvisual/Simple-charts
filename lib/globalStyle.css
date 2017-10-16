@@ -93,7 +93,60 @@
 			clear: both;
 		}
 		
+		.svgRect{
+			fill: white;
+		}
 		
+		/* y-axis tick labels */
+        #graphic .axis  /* required */
+		{
+            font-size: 12px;
+            fill: #666;
+        }
+
+
+		/* x-axis baseline; not to be confused with centreline. Can consider overlaying this with #centreline */
+        #graphic .axis path  /* required */
+		{
+            fill: none;
+            stroke: #ccc;
+            shape-rendering: crispEdges;
+        }
+
+
+		#graphic .axis line /* required */
+		{
+            fill: none;
+            stroke: #ccc;
+            shape-rendering: crispEdges;
+        }
+
+		/* y-axis line path */
+        #graphic .axis.y path /* required */
+		{
+			display: none;
+		}
+
+
+
+		/* y-axis full width grid lines */
+        #graphic .grid .tick line/* required */
+		{
+            stroke: #CCC;
+            stroke-width: 1px;
+            shape-rendering: crispEdges;
+        }
+
+
+
+		/* plotted graph line */
+        #graphic .line /* required */
+		{
+            fill: none; /* must be 'none' */
+            stroke-width: 3px;
+			stroke-linecap:round;
+			stroke-linejoin:round;
+        }
 
         #graphic img /* required */
 		{
@@ -153,7 +206,13 @@
 			float:none;
         }
 		
-	
+		.annotext0, .annotext1, .annotext2, .annotext3 {
+		    font-family: 'Open Sans', sans-serif;
+			font-size: 12px;
+			fill: #666;
+			font-weight:500;
+		}
+
 		
      	.annocirc0, .annocirc1, .annocirc2, .annocirc3{
 			stroke:#E66500;
@@ -164,7 +223,7 @@
 	 	 
 		#centreline /* required */
 		{
-			stroke:#CCC;
+			stroke:#666;
 			stroke-width:3px;		
 		}
 		

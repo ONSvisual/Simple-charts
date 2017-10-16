@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <title>Top 100 baby names, 2017</title>
+
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" href="../lib/globalStyle.css" />
+    <link rel="stylesheet" href="../lib/styles.css"/>
+    <link rel="stylesheet" href="../lib/style-chosen.css"/>
+    <link rel="stylesheet" type="text/css" href="../lib/tabs.css" />
+	<link rel="stylesheet" type="text/css" href="../lib/tabstyles.css" />
+    <style type="text/css">
+
+        body {
+            max-width:800px;
+            margin: 0px auto;
+			font-family:"Open Sans", Arial, Helvetica, sans-serif;
+			padding-bottom:40px;
+        }
+
+	#graphic .selected { stroke-width: 2px  !important; fill:none;}
+
+		.border0 { border-top: 2px solid #66c2a5; }
+    .border1 { border-top: 2px solid #fc8d62; }
+    .border2 { border-top: 2px solid #8da0cb; }
+		.border3 { border-top: 2px solid #e78ac3; }
+    .border4 { border-top: 2px solid #a6d854; }
+    .border5 { border-top: 2px solid #666; }
+
+       .rect{
+			fill:#BBBFD7;
+			opacity:0.16;
+			pointer-events:none;
+		}
+
+		/* x-axis line path */
+        #graphic .axis.y path /* required */
+		{
+			display: none;
+		}
+
+		/* x-axis line path */
+	    #graphic .axis.x path /* required */
+		{
+			display: inline;
+		}
+
+		.btnEnable, .clearBtn {
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			width: 40px;
+			border: none;
+			padding: 6px 0;
+			background-color: #0084d1;
+			font: 700 14px Arial;
+			color: #FFF;
+			filter: inherit;
+			-webkit-appearance: button;
+			cursor: pointer;
+			margin-right:5px;
+	}
+
+	form{
+		float:left;
+	}
+
+	@media (min-width: 768px) {
+	#areanm	{
+
+		font-size:20px;
+		color:#666;
+		min-width:1%;
+		font-family:open_sanssemibold, Arial, Helvetica, sans-serif;
+		text-align:center;
+		}
+
+		#footer {
+			position: relative;
+			top: -50px;
+		}
+
+	}
+
+
+
+	@media (max-width: 767px) {
+	#areanm
+	{
+		font-size:16px;
+		color:#666;
+		font-weight:700;
+		text-align:center;
+	}
+
+		#footer {
+			position: relative;
+			top: -20px;
+		}
+
+
+	}
+
+.row{
+	padding-bottom:10px;
+}
+
+.search-choice:nth-child(1) {
+    border-left: #66c2a5 12px  solid !important;
+}
+
+.search-choice:nth-child(2) {
+    border-left: #fc8d62 12px  solid !important;
+}
+
+.search-choice:nth-child(3) {
+    border-left:  #8da0cb 12px  solid !important;
+}
+
+.search-choice:nth-child(4) {
+    border-left:  #e78ac3 12px  solid !important;
+}
+
+.search-choice:nth-child(5) {
+    border-left:  #a6d854 12px  solid !important;
+}
+
+.search-choice:nth-child(6) {
+    border-left:  #666 12px  solid !important;
+}
+
+
+.intro {
+	font-family:"Open Sans", Arial, Helvetica, sans-serif;
+	font-size:16px;
+	font-weight:bold !important;
+	color:#414042;
+	padding-top: 8px;
+}
+
+p {
+    margin: 0px 0 5px !important;
+}
+
+input{
+    font-family: inherit;
+    font-size: 12px;
+    line-height: inherit;
+    height: 18px;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.tabs li {
+	cursor:pointer;
+	border-color: #A6A8AB;
+	border-style: solid;
+   	border-width: 1px;
+   	margin-right: 12px !important;
+   	margin-bottom: 16px !important;
+   	margin-top: 16px !important;
+}
+
+#sel {
+	padding-bottom:10px;
+}
+
+
+.row {
+	display:table;
+	width:100%;
+}
+
+.icon:before {
+      content: url('./images/search.svg');
+      position: absolute;
+      top: 5px;
+    }
+
+.img {
+	margin-bottom: -14px;
+	margin-right: -4px;
+	padding: 0;
+}
+
+.search-field {
+	padding-left: 6px !important;
+	padding-top: 4px !important;
+}
+
+    </style>
+</head>
+<body>
+
+	<section>
+				<div class="tabs tabs-style-iconfall">
+					<nav>
+						<ul>
+
+						</ul>
+					</nav>
+				</div><!-- /tabs -->
+	</section>
+
+	<div class="row">
+
+            <div id="chosensel" class="col-sm-12 col-xs-12"><p class="intro">Enter a country name, or click the lines to select up to 6 countries</p> </div>
+
+
+     </div>
+	<div id="graphic" class="col-sm-8">
+    	<img src="fallback.png" alt="[Chart]" />
+    </div>
+
+    <div id="keypoints">
+        <p></p>
+    </div>
+
+   <div class="footer"></div>
+   <div id="footer"></div>
+
+
+    <script src="../lib/jquery.js" type="text/javascript"></script>
+    <script src="../lib/chosen.jquery.js" type="text/javascript"></script>
+    <script src="../lib/chosen.order.jquery.min.js" type="text/javascript" ></script>
+    <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js" type="text/javascript"></script>
+    <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+    <script src="../lib/pym.js" type="text/javascript"></script>
+
+
+    <script>
+
+		var graphic = $('#graphic');
+		var keypoints = $('#keypoints');
+		var footer = $(".footer");
+    var tabs = $(".tabs");
+		var pymChild = null;
+		var listnames = [];
+		var whichOne = 0;
+    var dataarray={};
+    var data={};
+    var colours=[];
+		checkType();
+
+
+
+
+		function drawChoose() {
+			d3.select("#occselect").remove();
+			d3.select("#sel").remove();
+
+     drawGraphic(dataarray[whichOne])
+		}
+
+
+		function drawGraphic(graphic_data) {
+		   var threshold_md = 788;
+		   var threshold_sm = dvc.optional.mobileBreakpoint;
+       colours=dvc.essential.lineColours;
+
+		  	//set variables for chart dimensions dependent on width of #graphic
+		    if (graphic.width() < threshold_sm) {
+		            var margin = {top: dvc.optional.margin_sm[0], right: dvc.optional.margin_sm[1], bottom: dvc.optional.margin_sm[2], left: dvc.optional.margin_sm[3]};
+					var chart_width = graphic.width() - margin.left - margin.right;
+		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
+		    } else if (graphic.width() < threshold_md){
+		        	var margin = {top: dvc.optional.margin_md[0], right: dvc.optional.margin_md[1], bottom: dvc.optional.margin_md[2], left: dvc.optional.margin_md[3]};
+					var chart_width = graphic.width() - margin.left - margin.right;
+		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
+		  	} else {
+		        	var margin = {top: dvc.optional.margin_lg[0], right: dvc.optional.margin_lg[1], bottom: dvc.optional.margin_lg[2], left: dvc.optional.margin_lg[3]}
+					var chart_width = graphic.width() - margin.left - margin.right;
+		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
+			}
+
+		    // clear out existing graphics
+		    graphic.empty();
+			  keypoints.empty();
+			  footer.empty();
+        d3.select(".tabs").select("ul").selectAll("*").remove();
+
+
+      //change the text in the tabs to what's in the config
+      if(dvc.essential.tab_names.length>0){
+        dvc.essential.tab_names.forEach(function(d,i){
+        d3.select(".tabs").select("ul").append("li").attr("id","cat"+i).append("a").append('span').text(dvc.essential.tab_names[i])
+      })}
+
+		    x = d3.scaleTime()
+		        .range([0, chart_width]);
+
+		    y = d3.scaleLinear()
+		        .range([height, 0]);
+
+		    x.domain(d3.extent(graphic_data, function(d) { return d.date; }));
+
+		    var xAxis = d3.axisBottom(x)
+		        .tickFormat(function(d,i) {
+		            //specify date format for x axis depending on #graphic width
+		            if (graphic.width() <= threshold_sm) {
+		                var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[0]);
+		                return '\u2019' + fmt(d);
+		            } else if (graphic.width() <= threshold_md){
+		                var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[1]);
+		                return  fmt(d);
+		            } else {
+		                var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[2]);
+		                return fmt(d);
+		            }
+		        })
+				.tickPadding(5)
+
+	        //specify number of ticks on x axis and whether 1st and last data point labels are included
+	        if(graphic.width()<threshold_sm){
+	              xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[0]).concat( x.domain() ));
+	        } else if (graphic.width() <= threshold_md){
+				        xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[1])/*.concat( x.domain() )*/);
+			    } else {
+	              xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[2])/*.concat( x.domain() )*/);
+	        }
+
+		    var yAxis = d3.axisLeft(y)
+
+
+		    //gridlines
+		    var y_axis_grid = function() { return yAxis; }
+
+		    var line = d3.line()
+				.curve(d3.curveMonotoneX)
+		        .x(function(d) { return x(d.date); })
+		        .y(function(d) { return y(d.amt); })
+                .defined(function(d) {return !isNaN(d.amt); });
+
+		    // parse data into columns
+		    lines = {};
+        babynames = [];
+			  indexno = [];
+			  j=0;
+
+			var myDeselect;
+
+        for (var column in graphic_data[0]){
+
+		        if (column == 'date') continue;
+
+                 babynames.push(column);
+				         indexno.push("index" +j);
+
+            lines["index"+j] = graphic_data.map(function(d) {
+
+		            return {
+		                'date': d.date,
+		                'amt': d[column]
+		            };
+		        });
+				j++;
+		    }
+
+            selectlist();
+
+		  	//y domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
+	   		if (dvc.essential.yAxisScale == "auto_zero_max"){
+			   var yDomain = [
+								0,
+								d3.max(d3.entries(lines), function(c) {
+									return d3.max(c.value, function(v) {
+										var n = v.amt;
+										return Math.ceil(n);
+									});
+								})
+							 ];
+			} else if (dvc.essential.yAxisScale == "auto_min_max"){
+				var yDomain = [
+								d3.min(d3.entries(lines), function(c) {
+									return d3.min(c.value, function(v) {
+										var n = v.amt;
+										return Math.floor(n);
+									});
+								}),
+
+								d3.max(d3.entries(lines), function(c) {
+									return d3.max(c.value, function(v) {
+										var n = v.amt;
+										return Math.ceil(n);
+									});
+								})
+					 		];
+			} else {
+			   var yDomain = dvc.essential.yAxisScale;
+		    }
+
+		    y.domain(yDomain);
+
+			//specify number or ticks on y axis
+			if (graphic.width() <= threshold_sm) {
+				ticks = y.ticks(dvc.optional.y_num_ticks_sm_md_lg[0]);
+				//ticks.push(1);
+				yAxis.tickValues(ticks);
+
+			 } else if (graphic.width() <= threshold_md){
+				ticks = y.ticks(dvc.optional.y_num_ticks_sm_md_lg[1]);
+				//ticks.push(1);
+				yAxis.tickValues(ticks);
+			 } else {
+				ticks = y.ticks(dvc.optional.y_num_ticks_sm_md_lg[2]);
+				//ticks.push(1);
+				yAxis.tickValues(ticks);
+			}
+
+			//create legend
+			if(dvc.essential.legendLabels.length > 1){
+			var legend = d3.select('#graphic').append('ul')
+			                .attr('class', 'key')
+			            .selectAll('g')
+			                .data(dvc.essential.legendLabels)
+			            .enter().append('li')
+
+				    legend.append('b')
+						 .attr("class",function(d,i){return "border" + i})
+
+					legend.append('label')
+				         .html(function(d,i) { return dvc.essential.legendLabels[i]; });
+			}
+
+			//y axis label
+			d3.select('#graphic').append("p")
+		                .attr('class', 'unit')
+		  		        .text(function(d,i) { return dvc.essential.yAxisLabel; });
+
+
+
+		    //create svg for chart
+		    svg = d3.select('#graphic').append('svg')
+				        .attr("width", chart_width + margin.left + margin.right)
+				        .attr("height", height + margin.top + margin.bottom +30)
+				        .append("g")
+				        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+					svg.append("rect")
+						.attr("class","svgRect")
+						.attr("width", chart_width)
+						.attr("height", height)
+
+					svg.append("text")
+		                .attr('class', 'unit')
+						.attr('y',height +20)
+						.attr('x',-margin.left)
+		  		        .text(function(d,i) { return dvc.essential.yAxisLabel2; });
+
+				    svg.append('g')
+				        .attr('class', 'y axis')
+				        .call(yAxis);
+
+				    svg.append('g')
+				        .attr('class', 'y grid')
+				        .call(y_axis_grid()
+				            .tickSize(-chart_width, 0, 0)
+				            .tickFormat('')
+				        );
+
+					//create x axis, if y axis doesn't start at 0 drop x axis accordingly
+					svg.append('g')
+				        .attr('class', 'x axis')
+				        .attr('transform', function(d){
+				        			if(yDomain[0] != 0){
+										return 'translate(0,' + (height + 30) + ')'
+									} else {
+										return 'translate(0,' + height  + ')'
+									}
+							})
+				        .call(xAxis);
+
+				//create icon to symbolise break in y axis if required
+				if(yDomain[0] > 0 && dvc.essential.yAxisBreak == true){
+					var paths = svg.append("defs")
+								.append("g")
+								.attr("id","icon")
+								.append("g");
+
+							paths.append("polyline")
+								 .attr("points", "2.881,9.54 7.94,5.061 12.341,9.54 17.77,5.061")
+								 .attr("stroke", "#666")
+								 .attr("fill", "none")
+							paths.append("polyline")
+								.attr("points", "2.881,14.54 7.94,10.061 12.341,14.54 17.77,10.061")
+								.attr("stroke", "#666")
+								.attr("fill", "none");
+
+						//specify position of icon
+						svg.append("g").attr("id","iconpath")
+								.attr("transform","translate(-10,3)")
+								.append("use")
+								.attr("xlink:href","#icon")
+								.attr("x", x(x.domain()[0]))
+								.attr("y", function(){
+									if (graphic.width() < threshold_sm) {
+										return y(dvc.essential.yAxisBreak_sm_md_lg[0])
+									} else if (graphic.width() < threshold_md){
+										return y(dvc.essential.yAxisBreak_sm_md_lg[1])
+									} else {
+										return y(dvc.essential.yAxisBreak_sm_md_lg[2])
+									}
+								});
+				}
+
+				//create centre line if required
+				if (dvc.optional.centre_line == true){
+					svg.append("line")
+						.attr("id","centreline")
+						.attr('y1',y(dvc.optional.centre_line_value))
+						.attr('y2',y(dvc.optional.centre_line_value))
+						.attr('x1',0)
+						.attr('x2',chart_width);
+				} else if(yDomain[0] <0){
+					svg.append("line")
+						.attr("id","centreline")
+						.attr('y1',y(0))
+						.attr('y2',y(0))
+						.attr('x1',0)
+						.attr('x2',chart_width);
+				}
+
+
+
+				//create lines
+			    svg.append('g')
+					.attr("class", "linegroup")
+					.selectAll('path')
+			        .data(d3.entries(lines))
+			        .enter()
+			        .append('path')
+			            .attr('class', 'line')
+						.style("fill","none")
+						.attr("stroke","#eee")
+						.style("stroke-width","1px")
+						.attr('id', function(d, i) {
+							return stripspaces(d.key);
+			            })
+			            .attr('d', function(d) {
+			                return line(d.value);
+			            })
+						.style("pointer-events","none")
+						.on("mouseout",null)
+            .on("mouseover",null);
+
+
+
+				d3.select(".linegroup")
+					//.attr("class", "linegroup")
+					.selectAll('bbb')
+			        .data(d3.entries(lines))
+			        .enter()
+			        .append('path')
+						.attr('class', 'line hoverline')
+			           // .attr('class', 'line')
+					   	.style("fill","none")
+						.attr("stroke","#333")
+						.attr("opacity",0)
+						.style("stroke-width","4px")
+						.attr('id', function(d, i) {
+							return "index"+i;
+			            })
+			            .attr('d', function(d) {
+			                return line(d.value);
+			            })
+						.on("mouseout",function(){
+                            d3.selectAll('.mouse').remove();
+							$("#occselect").val(listnames);
+				            $("#occselect").trigger("chosen:updated");
+							$("#occselect").setSelectionOrder(listnames);
+                        })
+                        .on("mouseover",function(d,i){
+                            currclass = d3.select(this).attr("id");
+
+							listplus = listnames.slice()
+
+							if(listplus.indexOf(currclass) == -1 && listplus.length <= 5) {
+								listplus.push(currclass);
+							}
+
+
+							listplus.forEach(function(d,i){
+
+								if(i == (listnames.length)){
+
+									hoverLine(d,i,"mouse");
+								}
+
+							});
+
+						    $("#occselect").val(listplus);
+				            $("#occselect").trigger("chosen:updated");
+							$("#occselect").setSelectionOrder(listplus);
+
+//							setTimeout(function(){d3.selectAll(".search-choice")
+//										.style("background-color",function(d,i){return colours[i]})
+//										.style("border","1px solid #fff")
+//										.select("span")
+//										.style("color","#fff")
+//										.style("font-weight","bold")
+//							},10);
+
+                        })
+						.on("click",function(d,i){
+							currclass = d3.select(this).attr("id");
+
+							if(listnames.indexOf(currclass) == -1 && listnames.length <= 5) {
+								listnames.push(currclass);
+							}
+
+
+							$("#occselect").val(listnames);
+				            $("#occselect").trigger("chosen:updated");
+							$("#occselect").setSelectionOrder(listnames);
+
+							listnames.forEach(function(d,i){
+									if(myDeselect === undefined){
+										if(i == (listnames.length-1)){
+											hoverLine(d,i,"sel");
+											addShare();
+										}
+									}
+							});
+						});
+
+			//create link to source
+			d3.select(".footer").append("p")
+				.text("Source: ")
+				.append("a")
+				.attr("href", dvc.essential.sourceURL)
+				.attr("target", "_blank")
+				.html(dvc.essential.sourceText);
+
+			//Check if there are any preselects
+			checkUrl();
+
+      //check the tab buttons
+      checkType();
+			//use pym to calculate chart dimensions
+		    if (pymChild) {
+		        pymChild.sendHeight();
+				addShare();
+		    }
+		}
+
+
+
+    function selectlist() {
+
+			var menunames = d3.zip(babynames,indexno).sort(function(a, b){ return d3.ascending(a[0], b[0]); });
+
+			// Build option menu for occupations
+			var optns = d3.select("#chosensel").append("div").attr("id","sel").append("select")
+				.attr("id","occselect")
+				.attr("style","width:98%")
+				.attr("multiple",true)
+				.attr("class","chosen-select");
+
+
+			optns.append("option")
+				.attr("value","first")
+				.text("");
+
+			optns.selectAll("p").data(menunames).enter().append("option")
+				.attr("value", function(d){ return d[1]})
+				.text(function(d){ return d[0]});
+
+			myId=null;
+			removenames = [];
+			oldlistnames = [];
+
+      // if you want to change the max number of choices this is where you do it with max_selected_options
+			$('#occselect').chosen({width: "98%", max_selected_options: 6}).on('change',function(evt,params){
+
+								if(typeof params != 'undefined') {
+
+
+										myId=params.selected;
+
+										myDeselect=params.deselected;
+
+										listnames.push(myId);
+
+										//removenames.push(myDeselect);
+
+										var index = listnames.indexOf(myDeselect);
+
+										if (index > -1) {
+											listnames.splice(index, 1);
+											listnames.pop();
+											//delete listnames[index];
+										}
+
+										listnames.forEach(function(d,i){
+											if(myDeselect === undefined){
+												if(i == (listnames.length-1)){
+													hoverLine(d,i,"sel");
+													addShare();
+												}
+											} else {
+												if(i==0){d3.selectAll('.selected').remove();}
+												hoverLine(d,i,"sel");
+											}
+										});
+
+										oldlistnames = listnames;
+
+										if($("#occselect").val() == null){
+
+											d3.selectAll('.selected').remove();
+
+										}
+
+
+
+								}
+
+			});
+
+	};
+
+    function stripspaces(str){
+    	str=str.replace(/\s+/g, '');
+    	return str;
+	}
+
+    function hoverLine(myId,no,method){
+
+                var currpath = d3.select("#graphic")
+                        .select("#" + myId)
+                        .attr("d");
+
+                var currcircles = d3.select("#graphic")
+                        .selectAll(".circle" + myId);
+
+
+                d3.select(".linegroup").append("path")
+						.attr("id", "selected" + myId)
+                        .attr("d",currpath)
+                        .attr("class",function(){
+							if(method == "sel")
+								{return "selected sel"}
+							else {return "selected mouse"}
+						})
+						.style("stroke","#eee")
+						.attr("pointer-events","none");
+
+				d3.selectAll("#selected" + myId)
+					.transition()
+					.duration(500)
+					.style("stroke",colours[no]);
+
+
+       			svg.append("g")
+                    .attr("class",function(){
+						if(method == "sel")
+							{return "selected sel"}
+						else {return "selected mouse"}
+
+					})
+					.selectAll("circles")
+					.data(lines[myId])
+					.enter()
+                    .append("circle")
+					.attr("class", "circles" + myId)
+                    .attr("cx", function(d,i){return x(d.date)})
+                    .attr("cy", function(d,i){if(d.amt == "null"){
+									return 700;
+								} else {
+									return y(d.amt)
+								}
+						})
+                    .attr("r",2)
+                    .attr("stroke","#fff")
+                    .attr("stroke-width","2px")
+                    .attr("fill",colours[no])
+					.attr("opacity",0)
+					.attr("pointer-events","none");
+
+				d3.selectAll(".circles" + myId)
+					.transition()
+					.duration(500)
+					.style("stroke",colours[no])
+                	.attr("opacity",1);
+
+
+
+    }
+
+
+	function addShare() {
+
+			// Capture and set dynamic URL
+			d3.select("#footer").selectAll("*").remove();
+
+			if(typeof(parent.location.href) != "unknown") {
+			//can access
+				urlParent = parent.location.href;
+			} else {
+				//can't
+				urlParent = document.referrer;
+			}
+
+			if(listnames.length > 0){
+				urlshare = urlParent.split("?")[0] + "?"+ whichOne + "," + listnames;
+				window.location.hash = whichOne + "," + listnames;
+			} else {
+				urlshare = urlParent.split("?")[0];
+			}
+
+			addButtons();
+	}
+
+	function addButtons () {
+
+			//Code to create share buttons, embed code etc
+			d3.select("#footer")
+				.append("div")
+				.attr("id", "share")
+				.style("width","270px")
+				.style("height", "30px")
+				.style("float", "right")
+
+			d3.select("#share")
+				.append("p")
+				.style("float","left")
+				.style("padding-top","8px")
+				.style("color","#666")
+				.text("Share this view:")
+
+			var embedURL = d3.select("#footer")
+					.append("div")
+					.attr("id", "embedURL")
+					.style("float", "right")
+					.style("background-color", "#a7a7a7")
+					.style("height", "0px")
+					.style("max-height", "60px")
+					.style("display", "none")
+					.style("opacity", 0)
+					.style("padding", "5px, 5px, 5px, 5px")
+					.style("margin", "5px 7px 0px 0px")
+					.style("border-radius", "5px")
+
+			embedURL.append("p")
+					.style("color", "white")
+					.style("text-align", "center")
+					.style("margin", "2px 0px 2px 0px")
+					.style("padding", "0px")
+					.style("font-size", "12px")
+					.style("font-family", "Open Sans")
+					.html("paste HTML to embed in your website")
+
+			embedURL.append("input")
+					.attr("type", "text")
+					.attr("id", "embedurl")
+					.attr("name", "iframe")
+					.style("width", "240px")
+					.attr("height","20px")
+
+			embedURL.append("p")
+					.attr("id", "closeURL")
+					.style("color", "white")
+					.style("text-decoration", "underline")
+					.style("text-align", "center")
+					.style("margin", "0px")
+					.style("padding", "0px")
+					.style("font-size", "12px")
+					.style("font-family", "Open Sans")
+					.html("close");
+
+			//appending the buttons
+			d3.select("#share").append("a")
+				.attr("id","facebookShare")
+				.attr("href","https://www.facebook.com/sharer/sharer.php?u=" + urlshare)
+				.attr("target","_blank")
+				.style("display","block")
+				.style("height","25px")
+				.style("width","25px")
+				.style("background","#fff")
+				.style("margin-top","5px")
+				.style("margin-right","7px")
+				.style("margin-bottom","5px")
+				.style("float","left")
+				.style("opacity","0.7")
+				.attr("title","Facebook")
+				.append("img")
+				.style("height","25px")
+				.style("width","25px")
+				.attr("src","../images/facebook-grey.png");
+
+			d3.select("#share").append("a")
+				.attr("id","twitterShare")
+				.attr("href","https://twitter.com/intent/tweet?text=How popular is your name these days? " + urlshare)
+				.attr("target","_blank")
+				.style("display","block")
+				.style("height","25px")
+				.style("width","25px")
+				.style("background","#fff")
+				.style("margin-top","5px")
+				.style("margin-right","7px")
+				.style("margin-bottom","5px")
+				.style("float","left")
+				.style("opacity","0.7")
+				.attr("title","Twitter")
+				.append("img")
+				.style("height","25px")
+				.style("width","25px")
+				.attr("src","../images/twitter-grey.png");
+
+			d3.select("#share").append("a")
+				.attr("id","linkedinshare")
+				.attr("href","https://www.linkedin.com/cws/share?url=" + urlshare)
+				.attr("target","_blank")
+				.style("display","block")
+				.style("height","25px")
+				.style("width","25px")
+				.style("background","#fff")
+				.style("margin-top","5px")
+				.style("margin-right","7px")
+				.style("margin-bottom","5px")
+				.style("float","left")
+				.style("opacity","0.7")
+				.attr("title","Linkedin")
+				.append("img")
+				.style("height","25px")
+				.style("width","25px")
+				.attr("src","../images/linkedin-grey.png");
+
+			d3.select("#share").append("a")
+				.attr("id","embedShare")
+				.style("display","block")
+				.style("height","25px")
+				.style("width","25px")
+				.style("background","#fff")
+				.style("margin-top","5px")
+				.style("margin-bottom","5px")
+				.style("margin-right","7px")
+				.style("float","left")
+				.style("opacity","0.7")
+				.attr("title","Embed")
+				.append("img")
+				.attr("src","../images/embed-grey.png")
+				.style("height","25px")
+				.style("width","25px");
+
+
+			//on mouseover
+			d3.select("#facebookShare").on("mouseover", function() {
+				d3.select("#facebookShare").style("opacity","1");
+			});
+			d3.select("#twitterShare").on("mouseover", function() {
+				d3.select("#twitterShare").style("opacity","1");
+			});
+			d3.select("#embedShare").on("mouseover", function() {
+				d3.select("#embedShare").style("opacity","1");
+			});
+			d3.select("#linkedinshare").on("mouseover", function() {
+				d3.select("#linkedinshare").style("opacity","1");
+			});
+
+
+			//on mouseout
+			d3.select("#facebookShare").on("mouseout", function() {
+				d3.select("#facebookShare").style("opacity","0.7");
+			});
+			d3.select("#twitterShare").on("mouseout", function() {
+				d3.select("#twitterShare").style("opacity","0.7");
+			});
+			d3.select("#embedShare").on("mouseout", function() {
+				d3.select("#embedShare").style("opacity","0.7");
+			});
+			d3.select("#linkedinshare").on("mouseout", function() {
+				d3.select("#linkedinshare").style("opacity","0.7");
+			});
+
+
+			//open and close embed div with "close" or another click of the embed icon
+			d3.select('#embedurl').property("value",'<iframe width="100%" height="800px" src="' + document.URL + '"webkitAllowFullScreen mozAllowFullScreen allowFullScreen scrolling="no" frameborder="0"/>');
+			var embedUrlOpen = 1;
+			d3.select("#embedShare").on("click", function() {
+				if (embedUrlOpen == 1) {
+					d3.select("#embedURL").transition().duration(500).style("height","60px")
+										  .style("display","block").style("opacity",1);
+					embedUrlOpen = 2;
+				} else if (embedUrlOpen == 2) {
+					d3.select("#embedURL").transition().duration(500).style("height","0px").style("opacity",0);
+					d3.select("#embedURL").transition().delay(501).style("display", "none");
+
+					embedUrlOpen = 1;
+				}
+			});
+
+			d3.select("#closeURL").on("click", function() {
+					d3.select("#embedURL").transition().duration(500).style("height","0px").style("opacity",0);
+					d3.select("#embedURL").transition().delay(501).style("display", "none");
+				embedUrlOpen = 1;
+			});
+
+			//download image button
+			d3.select("#downloadshare").on("click",function(){saveSvgAsPng(document.getElementById("chart"), "fallback.png")});
+
+	}
+
+	function checkType() {
+		urlLocal = window.location.href;
+		urlParent = document.referrer;
+
+		var listnamesLocal = urlLocal.split("#")[1];
+		var listnamesParent = urlParent.split("?")[1];
+
+		if(listnamesLocal != undefined) {
+			listnamesAll = 	listnamesLocal;
+		} else if(listnamesParent != undefined) {
+			listnamesAll = 	listnamesParent;
+		} else {var listnamesAll}
+
+		if(listnamesAll != undefined) {
+			whichOne = listnamesAll.split(',')[0];
+			//drawChoose();
+		}
+
+		//Add listeners to select tabs
+		d3.select(".tabs")
+			.selectAll("li")
+			.attr("id",function(d,i){return "cat" + i})
+			.on("click", function(){
+				d3.select(".tabs").selectAll("li").attr("class","");
+				d3.select(this).attr("class","tab-current");
+				whichOne = d3.select(this).attr("id").slice(-1);
+				if(dvc.essential.keepurl==true){}else{removeHash();}
+				listnames = [];
+				drawChoose();
+
+		});
+
+		d3.select("#cat" + whichOne).attr("class","tab-current");
+
+
+	}
+
+
+	function checkUrl() {
+
+		urlLocal = window.location.href;
+		urlParent = document.referrer;
+
+		var listnamesLocal = urlLocal.split("#")[1];
+		var listnamesParent = urlParent.split("?")[1];
+
+		if(listnamesLocal != undefined) {
+			listnamesAll = 	listnamesLocal;
+		} else if(listnamesParent != undefined) {
+			listnamesAll = 	listnamesParent;
+		} else {var listnamesAll}
+
+
+
+		if(listnamesAll != undefined) {
+
+			listnamesA = listnamesAll.split(',').slice(1).join(',');
+
+			listnames = listnamesA.split(',');
+
+		//SET SELECTION NAMES
+
+			listnames.forEach(function(d,i){
+					hoverLine(d,i,"sel");
+			});
+
+			$("#occselect").val(listnames);
+			$("#occselect").trigger("chosen:updated");
+			$("#occselect").setSelectionOrder(listnames);
+		}
+	}
+
+
+	function removeHash() {
+		history.pushState("", document.title, window.location.pathname + window.location.search);
+	}
+
+
+		//check whether browser can cope with svg
+		if (Modernizr.svg) {
+		   //load config
+			d3.json("config.json", function(error, config) {
+			dvc=config
+			if(dvc.essential.graphic_data_array.length > 0){
+				dvc.essential.graphic_data_array.forEach(function(i)
+					{
+						j=0;
+						d3.csv(i,function(error,data){
+						dataarray[j]=data
+            dataarray[j].forEach(function(d) {
+  					 	d.date = d3.timeParse(dvc.essential.dateFormat)(d.date);
+  					 });
+						j++
+            if(j==dvc.essential.graphic_data_array.length){pymChild = new pym.Child({ renderCallback: drawChoose});}
+						})
+					})
+			}
+    })
+
+
+		} else {
+      console.log("fallback")
+			 //use pym to create iframe containing fallback image (which is set as default)
+			pymChild = new pym.Child();
+			if (pymChild) {pymChild.sendHeight();}
+		}
+
+		var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-37894017-1']);
+		  _gaq.push(['_trackPageview']);
+
+
+		  (function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+
+    </script>
+
+</body>
+</html>

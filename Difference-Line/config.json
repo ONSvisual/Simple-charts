@@ -1,0 +1,68 @@
+{
+    "essential" : {
+            "graphic_data_url": "data.csv",
+            "reference":"CIPH",
+            "comparison":"Public",
+            "dateFormat":"%d/%m/%Y",
+
+            "legendLabels" : ["Inflation", "Public sector pay growth","Inflation above public sector pay growth"],
+            "legendStyle": ["line","line","rect"],
+            "colour_palette": [ "#BBBDBF" , "#36ADD9", "#f69e91","none"],
+
+            "sourceText":["Average Weekly Earnings","CPIH"],
+            "sourceURL":["https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/averageweeklyearningsearn01","https://www.ons.gov.uk/economy/inflationandpriceindices/datasets/consumerpriceindices"],
+            "draggable": false,
+           "annotationsChart" : [
+              {
+                "xVal": "2012-03-23T00:00:00.000Z",
+                "yVal": 5,
+                "path": "",
+                "text": "Since the public sector pay cap,  inflation has been generally higher  than public sector pay growth",
+                "textOffset": [0,0]
+              }
+            ],
+
+            "wordwrap":[30,20,10],
+            "annoAlign": ["start","middle","end"],
+            "annotationBullet" : ["Since the public sector pay cap, inflation has been generally higher than public sector pay growth"],
+
+            "circles" : false,
+            "annotationCXCY":[
+                ["01/03/2012","5"]
+            ],
+
+            "yAxisLabel":"%",
+            "yAxisScale":"auto_min_max",
+            "yAxisBreak": false,
+            "yAxisBreak_sm_md_lg": [65,65,65]
+    },
+
+    "optional" : {
+            "margin_sm": [80, 10, 70, 30],
+            "margin_md": [50, 10, 70, 30],
+            "margin_lg": [50, 10, 70, 30],
+
+            "aspectRatio_sm" : [16,13],
+            "aspectRatio_md" : [16,12],
+            "aspectRatio_lg" : [16,10],
+
+            "mobileBreakpoint" : 610,
+
+            "xAxisTextFormat_sm_md_lg" : ["%y", "%Y", "%Y"],
+
+            "x_num_ticks_sm_md_lg" : [6,12,12],
+            "y_num_ticks_sm_md_lg" : [5,5,5],
+
+            "lineMarkers" : false,
+
+            "vertical_line" : true,
+            "annotateLineX1_Y1_X2_Y2" : [ [["Jul-00", "200"],["Jul-00", "0"]], [["Jul-08", "100"],["Jul-08", "200"]] ],
+
+            "annotateRect" : true,
+            "annotateRectX_Y" : [ [["Jan-94", 200],["Jan-96", 0]], [["Jul-04", 180],["Jul-06", 40]] ],
+            "lineColor_opcty" : [["#ABCDEF", 0.2], ["#888", 0.4]],
+
+            "centre_line" : true,
+            "centre_line_value" : 0
+    }
+}

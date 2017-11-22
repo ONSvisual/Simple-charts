@@ -204,7 +204,7 @@
 					.data(bars["value"])
 					.enter()
 					.append('rect')
-					.attr("fill", function(d,i){return dvc.essential.colour_palette})
+					.attr("fill", function(d) { if(d.amt>0){return dvc.essential.colour_palette[0]}else{return dvc.essential.negative_colour}})
 					.attr("width", function(d) { return 0 + Math.abs(x(d.amt) - x(0)); })
 					.attr("x", function(d) { return x(Math.min(0, d.amt)); })
 					.attr("y", function(d) { return y(d.name); })

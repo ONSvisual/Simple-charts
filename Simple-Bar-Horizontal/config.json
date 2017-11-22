@@ -1,12 +1,12 @@
 {
     "essential" : {
             "graphic_data_url": "data.csv",
-        
-            "colour_palette": [ "#274796"],
 
+            "colour_palette": [ "#274796"],
+            "negative_colour":["#D32F2F"],
             "sourceText":["Labour Market Statistics, February 2015, Table A02"],
             "sourceURL":["http://www.ons.gov.uk/ons/publications/re-reference-tables.html?edition=tcm%3A77-350752"],
-        
+
             "annotationChart": [
                 "Bar annotation  with words are  the best",
                 "Claws in your leg"
@@ -23,24 +23,24 @@
                 "middle",
                 "middle"
             ],
-        
+
             "barHeight_sm_md_lg" : [30,30,30],
-        
-        
+
+
             "xAxisLabel":"%",
-            "xAxisScale":[-10,90]            
+            "xAxisScale":[-10,90]
     },
     "optional" : {
             "margin_sm": [5, 20, 5, 135],
             "margin_md": [5, 20, 5, 135],
             "margin_lg": [5, 20, 5, 135],
-        
+
             "aspectRatio_sm" : [4,7],
             "aspectRatio_md" : [1,1],
             "aspectRatio_lg" : [16,10],
-        
-            "mobileBreakpoint" : 510, 
-                           
+
+            "mobileBreakpoint" : 510,
+
             "x_num_ticks_sm_md_lg" : [6,8,10],
             "vertical_line" : false,
             "annotateLineX1_Y1_X2_Y2":[ [[25,"South East"],[25,"East"]]],
@@ -51,5 +51,3 @@
             "centre_line_value" : 10
     }
 }
-
-

@@ -164,10 +164,10 @@
 			} else if(xDomain[0] <0){
 				svg.append("line")
 					.attr("id","centreline")
-					.attr('y1',y0(0))
-					.attr('y2',y0(0))
-					.attr('x1',0)
-					.attr('x2',chart_width);
+					.attr('y1',0)
+					.attr('y2',height)
+					.attr('x1',x(0))
+					.attr('x2',x(0));
 			}
 
 			svg.append("g")

@@ -76,7 +76,7 @@
 		var color = d3.scaleOrdinal().range(dvc.essential.colour_palette);
 
 
-		x0 = d3.scaleBand().rangeRound([0, chart_width]);
+		x0 = d3.scaleBand().rangeRound([0, chart_width]).paddingInner(0.1);;
 		var x1 = d3.scaleBand();
 		var y = d3.scaleLinear().range([height, 0]);
 

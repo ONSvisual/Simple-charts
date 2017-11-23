@@ -164,8 +164,8 @@
 			} else if(xDomain[0] <0){
 				svg.append("line")
 					.attr("id","centreline")
-					.attr('y1',y(0))
-					.attr('y2',y(0))
+					.attr('y1',y0(0))
+					.attr('y2',y0(0))
 					.attr('x1',0)
 					.attr('x2',chart_width);
 			}
@@ -425,8 +425,8 @@
 				.data(function(d) { return d.ages; })
 			  	.enter()
 			  	.append("rect")
-			  	.attr("width",function(d) { return x(d.value);} )
-			  	.attr("x", function(d) { return 0; })
+			  	.attr("width",function(d) { return 0 + Math.abs(x(d.value) - x(0));} )
+			  	.attr("x", function(d) { return x(Math.min(0, d.value)); })
 			  	.attr("y", function(d) { return  y1(d.name); })
 			  	.attr("height", function(d) { return y1.bandwidth(); })
 			  	.style("fill", function(d) { return color(d.name); })

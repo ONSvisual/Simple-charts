@@ -73,7 +73,8 @@
 		        .range([ 0, chart_width]);
 
 			var y = d3.scaleBand()
-				.rangeRound([0, height], .1)
+				.rangeRound([0, height])
+        .paddingInner(0.1);
 
 		    y.domain(graphic_data.map(function(d) { return d.name; }));
 

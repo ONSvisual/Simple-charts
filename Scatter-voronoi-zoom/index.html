@@ -448,7 +448,7 @@ if ( parseInt(graphic.style("width")) > dvc.optional.mobileBreakpoint ) {
         g.select(".y-axis").transition(t).call(yAxis);
         g.selectAll(".circles").transition(t)
             .attr("cx", function(d) { return x(d[dvc.essential.pickxdata]); })
-            .attr("cy", function(d) { return y(d[dvc.essential.pickxdata]); });
+            .attr("cy", function(d) { return y(d[dvc.essential.pickydata]); });
         g.selectAll(".line").transition(t)
             .attr("d", function(d) { return line(d); });
         g.selectAll(".rect").transition(t)

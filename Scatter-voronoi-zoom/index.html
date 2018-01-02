@@ -119,8 +119,8 @@ function drawGraphic(){
       return {
         'group' : d.group,
         'name' : d.name,
-        'SPD' : +d["SPDflows"],
-        'Census' : +d["Censusflows"]
+        'SPD' : +d[dvc.essential.pickxdata],
+        'Census' : +d[dvc.essential.pickydata]
       };
 
     });
@@ -133,7 +133,7 @@ function drawGraphic(){
     var data=[];
     for(var i=0;i<graphic_data.length;i++)
     {
-    data.push([graphic_data[i].SPDflows,graphic_data[i].Censusflows]);
+    data.push([graphic_data[i][dvc.essential.pickxdata],graphic_data[i][dvc.essential.pickydata]]);
     }
   return data;
 }
@@ -279,8 +279,8 @@ function drawGraphic(){
          main.selectAll('.circles').data(graphic_data).enter().append('circle')
             .attr( "class" , function(d,i){ return "circles " + d.group; })
             .attr( "id" , function (d,i){ return "circle" +  d.name; })
-            .attr( "cx" , function(d) { return x(d.SPDflows); })
-    				.attr( "cy" , function(d) { return y(d.Censusflows); })
+            .attr( "cx" , function(d) { return x(d[dvc.essential.pickxdata]); })
+    				.attr( "cy" , function(d) { return y(d[dvc.essential.pickydata]); })
             .attr('r', 4)
             .attr('fill', 'white')
             .attr('stroke', "red")
@@ -406,8 +406,8 @@ if ( parseInt(graphic.style("width")) > dvc.optional.mobileBreakpoint ) {
         svg.select(".x-axis").transition(t).call(xAxis);
         g.select(".y-axis").transition(t).call(yAxis);
         g.selectAll(".circles").transition(t)
-            .attr("cx", function(d) { return x(d.SPDflows); })
-            .attr("cy", function(d) { return y(d.Censusflows); });
+            .attr("cx", function(d) { return x(d[dvc.essential.pickxdata]); })
+            .attr("cy", function(d) { return y(d[dvc.essential.pickxdata]); });
         g.selectAll(".line").transition(t)
             .attr("d", function(d) { return line(d); });
 

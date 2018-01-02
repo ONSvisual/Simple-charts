@@ -1,7 +1,8 @@
 {
     "essential" : {
             "graphic_data_url": "data/dummydata.csv",
-
+            "pickxdata":"SPDflows",
+            "pickydata":"Censusflows",
             "dateFormat":"%b-%y",
 
             "legendLabels" : [],

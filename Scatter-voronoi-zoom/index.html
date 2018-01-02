@@ -341,8 +341,8 @@ function drawGraphic(){
           .annotations([d].map( d =>  {
             return {
               data: {x:d.data[0],y:d.data[1]},
-              dx: d.dx || (d.data[0] > 2000) ? -50 : 50,
-              dy: d.dy || (d.data[1] < 2000) ? -50 : 50,
+              dx: (d.data[0] > 2000) ? -50 : 50,
+              dy: (d.data[1] < 2000) ? -50 : 50,
               note: {
                  title: graphic_data[d.index].name || "??",
                  label: dvc.essential.xAxisLabel+": "+d3.format('.0f')(d.data[0])+", "+dvc.essential.yAxisLabel+": "+d3.format('.0f')(d.data[1]),

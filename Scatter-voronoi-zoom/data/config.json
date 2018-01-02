@@ -3,23 +3,10 @@
             "graphic_data_url": "data/dummydata.csv",
             "pickxdata":"SPDflows",
             "pickydata":"Censusflows",
-            "dateFormat":"%b-%y",
-
-            "legendLabels" : [],
 
             "sourceText":["My source information text here"],
             "sourceURL":["http://www.ons.gov.uk/"],
 
-            "annotationChart": [],
-            "annotationBullet": [],
-            "annotationXY":[[-50,-25],[-50,25],[50,25],[50,-25]],
-            "annotationAlign":["middle","middle","middle","middle"],
-            "annotationChart2": [],
-            "annotationXY2":[  ],
-            "annotationAlign2":["middle","middle","middle","middle"],
-
-            "circles" : false,
-            "annotationCXCY":[],
             "xAxisLabel":"X label",
             "yAxisLabel":"Y Label",
             "AxisScale":"auto_min_max",

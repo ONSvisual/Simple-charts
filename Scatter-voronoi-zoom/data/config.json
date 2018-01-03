@@ -31,6 +31,8 @@
                 "y":-1000,
                 "text":"example annotation text"
                 }],
+            "textAnnotationWrap":100,
+            "d3AnnotationWrap":300,   
             "xAxisLabel":"X label",
             "yAxisLabel":"Y Label",
             "AxisScale":"auto_min_max",

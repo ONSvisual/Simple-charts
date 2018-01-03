@@ -323,9 +323,13 @@ function drawGraphic(){
                     .datum(dvc.essential.textAnnotations[i])
                     .attr("x",x(d.x))
                     .attr("y",y(d.y))
-                    .attr("class","text")
+                    .attr("class","annotext")
                     .text(d.text)
+                    .call(wrap,dvc.essential.textAnnotationWrap);
                   })
+
+          //d3.selectAll('.annotext').call(wrap,1000);
+
 
 
 //d3-annotations tooltips(from https://bl.ocks.org/Fil/17fc857c3ce36bf8e21ddefab8bc9af4/167bce6e2b706016004a3baf14f838203646a27a)
@@ -334,7 +338,7 @@ function drawGraphic(){
       tipg = svg.append("g")
         .attr("class", "annotation-tip");
 
-// this function will call d3.annotation when a tooltip has to be drawn
+      // this function will call d3.annotation when a tooltip has to be drawn
         function tip (d) {
           annotationtip = d3.annotation()
           .type(d3.annotationCalloutCircle)
@@ -346,7 +350,7 @@ function drawGraphic(){
               note: {
                  title: graphic_data[d.index].name || "??",
                  label: dvc.essential.xAxisLabel+": "+d3.format('.0f')(d.data[0])+", "+dvc.essential.yAxisLabel+": "+d3.format('.0f')(d.data[1]),
-                 wrap:300
+                 wrap:dvc.essential.d3AnnotationWrap
               },
               subject: {
                 radius: 4,
@@ -385,7 +389,8 @@ function drawGraphic(){
           .attr('r', 4)
           .attr('class', 'circle focusCircle');
 
-if ( parseInt(graphic.style("width")) > dvc.optional.mobileBreakpoint ) {
+      if ( parseInt(graphic.style("width")) > dvc.optional.mobileBreakpoint ) {
+
       svg.select('.overlay')
           .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
           .attr('width', chart_width)
@@ -404,7 +409,6 @@ if ( parseInt(graphic.style("width")) > dvc.optional.mobileBreakpoint ) {
               tip(site);//tooltip stuff
               var xpos = site[0];
               var ypos = site[1];
-              //console.log(graphic_data[site.index].name)
 
               focus.select('#focusCircle')
                   .attr('cx', xpos)
@@ -422,6 +426,7 @@ if ( parseInt(graphic.style("width")) > dvc.optional.mobileBreakpoint ) {
             this.dispatchEvent(new Event('drag'));
             d3.event.preventDefault();
           });
+
 }//end if wider than mobileBreakpoint then do stuff
 
       function brushended() {
@@ -456,7 +461,7 @@ if ( parseInt(graphic.style("width")) > dvc.optional.mobileBreakpoint ) {
             .attr("y",function(d){return y(d.y);})
             .attr("width", function(d){return Math.abs(x(d.width)-x(0))})
             .attr("height",function(d){return Math.abs(y(d.height)-y(0))});
-        g.selectAll(".text").transition(t)
+        g.selectAll(".annotext").transition(t)
             .attr("x",function(d){return x(d.x);})
             .attr("y",function(d){return y(d.y);});
 
@@ -475,6 +480,32 @@ if ( parseInt(graphic.style("width")) > dvc.optional.mobileBreakpoint ) {
         g.select(".x-axis").call(xAxis);
         g.select(".y-axis").call(yAxis);
       }//end dragged
+
+      //word wrapping function from https://bl.ocks.org/mbostock/7555321
+      function wrap(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.1, // ems
+              x = text.attr("x"),
+              y = text.attr("y"),
+              dy = 0,//parseFloat(text.attr("dy")),
+              tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+          }
+        });
+      }
 
 
 }//end drawGraphic

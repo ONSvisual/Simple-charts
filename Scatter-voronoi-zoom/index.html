@@ -457,7 +457,7 @@ function drawGraphic(){
             .attr("y",function(d){return y(d.y);})
             .attr("width", function(d){return Math.abs(x(d.width)-x(0))})
             .attr("height",function(d){return Math.abs(y(d.height)-y(0))});
-        g.selectAll(".annotext").transition(t)
+        g.selectAll(".annotext").selectAll('tspan').transition(t)
             .attr("x",function(d){return x(d.x);})
             .attr("y",function(d){return y(d.y);});
 

@@ -181,7 +181,7 @@
 						for (var j = 0; j < words.length; j++) {
 							var tspan = d3.select(this).append('tspan').text(words[j]);
 							if (j > 0)
-								tspan.attr('x', x(d3.time.format(dvc.essential.dateFormat).parse(dvc.essential.annotationXY[i][0]))).attr('dy', '22');													
+								tspan.attr('x', 0).attr('dy', '22');													
 						}
 					};					
 											

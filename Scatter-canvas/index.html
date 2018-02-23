@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<title></title>
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet" href="../lib/globalStyle.css" />
+<style>
+
+body {
+  margin: 0;
+  padding: 0;
+  font: 12px sans-serif;
+  max-width: 1000px;
+}
+
+.hiddenCanvas{
+  display: none;
+}
+
+
+path,
+line {
+  shape-rendering: crispEdges;
+}
+
+div {
+    position:relative;
+}
+
+svg,
+canvas {
+  position: absolute;
+}
+
+svg {
+  pointer-events: none;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1px;
+}
+
+circle {
+  stroke-width: 4px;
+  stroke: #D32F2F;
+  fill: none;
+}
+
+.hidden {
+  display: none;
+}
+
+</style>
+</head>
+<body>
+<p>Ward name: <span id="wardname"></span></p></br>
+<p>Ward code: <span id="wardcode"></span></p>
+<div id="graphic">
+<img src="fallback.png" alt="[Chart]" /></div>
+<script type="text/javascript" src="../lib/queue.js" charset="utf-8"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+<script src="../lib/pym.js" type="text/javascript"></script>
+
+<script>
+
+var graphic = d3.select('#graphic');
+var pymChild = null;
+
+function drawGraphic(width){
+ var threshold_md = 788;
+ var threshold_sm = dvc.optional.mobileBreakpoint;
+	//set variables for chart dimensions dependent on width of #graphic
+  if (parseInt(graphic.style("width")) < threshold_sm) {
+				var margin = {	top: 	dvc.optional.margin_sm[0],
+												right: 	dvc.optional.margin_sm[1],
+												bottom: dvc.optional.margin_sm[2],
+												left: 	dvc.optional.margin_sm[3]
+											};
+									// var size = 0;	// used for margin_centre and x_ticks
+				var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+				var height = Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
+					}
+  else if (parseInt(graphic.style("width")) < threshold_md){
+  			var margin = {	top: 	dvc.optional.margin_md[0],
+              					right: 	dvc.optional.margin_md[1],
+              					bottom: dvc.optional.margin_md[2],
+              					left: 	dvc.optional.margin_md[3]
+              				};
+									// var size = 1;
+				var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+				var height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
+				}
+	 else {
+				var margin = {	top: 	dvc.optional.margin_lg[0],
+												right: 	dvc.optional.margin_lg[1],
+												bottom: dvc.optional.margin_lg[2],
+												left: 	dvc.optional.margin_lg[3]
+											};
+									// var size = 2;
+				var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+				var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
+				}
+
+// clear out existing graphics
+graphic.selectAll("*").remove();
+
+queue()
+.defer(d3.csv,"data.csv")
+.await(finished)
+
+function finished(error,data){
+  d3.csv("Scatter_plot_England_Wales_males.csv",function(data){
+    data.forEach(function(d){
+      d["LE"] = +d["LE"],
+      d["HLE"]= +d["HLE"]
+    })
+  });
+
+  /// make some data for the quadtree
+  var points = data.map(function(d){
+    return[
+      +d.LE,
+      +d.HLE
+    ]
+  })
+
+ // var margin = {top: 20, right: 10, bottom: 30, left: 40},
+ //    width = 960 - margin.left - margin.right,
+ //    height = 500 - margin.top - margin.bottom;
+
+var svg = d3.select("#graphic").append("svg")
+  .attr("width", chart_width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + " " + margin.top + ")");
+
+
+
+var x = d3.scaleLinear()
+  .range([0, chart_width]);
+
+  x.domain(d3.extent(data, function(d){return d.LE})).nice()
+
+var y = d3.scaleLinear()
+  .range([height, 0]);
+
+  y.domain(d3.extent(data, function(d){return d.HLE})).nice()
+
+var factory = d3.quadtree()
+                .extent([
+                  [0, 0],
+                  [chart_width, height]
+                ])
+                .addAll(points);
+
+var xAxis = d3.axisBottom(x)
+//specify number of ticks on x axis
+    if(parseInt(graphic.style("width"))<threshold_sm){
+          xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[0]).concat(x.domain()));
+    } else if (parseInt(graphic.style("width")) <= threshold_md){
+    			xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[1]));
+    } else {
+          xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[2]));
+    }
+
+var yAxis = d3.axisLeft(y);
+//specify number or ticks on y axis
+    if (parseInt(graphic.style("width")) <= threshold_sm) {
+    	  yAxis.ticks(dvc.optional.y_num_ticks_sm_md_lg[0])
+     } else if (parseInt(graphic.style("width")) <= threshold_md){
+    	  yAxis.ticks(dvc.optional.y_num_ticks_sm_md_lg[1])
+     } else {
+    	  yAxis.ticks(dvc.optional.y_num_ticks_sm_md_lg[2])
+     }
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .append('text')
+           .attr('x', chart_width)
+           .attr('dy', '2.5em')
+           .attr('text-anchor', 'end')
+           .attr('fill', 'rgb(54, 54, 54)')
+           .attr('font-size', '1.2em')
+           .text(function(d,i){return dvc.essential.xAxisLabel});
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append('text')
+             .attr('y', 10)
+             .attr('dy', '-2em')
+             .attr('dx','-2em')
+             .attr('text-anchor', 'start')
+             .attr('fill', 'rgb(54, 54, 54)')
+             .attr('font-size', '1.2em')
+             .text(function(d,i){return dvc.essential.yAxisLabel});
+
+//line annotations
+if(dvc.optional.annotation_line == true){
+   dvc.optional.annotateLineX1_Y1_X2_Y2.forEach(function(d,i) {
+   					svg.append("line")
+   						.attr('x1',x(dvc.optional.annotateLineX1_Y1_X2_Y2[i][0][0]))
+   						.attr('x2',x(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][0]))
+   						.attr('y1',y(dvc.optional.annotateLineX1_Y1_X2_Y2[i][0][1]))
+   						.attr('y2',y(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][1]))
+   						.style('stroke', '#888')
+   						.style('stroke-width', 2);
+    })
+}
+
+
+//rect annotations
+if (dvc.optional.annotateRect == true){
+    	dvc.optional.annotateRectX_Y.forEach(function(d,i) {
+    	svg.append("rect")
+    		.attr('x',x(dvc.optional.annotateRectX_Y[i][0][0]))
+    		.attr('y',y(dvc.optional.annotateRectX_Y[i][0][1]))
+    		.attr('height',y( dvc.optional.annotateRectX_Y[i][1][1] ) - y(dvc.optional.annotateRectX_Y[i][0][1]))
+    		.attr('width',x(dvc.optional.annotateRectX_Y[i][1][0]) - x(dvc.optional.annotateRectX_Y[i][0][0]))
+    		.style('fill', dvc.optional.rectColor_opcty[i][0] )
+    		.style('stroke-width', 2)
+    		.style('opacity', dvc.optional.rectColor_opcty[i][1] );
+    	})
+}
+
+// make written annotations
+if(dvc.essential.annotations == true){
+dvc.essential.textAnnotations.forEach(function(d,i) {
+         svg.append('text')
+          .datum(dvc.essential.textAnnotations[i])
+          .attr("x",x(d.x))
+          .attr("y",y(d.y))
+          .attr("class","annotext")
+          .text(d.text)
+          .call(wrap,dvc.essential.textAnnotationWrap);
+        })
+}
+
+
+//bits for canvas
+var chartArea = d3.select("#graphic").append("div")
+  .style("left", margin.left + "px")
+  .style("top", margin.top + "px");
+
+var canvas = chartArea.append("canvas")
+  .attr("width", chart_width)
+  .attr("height", height)
+
+
+//hidden canvas
+var hiddenCanvas = chartArea.append("canvas")
+    .classed('hiddenCanvas', true)
+    .attr('width', chart_width)
+    .attr('height', height);
+
+var context = canvas.node().getContext("2d");
+var hiddenContext = hiddenCanvas.node().getContext("2d");
+//this sets the colour for the dots
+context.fillStyle = "#3B7A9E";
+
+function getColor(index) {
+    return d3.rgb(
+            Math.floor(index / 256 / 256) % 256,
+            Math.floor(index / 256) % 256,
+            index % 256)
+        .toString();
+}
+
+
+// Layer on top of canvas, for showing the highlight circle
+var highlight = chartArea.append("svg")
+  .attr("width", chart_width)
+  .attr("height", height)
+    .append("circle")
+      .attr("r", 2)
+      .classed("hidden", true);
+
+
+  // Update canvas
+  context.clearRect(0, 0, chart_width, height);
+  hiddenContext.clearRect(0, 0, chart_width, height)
+
+  // set transparency for all dots
+  context.globalAlpha= 0.25;
+
+  //data array for colour to data lookup
+  colorToData={};
+
+  //looping through each data point to draw it
+  data.forEach(function(d,i){
+    const color = getColor(i)
+    colorToData[color]=d;
+    hiddenContext.fillStyle = color;
+
+    context.beginPath();
+    context.arc(x(d.LE), y(d.HLE), 2, 0, 2 * Math.PI);
+    context.fill();
+
+    hiddenContext.beginPath();
+    hiddenContext.arc(x(d.LE), y(d.HLE), 2, 0, 2 * Math.PI);
+    hiddenContext.fill();
+  });
+
+
+//when moving the mouse on the visible canvas do stuff
+  canvas.on("mousemove",function(){
+    var mouse = d3.mouse(this),
+        closest = factory.find(x.invert(mouse[0]), y.invert(mouse[1]));
+//^ used quadtree to find closest points
+
+//now find colour of hidden point, convert colour to data
+    const imageData = hiddenCanvas.node().getContext('2d').getImageData(x(closest[0]), y(closest[1]), 1, 1);
+    const color = d3.rgb.apply(null, imageData.data).toString();
+    const datum = colorToData[color];
+
+//move the highlight circle
+    highlight.attr("cx", x(closest[0]))
+      .attr("cy", y(closest[1]));
+
+   //update text with name and code
+   document.getElementById("wardname").innerHTML = datum.Area_name;
+   document.getElementById("wardcode").innerHTML = datum.Area_code;
+  });
+
+  canvas.on("mouseover",function(){
+    highlight.classed("hidden", false);
+  });
+
+  canvas.on("mouseout",function(){
+    highlight.classed("hidden", true);
+    document.getElementById("wardname").innerHTML = "";
+    document.getElementById("wardcode").innerHTML = "";
+  });
+
+  //TO DO create link to source
+
+
+
+}//end of finished
+
+
+//word wrapping function from https://stackoverflow.com/questions/24784302/wrapping-text-in-d3
+      function wrap(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.1, // ems
+              x = text.attr("x"),
+              y = text.attr("y"),
+              dy = 0,//parseFloat(text.attr("dy")),
+              tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+          }
+        });
+      }
+
+
+}// end of drawGraphic
+
+//check whether browser can cope with svg
+  if (Modernizr.svg) {
+     //load config
+    d3.json("config.json", function(error, config) {
+    dvc=config
+        //use pym to create iframed chart dependent on specified variables
+        pymChild = new pym.Child({ renderCallback: drawGraphic});
+      // });
+    })
+  } else {
+     //use pym to create iframe containing fallback image (which is set as default)
+     pymChild = new pym.Child();
+    if (pymChild) {
+          pymChild.sendHeight();
+      }
+  }
+
+</script>
+</body>
+</html>

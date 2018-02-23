@@ -1,0 +1,41 @@
+{
+    "essential" : {
+            "sourceText":"Statistics",
+            "sourceURL":"http://www.ons.gov.uk",
+            "xAxisLabel":"Life expectancy",
+            "yAxisLabel":"Healthy life expectancy",
+            "annotations":false,
+            "textAnnotations":[{
+               "x":70,
+               "y":75,
+               "text":"example annotation text"
+             },{
+               "x":88,
+               "y":55,
+               "text":"example annotation text"
+               }],
+           "textAnnotationWrap":100
+    },
+    "optional" : {
+            "margin_sm": [50, 10, 55, 30],
+            "margin_md": [50, 10, 55, 30],
+            "margin_lg": [50, 10, 55, 30],
+
+            "aspectRatio_sm" : [16,13],
+            "aspectRatio_md" : [16,12],
+            "aspectRatio_lg" : [16,10],
+
+            "mobileBreakpoint" : 610,
+
+            "x_num_ticks_sm_md_lg" : [6,12,12],
+            "y_num_ticks_sm_md_lg" : [5,11,11],
+
+            "annotation_line" : false,
+            "annotateLineX1_Y1_X2_Y2" : [ [[70, 50],[92, 80]], [[200, 200],[400, 400]] ],
+
+            "annotateRect" : false,
+            "annotateRectX_Y" : [ [[88, 55],[92, 46]], [[68, 80],[72, 70]] ],
+            "rectColor_opcty" : [["#ABCDEF", 0.2], ["#888", 0.4]]
+
+    }
+}

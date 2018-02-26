@@ -1,0 +1,175 @@
+.body {
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+.container {
+  position: relative;
+  font-family: 'Open Sans', Arial, sans-serif;
+  max-width: 800px;
+  text-align: left;
+  font-size:16px;
+
+}
+/*@media (max-width: 610px){
+.imgheader{
+  background-image: url(img/ChildrenSpending_mobile_outlines-03.svg);
+  width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+	height:350px;
+}
+}
+@media(min-width:611px){
+  .imgheader{
+    background-image: url(img/ChildrenSpending_header_outlines-01.svg);
+	width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+	height:300px;
+  }
+}*/
+.imgheader {
+  padding-bottom: 30px;
+}
+.options {
+  float: left;
+}
+
+.question {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.answers {
+  margin-top:16px;
+  margin-bottom: 16px;
+  text-align: left;
+  display: inline-block;
+}
+.slideAnswers {
+  margin-top:16px;
+  margin-bottom: 5px;
+  text-align: left;
+  display: inline-block;
+}
+.answers label {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.btn-primary1 {
+  background-color: #0F8243;
+  color: #fff;
+}
+
+.btn1, .btn2 {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  display: inline-block;
+  width: auto;
+  cursor: pointer;
+  padding: 8px 16px 10px 16px;
+  border: 0 none;
+  text-align: center;
+  margin-top: 10px;
+  -webkit-appearance: none;
+  transition: background-color 0.25s ease-out;
+  text-decoration: none;
+  line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn-primary1:hover, .btn-primary1:focus {
+  background-color: #0b5d30;
+}
+
+.optionsP {
+  margin-left: 10px;
+}
+
+.hide {
+  display: none;
+}
+
+
+#ex8 {
+  padding-top: 25px;
+}
+
+.flip {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+
+.guess {
+  width: 100%;
+  height: auto;
+  float: left;
+  padding-left: 27%;
+  color: #414042;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  margin-top: -32px;
+}
+
+#tooltip {
+  font-size: 16px;
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-weight: 400;
+  color: #414042 !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tick-marks {
+  width: 100%;
+  height: auto;
+  float: left;
+}
+
+.tooltip-inner {
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  padding: 6px 10px;
+  background-color: #d4d8da;
+  color: #414042;
+  border-radius: 6px;
+}
+.tick-marks {
+  width: 100%;
+  height: auto;
+  float: left;
+}
+.zero {
+  width: 50%;
+  float: left;
+  color: #414042;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+}
+.one-hundred {
+  width: 50%;
+  height: auto;
+  float: left;
+  color: #414042;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+}
+
+.tick-one {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.tick-two {
+  text-align: right;
+  margin-top: 10px;
+}
+.tooltip {
+  margin-top: -53px !important;
+}

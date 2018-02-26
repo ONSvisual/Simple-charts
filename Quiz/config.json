@@ -1,0 +1,88 @@
+{
+  "essential": {
+    "imgFull":"url(img/ChildrenSpending_header_outlines-01.svg)",
+    "imgMobile":"url(img/ChildrenSpending_mobile_outlines-03.svg)",
+    "setValue": [0, 0, 14, 50, 0],
+    
+    "questions": [{
+        "type": "multiple",
+        "question": "Which age group spent the largest percentage of their money on ice cream?",
+        "options": ["7-to-9-year-olds", "10-to-12-year-olds", "13-to-15-year-olds"],
+        "correctAnswer": "7-to-9-year-olds",
+        "explainerCorrect": "Correct! The Answer is A. 22% of seven to nine year olds bought at least one ice cream, compared to 15% of 13-to-15 year olds.",
+        "explainerIncorrect": "Incorrect! The Answer is A. 22% of seven to nine year olds bought at least one ice cream, compared to 15% of 13-to-15 year olds."
+      },
+      {
+        "type": "multiple",
+        "question": "Who spent more, boys or girls?",
+        "options": ["Boys", "Girls", "No difference"],
+        "correctAnswer": "Girls",
+        "explainerCorrect": "Correct! Girls' average weekly spending was £12.80 while boys spent £11.90.",
+        "explainerIncorrect": "Incorrect! The answer is B. Girls' average weekly spending was £12.80 while boys spent £11.90."
+      },
+      {
+        "type": "slider",
+        "question": "What percentage of children bought at least one clothing or footwear item in a fortnight?",
+        "options": [],
+        "correctAnswer": "14",
+        "tickOne": "0%",
+        "tickTwo": "100%",
+        "content": "%",
+        "explainerCorrect": "Correct! 14% of children bought at least one clothing or footwear item in a fortnight. However, it is 8% for boys and 20% for girls.",
+        "explainerClose": "Close! 14% of children bought at least one clothing or footwear item in a fortnight. However, it is 8% for boys and 20% for girls.",
+        "explainerIncorrect": "Incorrect! 14% of children bought at least one clothing or footwear item in a fortnight. However, it is 8% for boys and 20% for girls.",
+        "img": "img/boy_and_girl-05.svg"
+      },
+      {
+        "type": "slider",
+        "question": "How much did children aged seven to 15 spend a week on sweets and chocolate?",
+        "options": [],
+        "correctAnswer": "50",
+        "tickOne": "£0.00",
+        "tickTwo": "£1.00",
+        "content": " pence",
+        "explainerCorrect": "Correct! The answer is £0.50. We also see that nearly half of seven to 15-year-olds bought at least one confectionery item in a fortnight.",
+        "explainerClose": "Close! The answer is £0.50. We also see that nearly half of seven to 15-year-olds bought at least one confectionery item in a fortnight.",
+        "explainerIncorrect": "Incorrect! The answer is £0.50. We also see that nearly half of seven to 15-year-olds bought at least one confectionery item in a fortnight.",
+        "img":"img/sweet_2-01.svg"
+      },
+      {
+        "type": "multiple",
+        "question": "Which age group spent the most on books?",
+        "options": ["7-to-9-year-olds", "10-to-12-year-olds", "13-to-15-year-olds", "No difference"],
+        "correctAnswer": "No difference",
+        "explainerCorrect": "Correct! The answer is D. There is hardly any difference when we look at average weekly spending on books by age group. However, girls spent double the amount on books when compared to boys (£0.30 compared with £0.15).",
+        "explainerIncorrect": "Incorrect! The answer is D. There is hardly any difference when we look at average weekly spending on books by age group. However, girls spent double the amount on books when compared to boys (£0.30 compared with £0.15)."
+      }
+    ]
+  },
+
+  "optional": {
+    "margin_sm": [50, 10, 55, 30],
+    "margin_md": [50, 10, 55, 30],
+    "margin_lg": [50, 10, 55, 30],
+
+    "aspectRatio_sm": [16, 13],
+    "aspectRatio_md": [16, 12],
+    "aspectRatio_lg": [16, 10],
+
+    "mobileBreakpoint": 610,
+
+    "xAxisTextFormat_sm_md_lg": ["%y", "%Y", "%b %y"],
+
+    "x_num_ticks_sm_md_lg": [6, 12, 12],
+    "y_num_ticks_sm_md_lg": [5, 11, 11],
+
+    "lineMarkers": true,
+
+    "vertical_line": true,
+    "annotateLineX1_Y1_X2_Y2": [],
+
+    "annotateRect": true,
+    "annotateRectX_Y": [],
+    "lineColor_opcty": [],
+
+    "centre_line": true,
+    "centre_line_value": 25
+  }
+}

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google Tag Manager -->
+  <!-- <script>
+    (function(w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MBCBVQS');
+  </script> -->
+  <!-- End Google Tag Manager -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="lib/globalStyle.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' type='text/css'>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap-slider.css">
+  <link rel="stylesheet" href="lib/globalStyle.css">
+  <link rel="stylesheet" href="css/mystyles.css">
+  <title>Interactive Quiz</title>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MBCBVQS"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> -->
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Instead of forms, make 1 div and append different questions -->
+    <div class="container">
+      <div class="imgheader">
+      </div>
+      <!-- Change number of questions here -->
+      <p class="current">Question <text id="number">1</text> of 5</p>
+      <form class="form" id="form0">
+      </form>
+      <form class="form" id="form1">
+      </form>
+      <form class="form" id="form2">
+      </form>
+      <form class="form" id="form3">
+      </form>
+      <form class="form" id="form4">
+      </form>
+
+      <!--  Answer Button-->
+      <div id="answer-button" class="hide">
+        <button class="btn1 btn-primary1">Show me the answer</button>
+      </div>
+      <div class="answers" id="answers">
+      </div>
+
+      <!-- Next button -->
+      <div id="next-button" style="display:none;">
+        <button class="btn2 btn-primary1">Next question</button>
+      </div>
+    </div>
+
+    <script src="lib/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <script src="js/bootstrap-slider.js"></script>
+    <script src="//d3js.org/d3.v4.js"></script>
+    <script src="lib/modernizr.svg.min.js" type="text/javascript"></script>
+    <script src="lib/pym.js" type="text/javascript"></script>
+    <script src="lib/footer.js"></script>
+    <script src="lib/swoopy-drag-d3v4.js" type="text/javascript"></script>
+    <script src="lib/d3v4jetpack.js" type="text/javascript"></script>
+    <script>
+      var pymChild = null;
+      var guessedValue = null;
+
+      function drawGraphic() {
+
+        d3.select(".imgheader").selectAll("*").remove();
+
+        //Set question to 0 then use clicks to change question number
+        var question = 0;
+        var clicks = 1;
+        var dvc;
+        var getValue;
+        var move;
+
+
+        d3.select(".btn2").on("click", counter)
+
+        if (parseInt(d3.select(".imgheader").style("width")) < 611) {
+          d3.select(".imgheader").append("img")
+          // Mobile head image
+          //Load in a different mobile image here
+            .attr("src", "img/ChildrenSpending_mobile_outlines-03.svg")
+            .attr("x", "0")
+            .attr("y", "0")
+            .attr("width", d3.select(".imgheader").style("width"))
+            .attr("height", parseInt(d3.select(".imgheader").style("width")) / 400 * 189);
+        } else {
+          d3.select(".imgheader").append("img")
+          //Desktop head image
+          //Load in a different desktop image here
+            .attr("src", "img/ChildrenSpending_header_outlines-01.svg")
+            .attr("x", "0")
+            .attr("y", "0")
+            .attr("width", d3.select(".imgheader").style("width"))
+            .attr("height", parseInt(d3.select(".imgheader").style("width")) / 800 * 336);
+        }
+
+        function counter() {
+          clicks += 1;
+          document.getElementById("number").innerHTML = clicks;
+        };
+
+        // runQuestions is the function for multiple choice Qs
+        function runQuestions() {
+          //load config
+          d3.json("config.json", function(error, config) {
+            dvc = config
+
+            d3.select("#form" + question).selectAll("*").remove();
+
+            //Start to append elements from config
+            d3.select("#form" + question)
+              .append("p")
+              .append("text")
+              .style("font-size", "16px")
+              .text(dvc.essential.questions[+question].question);
+
+            //Add the input labels and buttons
+            for (i = 0; i < dvc.essential.questions[+question].options.length; i++) {
+
+              option = d3.select("#form" + question).append("div");
+
+              option.append("input").attr("name", "banana")
+                .attr('class', "inputID")
+                .attr("id", "optionsP" + i)
+                //.style("display", "block")
+                .attr("type", "radio");
+
+              option.append("label")
+                .attr("class", "optionsP")
+                .attr("for", "optionsP" + i)
+                .text(dvc.essential.questions[+question].options[i]);
+
+              if (pymChild) {
+                pymChild.sendHeight();
+              }
+            }
+
+
+            //Add a checked class to the chosen input button
+            //Dispay show me answer button when an input is chosen
+            d3.selectAll(".inputID").on('click', function() {
+              $("#answer-button").show();
+
+              guessedValue = dvc.essential.questions[+question].options[this.id.substring(8, 9)];
+
+              d3.select("#" + this.id)
+                .classed("checked", true)
+
+              if (pymChild) {
+                pymChild.sendHeight();
+              }
+            });
+
+          }) //End config load
+
+        } //End runQuestions
+
+        runQuestions();
+
+        //Display right/wrong explainer depending on the chosen option
+
+        $("#answer-button").on('click', function() {
+
+          if (dvc.essential.questions[+question].type == "multiple") {
+
+//Google tag manager things
+
+
+            // dataLayer.push({
+            //   'event': 'ChildSpendingQuiz',
+            //   'questionTxt': dvc.essential.questions[question].question,
+            //   'questionNumber': 1 + question,
+            //   'inputType': dvc.essential.questions[question].type,
+            //   'answerValue': guessedValue
+            // })
+            //If type is multiple, run the multiple choice code
+            if ("#form" + question === "#form4") {
+              d3.select("#form" + question)
+                .append("div")
+                .attr("class", "answers")
+                .attr("id", "answers")
+            }
+            $('#form' + question + " input:checked");
+
+
+
+            if ($('#form' + question + " input:checked").next().text() == dvc.essential.questions[+question].correctAnswer) {
+
+              d3.selectAll(".answers").selectAll("*").remove();
+              d3.select("#answers")
+                .append("p")
+                .append("text")
+                .attr("id", "correct")
+                .text(dvc.essential.questions[+question].explainerCorrect)
+            } else {
+
+
+              d3.selectAll(".answers").selectAll("*").remove();
+              d3.select("#answers")
+                .append("p")
+                .append("text")
+                .attr("id", "incorrect")
+                .text(dvc.essential.questions[+question].explainerIncorrect)
+            };
+
+            $("#answer-button").hide();
+            $("#next-button").show();
+
+
+
+            //Change this number to be the last question if you add/remove Qs
+            //Gets rid of next button on last form
+            if ("#form" + question == "#form4") {
+              d3.select("#next-button").remove();
+            }
+          }
+
+
+          if (pymChild) {
+            pymChild.sendHeight();
+          }
+        }) //End answer button function
+
+        $("#answer-button").on('click', function() {
+          if (dvc.essential.questions[+question].type == "slider") {
+            guess_value = $('#ex8').data('slider').getValue();
+            guessedValue = guess_value + "%";
+
+//Google tag manager things
+            // dataLayer.push({
+            //   'event': 'ChildSpendingQuiz',
+            //   'questionTxt': dvc.essential.questions[question].question,
+            //   'questionNumber': 1 + question,
+            //   'inputType': dvc.essential.questions[question].type,
+            //   'answerValue': guessedValue
+            // })
+
+            $("#answers").remove();
+            move();
+            $(".tooltip-inner").css('background-color', '#FF9933');
+            $(".tooltip-arrow").css('border-top-color', '#FF9933');
+            $(".tooltip-min .tooltip-inner").css('background-color', '#d4d8da');
+            $(".tooltip-min .tooltip-arrow").css('border-top-color', '#d4d8da');
+            $(".tooltip-main .tooltip-arrow").toggleClass('flip');
+          }
+
+          $(".slider-handle").hover(function() {
+            $(".guess").fadeOut();
+          });
+          //Change the slider handle CSS
+          $(function() {
+            $("#next-button").click(function() {
+              $(".tooltip-inner").css('background-color', '#d4d8da');
+            });
+            $("#next-button").click(function() {
+              $(".tooltip-arrow").css('border-top-color', '#d4d8da');
+            });
+          });
+
+          function move() {
+            //record width and original guess
+
+            guess_width = $(".slider-selection").css('width');
+
+            guess_left = $(".tooltip-main").css('left');
+            guess_marginleft = $(".tooltip-main").css('margin-left');
+
+
+            guess_value = $('#ex8').data('slider').getValue();
+
+            // Disables slider on answer reveal
+            $("#ex8").slider("disable");
+
+            if (guess_value === dvc.essential.setValue[+question]) {
+
+              d3.selectAll(".answers").selectAll("*").remove();
+              d3.select("#form" + question)
+                .append("p")
+                .attr("id", "slideAnswers")
+                .style("padding-top", "60px")
+                .append("text")
+                .text(dvc.essential.questions[+question].explainerCorrect)
+            } else if (guess_value < dvc.essential.setValue[+question] + 10 && guess_value > dvc.essential.setValue[+question] - 10) {
+
+              d3.selectAll(".answers").selectAll("*").remove();
+              d3.select("#form" + question)
+                .append("p")
+                .attr("id", "slideAnswers")
+                .style("padding-top", "60px")
+                .append("text")
+                .text(dvc.essential.questions[+question].explainerClose)
+            } else if (guess_value > dvc.essential.setValue[+question] + 10) {
+
+              d3.selectAll(".answers").selectAll("*").remove();
+              d3.select("#form" + question)
+                .append("p")
+                .attr("id", "slideAnswers")
+                .style("padding-top", "60px")
+                .append("text")
+                .text(dvc.essential.questions[+question].explainerIncorrect)
+            } else if (guess_value < dvc.essential.setValue[+question] - 10) {
+
+              d3.selectAll(".answers").selectAll("*").remove();
+              d3.select("#form" + question)
+                .append("p")
+                .attr("id", "slideAnswers")
+                .style("padding-top", "60px")
+                .append("text")
+                .text(dvc.essential.questions[+question].explainerIncorrect)
+
+            }
+
+            $("#answer-button").hide();
+            $("#next-button").show();
+
+
+            // Sets correct value for the answers
+
+            $("#ex8").slider('setValue', dvc.essential.questions[+question].correctAnswer, true);
+
+
+            d3.select(".tooltip-min")
+              .style("left", guess_left)
+              .style("top", "10px")
+              .style("margin-left", guess_marginleft)
+              .style("display", "block")
+              .classed("top", true)
+              .classed("bottom", true);
+
+            // Hides the tooltip temporarily
+
+            $(".tooltip-main").hide();
+
+            d3.select(".tooltip-main")
+              .style("top", "82px");
+
+            d3.select(".tooltip-main .tooltip-arrow")
+              .style("top", "0px");
+
+            // Animates slider to set value
+
+            $('.slider-selection').each(function(i, v) {
+              var grow_original = $(this).css('width')
+              $(this).css('width', guess_width);
+              $(this).show();
+              $(this).animate({
+                width: grow_original
+              }, 1500);
+            });
+
+            // Show tooltip on reveal
+            $(".tooltip-main").delay(1500).show(0);
+            setTimeout(function() {
+              d3.select(".tooltip-main").style("margin-left", guess_marginleft)
+            }, 1510);
+
+            // Set guess tooltip
+            d3.select(".tooltip-min")
+              .style("left", guess_left)
+              .style("top", "10px")
+              .style("margin-left", guess_marginleft)
+              .style("display", "block")
+              .classed("top", true)
+              .classed("bottom", false);
+
+            d3.select(".tooltip-min")
+              .selectAll(".tooltip-inner")
+              .html(guess_value)
+              .append("text")
+              .text(dvc.essential.questions[+question].content);
+
+            d3.select(".tooltip")
+              .selectAll(".tooltip-main")
+              .select(".tooltip-inner")
+              .append("text")
+              .text(dvc.essential.questions[+question].content);
+
+            d3.selectAll(".tooltip")
+              .transition()
+              .style("opacity", 1);
+
+            $(".slider-handle").hide();
+
+            if (pymChild) {
+              pymChild.sendHeight();
+            }
+          }
+
+
+          if (pymChild) {
+            pymChild.sendHeight();
+          }
+        }) //end move
+
+        //Next button actions
+        $("#next-button").on('click', function() {
+
+          guessedValue = null;
+
+
+          d3.select("#form" + question).remove();
+
+//Change this to be the last question number
+          if (clicks === 5) {
+            d3.select("#answer-button")
+            $("#answer-button").on("click")
+          }
+          $("#ex8").slider("destroy");
+          $("#correct").remove();
+          $("#incorrect").remove();
+          $("#slideAnswers").remove();
+          question++
+
+          //if next question is multiple or slider, run the appropriate code
+          if (dvc.essential.questions[+question].type == "multiple") {
+            d3.selectAll(".form").selectAll("*").remove();
+            // d3.selectAll(".answers").selectAll("*").remove();
+            runQuestions(+question);
+
+          } else {
+            if (dvc.essential.questions[+question].type == "slider") {
+              d3.selectAll(".form").selectAll("*").remove();
+              // d3.selectAll(".answers").selectAll("*").remove();
+              movefirst = true;
+              runSlider(+question);
+
+            }
+          }
+
+          $("#answer-button").show();
+          $("#next-button").hide();
+          if (pymChild) {
+            pymChild.sendHeight();
+          }
+
+        })
+
+        //Slider
+        function runSlider() {
+          d3.select("#form" + question)
+            .style("height", "auto" - 100)
+            .append("p")
+            .append("text")
+            .style("font-size", "16px")
+            .style("padding-bottom", "30px")
+            .text(dvc.essential.questions[+question].question);
+
+          d3.select("#form" + question)
+            .append("input")
+            .style("padding-top", "30px")
+            .attr("id", "ex8")
+            .attr("data-slider-id", "ex1Slider" + question)
+            .attr("type", "text")
+            .attr("data-slider-min", "0")
+            .attr("data-slider-max", "100")
+            .attr("data-slider-step", "1")
+            .attr("data-slider-value", "50")
+            .append("text")
+            .text(dvc.essential.questions[+question].content);
+
+          d3.select("#form" + question)
+            .append("div")
+            .attr("class", "tick")
+            .append("div")
+            .attr("class", "zero")
+            .append("p")
+            .attr("class", "tick-one")
+            .append("text")
+            .text(dvc.essential.questions[+question].tickOne);
+
+          d3.select("#form" + question)
+            .append("div")
+            .attr("class", "one-hundred")
+            .append("p")
+            .attr("class", "tick-two")
+            .append("text")
+            .text(dvc.essential.questions[+question].tickTwo);
+
+          // Start
+          // Bootstrap slider style
+          $("#ex8").slider({
+            tooltip: 'always',
+            formatter: function(value) {
+              return value + dvc.essential.questions[+question].content;
+            }
+
+          });
+          d3.selectAll(".slider-handle")
+            // .append("style", "content")
+            //.style("content", dvc.essential.questions[+question].img);
+            .append("img")
+            .style("pointer-events", "none")
+            .attr("src", dvc.essential.questions[+question].img)
+            .attr("x", "0")
+            .attr("y", "0")
+            .attr("width", 70)
+            .attr("height", 70);
+
+          if (pymChild) {
+            pymChild.sendHeight();
+          }
+          // Moves the handle
+        }
+        if (pymChild) {
+          pymChild.sendHeight();
+        }
+      } // end drawGraphic
+
+
+      if (Modernizr.svg) {
+        pymChild = new pym.Child({
+          renderCallback: drawGraphic
+        });
+      } else {
+        //use pym to create iframe containing fallback image (which is set as default)
+        pymChild = new pym.Child();
+        if (pymChild) {
+          pymChild.sendHeight();
+        }
+      }
+    </script>
+  </body>
+
+</html>

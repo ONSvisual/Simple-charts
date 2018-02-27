@@ -76,6 +76,11 @@ var graphic = d3.select('#graphic');
 var pymChild = null;
 
 function drawGraphic(width){
+
+
+
+
+
  var threshold_md = 788;
  var threshold_sm = dvc.optional.mobileBreakpoint;
 	//set variables for chart dimensions dependent on width of #graphic
@@ -109,6 +114,28 @@ function drawGraphic(width){
 				var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
 				var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
 				}
+
+//retina support for canvas, from http://bl.ocks.org/devgru/a9428ebd6e11353785f2
+function getRetinaRatio() {
+    var devicePixelRatio = window.devicePixelRatio || 1
+    var c = document.createElement('canvas').getContext('2d')
+    var backingStoreRatio = [
+        c.webkitBackingStorePixelRatio,
+        c.mozBackingStorePixelRatio,
+        c.msBackingStorePixelRatio,
+        c.oBackingStorePixelRatio,
+        c.backingStorePixelRatio,
+        1
+    ].reduce(function(a, b) { return a || b })
+
+    return devicePixelRatio / backingStoreRatio
+}
+
+var ratio = getRetinaRatio()
+console.log(ratio)
+var scaledWidth = chart_width * ratio
+var scaledHeight = height * ratio
+
 
 // clear out existing graphics
 graphic.selectAll("*").remove();
@@ -254,18 +281,26 @@ var chartArea = d3.select("#graphic").append("div")
   .style("top", margin.top + "px");
 
 var canvas = chartArea.append("canvas")
-  .attr("width", chart_width)
-  .attr("height", height)
-
+  .attr('width', scaledWidth)
+  .attr('height', scaledHeight)
+  .style('width', chart_width + 'px')
+  .style('height', height + 'px');
 
 //hidden canvas
 var hiddenCanvas = chartArea.append("canvas")
     .classed('hiddenCanvas', true)
-    .attr('width', chart_width)
-    .attr('height', height);
+    .attr('width', scaledWidth)
+    .attr('height', scaledHeight)
+    .style('width', chart_width + 'px')
+    .style('height', height + 'px');
 
 var context = canvas.node().getContext("2d");
 var hiddenContext = hiddenCanvas.node().getContext("2d");
+context.scale(ratio,ratio)
+hiddenContext.scale(ratio,ratio)
+
+
+
 //this sets the colour for the dots
 context.fillStyle = "#3B7A9E";
 

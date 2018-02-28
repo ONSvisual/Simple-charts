@@ -30,7 +30,7 @@
   <link rel="stylesheet" href="lib/globalStyle.css">
   <link rel="stylesheet" href="css/mystyles.css">
   <title>Interactive Quiz</title>
-
+  </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
     <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MBCBVQS"
@@ -184,9 +184,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           if (dvc.essential.questions[+question].type == "multiple") {
 
+          //disable radio button once answer button is pushed
+          $("input[type=radio]").attr('disabled', true);
+
 //Google tag manager things
-
-
             // dataLayer.push({
             //   'event': 'ChildSpendingQuiz',
             //   'questionTxt': dvc.essential.questions[question].question,
@@ -415,6 +416,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         //Next button actions
         $("#next-button").on('click', function() {
+
+        //re-enable radio buttons
+        $("input[type=radio]").attr('disabled', false);
+
+
 
           guessedValue = null;
 

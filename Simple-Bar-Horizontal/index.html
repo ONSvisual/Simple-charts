@@ -93,10 +93,6 @@
 			 }
 
 
-		    var bar = d3.line()
-		        .y(function(d) { return y(d.name); })
-		        .x(function(d) { return x(d.amt); });
-
 		    // parse data into columns
 		    var bars = {};
 		    for (var column in graphic_data[0]) {
@@ -436,7 +432,7 @@
 					names = d3.keys(/*data*/graphic_data[0]).filter(function(key) { return key !== "state"; });
 
 					/*data*/graphic_data.forEach(function(d) {
-					  d.ages = names.map(function(name) { return {name: name, value: +d[name]}; });
+					  //d.ages = names.map(function(name) { return {name: name, value: +d[name]}; });
 					});
 
 						//use pym to create iframed chart dependent on specified variables

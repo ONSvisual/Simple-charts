@@ -28,6 +28,10 @@
 		.key-3 b {margin-top:0px !important; width: 15px !important; background-color: #274796; }
 		.key-4 b {margin-top:0px !important; width: 15px !important; background-color: #979796; }
 
+    #graphic .grid .tick{
+      stroke:#ccc;!important
+    }
+
     </style>
 
 </head>
@@ -84,7 +88,8 @@ function drawGraphic(width) {
 
 
 	var x = d3.scaleBand()
-		.rangeRound([0, chart_width], .1);
+		.rangeRound([0, chart_width], .1)
+    .padding(0.1);
 
 	var y = d3.scaleLinear()
 		.rangeRound([height, 0]);
@@ -93,9 +98,7 @@ function drawGraphic(width) {
 
     x.domain(d3.extent(graphic_data, function(d) { return d.cat; }));
 
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom")
+    var xAxis = d3.axisBottom(x)
         .tickFormat(function(d,i) {
 			if(dvc.essential.dateFormat!=""){
             	if(chart_width <= threshold_sm){
@@ -214,8 +217,6 @@ function drawGraphic(width) {
 	   })
 	  .style("opacity", 0.85);
 
-
-
 	  writeAnnotation();
 
 		function writeAnnotation(){
@@ -275,7 +276,7 @@ function drawGraphic(width) {
 								var tspan = d3.select(this).append('tspan').text(words[j]);
 								if (j > 0)
 									tspan.attr('x', function(){ if(dvc.essential.dateFormat!=""){
-										return x(d3.timeParse(dvc.essential.dateFormat).(dvc.essential.annotationXY[i][0]))
+										return x(d3.timeParse(dvc.essential.dateFormat)(dvc.essential.annotationXY[i][0]))
 										} else {
 										return x(dvc.essential.annotationXY[i][0])
 										}})

@@ -143,6 +143,7 @@
 		    var y_axis_grid = function() { return yAxis; }
 
 		    var line = d3.line()
+            .defined(function(d){return d.amt;})
 		        .x(function(d) { return x(d.date); })
 		        .y(function(d) { return y(d.amt); });
 
@@ -376,7 +377,7 @@
 														.attr("cy", function(d){
 																					return y(d[column]);
 																				})
-														.attr("r", 3)
+														.attr("r", function(d){if(d[column]!=0){return 3}else{return 0}})
 													j++;
 													}
 												} // ends if

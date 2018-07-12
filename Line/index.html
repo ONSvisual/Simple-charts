@@ -142,8 +142,12 @@
 		    //gridlines
 		    var y_axis_grid = function() { return yAxis; }
 
+        var counter;
+
+
 		    var line = d3.line()
-            .defined(function(d){return d.amt;})
+            .defined(function(d){return d.amt || d.amt !== '0';})
+            .curve(d3.curveLinear)
 		        .x(function(d) { return x(d.date); })
 		        .y(function(d) { return y(d.amt); });
 
@@ -158,6 +162,24 @@
 		            };
 		        });
 		    }
+
+
+        // do some code to overwrite blanks with the last known point
+        keys=d3.keys(lines)
+        for(i=0;i<keys.length;i++){
+          // console.log(lines[keys[i]])
+          lines[keys[i]].forEach(function(d,j){
+            if(d.amt!="null"){
+              counter = j;
+            }else{
+              d.date=lines[keys[i]][counter].date
+              d.amt=lines[keys[i]][counter].amt
+            }
+
+          })
+
+        }
+
 
 		  	//y domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
 	   		if (dvc.essential.yAxisScale == "auto_zero_max"){
@@ -345,7 +367,7 @@
 
 				//create lines
 			    svg.append('g').selectAll('path')
-			        .data(d3.entries(lines))
+			        .data(d3.entries(lines).filter(line.defined()))
 			        .enter()
 			        .append('path')
 			            //.attr('class', 'line')
@@ -358,6 +380,8 @@
 			                return line(d.value);
 			            });
 
+
+
 				// add markers
 				if (parseInt(graphic.style("width")) > threshold_sm && dvc.optional.lineMarkers == true){
 					var j=0;
@@ -365,7 +389,7 @@
 								if (column == 'date') continue;
 													 svg.append("g")
 														.selectAll("circles")
-														.data(graphic_data) // raw data
+														.data(lines[column]) // raw data
 														.enter()
 														.append('circle')
 														.style('fill', '#fff')
@@ -375,7 +399,7 @@
 																					return x(d.date);
 																				})
 														.attr("cy", function(d){
-																					return y(d[column]);
+																					return y(d.amt);
 																				})
 														.attr("r", function(d){if(d[column]!=0){return 3}else{return 0}})
 													j++;

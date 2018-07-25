@@ -339,7 +339,7 @@ function drawGraphic(){
         function tip (d) {
           annotationtip = d3.annotation()
           .type(d3.annotationCalloutCircle)
-          .annotations([d].map( d =>  {
+          .annotations([d].map( function(d){
             return {
               data: {x:d.data[0],y:d.data[1]},
               dx: (d[0] > chart_width/2) ? -50 : 50,
@@ -356,7 +356,7 @@ function drawGraphic(){
 
             };
           }))
-          .accessors({ x: d => x(d.x)+margin.left, y: d => y(d.y)+margin.top})
+          .accessors({ x: function(d){return x(d.x)+margin.left}, y: function(d){return y(d.y)+margin.top}})
           tipg.call(annotationtip);
         }
 
@@ -396,7 +396,8 @@ function drawGraphic(){
           .on('mouseout', function() { focus.style('display', 'none'); tipg.selectAll("g").remove(); })
           .on('mousemove', function() {
 
-              var [mx, my] = d3.mouse(this);
+              //var [mx, my] = d3.mouse(this); ES6 version
+              var mx = d3.mouse(this)[0], my = d3.mouse(this)[1]
 
 
               // use the new diagram.find() function to find the Voronoi site

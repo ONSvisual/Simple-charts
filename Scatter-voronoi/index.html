@@ -48,6 +48,11 @@
           width: 500;
         }
 
+        .annotation-note-bg {
+          fill: #EAEAEA !important;
+          fill-opacity: 0.8 !important;
+        }
+
     </style>
 </head>
 <body>
@@ -339,6 +344,11 @@ function drawGraphic(){
           }))
           .accessors({ x: function(d){return x(d.x)+margin.left}, y: function(d){return y(d.y)+margin.top}})
           tipg.call(annotationtip);
+
+          d3.select("rect.annotation-note-bg").attr("fill","#eee").attr("fill-opacity",1).attr("opacity",0.9).attr("rx",5).attr("ry",5).attr("stroke","#eee").attr("stroke-width","10px");
+          d3.select(".annotation-note-label").attr("fill","#666");
+          d3.select(".annotation-note-title").attr("fill","#666");
+
         }
 
       //voronoi

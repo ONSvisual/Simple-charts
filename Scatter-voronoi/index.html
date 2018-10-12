@@ -28,7 +28,7 @@
           display: none;
         }
 
-        .overlay1 {
+        .overlay {
             fill: none;
             stroke: none;
             pointer-events: all;
@@ -308,13 +308,13 @@ function drawGraphic(){
                     .text(d.text)
                     .call(wrap,dvc.essential.textAnnotationWrap);
                   })
-
-          svg.append('g')
-           .append('rect')
-           .attr("class","overlay")
-           .attr("width",chart_width)
-           .attr("height",height)
-           .attr("opacity",0)
+          // 
+          // svg.append('g')
+          //  .append('rect')
+          //  .attr("class","overlay")
+          //  .attr("width",chart_width)
+          //  .attr("height",height)
+          //  .attr("opacity",0)
 
 //d3-annotations tooltips(from https://bl.ocks.org/Fil/17fc857c3ce36bf8e21ddefab8bc9af4/167bce6e2b706016004a3baf14f838203646a27a)
 
@@ -375,10 +375,16 @@ function drawGraphic(){
 
       if ( parseInt(graphic.style("width")) > dvc.optional.mobileBreakpoint ) {
 
-      svg.select('.overlay')
+      svg.append('rect')
           .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
-          .attr('width', chart_width)
-          .attr('height', height)
+         .attr("class","overlay")
+         .attr("width",chart_width)
+         .attr("height",height)
+         .attr("opacity",0)
+      // svg.select('.overlay')
+          //
+          // .attr('width', chart_width)
+          // .attr('height', height)
           .on('mouseover', function() { focus.style('display', null); })
           .on('mouseout', function() { focus.style('display', 'none'); tipg.selectAll("g").remove(); })
           .on('mousemove', function() {

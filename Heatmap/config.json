@@ -1,13 +1,11 @@
 {
     "essential" : {
             "graphic_data_url": "data.csv",
-            "other_data_url": "rank.csv",
             "sourceText":["ONS International Trade in Services"],
             "sourceURL":["https://www.ons.gov.uk"],
             "varcolour": ["#f03b20","#ffffb2","#fecc5c","#fd8d3c","#bd0026"],
-            "numberBreaks":5,
+            "numberBreaks":4,
             "breaks":[0,5,10,40,70],
-			      "brickHeight": 2,
             "brickRatio_S_M_L":[0.22,0.5,0.7],
             "unittext":"NUTS1 share of product: ",
             "tooltipFormat":",.1f"

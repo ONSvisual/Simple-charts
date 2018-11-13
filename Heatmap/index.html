@@ -37,15 +37,10 @@
 			}
 			#infoPanel
 				{
-					/*background-color:#ffe;
-					width: 100%;
-					height:100px;*/
+
 					top:30px;
 					padding: 0px 0px 20px 10px;
-					/*
-					top:0px;
-					padding: 0px 0px 10px 0px;
-					*/
+
 				}
 				.infoText{
 							position:relative;
@@ -92,22 +87,6 @@
 							text-align:left;
 						}
 
-		/*@media screen and (max-width: 767px) {
-			#key{
-	  			height:70px;
-				width:100%;
-			}
-			#infoPanel
-				{
-					top:0px;
-					padding: 0px 0px 10px 0px;
-				}
-
-			.figures{
-						font-size: 14px;
-						font-weight:300;
-					}
-		}*/
 		@media screen and (max-width: 500px) {
 				.infoText{
 						font-size: 14px;
@@ -126,20 +105,12 @@
     	#graphic
 		{
 				position: relative;
-				/*width: 100%;*/
-				/*height: 80px;*/
-				/*background-color: #ddd;
-				margin: 10px 10px 10px 10px;*/
 		}
 			#grid
 			{
 					position: relative;
-					/*background-color: #eee;*/
 			}
-		.square {
-			/*stroke:#ffffff;
-			stroke-width:1px;	*/
-		}
+
 		.highlighted {
 			stroke:#07b3a6;
 			stroke-width:2.2px;
@@ -371,17 +342,7 @@
 						.attr("class", "infoText")// col-sm-2 col-xs-3 text-center")
 						.attr("id", "info")
 						.html("&nbsp;");
-//					d3.select("#infoPanel")
-//						.append("div")
-//						.attr("class", "infoText col-sm-2 col-xs-4")
-//						.attr("id", "births")
-//						.text("Product group export");
-//
-//					d3.select("#infoPanel")
-//						.append("div")
-//						.attr("class", "infoText col-sm-2 col-xs-3 text-center")
-//						.attr("id", "info")
-//						.html("&nbsp;");
+
 
 				createKey();
 
@@ -527,9 +488,6 @@ function createKey(){
 				//load chart data
 				d3.csv(dvc.essential.graphic_data_url, function(error, data) {
 				graphic_data = data;
-
-						//d3.csv(dvc.essential.other_data_url, function(error, data2) {
-						//rank_data = data2;
 
 									//use pym to create iframed chart dependent on specified variables
 									pymChild = new pym.Child({ renderCallback: drawGraphic});

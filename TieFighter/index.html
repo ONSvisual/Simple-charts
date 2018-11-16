@@ -83,12 +83,12 @@
 
 			var y = d3.scalePoint()
 			.range([0, height], .3);
-				//.rangeRoundBands([0, height]);  // .1
-		    y.domain(graphic_data.map(function(d) { return d.name; }));
 
-		    var yAxis = d3.axisLeft(y)
+	    y.domain(graphic_data.map(function(d) { return d.name; }));
 
-		    var xAxis = d3.axisBottom(x);
+	    var yAxis = d3.axisLeft(y)
+
+	    var xAxis = d3.axisBottom(x);
 
 			//specify number or ticks on x axis
 			if (parseInt(graphic.style("width")) <= threshold_sm) {
@@ -100,49 +100,39 @@
 			 }
 
 
-		          lines = graphic_data.map(function(d,i) {  //console.log(d + " " +i);
-		            return {
-					//	lines.x: csv.column_headings
-		                'name': d.name,   // might not need since we mapped it in y.domain earlier
-		                'mymin': +d.imin,   // + changes string to numeric.
-						'mymax': +d.imax,
-						'mymedian': +d.median
-		            };
-		        });
+        lines = graphic_data.map(function(d,i) {  //console.log(d + " " +i);
+            return {
+                'name': d.name,   // might not need since we mapped it in y.domain earlier
+                'mymin': +d.imin,   // + changes string to numeric.
+    						'mymax': +d.imax,
+    						'mymedian': +d.median
+            };
+        });
 
 				var memax = d3.max(lines, function(d){
 													return d.mymax;
 													});
-				//console.log("memax: "+memax);
 
 				var memin = d3.min(lines, function(d){
 													return d.mymin;
 													});
-				console.log("memin: "+memin+"  memax: "+memax);
 
 				//x domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
 					if (dvc.essential.xAxisScale == "auto_zero_max" ){
 					var xDomain = [	0, Math.ceil(d3.max(lines, function(d){
 															return d.mymax;
 																		}))];
-
-
 					}
 					else if (dvc.essential.xAxisScale == "auto_min_max" )
 					{
 					var xDomain = [ Math.floor(d3.min(lines, function(d){return d.mymin;})),
 									Math.ceil(d3.max(lines, function(d){return d.mymax;}))
 								  ];
-
-					/*var yDomain = [ Math.floor(d3.min(dvc.yData)/dvc.essential.yAxisScaleDivisor)*dvc.essential.yAxisScaleDivisor , Math.ceil(d3.max(dvc.yData)/dvc.essential.yAxisScaleDivisor)*dvc.essential.yAxisScaleDivisor ];*/
-
 					} else {
 					  var xDomain = dvc.essential.xAxisScale;
 					  var yDomain = dvc.essential.yAxisScale;
-
 					}
 
-				console.log(xDomain);
 			    x.domain(xDomain);
 
 			// sort these hardwired numbers maybe through the dimensions above
@@ -170,7 +160,7 @@
 				    svg.append('g')
 				        .attr('class', 'x axis')
 				        .attr("transform", "translate(0, "+height+")")
-				        .call(xAxis.tickSize(-height, 0))
+				        .call(xAxis.tickSize(-height, 0).tickPadding(15))
 						.selectAll("line")
 						.style("stroke","#E5E6E7");
 
@@ -183,19 +173,9 @@
 						 .style("text-anchor", "end")
 						 .text(dvc.essential.xAxisLabel);
 
-//move the x number down a bit
-             d3.selectAll(".tick").select("text").attr("transform","translate(0,15)")
-
-					//create y axis, if x axis doesn't start at 0 drop x axis accordingly
+					//create y axis
 					svg.append('g')
 				        .attr('class', 'y axis')
-				        .attr('transform', function(d){
-				        			if(xDomain[0] != 0){
-										return 'translate(' + ( -30) + ',0)'
-									} else {
-										return 'translate(' + 0  + ', 0)'
-									}
-							})
 				        .call(yAxis);
 
 						d3.select(".y.axis").selectAll("line").remove();
@@ -209,9 +189,6 @@
 
 
 						var paths = svg.append("defs")
-
-
-
 
 						svg.append("defs").append("marker")
 								.attr("id","triangleStart")
@@ -243,15 +220,12 @@
 
 	function tieFight()
 		{
-			//console.log("ball "+ ball);
 
 			svg.append('g').attr("class","line").selectAll('.line')
 					.data(lines) //  ["value"]
 					.enter()
 					.append('line')
 					.attr('class', 'tiefighter')
-					//.attr("marker-end",  "url(#triangleEnd)")
-					//.attr("marker-start",  "url(#triangleStart)")
 					.style("stroke","#414042")
 					.attr('y1', function(d,i) { //console.log("y1 "+i+" "+y(d.name));
 												return y(d.name); })
@@ -312,9 +286,6 @@
 
 					//if not only drawing two dots, draw the median dot.
 					if(dvc.essential.minmaxonly=="true"){}else{
-						columnH = d3.keys(graphic_data[0]).filter(function(key) { return key;});
-						if (columnH[3] == "median")
-						{
 							svg.append('g').selectAll('.med')
 							.data(lines)
 							.enter()
@@ -324,13 +295,7 @@
 							.attr('cx',function(d,i) { return x(d.mymedian); })
 							.attr('cy',function(d,i) {return y(d.name); })
 							.attr('r', ball*1.5);
-							}
 					}
-
-
-
-
-
 
 			}
 

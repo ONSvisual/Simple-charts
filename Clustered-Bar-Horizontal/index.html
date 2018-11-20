@@ -153,22 +153,7 @@
 			yAxis.tickValues(y0(dvc.optional.y_num_ticks_sm_md_lg[2]));
 		}
 
-			//create centre line if required
-			if (dvc.optional.centre_line == true){
-				svg.append("line")
-					.attr("id","centreline")
-					.attr('y1',y(dvc.optional.centre_line_value))
-					.attr('y2',y(dvc.optional.centre_line_value))
-					.attr('x1',0)
-					.attr('x2',chart_width);
-			} else if(xDomain[0] <0){
-				svg.append("line")
-					.attr("id","centreline")
-					.attr('y1',0)
-					.attr('y2',height)
-					.attr('x1',x(0))
-					.attr('x2',x(0));
-			}
+
 
 			svg.append("g")
 				.attr("class", "x axis")
@@ -432,6 +417,22 @@
 			  	.style("fill", function(d) { return color(d.name); })
 			  	.style("opacity", 0.75);
 
+      //create centre line if required
+			if (dvc.optional.centre_line == true){
+				svg.append("line")
+					.attr("id","centreline")
+					.attr('x1',x(dvc.optional.centre_line_value))
+					.attr('x2',x(dvc.optional.centre_line_value))
+					.attr('y1',0)
+					.attr('y2',height);
+			} else if(xDomain[0] <0){
+				svg.append("line")
+					.attr("id","centreline")
+					.attr('y1',0)
+					.attr('y2',height)
+					.attr('x1',x(0))
+					.attr('x2',x(0));
+			}
 
 			d3.selectAll("path").attr("fill","none");
 

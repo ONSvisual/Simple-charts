@@ -53,7 +53,7 @@
 
             "x_num_ticks_sm_md_lg" : [7,17,17],
             "y_num_ticks_sm_md_lg" : [6,8,10],
-            "centre_line" : false,
-            "centre_line_value" : 0
+            "centre_line" : true,
+            "centre_line_value" : 10
     }
 }

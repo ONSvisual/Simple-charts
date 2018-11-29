@@ -196,8 +196,8 @@
 				                .attr("refX", 0)
 				                .attr("refY", 5)
 				                .attr("markerUnits", "strokeWidth")
-				                .attr("markerWidth", 20)
-				                .attr("markerHeight", 20)
+				                .attr("markerWidth", 8)
+				                .attr("markerHeight", 8)
 				                .attr("orient", "auto")
 				                .append("path")
 				                .attr("d", "M 0 5 L 10 10 L 10 0 z")
@@ -209,8 +209,8 @@
 				                .attr("refX", 10)
 				                .attr("refY", 5)
 				                .attr("markerUnits", "strokeWidth")
-				                .attr("markerWidth", 20)
-				                .attr("markerHeight", 20)
+				                .attr("markerWidth", 8)
+				                .attr("markerHeight", 8)
 				                .attr("orient", "auto")
 				                .append("path")
 				                .attr("d", "M 10 5 L 0 0 L 0 10 z")
@@ -236,16 +236,24 @@
 
 			// this code looks to draw arrows on the lines if specified in the
 			if(dvc.essential.arrows=="start"){
-			d3.select("g.line").selectAll("line")
-			.attr("marker-start",  "url(#triangleStart)")
+  			d3.select("g.line").selectAll("line")
+  			.attr("marker-start",  "url(#triangleStart)")
 			}else if (dvc.essential.arrows=="end"){
-			d3.select("g.line").selectAll("line")
-			.attr("marker-end",  "url(#triangleEnd)")
+  			d3.select("g.line").selectAll("line")
+  			.attr("marker-end",  "url(#triangleEnd)")
 			}else if (dvc.essential.arrows=="both"){
-			d3.select("g.line").selectAll("line")
-			.attr("marker-end",  "url(#triangleEnd)")
-			.attr("marker-start",  "url(#triangleStart)")
-			}else{}
+  			d3.select("g.line").selectAll("line")
+  			.attr("marker-end",  "url(#triangleEnd)")
+  			.attr("marker-start",  "url(#triangleStart)")
+      }else if(dvc.essential.arrows=="lowtohigh"){
+        d3.selectAll('.line')
+        .data(lines)
+        .attr("marker-end",function(d){if(d.mymin<d.mymax){return "url(#triangleEnd)"}else{return "url(#triangleStart)"}})
+      }else if(dvc.essential.arrows=="hightolow"){
+        d3.selectAll('.line')
+        .data(lines)
+        .attr("marker-end",function(d){if(d.mymin>d.mymax){return "url(#triangleEnd)"}else{return "url(#triangleStart)"}})
+      }
 
 
 

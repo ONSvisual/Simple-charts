@@ -24,9 +24,9 @@
                 "middle",
                 "middle"
             ],
-      			"minmaxonly":"true",
+      			"minmaxonly":"false",
       			"arrows":"starttoend",
-
+            "tooltip":"true",
             "xAxisLabel":"Amount",
             "yAxisLabel":"Regions and Countries",
             "xAxisScale":"auto_min_max"

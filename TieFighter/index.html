@@ -26,6 +26,9 @@
     .x.axis path {
       display: none;
     }
+    .focusCircle {
+        fill: red;
+    }
 
     </style>
 </head>
@@ -42,7 +45,8 @@
    <div class="footer">
    </div>
 
-    <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js" type="text/javascript"></script>
+    <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.1.0/d3-annotation.js" type="text/javascript"></script>
     <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
     <script src="../lib/pym.js" type="text/javascript"></script>
     <script>
@@ -304,7 +308,93 @@
 							.attr('r', ball*1.5);
 					}
 
-			}
+          if(dvc.essential.tooltip=="true"){
+          //d3-annotations tooltips(from https://bl.ocks.org/Fil/17fc857c3ce36bf8e21ddefab8bc9af4/167bce6e2b706016004a3baf14f838203646a27a)
+
+          // create a container for tooltips
+          tipg = svg.append("g")
+            .attr("class", "annotation-tip");
+
+            // this function will call d3.annotation when a tooltip has to be drawn
+              function tip (d) {
+                annotationtip = d3.annotation()
+                .type(d3.annotationLabel)
+                .annotations([d].map( function(d){
+                  return {
+                    data: {x:d.data[1],y:d.data[0]},
+                    // dx: 0,
+                    dy: (d[1] > height/2) ? -1 : 6,
+                    note: {
+                       title: d.data[1] || "??",
+                    },
+                    disable: ["connector", "subject"]
+
+                  };
+                }))
+                .accessors({ x: function(d){return x(d.x)}, y: function(d){return y(d.y)}})
+                tipg.call(annotationtip);
+
+                d3.select("rect.annotation-note-bg").attr("fill","#eee").attr("fill-opacity",1).attr("opacity",0.9).attr("rx",5).attr("ry",5).attr("stroke","#eee").attr("stroke-width","10px");
+              }
+
+          //make data for voronoi
+          var makingdata=[]
+          makingdata.push(makedata());
+          function makedata(){
+            var keys = Object.keys(graphic_data[0])
+            var data=[];
+            for(i=0;i<graphic_data.length;i++){
+              for(j=1;j<keys.length;j++)
+              {
+                data.push([graphic_data[i][keys[0]],graphic_data[i][keys[j]]])
+              }
+            }
+            return data;
+          }
+
+          var vorData=d3.merge(makingdata)
+          var voronoi = d3.voronoi()
+              .y(function(d) {return y(d[0]); })
+              .x(function(d) {return x(d[1]); })
+              .size([chart_width, height])(vorData);
+
+          var voronoiRadius = chart_width;
+
+          var focus = svg.append('g').style('display', 'none');
+
+          focus.append('circle')
+              .attr('id', 'focusCircle')
+              .attr('r', 8)
+              .attr('class', 'circle focusCircle');
+
+          svg.append('rect')
+              // .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
+              .attr("class","overlay")
+              .attr("width",chart_width)
+              .attr("height",height)
+              .attr("opacity",0)
+              .on('mouseover', function() { focus.style('display', null); })
+              .on('mouseout', function() { focus.style('display', 'none'); tipg.selectAll("g").remove();})
+              .on('mousemove', function() {
+
+                  //var [mx, my] = d3.mouse(this); ES6 version
+                  var mx = d3.mouse(this)[0], my = d3.mouse(this)[1]
+
+                  // use the new diagram.find() function to find the Voronoi site
+                  // closest to the mouse, limited by max distance voronoiRadius
+                  var site = voronoi.find(mx, my, voronoiRadius);
+
+                  var xpos = site[0];
+                  var ypos = site[1];
+
+                  focus.select('#focusCircle')
+                      .attr('cx', xpos)
+                      .attr('cy', ypos);
+
+                  tip(site);//tooltip stuff
+              })
+            }//end if tooltip
+			}//end tieFight
 
 
 					//create centre line if required

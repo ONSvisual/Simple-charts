@@ -20,31 +20,26 @@
     .key-0 b {
       margin-top: 0px !important;
       width: 15px !important;
-      background-color: #E73f40;
     }
 
     .key-1 b {
       margin-top: 0px !important;
       width: 15px !important;
-      background-color: #7bcae2;
     }
 
     .key-2 b {
       margin-top: 0px !important;
       width: 15px !important;
-      background-color: #f3942f;
     }
 
     .key-3 b {
       margin-top: 0px !important;
       width: 15px !important;
-      background-color: #274796;
     }
 
     .key-4 b {
       margin-top: 0px !important;
       width: 15px !important;
-      background-color: #979796;
     }
 
     #graphic .grid .tick {
@@ -188,6 +183,8 @@
         })
 
       legend.append('b')
+        .style('background-color', function(d,i) {return dvc.essential.colour_palette[i]})
+
       legend.append('label')
         .html(function(d, i) {
           return dvc.essential.legendLabels[i];

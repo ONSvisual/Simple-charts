@@ -16,7 +16,7 @@
             "annotationChart": ["Example annotation"],
             "annotationBullet": ["Example annotation"],
             "annotationXY":[
-                [50,"Private  rented" ]
+                [90,"Private rented" ]
 
             ],
             "annotationAlign":[
@@ -39,9 +39,9 @@
             "margin_md": [20, 5, 35, 60],
             "margin_lg": [20, 5, 35, 60],
 
-            "aspectRatio_sm" : [16,10],
+            "aspectRatio_sm" : [16,16],
             "aspectRatio_md" : [16,7],
-            "aspectRatio_lg" : [16,5],
+            "aspectRatio_lg" : [16,10],
 
             "mobileBreakpoint" : 610,
 

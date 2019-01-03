@@ -64,7 +64,6 @@
   <div class="footer">
   </div>
 
-
   <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js" type="text/javascript"></script>
   <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
   <script src="../lib/pym.js" type="text/javascript"></script>
@@ -163,7 +162,9 @@
         })
 
       legend.append('b')
-        .style('background-color', function(d,i) {return dvc.essential.colour_palette[i]})
+        .style('background-color', function(d, i) {
+          return dvc.essential.colour_palette[i]
+        })
 
       legend.append('label')
         .html(function(d, i) {
@@ -195,14 +196,13 @@
 
       x.domain(xDomain);
 
-
       svg.append('g')
-        .attr('class', 'y axis')
+        .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + (height * 1.00) + ')')
         .call(xAxis);
 
       svg.append('g')
-        .attr('class', 'x axis')
+        .attr('class', 'y axis')
         .call(yAxis)
         .append("text")
         .attr("y", height + 23)
@@ -210,6 +210,17 @@
         .attr("dy", ".71em")
         .style("text-anchor", "end")
         .text(dvc.essential.xAxisLabel);
+
+      if (parseInt(graphic.style("width")) < threshold_sm) {
+        d3.selectAll(".y .tick text")
+          .call(wrap, dvc.optional.margin_sm[3]);
+      } else if (parseInt(graphic.style("width")) < threshold_md) {
+        d3.selectAll(".y .tick text")
+          .call(wrap, dvc.optional.margin_md[3]);
+      } else {
+        d3.selectAll(".y .tick text")
+          .call(wrap, dvc.optional.margin_lg[3]);
+      };
 
       svg.append('g')
         .attr('class', 'x grid')
@@ -247,6 +258,57 @@
           return x(d[1]) - x(d[0]);
         })
         .style("opacity", 0.85);
+
+      function wrap(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y"),
+            x = text.attr("x"),
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+          if (words.length > 2) {
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width) {
+                if (lineNumber == 0) {
+                  tspan.attr("dy", dy - 1.1 + "em")
+                } else {
+                  tspan.attr("dy", -dy + 0.55 + "em")
+                }
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                ++lineNumber;
+                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", (0.55 * lineNumber - dy + 0.55) + "em").text(word);
+              }
+            }
+          } else {
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width) {
+                if (lineNumber == 0) {
+                  tspan.attr("dy", dy - 0.55 + "em")
+                } else {
+                  tspan.attr("dy", -dy + 0.55 + "em")
+                }
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                ++lineNumber;
+                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", (1.1 * lineNumber - dy + 0.55) + "em").text(word);
+              }
+            }
+          }
+
+        });
+      }
 
       writeAnnotation();
 
@@ -336,23 +398,23 @@
 
         // If you have labels rather than years then you can split the lines using a double space (in the CSV file).
 
-        function insertLinebreaksLabels() {
-          var str = this.textContent;
+        // function insertLinebreaksLabels() {
+        //   var str = this.textContent;
+        //
+        //   var words = str.split('  ');
+        //
+        //   d3.select(this /*str*/ ).text('');
+        //
+        //   for (var j = 0; j < words.length; j++) {
+        //     var tspan = d3.select(this).append('tspan').text(words[j]);
+        //     if (j > 0)
+        //       tspan
+        //       .attr('x', -10)
+        //       .attr('dy', '1em');
+        //   }
+        // };
 
-          var words = str.split('  ');
-
-          d3.select(this /*str*/ ).text('');
-
-          for (var j = 0; j < words.length; j++) {
-            var tspan = d3.select(this).append('tspan').text(words[j]);
-            if (j > 0)
-              tspan
-              .attr('x', -10)
-              .attr('dy', '1em');
-          }
-        };
-
-        d3.selectAll(".x text").each(insertLinebreaksLabels)
+        // d3.selectAll(".x text").each(insertLinebreaksLabels)
 
       } // end function writeAnnotation()
 

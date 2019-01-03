@@ -24,7 +24,7 @@
                 "middle"
             ],
 
-            "barHeight_sm_md_lg" : [30,30,30],
+            "barHeight_sm_md_lg" : [40,50,90],
 
 
             "xAxisLabel":"%",
@@ -33,11 +33,11 @@
     "optional" : {
             "margin_sm": [5, 20, 5, 135],
             "margin_md": [5, 20, 5, 135],
-            "margin_lg": [5, 20, 5, 135],
+            "margin_lg": [5, 20, 5, 80],
 
             "aspectRatio_sm" : [4,7],
             "aspectRatio_md" : [1,1],
-            "aspectRatio_lg" : [16,10],
+            "aspectRatio_lg" : [16,12],
 
             "mobileBreakpoint" : 510,
 

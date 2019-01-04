@@ -99,7 +99,6 @@
 		        	map_width = parseInt(graphic.style("width"))- chart_width - margin.left - margin.right;
 					height = config2.essential.barHeight_sm_md_lg[2] * data2.length - margin.top - margin.bottom;
 			}
-			console.log(chart_width)
 
 		    // clear out existing graphics
 		   graphic.selectAll("*").remove();
@@ -275,11 +274,10 @@
 					.attr("x", function(d) { return x(Math.min(0, d.amt)); })
 					.attr("y", function(d) { return y(d.AREANM); })
 					.attr("height", y.bandwidth())
-					.attr("class",function(d) { console.log(d); return d.AREACD} )
+					.attr("class",function(d) { return d.AREACD} )
 					.attr("opacity", "0.9")
 					.on("mouseout",unhighlight)
 					.on("mouseover",function(d){
-						console.log(d.AREACD)
 						highlight(d.AREACD);
 					});
 
@@ -497,15 +495,12 @@
 			var values =  data.map(function(d) { return +d.value; }).filter(function(d) {return !isNaN(d)}).sort(d3.ascending);
 
 			// Generate some breaks based on the Jenks algorithm - http://en.wikipedia.org/wiki/Jenks_natural_breaks_optimization
-			console.log(values)
-
 			if(config2.optional.breaks_choice == "jenks"){
 				breaks = ss.jenks(values, config2.optional.number_breaks);
 			} else {
 				breaks = config2.optional.breaks_choice;
 			}
 
-			console.log(breaks)
 		// Set up a colour scaling variable
 		// This time using the jenks breaks we've defined
 			color = d3.scaleThreshold()

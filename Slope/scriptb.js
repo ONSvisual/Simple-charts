@@ -144,15 +144,24 @@
 			.attr("transform", "translate(" + (margin.left*-1) + ",-5)")
       .text(function(d,i) { return dvc.essential.yAxisLabel; });
 
-		svg.append("rect")
-			.attr("class","svgRect")
-			.attr("width", chart_width)
-			.attr("height", height)
+		// svg.append("rect")
+		// 	.attr("class","svgRect")
+		// 	.attr("width", chart_width)
+		// 	.attr("height", height)
 
 		svg.append("text")
-			.attr("x",-margin.left)
+			.attr("class","leftLabel")
+			.attr("x",function (){
+					if(graphic.width() < threshold_sm){
+						return -margin.left;
+					} else {return "-15px"}
+			})
 			.attr("y",-18)
-			.attr("text-anchor","start")
+			.attr("text-anchor",function (){
+					if(graphic.width() < threshold_sm){
+						return "start"
+					} else {return "end"}
+			})
 			.attr("fill","#666")
 			.attr("font-weight", "bold")
 			.style("font-size","14px")
@@ -160,8 +169,8 @@
 
 		svg.append("text")
 			.attr("y",-18)
-			.attr("x",chart_width + margin.right)
-			.attr("text-anchor","end")
+			.attr("x",chart_width + 15)
+			.attr("text-anchor","start")
 			.attr("fill","#666")
 			.attr("font-weight", "bold")
 			.style("font-size","14px")
@@ -200,36 +209,79 @@ if(dvc.essential.slopeType=="value"){
         return line(d.value);
     });
 
+	//Work out if there are duplicate ifValueShowRanks
+		var listL = graphic_data.map(function(d) {return d.leftValue});
+		var listR = graphic_data.map(function(d) {return d.rightValue});
+
+		console.log(listL)
+
+		function countInArray(array, what) {
+		    var count = 0;
+		    for (var i = 0; i < array.length; i++) {
+		        if (array[i] == what) {
+		            count++;
+		        }
+		    }
+		    return count;
+		}
+
+		countInArray(listL, 2); // returns 2
+		console.log(countInArray(listL,"89.6"));
+
+
+  index=0
+
 	linegroups.append('text')
 		.attr("class","labelstext2")
+		.attr("transform", function(d,i) {
+			if(countInArray(listR,d.value[1].amt)>1)
+				{index++; console.log(index); return "translate(0," + index +")"}
+			else {return "translate(0,0)"}
+		})
 		.text(function(d, i) {
 			return d.key + " ("+format1(d.value[1].amt)+")"
 		})
 		.attr('y', function(d,i) {
 			return (y(d.value[1].amt) +5);
 		})
-		.attr('x', chart_width +30)
-		.attr('text-anchor','start');
+		.attr('x', chart_width +15)
+		.attr('text-anchor','start')
+    .call(function(){arrangeLabels("labelstext2")})
 
+	index=0
 	linegroups.append('text')
 		.attr("class","labelstext desk")
+		.attr("transform", function(d,i) {
+			if(countInArray(listL,d.value[0].amt)>1)
+				{index++; console.log(index); return "translate(0," + index +")"}
+			else {return "translate(0,0)"}
+		})
 		.text(function(d, i) {
 					return d.key + " ("+format1(d.value[0].amt)+")"
 		})
 		.attr('y', function(d) {
 			return (y(d.value[0].amt)+5);
 		})
-		.attr('x', -25)
-		.attr('text-anchor','end');
+		.attr('x', -15)
+		.attr('text-anchor','end')
+		.call(function(){arrangeLabels("desk")})
 
+	index=0
 	linegroups.append('text')
 		.attr("class","labelstext mob")
+		.attr("transform", function(d,i) {
+			if(countInArray(listL,d.value[0].amt)>1)
+				{index++; console.log(index); return "translate(0," + index +")"}
+			else {return "translate(0,0)"}
+		})
 		.text(function(d){return "("+format1(d.value[0].amt)+")"})
 		.attr('y', function(d) {
 			return (y(d.value[0].amt)+5);
 		})
-		.attr('x', -25)
-		.attr('text-anchor','end');
+		.attr('x', -15)
+		.attr('text-anchor','end')
+    .call(function(){arrangeLabels("mob")})
+
 
 	if(dvc.essential.ifValueShowRanks==true){
 		for (var j = 0; j < lines[0].rank.length; j++) {
@@ -414,11 +466,85 @@ d3.selectAll(".rectno0")
 
 //create link to source
 d3.select(".footer").append("p")
-	.text("Source: ")
-	.append("a")
-	.attr("href", dvc.essential.sourceURL)
-	.attr("target", "_blank")
-	.html(dvc.essential.sourceText);
+	.text("Source: " + dvc.essential.sourceText)
+	.style("font-weight",700)
+	.style("font-size", "16px")
+	.style("color","#323132")
+
+
+	function arrangeLabels(classname) {
+        var move = 1;
+        while (move > 0) {
+          move = 0;
+          d3.selectAll("." + classname)
+            .each(function(d, i) {
+              var that = this,
+                a = this.getBoundingClientRect();
+
+              d3.selectAll("." + classname)
+                .each(function() {
+                  if (this != that) {
+                    var b = this.getBoundingClientRect();
+                    if ((Math.abs(a.top - b.top) * 2.5 < (a.height + b.height))) {
+                      // overlap, move labels
+                      var dx = (Math.max(0, a.right - b.left) +
+                          Math.min(0, a.left - b.right)) * 0.01,
+                        dy = (Math.max(0, a.bottom - b.top) +
+                          Math.min(0, a.top - b.bottom)) * 0.03;
+
+                      tt = getTransformation(d3.select(this).attr("transform")),
+                        to = getTransformation(d3.select(that).attr("transform"));
+
+                      move += Math.abs(dx) + Math.abs(dy);
+
+                      to.translateY = [0, to.translateY + dy];
+                      tt.translateY = [0, tt.translateY - dy];
+
+                      d3.select(this).attr("transform", "translate(" + tt.translateY + ")");
+                      d3.select(that).attr("transform", "translate(" + to.translateY + ")");
+                      a = this.getBoundingClientRect();
+                    }
+                  }
+                });
+            });
+        }
+      } // end of arangeLabels
+
+        function getTransformation(transform) {
+          // Create a dummy g for calculation purposes only. This will never
+          // be appended to the DOM and will be discarded once this function
+          // returns.
+          var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+          // Set the transform attribute to the provided string value.
+          g.setAttributeNS(null, "transform", transform);
+
+          // consolidate the SVGTransformList containing all transformations
+          // to a single SVGTransform of type SVG_TRANSFORM_MATRIX and get
+          // its SVGMatrix.
+          var matrix = g.transform.baseVal.consolidate().matrix;
+
+          // Below calculations are taken and adapted from the private function
+          // transform/decompose.js of D3's module d3-interpolate.
+       		// ES6, if this doesn't work, use below assignment
+
+					var a=matrix.a, b=matrix.b, c=matrix.c, d=matrix.d, e=matrix.e, f=matrix.f; // ES5
+          var scaleX, scaleY, skewX;
+          if (scaleX = Math.sqrt(a * a + b * b)) a /= scaleX, b /= scaleX;
+          if (skewX = a * c + b * d) c -= a * skewX, d -= b * skewX;
+          if (scaleY = Math.sqrt(c * c + d * d)) c /= scaleY, d /= scaleY, skewX /= scaleY;
+          if (a * d < b * c) a = -a, b = -b, skewX = -skewX, scaleX = -scaleX;
+          return {
+            translateX: e,
+            translateY: f,
+            rotate: Math.atan2(b, a) * 180 / Math.PI,
+            skewX: Math.atan(skewX) * 180 / Math.PI,
+            scaleX: scaleX,
+            scaleY: scaleY
+          };
+        } // end of getTrnsformatio
+
+
 
 //use pym to calculate chart dimensions
   if (pymChild) {
@@ -441,6 +567,7 @@ if (Modernizr.svg) {
 		//load chart data
 		d3.csv(dvc.essential.dataFile, function(error, data) {
 			graphic_data = data;
+			console.log(graphic_data)
 
 			//use pym to create iframed chart dependent on specified variables
 			pymChild = new pym.Child({ renderCallback: drawGraphic});

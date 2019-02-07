@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <title></title>
 
     <meta name="description" content="">
@@ -12,18 +12,24 @@
 
     <link rel="stylesheet" href="../lib/globalStyle.css" />
     <style type="text/css">
-	
-    	.line_pos { fill: #F5942F; }
-        .line_neg { fill: #7BCAE2; }
-         .circle1 { fill: #7BCAE2; }
-		 .circle2 { fill: #C33; }
-		 .med { fill: #F5942F; }
-		 
+
 		.background0 { background: #F5942F; }
-        .background1 { background: #7BCAE2; }        
-    	
-		
-		/*#circle1{ fill:#7BCAE2;!important }*/
+        .background1 { background: #7BCAE2; }
+		#triangleEnd{
+			fill:black;
+		}
+
+		#triangleStart{
+			fill:black;
+		}
+
+    .x.axis path {
+      display: none;
+    }
+    .focusCircle {
+        fill: red;
+    }
+
     </style>
 </head>
 <body>
@@ -31,15 +37,16 @@
 	<div id="graphic">
     	<img src="fallback.png" alt="[Chart]" />
     </div>
-	    
+
     <div id="keypoints">
         <p></p>
     </div>
 
-   <div class="footer">        
+   <div class="footer">
    </div>
-    
-    <script src="../lib/d3.v3.5.17.min.js" type="text/javascript"></script>
+
+    <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.1.0/d3-annotation.js" type="text/javascript"></script>
     <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
     <script src="../lib/pym.js" type="text/javascript"></script>
     <script>
@@ -52,45 +59,41 @@
 		function drawGraphic() {
 		   var threshold_md = 788;
 		   var threshold_sm = dvc.optional.mobileBreakpoint; // 510
-		  
+
 		  	//set variables for chart dimensions dependent on width of #graphic
-		    if (parseInt(graphic.style("width")) < threshold_sm) {  var ball = 4;     	
-		            var margin = {top: dvc.optional.margin_sm[0], right: dvc.optional.margin_sm[1], bottom: dvc.optional.margin_sm[2], left: dvc.optional.margin_sm[3]}; 
+		    if (parseInt(graphic.style("width")) < threshold_sm) {  var ball = 4;
+		            var margin = {top: dvc.optional.margin_sm[0], right: dvc.optional.margin_sm[1], bottom: dvc.optional.margin_sm[2], left: dvc.optional.margin_sm[3]};
 					var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
 		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
-		    } else if (parseInt(graphic.style("width")) < threshold_md){  var ball = 4; 
-		        	var margin = {top: dvc.optional.margin_md[0], right: dvc.optional.margin_md[1], bottom: dvc.optional.margin_md[2], left: dvc.optional.margin_md[3]}; 
+		    } else if (parseInt(graphic.style("width")) < threshold_md){  var ball = 4;
+		        	var margin = {top: dvc.optional.margin_md[0], right: dvc.optional.margin_md[1], bottom: dvc.optional.margin_md[2], left: dvc.optional.margin_md[3]};
 					var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
 		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
-		  	} else {  var ball = 5; 
+		  	} else {  var ball = 5;
 		        	var margin = {top: dvc.optional.margin_lg[0], right: dvc.optional.margin_lg[1], bottom: dvc.optional.margin_lg[2], left: dvc.optional.margin_lg[3]}
 					var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
 		            var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
 			}
-			
-				
-				
+
+
+
 		    // clear out existing graphics
 			graphic.selectAll("*").remove();
 			keypoints.selectAll("*").remove();
 			footer.selectAll("*").remove();
-					
-			var x = d3.scale.linear()
+
+			var x = d3.scaleLinear()
 		        .range([ 0, chart_width]);
 
-			var y = d3.scale.ordinal()
-			.rangePoints([0, height], .3);
-				//.rangeRoundBands([0, height]);  // .1
-		    y.domain(graphic_data.map(function(d) { return d.name; }));
+			var y = d3.scalePoint()
+			.range([0, height], .3);
 
-		    var yAxis = d3.svg.axis()
-		        .scale(y)
-		        .orient("left")
-		    
-		    var xAxis = d3.svg.axis()
-		        .scale(x)
-		        .orient('bottom');
-		    			    
+	    y.domain(graphic_data.map(function(d) { return d.name; }));
+
+	    var yAxis = d3.axisLeft(y)
+
+	    var xAxis = d3.axisBottom(x);
+
 			//specify number or ticks on x axis
 			if (parseInt(graphic.style("width")) <= threshold_sm) {
 				xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[0])
@@ -99,61 +102,51 @@
 			 } else {
 				xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[2])
 			 }
-				
 
-		          lines = graphic_data.map(function(d,i) {  //console.log(d + " " +i); 
-		            return {  
-					//	lines.x: csv.column_headings	
-		                'name': d.name,   // might not need since we mappe it in y.domain earlier
-		                'mymin': +d.imin,   // + changes string to numeric.
-						'mymax': +d.imax,
-						'mymedian': +d.median
-		            };
-		        });
-				
+
+        lines = graphic_data.map(function(d,i) {  //console.log(d + " " +i);
+            return {
+                'name': d.name,   // might not need since we mapped it in y.domain earlier
+                'mymin': +d.imin,   // + changes string to numeric.
+    						'mymax': +d.imax,
+    						'mymedian': +d.median
+            };
+        });
+
 				var memax = d3.max(lines, function(d){
 													return d.mymax;
 													});
-				//console.log("memax: "+memax);
-				
+
 				var memin = d3.min(lines, function(d){
 													return d.mymin;
 													});
-				console.log("memin: "+memin+"  memax: "+memax);
-				
+
 				//x domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
 					if (dvc.essential.xAxisScale == "auto_zero_max" ){
 					var xDomain = [	0, Math.ceil(d3.max(lines, function(d){
 															return d.mymax;
 																		}))];
-										
-					
 					}
 					else if (dvc.essential.xAxisScale == "auto_min_max" )
 					{
 					var xDomain = [ Math.floor(d3.min(lines, function(d){return d.mymin;})),
 									Math.ceil(d3.max(lines, function(d){return d.mymax;}))
 								  ];
-										
-					/*var yDomain = [ Math.floor(d3.min(dvc.yData)/dvc.essential.yAxisScaleDivisor)*dvc.essential.yAxisScaleDivisor , Math.ceil(d3.max(dvc.yData)/dvc.essential.yAxisScaleDivisor)*dvc.essential.yAxisScaleDivisor ];*/
-									
 					} else {
 					  var xDomain = dvc.essential.xAxisScale;
 					  var yDomain = dvc.essential.yAxisScale;
-									
-					}	
-									
-				console.log(xDomain);				
+					}
+
 			    x.domain(xDomain);
-			
+
 			// sort these hardwired numbers maybe through the dimensions above
 				    var legend = d3.select('#graphic').append('svg')
 							.attr("width", chart_width + margin.left + margin.right)
 							.attr("height", height + margin.top + margin.bottom + 30)
 							.append("g")
 							.attr("id", "legend")
-					
-					//create svg for chart						
+
+					//create svg for chart
 					 var svg = d3.select('svg')
 							.attr("id","chart")
 							.style("background-color","#fff")
@@ -162,111 +155,248 @@
 							.append("g")
 							.attr("transform", "translate(" + margin.left + "," + (margin.top+40) + ")")
 
-
-				
 					svg.append("rect")
 						.attr("class","svgRect")
 						.style("fill", "#fff")
 						.attr("width", chart_width)
 						.attr("height", height);
-			    
+
 				    svg.append('g')
 				        .attr('class', 'x axis')
 				        .attr("transform", "translate(0, "+height+")")
-				        .call(xAxis.tickSize(-height, 0)
-)
-						
+				        .call(xAxis.tickSize(-height, 0).tickPadding(15))
+						.selectAll("line")
+						.style("stroke","#E5E6E7");
+
+
 					svg.select(".x.axis")
 					   	 .append("text")
-						 .attr("y", 25)
+						 .attr("y", 35)
 						 .attr("x",chart_width)
 						 .attr("dy", ".71em")
 						 .style("text-anchor", "end")
 						 .text(dvc.essential.xAxisLabel);
-					
-					//create y axis, if x axis doesn't start at 0 drop x axis accordingly	
+
+					//create y axis
 					svg.append('g')
 				        .attr('class', 'y axis')
-				        .attr('transform', function(d){ 
-				        			if(xDomain[0] != 0){
-										return 'translate(' + ( -30) + ',0)'
-									} else {
-										return 'translate(' + 0  + ', 0)'
-									}
-							})
 				        .call(yAxis);
-						
+
 						d3.select(".y.axis").selectAll("line").remove();
-						
+
 						svg.append("text")
 							 .attr('class', 'unit')
 							 .attr('transform',"translate(" + -margin.left + "," + eval(-margin.top) + ")")// + (lineNo+1)*20 or -10
 							 .attr("font-size","12px")
 							 .attr("fill","#666")
 							 .text(dvc.essential.yAxisLabel);
-							 
-							 
-		
+
+
+						var paths = svg.append("defs")
+
+						svg.append("defs").append("marker")
+								.attr("id","triangleStart")
+				                .attr("viewBox", "0 0 20 20")
+				                .attr("refX", 0)
+				                .attr("refY", 5)
+				                .attr("markerUnits", "strokeWidth")
+				                .attr("markerWidth", 8)
+				                .attr("markerHeight", 8)
+				                .attr("orient", "auto")
+				                .append("path")
+				                .attr("d", "M 0 5 L 10 10 L 10 0 z")
+								.style("fill",'#414042');
+
+						svg.append("defs").append("marker")
+								.attr("id","triangleEnd")
+				                .attr("viewBox", "0 0 20 20")
+				                .attr("refX", 10)
+				                .attr("refY", 5)
+				                .attr("markerUnits", "strokeWidth")
+				                .attr("markerWidth", 8)
+				                .attr("markerHeight", 8)
+				                .attr("orient", "auto")
+				                .append("path")
+				                .attr("d", "M 10 5 L 0 0 L 0 10 z")
+								.style("fill","#414042");
+
 		tieFight();
-									
+
 	function tieFight()
 		{
-			//console.log("ball "+ ball);
-			
+
 			svg.append('g').attr("class","line").selectAll('.line')
 					.data(lines) //  ["value"]
 					.enter()
 					.append('line')
-					.attr('class', function(d, i) { 
-			                if ( d.mymin <0 ) { 
-								return 'tiefighter line_neg'; 
-							} else { 
-								return 'tiefighter line_pos'; 
-							}
-			            })
-					.style("stroke","#abc")
-					.attr('y1', function(d,i) { //console.log("y1 "+i+" "+y(d.name));	
+					.attr('class', 'tiefighter')
+					.style("stroke","#414042")
+					.attr('y1', function(d,i) { //console.log("y1 "+i+" "+y(d.name));
 												return y(d.name); })
 					.attr('y2', function(d) { return y(d.name); })
 					.attr('x1', function(d,i) { //console.log("x1 "+i+" "+x(d.mymin));
 												return x(d.mymin); })  //d.mymin
 					.attr('x2', function(d) { return x(d.mymax); });
 
-					//svg.selectAll('.tiefighter')//.append("svg")
+			// this code looks to draw arrows on the lines if specified in the
+			if(dvc.essential.arrows=="start"){
+  			d3.select("g.line").selectAll("line")
+  			.attr("marker-start",  "url(#triangleStart)")
+			}else if (dvc.essential.arrows=="end"){
+  			d3.select("g.line").selectAll("line")
+  			.attr("marker-end",  "url(#triangleEnd)")
+			}else if (dvc.essential.arrows=="both"){
+  			d3.select("g.line").selectAll("line")
+  			.attr("marker-end",  "url(#triangleEnd)")
+  			.attr("marker-start",  "url(#triangleStart)")
+      }else if(dvc.essential.arrows=="lowtohigh"){
+        d3.selectAll('.line')
+        .data(lines)
+        .attr("marker-end",function(d){if(d.mymin<d.mymax){return "url(#triangleEnd)"}else{return "url(#triangleStart)"}})
+      }else if(dvc.essential.arrows=="hightolow"){
+        d3.selectAll('.line')
+        .data(lines)
+        .attr("marker-end",function(d){if(d.mymin>d.mymax){return "url(#triangleEnd)"}else{return "url(#triangleStart)"}})
+      }
+
+
+
 					svg.append('g').selectAll('.circle')
 					.data(lines)
 					.enter()
 					.append('circle')
-					.attr("class","circle1")
-					.attr('cx',function(d,i) { return x(d.mymin); }) 
-					.attr('cy',function(d,i) {return y(d.name); }) 
+					.attr('class',"circlemin")
+					.attr("fill",dvc.essential.colour_palette[0])
+					.attr('cx',function(d,i) { return x(d.mymin); })
+					.attr('cy',function(d,i) {return y(d.name); })
 					.attr('r', ball);
-					
+
+					// if only drawing two dots, make the second dot a different colour
+					if(dvc.essential.minmaxonly=="true")
+					{
 					svg.append('g').selectAll('.circle')
 					.data(lines)
 					.enter()
 					.append('circle')
-					.attr("class","circle1")  // make it .circle2 for different end colour
-					.attr('cx',function(d,i) { return x(d.mymax); }) 
-					.attr('cy',function(d,i) {return y(d.name); }) 
+					.attr('class',"circlemax")
+					.attr("fill",dvc.essential.colour_palette[1])
+					.attr('cx',function(d,i) { return x(d.mymax); })
+					.attr('cy',function(d,i) {return y(d.name); })
 					.attr('r', ball); // (1/lines.length)*40);
-				
-				
-				columnH = d3.keys(graphic_data[0]).filter(function(key) { return key;});
-				if (columnH[3] == "median")
-				{
-					svg.append('g').selectAll('.med')
+					}else{
+					svg.append('g').selectAll('.circle')
 					.data(lines)
 					.enter()
 					.append('circle')
-					.attr("class","med")
-					.attr('cx',function(d,i) { return x(d.mymedian); }) 
-					.attr('cy',function(d,i) {return y(d.name); }) 
-					.attr('r', ball*1.5);
+					.attr('class',"circlemax")
+					.attr("fill",dvc.essential.colour_palette[0])
+					.attr('cx',function(d,i) { return x(d.mymax); })
+					.attr('cy',function(d,i) {return y(d.name); })
+					.attr('r', ball); // (1/lines.length)*40);
 					}
-			}
-					
-					
+
+					//if not only drawing two dots, draw the median dot.
+					if(dvc.essential.minmaxonly=="true"){}else{
+							svg.append('g').selectAll('.med')
+							.data(lines)
+							.enter()
+							.append('circle')
+							.attr("class","circlemed")
+							.attr("fill",dvc.essential.colour_palette[1])
+							.attr('cx',function(d,i) { return x(d.mymedian); })
+							.attr('cy',function(d,i) {return y(d.name); })
+							.attr('r', ball*1.5);
+					}
+
+          if(dvc.essential.tooltip=="true"){
+          //d3-annotations tooltips(from https://bl.ocks.org/Fil/17fc857c3ce36bf8e21ddefab8bc9af4/167bce6e2b706016004a3baf14f838203646a27a)
+
+          // create a container for tooltips
+          tipg = svg.append("g")
+            .attr("class", "annotation-tip");
+
+            // this function will call d3.annotation when a tooltip has to be drawn
+              function tip (d) {
+                annotationtip = d3.annotation()
+                .type(d3.annotationLabel)
+                .annotations([d].map( function(d){
+                  return {
+                    data: {x:d.data[1],y:d.data[0]},
+                    // dx: 0,
+                    dy: (d[1] > height/2) ? -1 : 6,
+                    note: {
+                       title: d.data[1] || "??",
+                    },
+                    disable: ["connector", "subject"]
+
+                  };
+                }))
+                .accessors({ x: function(d){return x(d.x)}, y: function(d){return y(d.y)}})
+                tipg.call(annotationtip);
+
+                d3.select("rect.annotation-note-bg").attr("fill","#eee").attr("fill-opacity",1).attr("opacity",0.9).attr("rx",5).attr("ry",5).attr("stroke","#eee").attr("stroke-width","10px");
+              }
+
+          //make data for voronoi
+          var makingdata=[]
+          makingdata.push(makedata());
+          function makedata(){
+            var keys = Object.keys(graphic_data[0])
+            var data=[];
+            for(i=0;i<graphic_data.length;i++){
+              for(j=1;j<keys.length;j++)
+              {
+                data.push([graphic_data[i][keys[0]],graphic_data[i][keys[j]]])
+              }
+            }
+            return data;
+          }
+
+          var vorData=d3.merge(makingdata)
+          var voronoi = d3.voronoi()
+              .y(function(d) {return y(d[0]); })
+              .x(function(d) {return x(d[1]); })
+              .size([chart_width, height])(vorData);
+
+          var voronoiRadius = chart_width;
+
+          var focus = svg.append('g').style('display', 'none');
+
+          focus.append('circle')
+              .attr('id', 'focusCircle')
+              .attr('r', 8)
+              .attr('class', 'circle focusCircle');
+
+          svg.append('rect')
+              // .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
+              .attr("class","overlay")
+              .attr("width",chart_width)
+              .attr("height",height)
+              .attr("opacity",0)
+              .on('mouseover', function() { focus.style('display', null); })
+              .on('mouseout', function() { focus.style('display', 'none'); tipg.selectAll("g").remove();})
+              .on('mousemove', function() {
+
+                  //var [mx, my] = d3.mouse(this); ES6 version
+                  var mx = d3.mouse(this)[0], my = d3.mouse(this)[1]
+
+                  // use the new diagram.find() function to find the Voronoi site
+                  // closest to the mouse, limited by max distance voronoiRadius
+                  var site = voronoi.find(mx, my, voronoiRadius);
+
+                  var xpos = site[0];
+                  var ypos = site[1];
+
+                  focus.select('#focusCircle')
+                      .attr('cx', xpos)
+                      .attr('cy', ypos);
+
+                  tip(site);//tooltip stuff
+              })
+            }//end if tooltip
+			}//end tieFight
+
+
 					//create centre line if required
 					if (dvc.optional.centre_line == true){
 							svg.append("line")
@@ -275,25 +405,19 @@
 							.attr('y2',height)
 							.attr('x1',x(dvc.optional.centre_line_value))
 							.attr('x2',x(dvc.optional.centre_line_value));
-					
-					} else if(xDomain[0] <0){
-						//svg.append("line")
-						svg.append("line")
-							.attr("id","centreline")
-							.attr('y1',0)
-							.attr('y2',height)
-							.attr('x1',x(0))
-							.attr('x2',x(0));
-					}  	
-					
+
+					} else {}
+
+
+
 			writeAnnotation();
-							
+
 			function writeAnnotation(){
-			
+
 				if (parseInt(graphic.style("width")) < threshold_sm) {
-					
+
 						dvc.essential.annotationBullet.forEach(function(d,i) {
-						
+
 							d3.select("#keypoints").append("svg")
 								.attr("width","20px")
 								.attr("height","20px")
@@ -303,15 +427,15 @@
 								.attr("r", "2")
 								.attr('cy',"12px")
 								.attr("cx", "10px");
-							
+
 							d3.select("#keypoints").append("p").text(dvc.essential.annotationBullet[i]);
-						
+
 						})// end foreach
-				}		
+				}
 				else {
-					
-						dvc.essential.annotationChart.forEach(function(d,i) {	
-						
+
+						dvc.essential.annotationChart.forEach(function(d,i) {
+
 							// draw annotation text based on content of var annotationArray ...
 							svg.append("text")
 								.text(dvc.essential.annotationChart[i])
@@ -319,34 +443,34 @@
 								.attr("text-anchor", dvc.essential.annotationAlign[i])
 								.attr('y',y(dvc.essential.annotationXY[i][1]))
 								.attr('x',x(dvc.essential.annotationXY[i][0]));
-										
+
 							d3.selectAll(".annotext" + (i))
 								.each(insertLinebreaks)
-								.each(createBackRect);	
-								
-								
+								.each(createBackRect);
+
+
 							function insertLinebreaks() {
-								
+
 								var str = this;
-			
+
 								var el1 = dvc.essential.annotationChart[i];
 								var el = el1.data;
-						
+
 								var words = el1.split('  ');
-								
+
 								d3.select(this/*str*/).text('');
-							
+
 								for (var j = 0; j < words.length; j++) {
 									var tspan = d3.select(this).append('tspan').text(words[j]);
 									if (j > 0)
-										tspan.attr('x', x(dvc.essential.annotationXY[i][0])).attr('dy', '22');													
+										tspan.attr('x', x(dvc.essential.annotationXY[i][0])).attr('dy', '22');
 								}
-							};					
-													
+							};
+
 							function createBackRect() {
-								
+
 							var BBox = this.getBBox()
-											
+
 									svg.insert("rect", ".annotext" + (i))
 										.attr("width", BBox.width)
 										.attr("height", BBox.height)
@@ -354,72 +478,72 @@
 										.attr("y", BBox.y)
 										.attr("fill", "white")
 										.attr("opacity", 0.4);
-										
+
 							}; // end function createBackRect()
 
-						});	// end foreach 		
-					
-				} // end else ... 
-				
+						});	// end foreach
+
+				} // end else ...
+
 				// If you have labels rather than years then you can split the lines using a double space (in the CSV file).
-			
-			
+
+
 				function insertLinebreaksLabels() {
 								var str = this.textContent;
-			
+
 								var words = str.split('  ');
-								
+
 								d3.select(this/*str*/).text('');
-							
+
 								for (var j = 0; j < words.length; j++) {
 									var tspan = d3.select(this).append('tspan').text(words[j]);
 									if (j > 0)
 										tspan
-										.attr('x', -10)			
-										.attr('dy', '1em');													
+										.attr('x', -10)
+										.attr('dy', '1em');
 										}
-				};	
-				
+				};
+
 				d3.selectAll(".y text").each(insertLinebreaksLabels)
-				
-				
+
+
 			}// end function writeAnnotation()
-			
-			
-			createLegend();			
-			
+
+
+			createLegend();
+
 function createLegend(){
-			
+
 							var prevX= 0;
 							var prevY= 0;
 							lineNo = 0;
 							var lineNoOld = 0;
-					
-						dvc.essential.legendLabels.forEach(function(d,i) {	
-						
+
+						dvc.essential.legendLabels.forEach(function(d,i) {
+
 							// draw legend text based on content of var legendLabels ...
 							var_group= d3.select("#legend").append("g")
-							
+
 							var_group.append("rect")
 								.attr("class","rect" + i)
 								.attr("fill", dvc.essential.colour_palette[i])
 								.attr("x", 0)
 								.attr("y", 0)
-								.attr("width", function(d){ 
+								.attr("width", function(d){
 									if(dvc.essential.legendStyle=="rect"){
 										return 15;
 									} else {
 										return 20;
 									}
 								})
-								.attr("height", function(d){ 
+								.attr("height", function(d){
 									if(dvc.essential.legendStyle=="rect"){
 										return 15;
 									} else {
 										return 3;
 									}
 								})
-							
+
 							var_group.append("text")
 								.text(dvc.essential.legendLabels[i])
 								.attr("class","legend" + i)
@@ -428,20 +552,20 @@ function createLegend(){
 								.style("fill", "#666")
 								.attr('y',15)
 								.attr('x',0);
-							
+
 
 							d3.selectAll(".legend" + (i))
-								.each(calcPosition);	
-													
+								.each(calcPosition);
+
 							function calcPosition() {
-							
-								
+
+
 							var BBox = this.getBBox()
-							
-								
-							//prevY =BBox.width 	
+
+
+							//prevY =BBox.width
 								d3.select(".legend" + (i))
-										.attr("y",function(d){ 
+										.attr("y",function(d){
 													if((prevX+BBox.width +50)>parseInt(graphic.style("width")) ){
 														lineNoOld = lineNo;
 														lineNo=lineNo + 1;
@@ -450,79 +574,79 @@ function createLegend(){
 												return eval((lineNo*20) + 20);
 										})
 										.attr("x",function(d){ return prevX+25;})
-										
-										
+
+
 								d3.select(".rect" + (i))
-										.attr("y",function(d){ 
-												
+										.attr("y",function(d){
+
 												if((prevX+BBox.width +50)>parseInt(graphic.style("width")) ){
 													lineNoOld = lineNo;
 													lineNo=lineNo + 1;
 													prevX = 0;
 												}
-													
+
 												if(dvc.essential.legendStyle=="rect"){
 													return eval((lineNo*20)+5);
 												} else {
 													return eval((lineNo*20)+12);
-													
-												}	
+
+												}
 										})
 										.attr("x",function(d){ return prevX; })
-								
-								prevX = prevX + BBox.width +50
-								
 
-								
+								prevX = prevX + BBox.width +50
+
+
+
 							}; // end function calcPosition()
-						});	// end foreach 	
+						});	// end foreach
 			}// end function createLegend()
-		
+
 		// css fix
 			d3.selectAll("path").attr("fill","none");
-			
+
 			d3.selectAll("text").attr("font-family","'Open Sans', sans-serif");
-						
+
 			d3.selectAll(".x text").attr("font-size","12px").attr("fill","#666");
 			d3.selectAll(".y text").attr("font-size","12px").attr("fill","#666");
-						
+
 			d3.selectAll(".y line")
 					.attr("stroke","#CCC")
 					.attr("stroke-width","1px")
 					.style("shape-rendering","crispEdges");
-					
-					
-					
-								
-			//create link to source				
+
+
+
+
+			//create link to source
 			d3.select(".footer").append("p")
 				.text("Source: ")
 				.append("a")
 				.attr("href", dvc.essential.sourceURL)
 				.attr("target", "_blank")
 				.html(dvc.essential.sourceText);
-						
-			//use pym to calculate chart dimensions	
+
+			//use pym to calculate chart dimensions
 		    if (pymChild) {
 		        pymChild.sendHeight();
 		    }
 		}
 
 
-		//check whether browser can cope with svg	
+		//check whether browser can cope with svg
 		if (Modernizr.svg) {
-		   //load config 
+		   //load config
 			d3.json("config.json", function(error, config) {
 						dvc=config;
 
 						//load chart data
 						d3.csv(dvc.essential.graphic_data_url, function(error, data) {
 																					graphic_data = data;
-										
+
 															//use pym to create iframed chart dependent on specified variables
 															pymChild = new pym.Child({ renderCallback: drawGraphic});
 															});
-						
+
 			})
 
 		} else {
@@ -535,5 +659,3 @@ function createLegend(){
     </script>
 </body>
 </html>
-
-

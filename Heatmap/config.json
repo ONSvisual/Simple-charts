@@ -1,0 +1,21 @@
+{
+    "essential" : {
+            "graphic_data_url": "data.csv",
+            "sourceText":["ONS International Trade in Services"],
+            "sourceURL":["https://www.ons.gov.uk"],
+            "varcolour": ["#f03b20","#ffffb2","#fecc5c","#fd8d3c","#bd0026"],
+            "numberBreaks":4,
+            "breaks":[0,5,10,40,70],
+            "brickRatio_S_M_L":[0.22,0.5,0.7],
+            "unittext":"NUTS1 share of product: ",
+            "tooltipFormat":",.1f"
+    },
+    "optional" : {
+            "margin_sm": [5, 0, 30, 80],
+            "margin_md": [5, 0, 30, 80],
+            "margin_lg": [5, 0, 50, 176],
+
+            "mobileBreakpoint" : 450,
+            "tabletBreakpoint" : 600
+    }
+}

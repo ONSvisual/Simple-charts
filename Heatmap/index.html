@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <title>Heatmap</title>
+
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" href="../lib/globalStyle.css" />
+    <link type="text/css" href="../lib/styles.css" rel="stylesheet" />
+
+
+    <style type="text/css">
+
+		.row {
+			  margin-left: 0px;
+			  margin-right: 0px;
+			}
+
+		#key{
+			  display: block;
+			  stroke: #666;
+			  stroke-width:1px;
+			  shape-rendering: crispEdges;
+			  font-size:12px;
+				height:50px;
+				width:100%;
+				/*background-color: #abc;*/
+			}
+
+			#key text{
+				  stroke:none;
+			}
+			#infoPanel
+				{
+
+					top:30px;
+					padding: 0px 0px 20px 10px;
+
+				}
+				.infoText{
+							position:relative;
+							font-size: 15px;
+							color:#666;
+							font-weight:800;
+							/*text-anchor: start;*/
+						}
+
+						#births{
+							display:inline-block;
+							font-weight:600;
+								}
+
+						#info {
+							display:inline-block;
+								}
+
+						#rank{position:relative;
+								top:5px;
+								}
+						#info2{
+								top:5px;
+								}
+
+						.figures{
+							position:relative;
+							font-size: 14px;
+							font-weight:400;
+							text-anchor: middle;
+						}
+						.smallfigs{
+									position:relative;
+									font-size: 14px;
+									font-weight:400;
+									text-anchor: end;
+								}
+
+						.footer{
+							position:relative;
+							font-size: 14px;
+							color:#666;
+							font-weight:400;
+							text-align:left;
+						}
+
+		@media screen and (max-width: 500px) {
+				.infoText{
+						font-size: 14px;
+						}
+				.smallfigs{
+							font-size: 14px;
+							font-weight:400;
+						}
+
+				g.tick major text{
+							font-size:14px;
+						}
+
+		}
+
+    	#graphic
+		{
+				position: relative;
+		}
+			#grid
+			{
+					position: relative;
+			}
+
+		.highlighted {
+			stroke:#07b3a6;
+			stroke-width:2.2px;
+		}
+
+    </style>
+
+
+</head>
+<body>
+
+	<div id="graphic">
+    <img id="fallback" src="fallback.png" alt="[Chart]" />
+
+    <div class="row" id="infoPanel"></div>
+
+    <div class="row">
+            <div class="col-xs-12" id="left"></div>
+            <div class="col-xs-12" id="legnd"></div>
+    </div>
+  </div>
+
+   <div class="footer" />
+
+    <script src="../lib/jquery.js" type="text/javascript"></script>
+    <script src="../lib/d3.v4.min.js" type="text/javascript"></script>
+    <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+    <script src="../lib/pym.js" type="text/javascript"></script>
+    <script src="../lib/ss.js" type="text/javascript"></script>
+    <script src="../lib/chroma.min.js"></script>
+    <script>
+
+		var dvc = {};
+
+	function drawGraphic() {
+
+		var graphic = $('#graphic');
+		var infoPanel = $('#infoPanel');
+		var left = $('#left');
+		var legnd = $('#legnd');
+		var footer = $(".footer");
+		var pymChild = null;
+
+		graphic_width = graphic.width();
+
+		   if (graphic.width()+15 < dvc.optional.mobileBreakpoint) {
+												dvc.margin = {	top: 	dvc.optional.margin_sm[0],
+																right: 	dvc.optional.margin_sm[1],
+																bottom:	dvc.optional.margin_sm[2],
+																left: 	dvc.optional.margin_sm[3]
+															};
+												}
+												else dvc.margin = {
+																top: 	dvc.optional.margin_lg[0],
+																right: 	dvc.optional.margin_lg[1],
+																bottom: dvc.optional.margin_lg[2],
+																left: 	dvc.optional.margin_lg[3]
+															};
+
+		graphic_width = parseInt(graphic.width()) - dvc.margin.left - dvc.margin.right;
+
+		keywidth = $("#right").width();
+
+		// clear out existing graphics
+		d3.select("#fallback").remove();
+		infoPanel.empty();
+		left.empty();
+		legnd.empty();
+		footer.empty();
+
+
+		dvc.names = d3.keys(graphic_data[0])
+
+		dvc.numbers = d3.values(graphic_data)
+
+
+			// map the data to see it in columns for each header
+		    var block = {};
+		    for (var column in graphic_data[0]) {
+		      if (column == "yvals") continue;
+						block[column] = graphic_data.map(function(d) {
+              return {'amt': +d[column]};
+					  });
+	  	 }; // ends for loop
+
+			//create link to source
+			d3.select(".footer").append("p")
+				.html("Source: <a href='"+dvc.essential.sourceURL+"'>"+dvc.essential.sourceText+"</a>");
+
+		//  Now let get the size of the heat map  // row=12
+		if(graphic.width() < dvc.optional.mobileBreakpoint) {ratio = dvc.essential.brickRatio_S_M_L[0]; }
+		else if(graphic.width() < dvc.optional.tabletBreakpoint){ratio = dvc.essential.brickRatio_S_M_L[1]; }
+    else {ratio = dvc.essential.brickRatio_S_M_L[2];}
+
+		dvc.brickWidth = (graphic_width) / Object.keys(block).length;
+
+		myWidth = graphic_width + dvc.margin.left + dvc.margin.right;
+
+		myColumn = dvc.numbers.length;
+		myHeight = (myColumn * dvc.brickWidth/(2*ratio)) + dvc.margin.top + dvc.margin.bottom;
+		// divided by '2' because the blocks are rectangular
+		//console.log('myh  ' + myHeight);
+
+    if(typeof dvc.essential.varcolour === 'string') {
+			color=chroma.scale(dvc.essential.varcolour).colors(dvc.essential.numberBreaks)
+			dvc.colour=[]
+		  color.forEach(function(d){colour.push(chroma(d).darken(0.4).saturate(0.6).hex())})
+		} else {
+			dvc.colour = dvc.essential.varcolour;
+    }
+
+
+  	//  order the values to create breaks
+  	var values = [];
+  	allvalues = [];
+  	 for (var column in graphic_data[0]) {  // Jan - just sort one in ascending order for jenks
+          if (column != 'yvals') {
+    		        values[column] =  graphic_data.map(function(d){
+                  return +eval("d." + column);
+                }).filter(function(d) {return !isNaN(d)});
+    		        allvalues = allvalues.concat(values[column]);
+  		      }
+      }
+
+      allvalues=allvalues.sort(d3.ascending)
+
+			// Use jenks if the option is set
+			if(dvc.essential.breaks =="jenks")
+				{breaks = ss.jenks(allvalues, dvc.essential.numberBreaks);}
+			else
+        {breaks = dvc.essential.breaks;};
+
+
+      	var colorScale = d3.scaleThreshold()
+      						.domain(breaks)
+      						.range(dvc.colour);
+
+	    // Let's get building
+		  d3.select("#left")
+			.append("svg")
+			.attr("id","grid")
+			.attr("width", myWidth)
+			.attr("height", myHeight)
+			// .attr("transform", "translate(0," + dvc.margin.top + ")");
+
+				// use nested method to create parent Node for each month
+				allTiles = d3.select('#grid')
+								.append("g")
+								.attr("class","tiles")
+								.selectAll("g")
+								.data(d3.entries(block) )  // top hierarchy of the mapped data. Variable is called 'amt'
+								.enter()
+								.append("g")
+								.attr("id", function(d,i){ return d.key })
+								.attr("transform", function(d,i) {
+																return "translate(" + i*dvc.brickWidth*1.05 + ", " + 0 + ")";
+																} )
+
+
+					allTiles.selectAll('.tiles')
+					   	.data(function(d,i){return d.value})  // just give me the 'values' for each month/column. 'keys' not required
+							.enter()
+							.append("rect")
+							.attr("class","square")
+              .attr("data-value",function(d,i){return d.amt})
+							.attr("id", function(d,i,j) {return "sqr" +i; } )
+							.attr("y",  function(d,i) {
+														return i*(dvc.brickWidth/(2*ratio));
+														})
+							.attr("height", dvc.brickWidth/(2.2*ratio) )
+							.attr("width", dvc.brickWidth)
+							.style("fill", function(d,j) {
+								 if(d.amt !== d.amt){ return '#fff';} // copy bg colour
+																	else{
+																		return colorScale(d.amt);
+																		}
+														})
+							.on("mouseout",removeInfo)
+							.on("mouseover", updateInfo)
+							.attr("transform","translate("+(dvc.margin.left + 30)+","+(dvc.margin.top + 20)+")");  // plus string width
+
+					dvc.names.shift(); // shift out the day value - 'yvals'
+
+				var adding = d3.select('#grid');
+
+					  adding.append('g').attr('class', 'figures')
+					  	.selectAll('text')
+							.data(dvc.names)
+							.enter()
+							.append("text")
+							.style("fill", "#666")
+							.attr("x",  function(d,i) {
+												return (i*dvc.brickWidth*1.05);
+												})
+							.text( function(d,i) {return d;})
+							.attr("transform","translate("+(dvc.margin.left+(dvc.brickWidth/2.4)+30)+","+(dvc.margin.top + 10)+")");
+
+
+					  adding.append('g')
+					  		.selectAll('text')
+					  		.append('g')
+							.data(graphic_data)
+							.enter()
+							.append("text")
+							.style("fill", "#666")
+							.attr('class', 'smallfigs')
+							.attr("y",  function(d,i) {
+												return (i*(dvc.brickWidth/(2*ratio)));
+												})
+							.text(function(d,i) {return d.yvals})
+							.attr("transform","translate("+(dvc.margin.left+25)+","+(dvc.margin.top + 30)+")");
+
+        //wrap labels for small
+      	// if(graphic.width() < dvc.optional.tabletBreakpoint) {
+				d3.selectAll('text.smallfigs').call(wrap, dvc.margin.left)//+25);
+				// }
+
+		// add the info divs to populate in tellMe
+
+		myInfo = d3.select("#infoPanel")//.append('span');
+
+		 		 myInfo.append("div")
+						.attr("class", "infoText")// col-sm-2 col-xs-4")
+						.attr("id", "births")
+						.text(dvc.essential.unittext)
+
+				  //myInfo
+				  		.append("div")
+						.attr("class", "infoText")// col-sm-2 col-xs-3 text-center")
+						.attr("id", "info")
+						.html("&nbsp;");
+
+
+				createKey();
+
+		//use pym to calculate chart dimensions
+		    if (pymChild) {
+		        pymChild.sendHeight();
+		    	}
+
+	}; // end drawGraphic
+
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.1, // ems
+        y = text.attr("y"),
+        dy = 0, //parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
+}
+
+function updateInfo(evt){
+			d3.select("#info").html(d3.format(dvc.essential.tooltipFormat)(evt.amt)+ "%");
+      d3.select(this).classed("highlighted",true);
+}
+
+
+function removeInfo(){
+			d3.select(".highlighted").classed("highlighted",false);
+			d3.select("#info").html("&nbsp;");
+}
+
+function createKey(){
+
+		var keywidth = graphic_width + dvc.margin.left; //$("#legnd").width();
+		//console.log('kW '+keywidth);
+
+		var svgkey = d3.select("#legnd")
+			.append("svg")
+			.attr("id", "key");
+			//.attr("width", keywidth*0.01);  // keywidth ??
+
+		var color = d3.scaleThreshold()
+		   .domain(breaks)
+		   .range(dvc.colour.slice(1));
+
+//		y = d3.scale.linear()
+//		    .domain([breaks[0],breaks[4]]) /*range for data   breaks[0]  */
+//		    .range([400,0]); /*range for pixels*/
+
+		len = breaks.length-1;
+
+		x = d3.scaleLinear()
+		//.base(Math.E)
+		   .domain([breaks[0],len])/*range for data   breaks[0]*/
+			// 1.95 is the div factor that's roughly meets both
+		    .range([0,keywidth * 0.05]); //keywidth-(keywidth/1.95)]);
+
+		var xAxis = d3.axisBottom(x)
+    		.tickSize(15)
+		    .tickValues(color.domain());
+			//.tickFormat(d3.format(".1f"));
+
+		//horizontal key
+
+		var g2 = svgkey.append("g").attr("id","horiz")//.attr("class","visible-xs")
+			.attr("transform", "translate(38,0)");
+
+		keyhor = d3.select("#horiz");
+
+		g2.selectAll("rect")
+			.data(color.range().map(function(d, i) {
+			  return {
+				x0: i ? x(color.domain()[i]) : x.range()[0],
+				x1: i < color.domain().length ? x(color.domain()[i+1]) : x.range()[1],
+				z: d
+			  };
+			}))
+		  .enter().append("rect")
+			.attr("height", 8)
+			.attr("x", function(d) {
+				 return d.x0; })
+			.attr("width", function(d) { return d.x1 - d.x0; })
+			.style("opacity",0.8)
+			.style("fill", function(d) { return d.z; });
+
+
+		keyhor.selectAll("rect")
+			.data(color.range().map(function(d, i) {
+			  return {
+				x0: i ? x(color.domain()[i]) : x.range()[0],
+				x1: i < color.domain().length ? x(color.domain()[i+1]) : x.range()[1],
+				z: d
+			  };
+			}))
+			.attr("x", function(d) { return d.x0; })
+			.attr("width", function(d) { return d.x1 - d.x0; })
+			.style("fill", function(d) { return d.z; });
+
+		// how does this effect the key values??
+		keyhor.call(xAxis).append("text")
+			.attr("id", "caption")
+			//.attr("x", -63)
+			//.attr("y", -20)
+			.text("");
+
+		keyhor.append("rect")
+			.attr("id","keybar")
+			.attr("width",8)
+			.attr("height",0)
+			.attr("transform","translate(15,0)")
+			.style("fill", "#ccc")
+			.attr("x",x(0));
+
+  	forma = d3.format(",.1f");
+		// every other value is dropped down to make room
+		d3.select("#horiz").selectAll("text").attr("transform",function(d,i){if(i % 2){return "translate(0,10)"}});
+
+		g2.append("text").attr("id","keyunit").text(forma(dvc.unittext)).attr("transform","translate(0,-10)");
+
+}  // end key Function
+
+
+		//check whether browser can cope with svg
+		if (Modernizr.svg) {
+		   //load config
+			d3.json("config.json", function(error, config) {
+			dvc = config;
+
+				//load chart data
+				d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+				graphic_data = data;
+
+									//use pym to create iframed chart dependent on specified variables
+									pymChild = new pym.Child({ renderCallback: drawGraphic});
+						//});
+				});
+			})
+
+		} else {
+			 //use pym to create iframe containing fallback image (which is set as default)
+			 pymChild = new pym.Child();
+			if (pymChild) {
+							pymChild.sendHeight();
+						  }
+		}
+    </script>
+</body>
+</html>

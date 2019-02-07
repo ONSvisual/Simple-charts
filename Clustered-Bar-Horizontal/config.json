@@ -1,19 +1,15 @@
 {
     "essential" : {
-		
-			"GraphType" : "clusterBar" , 
-			
+
+			"GraphType" : "clusterBar" ,
             "graphic_data_url": "data.csv",
-        
             "colour_palette": [ "#274796" , "pink", "#E73F40", "#7BCAE2" ],
-        
             "dateFormat":"%Y-%y",
-        
             "legendLabels" :[ "Education for under-fives" , "Primary education" , "Secondary education" , "Tertiary education" ],
-			"legendStyle": "rect",
-			"sourceText":["Source information"],
+      			"legendStyle": "rect",
+      			"sourceText":["Source information"],
             "sourceURL":["http://www.ons.gov.uk/ons"],
-        
+
             "annotationChart": [
                 "The proportion of spending on each education category  has remained broadly stable over the past five years",
                 "Annotation 2"
@@ -30,13 +26,13 @@
                 "start",
                 "start"
             ],
-        
-            "circles" : false,    
+
+            "circles" : false,
             "annotationCXCY":[
                 ["38.4","2010-11"],
                 ["23","2012-13"]
             ],
-        
+
             "xAxisLabel":"%",
             "xAxisScale":[0,50],
             "barHeight_sm_md_lg" : [60,70,80]
@@ -46,20 +42,18 @@
             "margin_sm": [40, 10, 35, 60],
             "margin_md": [20, 10, 55, 60],
             "margin_lg": [20, 10, 65, 60],
-        
+
             "aspectRatio_sm" : [16,13],
             "aspectRatio_md" : [16,12],
             "aspectRatio_lg" : [16,10],
-        
-            "mobileBreakpoint" : 610, 
-            
-            "xAxisTextFormat_sm_md_lg" : ["%Y-%y", "%Y-%y", "%Y-%y"], 
-                
-            "x_num_ticks_sm_md_lg" : [7,17,17],    
+
+            "mobileBreakpoint" : 610,
+
+            "xAxisTextFormat_sm_md_lg" : ["%Y-%y", "%Y-%y", "%Y-%y"],
+
+            "x_num_ticks_sm_md_lg" : [7,17,17],
             "y_num_ticks_sm_md_lg" : [6,8,10],
-            "centre_line" : false,
-            "centre_line_value" : 0
+            "centre_line" : true,
+            "centre_line_value" : 10
     }
 }
-
-

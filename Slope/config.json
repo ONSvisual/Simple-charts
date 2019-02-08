@@ -1,6 +1,6 @@
 {
     "essential" : {
-            "slopeType":"rank",
+            "slopeType":"value",
             "ifValueShowRanks":true,
             "ifRankCustomRank":true,
             "ifRankShowValue":true,
@@ -10,7 +10,7 @@
             "sourceURL":[""],
             "sortby":"ascending",
             "yAxisScale":"auto_min_max",
-            "yAxisBreak": 11,
+            "yAxisBreak": false,
             "yAxisBreakText":"TOP 20 &#9650;",
             "numberFormat":",.0f",
             "gHeight_sm_md_lg":[40,40,40]

@@ -350,6 +350,15 @@ if(dvc.essential.slopeType=="value"){
 			})
 			.attr('x', -25)
 			.attr('text-anchor','end');
+
+		linegroups.append('text')
+			.attr("class","labelstext mob")
+			.text(function(d){return "("+format1(d.value[0].amt)+")"})
+			.attr('y', function(d) {
+				return (y(d.rank[0].amt)+5);
+			})
+			.attr('x', -20)
+			.attr('text-anchor','end')
 	} else {
 		linegroups.append('text')
 			.attr("class","labelstext2")

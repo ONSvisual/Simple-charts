@@ -205,7 +205,7 @@
 		else if(graphic.width() < dvc.optional.tabletBreakpoint){ratio = dvc.essential.brickRatio_S_M_L[1]; }
     else {ratio = dvc.essential.brickRatio_S_M_L[2];}
 
-		dvc.brickWidth = (graphic_width) / Object.keys(block).length;
+		dvc.brickWidth = (graphic_width) / (Object.keys(block).length+((Object.keys(block).length+1)*0.1));
 
 		myWidth = graphic_width + dvc.margin.left + dvc.margin.right;
 

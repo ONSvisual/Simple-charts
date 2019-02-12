@@ -406,6 +406,21 @@
 													}
 												} // ends if
 
+            if(dvc.essential.circles==true){
+              dvc.essential.annotationCXCY.forEach(function(d,i){
+                svg.append("circle")
+                  .attr("cx",x(dvc.essential.annotationCXCY[i][0]))
+                  .attr("cy",y(dvc.essential.annotationCXCY[i][1]))
+                  .attr("r",6)
+                  .attr("fill",dvc.essential.colour_palette[i])
+
+                svg.append("text")
+                .attr("x",x(dvc.essential.annotationCXCY[i][0])-20)
+                .attr("y",y(dvc.essential.annotationCXCY[i][1])-15)
+                .text(dvc.essential.annotationCXCY[i][0])
+              })
+            }
+
 			writeAnnotation();
 
 			//create link to source

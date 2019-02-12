@@ -12,7 +12,6 @@
 			var gHeight=dvc.essential.gHeight_sm_md_lg;
 			var number=graphic_data.length
 			if(typeof dvc.essential.yAxisBreak=="number"){++number}
-			console.log(number)
 
 	  	//set variables for chart dimensions dependent on width of #graphic
 			if (graphic.width() < threshold_sm) {
@@ -213,8 +212,6 @@ if(dvc.essential.slopeType=="value"){
 		var listL = graphic_data.map(function(d) {return d.leftValue});
 		var listR = graphic_data.map(function(d) {return d.rightValue});
 
-		console.log(listL)
-
 		function countInArray(array, what) {
 		    var count = 0;
 		    for (var i = 0; i < array.length; i++) {
@@ -226,7 +223,6 @@ if(dvc.essential.slopeType=="value"){
 		}
 
 		countInArray(listL, 2); // returns 2
-		console.log(countInArray(listL,"89.6"));
 
 
   index=0
@@ -235,7 +231,7 @@ if(dvc.essential.slopeType=="value"){
 		.attr("class","labelstext2")
 		.attr("transform", function(d,i) {
 			if(countInArray(listR,d.value[1].amt)>1)
-				{index++; console.log(index); return "translate(0," + index +")"}
+				{index++; return "translate(0," + index +")"}
 			else {return "translate(0,0)"}
 		})
 		.text(function(d, i) {
@@ -253,7 +249,7 @@ if(dvc.essential.slopeType=="value"){
 		.attr("class","labelstext desk")
 		.attr("transform", function(d,i) {
 			if(countInArray(listL,d.value[0].amt)>1)
-				{index++; console.log(index); return "translate(0," + index +")"}
+				{index++; return "translate(0," + index +")"}
 			else {return "translate(0,0)"}
 		})
 		.text(function(d, i) {
@@ -271,7 +267,7 @@ if(dvc.essential.slopeType=="value"){
 		.attr("class","labelstext mob")
 		.attr("transform", function(d,i) {
 			if(countInArray(listL,d.value[0].amt)>1)
-				{index++; console.log(index); return "translate(0," + index +")"}
+				{index++; return "translate(0," + index +")"}
 			else {return "translate(0,0)"}
 		})
 		.text(function(d){return "("+format1(d.value[0].amt)+")"})
@@ -576,7 +572,6 @@ if (Modernizr.svg) {
 		//load chart data
 		d3.csv(dvc.essential.dataFile, function(error, data) {
 			graphic_data = data;
-			console.log(graphic_data)
 
 			//use pym to create iframed chart dependent on specified variables
 			pymChild = new pym.Child({ renderCallback: drawGraphic});

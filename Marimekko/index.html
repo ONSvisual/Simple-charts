@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MBCBVQS');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+  <title></title>
+
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <link rel="stylesheet" href="../lib/globalStyle2.css" />
+
+  <style type="text/css">
+    .annotation-note-label {
+      fill: #333
+    }
+
+    #how-to {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    #explainer {
+      margin-bottom: 20px;
+    }
+
+    .curlyBrace {
+      stroke: #dadada;
+      stroke-width: 2px;
+      fill: none;
+    }
+
+    path.subject,
+    path.connector {
+      fill: none;
+      stroke: #dadada;
+    }
+
+    .annotation-group {
+      font-size: 12px;
+    }
+
+    #graphic {
+      max-width: 944px;
+    }
+
+    .axis path {
+      stroke: none !important;
+    }
+
+    .toolTip {
+      position: absolute;
+      display: none;
+      max-width: 200px;
+      height: auto;
+      background: none repeat scroll 0 0 #ffffff;
+      border: 1px solid #dadada;
+      padding: 14px;
+      text-align: center;
+      pointer-events: none;
+      opacity: 0.85;
+      border-radius: 20px;
+    }
+
+    .key-0 b {
+      margin-top: 0px !important;
+      width: 15px !important;
+    }
+
+    .key-1 b {
+      margin-top: 0px !important;
+      width: 15px !important;
+    }
+
+    .key-2 b {
+      margin-top: 0px !important;
+      width: 15px !important;
+    }
+
+    .key-3 b {
+      margin-top: 0px !important;
+      width: 15px !important;
+    }
+
+    .key-4 b {
+      margin-top: 0px !important;
+      width: 15px !important;
+    }
+
+    .key-5 b {
+      margin-top: 0px !important;
+      width: 15px !important;
+    }
+
+    .key-6 b {
+      margin-top: 0px !important;
+      width: 15px !important;
+    }
+
+    .key-7 b {
+      margin-top: 0px !important;
+      width: 15px !important;
+    }
+
+    .key-8 b {
+      margin-top: 0px !important;
+      width: 15px !important;
+    }
+
+    .key-9 b {
+      margin-top: 0px !important;
+      width: 15px !important;
+    }
+
+    path.note-line {
+      opacity: 0
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MBCBVQS" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <div id="how-to">
+    How to read this chart
+  </div>
+  <div id="explainer"></div>
+  <div id="legend"></div>
+  <div id="graphic">
+    <img src="fallback.png" alt="[Chart]" />
+  </div>
+
+  <div id="keypoints">
+    <p></p>
+  </div>
+
+  <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js" type="text/javascript"></script>
+  <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
+  <script src="../lib/d3-annotation.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+
+  <script>
+    var graphic = d3.select('#graphic');
+    var keypoints = d3.select('#keypoints');
+    var footer = d3.select(".footer");
+    var tooltip = d3.select('body').append('div').attr('class', 'toolTip');
+    var explainer = d3.select('#explainer');
+    var pymChild = null;
+
+    function drawGraphic(width) {
+      var threshold_md = 788;
+      var threshold_sm = dvc.optional.mobileBreakpoint;
+
+      if (parseInt(graphic.style("width")) < threshold_sm) {
+        var margin = {
+          top: dvc.optional.margin_sm[0],
+          right: dvc.optional.margin_sm[1],
+          bottom: dvc.optional.margin_sm[2],
+          left: dvc.optional.margin_sm[3]
+        };
+        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
+      } else if (parseInt(graphic.style("width")) < threshold_md) {
+        var margin = {
+          top: dvc.optional.margin_md[0],
+          right: dvc.optional.margin_md[1],
+          bottom: dvc.optional.margin_md[2],
+          left: dvc.optional.margin_md[3]
+        };
+        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
+      } else {
+        var margin = {
+          top: dvc.optional.margin_lg[0],
+          right: dvc.optional.margin_lg[1],
+          bottom: dvc.optional.margin_lg[2],
+          left: dvc.optional.margin_lg[3]
+        }
+        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
+      }
+
+      // clear out existing graphics
+      graphic.selectAll("*").remove();
+      keypoints.selectAll("*").remove();
+      footer.selectAll("*").remove();
+      explainer.selectAll('*').remove();
+
+      var y = d3.scaleLinear()
+        .range([height, 0]);
+
+      var x = d3.scaleLinear()
+        .range([0, chart_width]);
+
+      var z = d3.scaleOrdinal(dvc.essential.colour_palette);
+
+      var formatAsPercentage = d3.formatPrefix('%', 0);
+
+      d3.selectAll(".tick").selectAll("line").attr("transform", "translate(30,0)");
+
+      var xAxis = d3.axisBottom(x);
+
+      if (parseInt(graphic.style("width")) <= threshold_sm) {
+        xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[0])
+      } else if (parseInt(graphic.style("width")) <= threshold_md) {
+        xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[1])
+      } else {
+        xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[2])
+      }
+
+      var x_axis_grid = function() {
+        return xAxis;
+      }
+
+      var legend = d3.select('#graphic').append('ul')
+        .attr('class', 'key')
+        .selectAll('g')
+        .data(dvc.essential.legendLabels)
+        .enter().append('li')
+        .attr("class", function(d, i) {
+          return "key-" + i
+        })
+
+      legend.append('b')
+        .style('background-color', function(d, i) {
+          return dvc.essential.colour_palette[i]
+        });
+
+      legend.append('label')
+        .html(function(d, i) {
+          return dvc.essential.legendLabels[i];
+        });
+
+      var svg = d3.select('#graphic').append('svg')
+        .attr("width", chart_width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      //y domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
+      var xDomain = [0,100];
+
+      x.domain(xDomain);
+
+      var sum = graphic_data[0].sum;
+
+      y.domain([0, sum]);
+
+      svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis)
+        .append("text")
+        .attr("y", 23)
+        .attr("x", chart_width)
+        .attr("dy", ".71em")
+        .attr("text-anchor", "end")
+        .text(dvc.essential.xAxisLabel);
+
+      var stack = d3.stack();
+
+      var stack_data = stack.keys(graphic_data.columns.slice(1))(graphic_data);
+
+      var group = svg.selectAll(".bars")
+        .data(stack_data)
+        .enter().append("g")
+        .attr("class", function(d, i) {
+          return "g bars";
+        })
+        .style("margin-top", "5px")
+        .attr("fill", function(d) {
+          return z(d.key);
+        });
+
+
+      for (i=0;i<stack_data.length;i++) {
+        var key = stack_data[i].key
+
+        for(j=0;j<stack_data[i].length;j++) {
+          stack_data[i][j].key = key
+        }
+      }
+
+      var rect = group.selectAll("rect");
+
+      rect
+        .data(function(d,i) {
+          return d;
+        })
+        .enter()
+        .append("rect")
+        .attr("class", function(d, i) {
+          return "bar-" + i
+        })
+        .attr("x", function(d) {
+          return x(d[0] / d.data.total * 100)
+        })
+        .attr("y", function(d) {
+          return y((d.data.sum - d.data.offset))
+        })
+        .attr("width", function(d) {
+          return Math.abs(x((d[1] - d[0]) / d.data.total * 100))
+        })
+        .attr("height", function(d) {
+          return (y((d.data.sum - d.data.total)))
+        })
+        .style("stroke", "#fff")
+        .style('stroke-width', '2px')
+        .style("opacity", 0.85)
+        .on('mouseover', function() {
+          if (parseInt(graphic.style("width")) > threshold_sm) {
+            group.selectAll('rect')
+              .transition()
+              .style('opacity', 0.5);
+
+            d3.select(this)
+              .transition()
+              .style("opacity", 1);
+          }
+        })
+        .on('mousemove', function(d, i) {
+          tooltip
+            .style('left', function() {
+              if ((chart_width + margin.left) / 2 <= d3.event.pageX) {
+                return d3.event.pageX - d3.select('.toolTip').node().offsetWidth + 'px'
+              } else {
+                return d3.event.pageX + 15 + 'px'
+              }
+
+            })
+            .style('top', function() {
+              if ((height + margin.top) / 2 > d3.event.pageY) {
+                return d3.event.pageY + 10 + 'px';
+              } else {
+                return d3.event.pageY - d3.select('.toolTip').node().offsetHeight + 'px';
+              }
+            })
+            .style('display', function() {
+              if (parseInt(graphic.style("width")) < threshold_sm) {
+                return 'none';
+              } else {
+                return 'inline-block';
+              }
+            })
+            .html((d.data.full_name + '<br>' + 'Category: ' + d.key + '<br>' + '£' + d3.format(',.0f')((d[1] - d[0]) * 1000000)));
+        })
+        .on('mouseout', function(d) {
+          d3.selectAll('rect')
+            .transition()
+            .style('opacity', 0.85)
+          tooltip.style('display', 'none');
+        });
+
+      // Explainer
+      var xExplainer = d3.scaleLinear()
+        .range([0, chart_width + 35]);
+
+      var yExplainer = d3.scaleLinear()
+        .range([10, 0]);
+
+      var yAxisExplainer = d3.axisLeft(y)
+        .tickFormat(function(d, i) {
+          return d;
+        })
+        .tickPadding(5);
+
+      var xAxisExplainer = d3.axisBottom(xExplainer);
+
+      if (parseInt(graphic.style("width")) <= threshold_sm) {
+        xAxisExplainer.ticks(dvc.optional.x_num_ticks_sm_md_lg[0])
+      } else if (parseInt(graphic.style("width")) <= threshold_md) {
+        xAxisExplainer.ticks(dvc.optional.x_num_ticks_sm_md_lg[1])
+      } else {
+        xAxisExplainer.ticks(dvc.optional.x_num_ticks_sm_md_lg[2])
+      }
+
+      var x_axis_grid = function() {
+        return xAxisExplainer;
+      }
+
+      var explainerMarginTop
+      if (parseInt(graphic.style("width")) < 357) {
+        explainerMarginTop = 60
+      } else if (parseInt(graphic.style("width")) < 393) {
+        explainerMarginTop = 50
+      } else if (parseInt(graphic.style("width")) < 670) {
+        explainerMarginTop = 40
+      } else {
+        explainerMarginTop = 20
+      }
+
+      var svgExplainer = d3.select('#explainer').append('svg')
+        .attr("width", chart_width + margin.left + margin.right)
+        .attr("height", 60 + explainerMarginTop)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + explainerMarginTop + ")");
+
+      yExplainer.domain([0, 10]);
+
+      xExplainer.domain([0, 100]);
+
+      svgExplainer.append('g')
+        .attr('class', 'yExplainer yaxisExplainer')
+        .attr('transform', 'translate(0,' + 40 + ')')
+        .call(xAxisExplainer);
+
+      d3.select('.yExplainer').selectAll('.tick').select('line').attr('stroke', '#ccc')
+
+      var groupxplainer = svgExplainer.selectAll(".bars")
+        .data(stack.keys(graphic_data.columns.slice(1))(graphic_data))
+        .enter().append("g")
+        .attr("class", function(d, i) {
+          return "g bars"
+        })
+        .style("margin-top", "5px")
+        .attr("fill", function(d) {
+          return z(d.key);
+        });
+
+      groupxplainer.selectAll("rect")
+        .data(function(d, i) {
+          return [d[0]];
+        })
+        .enter()
+        .append("rect")
+        .attr("class", function(d, i) {
+          return "bar-" + i
+        })
+        .attr("x", function(d) {
+          return xExplainer(d[0] / d.data.total * 100)
+        })
+        .attr("width", function(d) {
+          return Math.abs(xExplainer((d[1] - d[0]) / d.data.total * 100))
+        })
+        .attr("height", 40)
+        .style("opacity", 0.85);
+
+      //explainer annotations
+      var annotations = [{
+          type: d3.annotationLabel,
+
+          x: margin.left,
+          y: explainerMarginTop - 12.5,
+
+          dx: xExplainer(30),
+          dy: 0,
+          disable: ["note"],
+          "connector": {
+            "end": "arrow"
+          },
+        },
+        {
+          type: d3.annotationLabel,
+          x: margin.left + xExplainer(100),
+          y: explainerMarginTop - 12.5,
+          dx: -xExplainer(30),
+          dy: 0,
+          disable: ["note"],
+          "connector": {
+            "end": "arrow"
+          },
+        },
+        {
+          type: d3.annotationLabel,
+          x: margin.left - 5,
+          y: explainerMarginTop,
+          dx: 0,
+          dy: 20,
+          disable: ["note"],
+          "connector": {
+            "end": "arrow"
+          },
+        },
+        {
+          type: d3.annotationLabel,
+          x: margin.left - 5,
+          y: explainerMarginTop + 40,
+          dx: 0,
+          dy: -20,
+          disable: ["note"],
+          "connector": {
+            "end": "arrow"
+          },
+        },
+        {
+          type: d3.annotationLabel,
+          note: {
+            label: dvc.essential.legendYAnnotation,
+            wrap: margin.left - 5,
+            "align": "right"
+          },
+          x: margin.left - 10,
+          y: explainerMarginTop + 10,
+
+          dx: 0,
+          dy: 0
+        }
+      ]
+
+      if (parseInt(graphic.style("width")) < 357) {
+        annotations.push({
+          type: d3.annotationLabel,
+          note: {
+            label: dvc.essential.legendXAnnotation,
+            wrap: xExplainer(70) - xExplainer(30),
+          },
+          x: margin.left + xExplainer(50),
+          y: 0,
+
+          dx: 0,
+          dy: 0
+        })
+      } else if (parseInt(graphic.style("width")) < 393) {
+        annotations.push({
+          type: d3.annotationLabel,
+          note: {
+            label: dvc.essential.legendXAnnotation,
+            wrap: xExplainer(70) - xExplainer(30),
+          },
+          x: margin.left + xExplainer(50),
+          y: 2,
+
+          dx: 0,
+          dy: 0
+        })
+      } else if (parseInt(graphic.style("width")) < 670) {
+        annotations.push({
+          type: d3.annotationLabel,
+          note: {
+            label: dvc.essential.legendXAnnotation,
+            wrap: xExplainer(70) - xExplainer(30),
+          },
+          x: margin.left + xExplainer(50),
+          y: 10,
+
+          dx: 0,
+          dy: 0
+        })
+      } else {
+        annotations.push({
+          type: d3.annotationLabel,
+          note: {
+            label: dvc.essential.legendXAnnotation,
+            wrap: xExplainer(70) - xExplainer(30),
+          },
+          x: margin.left + xExplainer(50),
+          y: 0,
+
+          dx: 0,
+          dy: 0
+        })
+      }
+
+      var makeAnnotations = d3.annotation()
+        .accessors({
+          x: function(d) {
+            return xExplainer(d.x) + margin.left
+          },
+          y: function(d) {
+            return yExplainer(d.y) + margin.top + 50
+          }
+        })
+        .annotations(annotations)
+
+      d3.select('#explainer').select("svg")
+        .append("g")
+        .attr("class", "annotation-group")
+        .call(makeAnnotations)
+
+      // labels
+      var f = d3.format("0.2s");
+
+      var labels = svg.selectAll(".label-text")
+        .data(graphic_data)
+        .enter()
+        .append("text")
+        .attr("class", "label-text")
+        .attr("transform", function(d, i) {
+          return "translate(-5," + (y(d.sum - d.total / 2 - d.offset) + 8) + ")"
+        })
+        .text(function(d) {
+          return d.group;
+        })
+        .attr('text-anchor', 'end')
+        .attr("dy", "0em")
+        .style('font-size', '12px')
+        .style('font-weight', 'normal')
+        .style('font-family', 'Open Sans')
+        .style('fill', '#3f4041')
+
+      var labelsRight = svg.selectAll(".label-text-right")
+        .data(graphic_data)
+        .enter()
+        .append("text")
+        .attr("class", "label-text-right")
+        .attr('x', x(100) + 45)
+        .attr('y', function(d) {
+          return y(d.sum - d.total / 2 - d.offset) + 4
+        })
+        .text(function(d) {
+          return d3.format('.1f')(d.total / 1000) + 'bn'
+        })
+        .attr('text-anchor', 'end')
+        .attr("dy", "0em")
+        .style('font-size', '12px')
+        .style('font-weight', 'normal')
+        .style('font-family', 'Open Sans')
+        .style('fill', '#3f4041')
+
+      if (parseInt(graphic.style("width")) < threshold_sm) {
+        d3.selectAll(".label-text")
+          .call(wrap, dvc.optional.margin_sm[3])
+          .call(arrangeLabels);
+      } else if (parseInt(graphic.style("width")) < threshold_md) {
+        d3.selectAll(".label-text")
+          .call(wrap, dvc.optional.margin_md[3])
+          .call(arrangeLabels);
+      } else {
+        d3.selectAll(".label-text")
+          .call(wrap, (dvc.optional.margin_lg[3]))
+          .call(arrangeLabels);
+      };
+
+      // annotations for amount - right side
+      var data = [];
+
+      graphic_data.forEach(function(d) {
+
+        data.push({
+          x: 100,
+          y: (d.sum - d.offset),
+          y2: d.sum - d.offset - d.total
+        })
+      })
+
+      // curly brackets
+      function makeCurlyBrace(x1, y1, x2, y2, w, q) {
+        //Calculate unit vector
+        var dx = x1 - x2;
+        var dy = y1 - y2;
+        var len = Math.sqrt(dx * dx + dy * dy);
+        dx = dx / len;
+        dy = dy / len;
+
+        //Calculate Control Points of path,
+        var qx1 = x1 + q * w * dy;
+        var qy1 = y1 - q * w * dx;
+        var qx2 = (x1 - .25 * len * dx) + (1 - q) * w * dy;
+        var qy2 = (y1 - .25 * len * dy) - (1 - q) * w * dx;
+        var tx1 = (x1 - .5 * len * dx) + w * dy;
+        var ty1 = (y1 - .5 * len * dy) - w * dx;
+        var qx3 = x2 + q * w * dy;
+        var qy3 = y2 - q * w * dx;
+        var qx4 = (x1 - .75 * len * dx) + (1 - q) * w * dy;
+        var qy4 = (y1 - .75 * len * dy) - (1 - q) * w * dx;
+
+        return ("M " + x1 + " " + y1 +
+          " Q " + qx1 + " " + qy1 + " " + qx2 + " " + qy2 +
+          " T " + tx1 + " " + ty1 +
+          " M " + x2 + " " + y2 +
+          " Q " + qx3 + " " + qy3 + " " + qx4 + " " + qy4 +
+          " T " + tx1 + " " + ty1);
+      }
+
+      function update() {
+        var bracket = d3.select('#graphic').select("svg").selectAll("curlyBrace").data(coords);
+
+        bracket.enter().append('g').append("path")
+          .attr("class", function(d, i) {
+            return "curlyBrace"
+          })
+          .attr("d", function(d) {
+            return makeCurlyBrace(d.x1, d.y1, d.x2, d.y2, 10, 0.50);
+          });
+      }
+
+      var widthC = chart_width;
+      var heightC = height;
+      var coords = data.map(function(d) {
+        return {
+          x1: x(d.x) + margin.left,
+          x2: x(d.x) + margin.left,
+          y1: y(d.y2) + margin.top - 2,
+          y2: y(d.y) + margin.top + 2
+        }
+      })
+      update()
+
+      function arrangeLabels() {
+        var move = 1;
+        while (move > 0) {
+          move = 0;
+          d3.selectAll(".label-text")
+            .each(function(d, i) {
+              var that = this,
+                a = this.getBoundingClientRect();
+
+              d3.selectAll(".label-text")
+                .each(function() {
+                  if (this != that) {
+                    var b = this.getBoundingClientRect();
+                    if ((Math.abs(a.top - b.top) * 2.5 < (a.height + b.height))) {
+                      // overlap, move labels
+                      var dx = (Math.max(0, a.right - b.left) +
+                          Math.min(0, a.left - b.right)) * 0.01,
+                        dy = (Math.max(0, a.bottom - b.top) +
+                          Math.min(0, a.top - b.bottom)) * 0.03;
+
+                      tt = getTransformation(d3.select(this).attr("transform")),
+                        to = getTransformation(d3.select(that).attr("transform"));
+
+                      move += Math.abs(dx) + Math.abs(dy);
+
+                      to.translateY = [-5, to.translateY + dy];
+                      tt.translateY = [-5, tt.translateY - dy];
+
+                      d3.select(this).attr("transform", "translate(" + tt.translateY + ")");
+                      d3.select(that).attr("transform", "translate(" + to.translateY + ")");
+                      a = this.getBoundingClientRect();
+                    }
+                  }
+                });
+            });
+        }
+      } // end of arangeLabels
+
+      function wrap(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = 0,
+            x = getTransformation(text.attr('transform')).translateX,
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+          if (words.length > 2) {
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width) {
+                if (lineNumber == 0) {
+                  tspan.attr("dy", dy - 1.1 + "em")
+                } else {
+                  tspan.attr("dy", -dy + 0.55 + "em")
+                }
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                ++lineNumber;
+                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", (0.55 * lineNumber - dy) + "em").text(word);
+              }
+            }
+          } else {
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width) {
+                if (lineNumber == 0) {
+                  tspan.attr("dy", dy - 0.55 + "em")
+                } else {
+                  tspan.attr("dy", -dy + 0.55 + "em")
+                }
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                ++lineNumber;
+                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", (1.1 * lineNumber - dy + 0) + "em").text(word);
+              }
+            }
+          }
+        });
+      }
+
+      function getTransformation(transform) {
+        // Create a dummy g for calculation purposes only. This will never
+        // be appended to the DOM and will be discarded once this function
+        // returns.
+        var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+        // Set the transform attribute to the provided string value.
+        g.setAttributeNS(null, "transform", transform);
+
+        // consolidate the SVGTransformList containing all transformations
+        // to a single SVGTransform of type SVG_TRANSFORM_MATRIX and get
+        // its SVGMatrix.
+        var matrix = g.transform.baseVal.consolidate().matrix;
+
+        // Below calculations are taken and adapted from the private function
+        // transform/decompose.js of D3's module d3-interpolate.
+        // var {
+        //   a,
+        //   b,
+        //   c,
+        //   d,
+        //   e,
+        //   f
+        // } = matrix; // ES6, if this doesn't work, use below assignment
+        var a = matrix.a,
+          b = matrix.b,
+          c = matrix.c,
+          d = matrix.d,
+          e = matrix.e,
+          f = matrix.f; // ES5
+        var scaleX, scaleY, skewX;
+        if (scaleX = Math.sqrt(a * a + b * b)) a /= scaleX, b /= scaleX;
+        if (skewX = a * c + b * d) c -= a * skewX, d -= b * skewX;
+        if (scaleY = Math.sqrt(c * c + d * d)) c /= scaleY, d /= scaleY, skewX /= scaleY;
+        if (a * d < b * c) a = -a, b = -b, skewX = -skewX, scaleX = -scaleX;
+        return {
+          translateX: e,
+          translateY: f,
+          rotate: Math.atan2(b, a) * 180 / Math.PI,
+          skewX: Math.atan(skewX) * 180 / Math.PI,
+          scaleX: scaleX,
+          scaleY: scaleY
+        };
+      } // end of getTrnsformation
+
+      //create link to source
+      d3.select(".footer")
+        .append("p")
+        .append("h5")
+        .html("Source: <a href='" + dvc.essential.sourceURL + "' target=_blank>" + dvc.essential.sourceText + "</a>")
+        .style('font-size', '16px')
+        .style('lineHeight', '32px')
+        .style('font-weight', 700)
+        .style('color', '#323132')
+
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+
+    if (Modernizr.svg) {
+
+      d3.json("config.json", function(error, config) {
+        dvc = config
+
+        d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+          graphic_data = data;
+          varnames = d3.keys(graphic_data[0]).filter(function(key) {
+            return key !== "group";
+          });
+          var sum = 0;
+          var offset = 0;
+
+          graphic_data.forEach(function(d, i) {
+
+            d.cat = d.group;
+            d.full_name = dvc.essential.cat_hover[i]
+
+            var x0 = 0;
+
+            d.vars = varnames.map(function(name) {
+              return {
+                name: name,
+                x0: x0,
+                x1: x0 += +d[name],
+                x2: +d[name],
+                category: d.cat,
+                full_name: d.full_name
+
+              };
+            });
+            d.vars.forEach(function(dvar, i) {
+              dvar.total = d.vars[d.vars.length - 1].x1;
+            })
+
+            d.total = d.vars[d.vars.length - 1].x1;
+            if (i === 0) {
+              d.offset = 0;
+            } else {
+              offset = offset + graphic_data[i - 1].total
+              d.offset = offset;
+            }
+            sum = sum + d.total;
+
+          });
+
+          graphic_data.forEach(function(d, i) {
+            d.sum = sum;
+            d.vars.forEach(function(d, i) {
+              d.sum = sum;
+            })
+          })
+
+          // Cycle through data and sum all data for all data columns
+          d3.csv(dvc.essential.graphic_data_url).row(function(d) {
+              var mySum = 0;
+              for (var o in d) { // iterate all the properties of d
+                if (o === "group") continue; // if it's our key field skip it
+                else mySum += +d[o]; // everyone else into the sum
+              }
+              return mySum
+
+            })
+            .get(function(error, rows) {
+              dvc.rows = rows;
+              pymChild = new pym.Child({
+                renderCallback: drawGraphic
+              });
+            });
+
+        });
+
+      });
+
+    } else {
+      pymChild = new pym.Child();
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+  </script>
+</body>
+
+</html>

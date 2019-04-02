@@ -17,6 +17,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Donut](https://onsvisual.github.io/Simple-charts/Donut/)
 - [Heatmap](https://onsvisual.github.io/Simple-charts/Heatmap/)
 - [Line](https://onsvisual.github.io/Simple-charts/Line/)
+- [Marimekko](https://onsvisual.github.io/Simple-charts/Marimekko/)
 - [Quiz](https://onsvisual.github.io/Simple-charts/Quiz/)
 - [Regional bar map](https://onsvisual.github.io/Simple-charts/Regional-Map-Bar/)
 - [Scatter-canvas](https://onsvisual.github.io/Simple-charts/Scatter-canvas/)

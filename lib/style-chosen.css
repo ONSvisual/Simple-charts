@@ -12,7 +12,7 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-  font-weight:bold;
+  font-weight:400;
 }
 .chosen-container .chosen-drop {
   position: absolute;

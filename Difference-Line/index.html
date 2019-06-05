@@ -11,6 +11,16 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
     <link rel="stylesheet" href="../lib/globalStyle.css" />
+
+    <style type="text/css">
+      h6 {
+         font-size: 16px;
+         margin: 16px 0 8px 0;
+         font-weight: 700;
+         color:#323132;
+      }
+    </style>
+
 </head>
 
 
@@ -18,7 +28,10 @@
 
 	<div id="graphic">
     	<img src="fallback.png" alt="[Chart]" />
-    </div>
+  </div>
+
+  <h6 id="source"></h6>
+
 
     <div id="keypoints">
         <p></p>
@@ -413,20 +426,8 @@
 			writeAnnotation();
 
 			//create link to source
-			d3.select('#graphic').select('svg')
-						.append("g")
-						.attr("id", "source")
-						.append("text")
-						.attr("text-anchor", "start")
-						.style("font-size", "12px")
-						.style("fill", "#666")
-						.attr('y',height + margin.top + (margin.bottom-4))
-						.attr('x',0)
-						//.style('margin-bottom', '10px')
-						.text("Source: ")
-						.append("a")
-						.attr("xlink:href", dvc.essential.sourceURL[0])
-						.text(dvc.essential.sourceText[0]);
+      d3.select('#source')
+        .text('Source: ' + dvc.essential.sourceText);
 
         d3.select('#graphic').select('svg')
   						.append("g")

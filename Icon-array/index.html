@@ -12,6 +12,17 @@
 
   <link rel="stylesheet" href="../lib/globalStyle.css" />
   <link rel="stylesheet" href="../lib/bootstrap-grid.css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+
+  <style type="text/css">
+    h6 {
+       font-size: 16px;
+       margin: 16px 0 8px 0;
+       font-weight: 700;
+       color:#323132;
+    }
+  </style>
+
 </head>
 
 
@@ -22,6 +33,8 @@
       <img src="fallback.png" alt="[Chart]" />
     </div>
   </div>
+
+  <h6 id="source"></h6>
 
   <div id="keypoints">
     <p></p>
@@ -120,10 +133,8 @@
       .attr('fill',function(d,i){return dvc.essential.colour_palette[i]})
 
       //create link to source
-      d3.select('#footer')
-        .append("h6")
-        .attr("id", "source")
-        .html("Source: "+dvc.essential.sourceText[0])
+      d3.select('#source')
+        .text('Source: ' + dvc.essential.sourceText);
 
       //use pym to calculate chart dimensions
       if (pymChild) {

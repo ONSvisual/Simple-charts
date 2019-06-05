@@ -11,6 +11,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../lib/globalStyle.css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+
 
   <style>
         body {
@@ -97,6 +99,12 @@
             margin: 16px 0 0 0;
             color:#323132;
         }
+        h6 {
+           font-size: 16px;
+           margin: 16px 0 8px 0;
+           font-weight: 700;
+           color:#323132;
+        }
 
     </style>
 </head>
@@ -107,6 +115,8 @@
 
 
 <div id="footer">
+  <h6 id="source"></h6>
+
 </div>
 
 <div>
@@ -365,16 +375,8 @@ function drawGraphic(){
 
 
           //create link to source
-          d3.select('#footer').append("p")
-                .attr("id", "source")
-                .text("Source: ")
-                .style("font-size","14px")
-                .style("font-weight",700)
-                .append("a")
-                // .style("fill", "#4774CC")  // it ignored the css !!
-                .attr("href", dvc.essential.sourceURL)
-                .attr("target", "_blank")
-                .text(dvc.essential.sourceText);
+          d3.select('#source')
+            .text('Source: ' + dvc.essential.sourceText);
 
           // make rectangle annotations
           dvc.essential.rectannotations.forEach(function(d,i) {

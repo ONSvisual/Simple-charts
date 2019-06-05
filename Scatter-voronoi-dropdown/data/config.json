@@ -17,7 +17,7 @@
                 "text":"example annotation text"
                 }],
             "textAnnotationWrap":100,
-            "d3AnnotationWrap":300,   
+            "d3AnnotationWrap":300,
             "xAxisLabel":"% pupils whose first language is not English",
             "yAxisLabel":"Average attainment 8 score",
             "AxisScale":"",
@@ -26,9 +26,9 @@
 
 	},
     "optional" : {
-            "margin_sm": [50 ,20, 50, 50],
-            "margin_md": [50, 20, 50, 50],
-            "margin_lg": [50, 50, 50, 50],
+            "margin_sm": [50 ,20, 0, 50],
+            "margin_md": [50, 20, 0, 50],
+            "margin_lg": [50, 50, 0, 50],
 
             "aspectRatio_sm" : [1,1],
             "aspectRatio_md" : [1,1],

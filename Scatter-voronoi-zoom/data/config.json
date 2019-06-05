@@ -32,7 +32,7 @@
                 "text":"example annotation text"
                 }],
             "textAnnotationWrap":100,
-            "d3AnnotationWrap":300,   
+            "d3AnnotationWrap":300,
             "xAxisLabel":"X label",
             "yAxisLabel":"Y Label",
             "AxisScale":"auto_min_max",
@@ -41,9 +41,9 @@
 
 	},
     "optional" : {
-            "margin_sm": [20 ,20, 20, 50],
-            "margin_md": [20, 20, 20, 50],
-            "margin_lg": [50, 50, 50, 50],
+            "margin_sm": [20 ,20, 0, 50],
+            "margin_md": [20, 20, 0, 50],
+            "margin_lg": [50, 50, 0, 50],
 
             "aspectRatio_sm" : [1.5,1],
             "aspectRatio_md" : [1.5,1],

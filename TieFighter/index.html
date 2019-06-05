@@ -30,13 +30,22 @@
         fill: red;
     }
 
+    h6 {
+       font-size: 16px;
+       margin: 16px 0 8px 0;
+       font-weight: 700;
+       color:#323132;
+    }
+
     </style>
 </head>
 <body>
 
-	<div id="graphic">
+  	<div id="graphic">
     	<img src="fallback.png" alt="[Chart]" />
     </div>
+
+    <h6 id="source"></h6>
 
     <div id="keypoints">
         <p></p>
@@ -619,12 +628,8 @@ function createLegend(){
 
 
 			//create link to source
-			d3.select(".footer").append("p")
-				.text("Source: ")
-				.append("a")
-				.attr("href", dvc.essential.sourceURL)
-				.attr("target", "_blank")
-				.html(dvc.essential.sourceText);
+      d3.select('#source')
+        .text('Source: ' + dvc.essential.sourceText);
 
 			//use pym to calculate chart dimensions
 		    if (pymChild) {

@@ -47,6 +47,14 @@
     label {
       font-family: 'Open Sans', sans-serif;
     }
+
+    h6 {
+       font-size: 16px;
+       margin: 16px 0 8px 0;
+       font-weight: 700;
+       color:#323132;
+    }
+
   </style>
 
 </head>
@@ -56,6 +64,8 @@
   <div id="graphic">
     <img src="fallback.png" alt="[Chart]" />
   </div>
+
+  <h6 id="source"></h6>
 
   <div id="keypoints">
     <p></p>
@@ -419,12 +429,8 @@
       } // end function writeAnnotation()
 
       //create link to source
-      d3.select(".footer").append("p")
-        .text("Source: ")
-        .append("a")
-        .attr("href", dvc.essential.sourceURL)
-        .attr("target", "_blank")
-        .text(dvc.essential.sourceText);
+      d3.select('#source')
+        .text('Source: ' + dvc.essential.sourceText);
 
       if (chart_width > dvc.optional.mobileBreakpoint) {} else {
 

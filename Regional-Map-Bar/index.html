@@ -38,13 +38,22 @@
 		stroke: teal;
 	}
 
+  h6 {
+     font-size: 16px;
+     margin: 16px 0 8px 0;
+     font-weight: 700;
+     color:#323132;
+  }
+
     </style>
 </head>
 <body>
 
-	<div id="graphic">
+  	<div id="graphic">
     	<img src="fallback.png" alt="[Chart]" />
     </div>
+
+    <h6 id="source"></h6>
 
     <div id="keypoints">
         <p></p>
@@ -444,24 +453,8 @@
 			}// end function writeAnnotation()
 
 
-			 d3.select('.footer')
-					.append("div")
-					.attr("id", "source")
-					.append("text")
-					//.attr("text-anchor", "start")
-					.style("font-size", "12px")
-					//.style("fill", "#666")
-					//.attr('y',height + margin.top + margin.bottom+28)
-					//.attr('x',0)
-					.text("Source: ")
-					.append("a")
-					//.style("fill", "#4774CC")
-					.attr("xlink:href", config2.essential.sourceURL)
-					.attr("target", "_blank")
-					.text(config2.essential.sourceText);
-
-
-
+      d3.select('#source')
+        .text('Source: ' + config2.essential.sourceText);
 
 				d3.selectAll("text").attr("font-family","'Open Sans', sans-serif");
 

@@ -8,17 +8,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 
     <link rel="stylesheet" href="../lib/globalStyle.css" />
-	<style type="text/css">
-
-
+	  <style type="text/css">
+    h6 {
+       font-size: 16px;
+       margin: 16px 0 8px 0;
+       font-weight: 700;
+       color:#323132;
+    }
     </style>
 
 </head>
 <body>
 
     <div id="graphic"><img src="fallback.png" alt="[Chart]" /></div>
+    <h6 id="source"></h6>
+
 
 
 	<div id="keypoints">
@@ -380,21 +387,9 @@
 
 		d3.select('#chart').attr("height",  height + margin.top + margin.bottom + legend_height.height)
 
-		d3.select('#graphic').select('svg')
-			.append("g")
-			.attr("id", "source")
-			.append("text")
-			.attr("text-anchor", "start")
-			.style("font-size", "12px")
-			.style("fill", "#666")
-			.attr('y',height + margin.top + margin.bottom+legend_height.height-5)
-			.attr('x',0)
-			.text("Source: ")
-			.append("a")
-			.style("fill", "#4774CC")
-			.attr("xlink:href", dvc.essential.sourceURL)
-			.attr("target", "_blank")
-			.text(dvc.essential.sourceText);
+    d3.select('#source')
+      .text('Source: ' + dvc.essential.sourceText);
+
 
 
 				svg.append("text")

@@ -470,11 +470,10 @@ d3.selectAll(".rectno0")
 	.attr("transform","translate(-10,-11)");
 
 //create link to source
-d3.select(".footer").append("p")
-	.text("Source: " + dvc.essential.sourceText)
-	.style("font-weight",700)
-	.style("font-size", "16px")
-	.style("color","#323132")
+
+d3.select('.footer')
+	.append('h6')
+	.text('Source: ' + dvc.essential.sourceText);
 
 
 	function arrangeLabels(classname) {

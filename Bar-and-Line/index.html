@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="../lib/globalStyle.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 
     <style type="text/css">
 
@@ -35,6 +36,13 @@
             stroke: #666;
             shape-rendering: crispEdges;
 		}
+
+    h6 {
+       font-size: 16px;
+       margin: 16px 0 8px 0;
+       font-weight: 700;
+       color:#323132;
+    }
 		/* END Graph-style specific CSS attribution DO NOT DELETE */
 
     </style>
@@ -44,9 +52,9 @@
    <!-- <h1>Long Term International Net Migration by Citizenship, 1975 to 2014</h1>-->
 
     <div id="graphic"><img src="fallback.png" alt="[Chart]" /></div>
+    <h6 id="source"></h6>
 
     <div id="keypoints">
-        <p></p>
     </div>
 
     <!-- Define the source -->
@@ -631,21 +639,8 @@
 			d3.select('#graphic').select('svg').attr("height", +svgHeight + +legendHeight + 30);
 
 			//create link to source
-			d3.select('#graphic').select('svg')
-				.append("g")
-				.attr("id", "source")
-				.append("text")
-				.attr("text-anchor", "start")
-				.style("font-size", "12px")
-				.style("fill", "#666")
-				.attr('y',height + margin.top + margin.bottom + +legendHeight + 20)
-				.attr('x', 0)
-				.text("Source: ")
-				.append("a")
-				.style("fill", "#4774CC")
-				.attr("xlink:href", dvc.essential.sourceURL)
-				.attr("target", "_blank")
-				.text(dvc.essential.sourceText);
+			d3.select('#source')
+				.text('Source: ' + dvc.essential.sourceText);
 
 		//Fix CSS
 

@@ -12,9 +12,16 @@
 
     <link rel="stylesheet" href="../lib/globalStyle.css" />
     <link type="text/css" href="../lib/styles.css" rel="stylesheet" />
-
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 
     <style type="text/css">
+
+    h6 {
+       font-size: 16px;
+       margin: 16px 0 8px 0;
+       font-weight: 700;
+       color:#323132;
+    }
 
 		.row {
 			  margin-left: 0px;
@@ -132,6 +139,7 @@
             <div class="col-xs-12" id="legnd"></div>
     </div>
   </div>
+  <h6 id="source"></h6>
 
    <div class="footer" />
 
@@ -197,8 +205,8 @@
 	  	 }; // ends for loop
 
 			//create link to source
-			d3.select(".footer").append("p")
-				.html("Source: <a href='"+dvc.essential.sourceURL+"'>"+dvc.essential.sourceText+"</a>");
+      d3.select('#source')
+        .text('Source: ' + dvc.essential.sourceText);
 
 		//  Now let get the size of the heat map  // row=12
 		if(graphic.width() < dvc.optional.mobileBreakpoint) {ratio = dvc.essential.brickRatio_S_M_L[0]; }

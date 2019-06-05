@@ -86,6 +86,14 @@
       max-width: 700px;
       width: 100%;
     }
+
+    h6 {
+       font-size: 16px;
+       margin: 16px 0 8px 0;
+       font-weight: 700;
+       color:#323132;
+    }
+
   </style>
 </head>
 
@@ -351,14 +359,9 @@
       .attr('class', 'circles');
 
     //create link to source
-    d3.select('#graphic').select('svg')
-      .append("g")
-      .attr("id", "source")
-      .append("text")
-      .attr("text-anchor", "start")
-      .attr('y', height + margin.top + margin.bottom + 20)
-      .attr('x', 0)
-      .text("Source: " + dvc.essential.sourceText)
+    d3.select('#footer')
+      .append('h6')
+      .text('Source: ' + dvc.essential.sourceText);
 
     // make rectangle annotations
     dvc.essential.rectannotations.forEach(function(d, i) {

@@ -60,6 +60,13 @@ circle {
   display: none;
 }
 
+h6 {
+   font-size: 16px;
+   margin: 16px 0 8px 0;
+   font-weight: 700;
+   color:#323132;
+}
+
 </style>
 </head>
 <body>
@@ -386,21 +393,9 @@ var highlight = chartArea.append("svg")
   //add a blank svg to push the footer button div down
   d3.select("#graphic").append("svg").attr("height",height+margin.top+30).style("position","relative")
 
-  d3.select("#footer").append("div")
-  .attr("id", "source")
-  .append("text")
-  .attr("text-anchor", "start")
-  .style("font-size", "12px")
-  .style("fill", "#666")
-  // .attr('y',height + margin.top + margin.bottom-10)
-  // .attr('x',0)
-  //.style('margin-bottom', '10px')
-  .text("Source: ")
-  .append("a")
-  .style("fill", "#4774CC")  // it ignored the css !!
-  .attr("xlink:href", dvc.essential.sourceURL)
-  .attr("target", "_blank")
-  .text(dvc.essential.sourceText);
+  d3.select('#footer')
+    .append('h6')
+    .text('Source: ' + dvc.essential.sourceText);
 
 
 pymChild.sendHeight();

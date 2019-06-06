@@ -193,7 +193,7 @@
 
       }
 
-      d3.csv('data.csv', row, function(error, dataFlat) {
+      d3.csv(dvc.essential.graphic_data_url, row, function(error, dataFlat) {
         if (error) throw error;
 
         var dataFlatMax = d3.max(dataFlat, function(d) {

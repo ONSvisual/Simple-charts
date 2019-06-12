@@ -28,6 +28,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Simple bar vertival](https://onsvisual.github.io/Simple-charts/Simple-Bar-Vertical/)
 - [Split bar chart](https://onsvisual.github.io/Simple-charts/Split-bar-chart/)
 - [Slope](https://onsvisual.github.io/Simple-charts/Slope/)
+- [Slope-voronoi](https://onsvisual.github.io/Simple-charts/Slope-voronoi/)
 - [Stacked area charts](https://onsvisual.github.io/Simple-charts/Stacked-Area-Charts/)
 - [Stacked bar horizontal](https://onsvisual.github.io/Simple-charts/Stacked-Bar-Horizontal/)
 - [Stacked bar vertical](https://onsvisual.github.io/Simple-charts/Stacked-Bar-Vertical/)

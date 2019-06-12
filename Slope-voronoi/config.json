@@ -1,6 +1,6 @@
 {
     "essential" : {
-            "slopeType":"rank",
+            "slopeType":"value",
             "ifValueShowRanks":true,
             "ifRankCustomRank":true,
             "ifRankShowValue":true,

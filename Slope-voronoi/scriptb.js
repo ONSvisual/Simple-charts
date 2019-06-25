@@ -317,6 +317,8 @@
 	      .call(function() {
 	        arrangeLabels("labelstext2")
 	      })
+				.call(wrap,margin.right-30);
+
 
 	    index = 0
 	    linegroups.append('text')
@@ -340,6 +342,8 @@
 	      .call(function() {
 	        arrangeLabels("desk")
 	      })
+				.call(wrap,margin.left-30);
+
 
 	    index = 0
 	    linegroups.append('text')
@@ -363,6 +367,8 @@
 	      .call(function() {
 	        arrangeLabels("mob")
 	      })
+				.call(wrap,margin.left-30);
+
 
 	    if (dvc.essential.ifValueShowRanks == true) {
 	      for (var j = 0; j < lines[0].rank.length; j++) {
@@ -427,7 +433,8 @@
 	          return (y(d.rank[1].amt) + 5);
 	        })
 	        .attr('x', chart_width + 30)
-	        .attr('text-anchor', 'start');
+	        .attr('text-anchor', 'start')
+					.call(wrap,margin.right-30);
 
 	      linegroups.append('text')
 	        .attr("class", "labelstext desk")
@@ -438,7 +445,9 @@
 	          return (y(d.rank[0].amt) + 5);
 	        })
 	        .attr('x', -25)
-	        .attr('text-anchor', 'end');
+	        .attr('text-anchor', 'end')
+					.call(wrap,margin.left-30);
+
 
 	      linegroups.append('text')
 	        .attr("class", "labelstext mob")
@@ -450,6 +459,8 @@
 	        })
 	        .attr('x', -20)
 	        .attr('text-anchor', 'end')
+					.call(wrap,margin.left-30);
+
 	    } else {
 	      linegroups.append('text')
 	        .attr("class", "labelstext2")
@@ -460,7 +471,8 @@
 	          return (y(d.rank[1].amt) + 5);
 	        })
 	        .attr('x', chart_width + 30)
-	        .attr('text-anchor', 'start');
+	        .attr('text-anchor', 'start')
+					.call(wrap,margin.right-30);
 
 	      linegroups.append('text')
 	        .attr("class", "labelstext desk")
@@ -471,7 +483,8 @@
 	          return (y(d.rank[0].amt) + 5);
 	        })
 	        .attr('x', -25)
-	        .attr('text-anchor', 'end');
+	        .attr('text-anchor', 'end')
+					.call(wrap,margin.left-30);
 	    }
 
 	    for (var j = 0; j < lines[0].rank.length; j++) {
@@ -594,6 +607,31 @@
 	  d3.select('.footer')
 	    .append('h6')
 	    .text('Source: ' + dvc.essential.sourceText);
+
+	function wrap(text, width) {
+	  text.each(function() {
+	    var text = d3.select(this),
+	        words = text.text().split(/\s+/).reverse(),
+	        word,
+	        line = [],
+	        lineNumber = 0,
+	        lineHeight = 1.1, // ems
+	        y = text.attr("y"),
+					x= text.attr("x"),
+	        dy = 0,
+	        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+	    while (word = words.pop()) {
+	      line.push(word);
+	      tspan.text(line.join(" "));
+	      if (tspan.node().getComputedTextLength() > width) {
+	        line.pop();
+	        tspan.text(line.join(" "));
+	        line = [word];
+	        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+	      }
+	    }
+	  });
+	}
 
 
 	  function arrangeLabels(classname) {

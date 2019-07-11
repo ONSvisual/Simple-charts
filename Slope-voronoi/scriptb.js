@@ -312,12 +312,13 @@
 	      .attr('y', function(d, i) {
 	        return (y(d.value[1].amt) + 5);
 	      })
-	      .attr('x', chart_width + 15)
+	      .attr('x', chart_width + 25)
 	      .attr('text-anchor', 'start')
 	      .call(function() {
 	        arrangeLabels("labelstext2")
 	      })
-				.call(wrap,margin.right-30);
+		//I've commented out the wrap call as it's breaking it somehow		
+		  //.call(wrap,margin.right-30);
 
 
 	    index = 0
@@ -337,12 +338,13 @@
 	      .attr('y', function(d) {
 	        return (y(d.value[0].amt) + 5);
 	      })
-	      .attr('x', -15)
+	      .attr('x', -25)
 	      .attr('text-anchor', 'end')
 	      .call(function() {
 	        arrangeLabels("desk")
 	      })
-				.call(wrap,margin.left-30);
+		  //I've commented out the wrap call as it's breaking it somehow
+				//.call(wrap,margin.left-30);
 
 
 	    index = 0

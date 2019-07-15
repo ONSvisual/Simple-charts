@@ -1,0 +1,14 @@
+﻿name,time1value,time2value,time3value,time4value,time1rank,time2rank,time3rank,time4rank
+United States,350,360,400,700,1,1,1,1
+Netherlands,200,150,180,175,2,2,2,4
+France,100,80,-,150,3,3,4,3
+Germany,90,70,80,125,4,4,5,2
+Japan,80,60,70,100,5,5,6,5
+Switzerland,70,50,60,90,6,6,7,7
+Canada,60,40,50,80,7,10,13,13
+Great Britain,50,30,40,70,8,9,10,9
+Spain,40,20,35,60,9,7,9,8
+Jersey,30,18,30,50,10,8,12,6
+Luxembourg,15,15,25,30,12,12,8,12
+Bermuda,10,10,20,25,13,13,14,10
+Belgium,5,5,15,5,14,14,3,14

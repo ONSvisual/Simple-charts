@@ -1,7 +1,6 @@
 {
   "essential": {
     "graphic_data_url": "data.csv",
-    "dateFormat": "%d/%m/%Y",
     "colour_palette": ["#36ADD9", "#BBBDBF", "#BBBDBF","#BBBDBF", "#BBBDBF", "#BBBDBF"],
     "sourceText": ["Office for National Statistics"],
     "gridWidth":"16",

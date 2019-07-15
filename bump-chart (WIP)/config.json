@@ -1,0 +1,26 @@
+{
+  "essential": {
+    "graphic_data_url": "data.csv",
+    "useRanks":true,
+    "timeFormat": "%Y",
+    "timePeriods":[2014,2015,2016,2017],
+    "colour_palette": ["#36ADD9", "#BBBDBF", "#BBBDBF","#BBBDBF", "#BBBDBF", "#BBBDBF"],
+    "sourceText": ["Office for National Statistics"],
+    "yAxisLabel":"Rank",
+    "yAxisBreak":11,
+    "yAxisBreakText":"TOP 10 &#9650;"
+  },
+
+  "optional": {
+    "margin_sm": [80, 150, 20, 0],
+    "margin_md": [50, 150, 20, 0],
+    "margin_lg": [50, 150, 20, 0],
+
+    "aspectRatio_sm": [9, 18],
+    "aspectRatio_md": [16, 16],
+    "aspectRatio_lg": [16, 10],
+
+    "mobileBreakpoint": 414,
+    "tabletBreakpoint": 576
+  }
+}

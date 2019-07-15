@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='ext/css'>
+  <title></title>
+
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <link rel="stylesheet" href="../lib/globalStyle.css" />
+  <link rel="stylesheet" href="../lib/bootstrap-grid.css" />
+
+  <style type="text/css">
+    h6 {
+       font-size: 16px;
+       margin: 16px 0 8px 0;
+       font-weight: 700;
+       color:#323132;
+    }
+  </style>
+
+</head>
+
+
+<body>
+
+  <div id="graphic" class="row no-gutters">
+    <img src="fallback.png" alt="[Chart]" />
+  </div>
+
+  <h6 id="source"></h6>
+
+  <div id="keypoints">
+    <p></p>
+  </div>
+
+  <div id="footer">
+  </div>
+
+  <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" type="text/javascript"></script>
+  <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
+
+  <script>
+    var graphic = d3.select('#graphic');
+    var keypoints = d3.select('#keypoints');
+    var footer = d3.select(".footer");
+    var pymChild = null;
+
+    function drawGraphic(width) {
+      // clear out existing graphics
+      graphic.selectAll("*").remove();
+      keypoints.selectAll("*").remove();
+      footer.selectAll("*").remove();
+
+      //set variables for chart dimensions dependent on width of #graphic
+      if (parseInt(graphic.style("width")) < dvc.optional.mobileBreakpoint) {
+        var margin = {
+          top: dvc.optional.margin_sm[0],
+          right: dvc.optional.margin_sm[1],
+          bottom: dvc.optional.margin_sm[2],
+          left: dvc.optional.margin_sm[3]
+        };
+        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
+      } else if (parseInt(graphic.style("width")) < dvc.optional.tabletBreakpoint) {
+        var margin = {
+          top: dvc.optional.margin_md[0],
+          right: dvc.optional.margin_md[1],
+          bottom: dvc.optional.margin_md[2],
+          left: dvc.optional.margin_md[3]
+        };
+        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
+      } else {
+        var margin = {
+          top: dvc.optional.margin_lg[0],
+          right: dvc.optional.margin_lg[1],
+          bottom: dvc.optional.margin_lg[2],
+          left: dvc.optional.margin_lg[3]
+        };
+        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
+      }
+
+      //if using the values
+      if(dvc.essential.useRanks!=true){
+        //do some calculations to calculate the ranks
+      }
+      //if using using ranks
+      else {
+        //find extent of ranks
+        //first get column names with rank in them
+        columnNames = d3.keys(graphic_data[0])
+        rankNames = columnNames.filter(function(d){
+          if(d.indexOf("rank")!=-1){return d}
+        })
+
+        //then put them in one big array
+        ranks=[]
+        for(i=0;i<graphic_data.length;i++){
+          for(j=0;j<rankNames.length;j++){
+            ranks.push(+graphic_data[i][rankNames[j]])
+          }
+        }
+
+        names=[]
+        for(i=0;i<graphic_data.length;i++){
+          names.push(graphic_data[i].name)
+        }
+
+
+        var x = d3.scaleTime()
+              .domain([d3.timeParse(dvc.essential.timeFormat)(d3.extent(dvc.essential.timePeriods)[0]),d3.timeParse(dvc.essential.timeFormat)(d3.extent(dvc.essential.timePeriods)[1])])
+              .range([0,chart_width])
+
+        var y = d3.scaleLinear()
+                .domain(d3.extent(ranks))
+                .range([0,height])
+
+      }
+
+      var xAxis = d3.axisBottom(x)
+        .tickSize(0)
+        .tickFormat("")
+
+      var yAxis = d3.axisLeft(y);
+
+      var line = d3.line()
+          // .defined(function(d){return d.amt || d.amt !== '0';})
+          // .curve(d3.curveLinear)
+          .x(function(d) { return x(d.date); })
+          .y(function(d) { return y(d.amt); });
+
+      // parse data into columns
+      var lines = {};
+      for(i=0;i<names.length;i++){
+        lines[names[i]] = [];
+
+        graphic_data.filter(function(d){
+          return d.name == names[i]
+        }).map(function(d){
+          for(j=0;j<rankNames.length;j++){
+            lines[names[i]].push({
+            'date':d3.timeParse(dvc.essential.timeFormat)(dvc.essential.timePeriods[j]),
+            'amt':+d[rankNames[j]]
+            })
+          }
+        })
+      }
+
+      var svg = d3.select('#graphic').append('svg')
+        .attr("id", "chart")
+        .style("background-color", "#fff")
+        .attr("width", chart_width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+      svg.append("rect")
+        .style("fill", "#fff")
+        .attr("width", chart_width)
+        .attr("height", height);
+
+      // svg.append('g')
+      //     .attr('class', 'y axis')
+      //     .call(yAxis);
+
+      svg.append('g')
+          .attr('class', 'x axis')
+          .attr("transform", "translate(" + 0 + "," + height + ")")
+          .call(xAxis);
+
+
+    // //y axis label
+    //    svg.append("text")
+    //     .attr('transform','translate(' + -margin.left + ',-10)')
+    //     .attr("font-size","12px")
+    //     .attr("fill","#323132")
+    //     .text(function(d,i) { return dvc.essential.yAxisLabel});
+    if (typeof dvc.essential.yAxisBreak == "number") {
+
+      svg.append("line")
+        .attr("x1", x(d3.timeParse(dvc.essential.timeFormat)(dvc.essential.timePeriods[0])) )
+        .attr("x2", x(d3.timeParse(dvc.essential.timeFormat)(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])))
+        .attr("y1", y(dvc.essential.yAxisBreak))
+        .attr("y2", y(dvc.essential.yAxisBreak))
+        .attr("stroke", "#8e8e8e")
+        .attr("stroke-width", "2px")
+        .attr("stroke-dasharray", 4);
+
+      svg.append("text")
+       .attr("x", x(d3.timeParse(dvc.essential.timeFormat)(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1]))+5)
+       .attr("y", y(dvc.essential.yAxisBreak) + 5)
+       .html(dvc.essential.yAxisBreakText)
+    }
+
+      //create lines
+      svg.append('g').selectAll('path')
+        .data(d3.entries(lines))
+        .enter()
+        .append('path')
+        .style("stroke", function(d,i){return d3.interpolateInferno(0.2+i/(2*names.length))})
+        .style("fill", 'none')
+        .style("stroke-width", 3)
+        .style("stroke-linecap", 'round')
+        .style("stroke-linejoin", 'round')
+        .attr('d', function(d) {
+            return line(d.value);
+        });
+
+      //add line line labels
+      svg.append('g').selectAll('text')
+        .data(names)
+        .enter()
+        .append('text')
+        .attr('x',x(d3.timeParse(dvc.essential.timeFormat)(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1]))+5)
+        .attr('y',function(d,i){
+            return y(graphic_data.filter(function(e){return e.name==d})[0][rankNames[rankNames.length-1]])+5
+        })
+        .text(function(d){return d})
+
+      d3.select(".x.axis path.domain").remove()
+
+      //create link to source
+      d3.select('#source')
+        .text('Source: ' + dvc.essential.sourceText);
+
+      //use pym to calculate chart dimensions
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+
+    } // ends drawGraphic
+
+
+
+    //check whether browser can cope with svg
+    if (Modernizr.svg) {
+      //load config
+      d3.json("config.json", function(error, config) {
+
+        dvc = config
+        //load chart data
+        d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+          graphic_data = data;
+
+          //use pym to create iframed chart dependent on specified variables
+          pymChild = new pym.Child({
+            renderCallback: drawGraphic
+          });
+        });
+      })
+
+    } else {
+      //use pym to create iframe containing fallback image (which is set as default)
+      pymChild = new pym.Child();
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+  </script>
+</body>
+
+</html>

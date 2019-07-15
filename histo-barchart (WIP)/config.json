@@ -1,0 +1,26 @@
+{
+  "essential": {
+    "graphic_data_url": "data.csv",
+    "legendLabels": ["Stage 1", "Stage 2", "Stage 3", "Stage 4"],
+    "legendStyle": "rect",
+    "colour_palette": ["#e79095", "#da6a75", "#cb4050", "#b6031b"],
+
+    "sourceText": ["Office for National Statistics"],
+    "yAxisLabel": "Cancer survival rate (%)",
+    "yAxisScale": [0,100]
+  },
+  "optional": {
+    "margin_sm": [50, 10, 55, 30],
+    "margin_md": [50, 10, 55, 30],
+    "margin_lg": [50, 10, 55, 30],
+
+    "aspectRatio_sm": [16, 13],
+    "aspectRatio_md": [16, 12],
+    "aspectRatio_lg": [16, 10],
+
+    "mobileBreakpoint": 320,
+
+    "x_num_ticks_sm_md_lg": [6, 12, 12],
+    "y_num_ticks_sm_md_lg": [5, 11, 11]
+  }
+}

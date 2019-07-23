@@ -12,13 +12,13 @@
   },
 
   "optional": {
-    "margin_sm": [80, 150, 20, 0],
-    "margin_md": [50, 150, 20, 0],
-    "margin_lg": [50, 150, 20, 0],
+    "margin_sm": [50, 200, 20, 15],
+    "margin_md": [50, 250, 20, 15],
+    "margin_lg": [50, 250, 20, 15],
 
-    "aspectRatio_sm": [9, 18],
-    "aspectRatio_md": [16, 16],
-    "aspectRatio_lg": [16, 10],
+    "aspectRatio_sm": [9, 24],
+    "aspectRatio_md": [10, 16],
+    "aspectRatio_lg": [12, 10],
 
     "mobileBreakpoint": 414,
     "tabletBreakpoint": 576

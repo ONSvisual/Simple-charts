@@ -20,6 +20,11 @@
        font-weight: 700;
        color:#323132;
     }
+
+    .voronoi path {
+      fill: none;
+      pointer-events: all;
+    }
   </style>
 
 </head>
@@ -93,13 +98,18 @@
       //if using using ranks
       else {
         //find extent of ranks
-        //first get column names with rank in them
+        //first get the columns with rank in the name
         columnNames = d3.keys(graphic_data[0])
         rankNames = columnNames.filter(function(d){
           if(d.indexOf("rank")!=-1){return d}
         })
 
-        //then put them in one big array
+        //and the columns with value in the name
+        valueNames = columnNames.filter(function(d){
+          if(d.indexOf("value")!=-1){return d}
+        })
+
+        //then put them in one big array so you can find the extent of the ranks
         ranks=[]
         for(i=0;i<graphic_data.length;i++){
           for(j=0;j<rankNames.length;j++){
@@ -113,8 +123,9 @@
         }
 
 
-        var x = d3.scaleTime()
-              .domain([d3.timeParse(dvc.essential.timeFormat)(d3.extent(dvc.essential.timePeriods)[0]),d3.timeParse(dvc.essential.timeFormat)(d3.extent(dvc.essential.timePeriods)[1])])
+        var x = d3.scalePoint()
+              .align(0)
+              .domain(dvc.essential.timePeriods)
               .range([0,chart_width])
 
         var y = d3.scaleLinear()
@@ -125,7 +136,7 @@
 
       var xAxis = d3.axisBottom(x)
         .tickSize(0)
-        .tickFormat("")
+        // .tickFormat("")
 
       var yAxis = d3.axisLeft(y);
 
@@ -145,13 +156,22 @@
         }).map(function(d){
           for(j=0;j<rankNames.length;j++){
             lines[names[i]].push({
-            'date':d3.timeParse(dvc.essential.timeFormat)(dvc.essential.timePeriods[j]),
-            'amt':+d[rankNames[j]]
+            'date':dvc.essential.timePeriods[j],
+            'amt':+d[rankNames[j]],
+            'value':+d[valueNames[j]]
             })
           }
         })
       }
 
+      voronoiData=[]
+
+      graphic_data.forEach(function(d){
+        dvc.essential.timePeriods.forEach(function(e,i){
+          voronoiData.push({'name':d.name,'date':dvc.essential.timePeriods[i],'amt':+d[rankNames[i]]})
+        })
+      })
+      console.log(voronoiData)
       var svg = d3.select('#graphic').append('svg')
         .attr("id", "chart")
         .style("background-color", "#fff")
@@ -166,14 +186,12 @@
         .attr("width", chart_width)
         .attr("height", height);
 
-      // svg.append('g')
-      //     .attr('class', 'y axis')
-      //     .call(yAxis);
-
       svg.append('g')
           .attr('class', 'x axis')
-          .attr("transform", "translate(" + 0 + "," + height + ")")
+          .attr("transform", "translate(" + 0 + "," + (height+5) + ")")
           .call(xAxis);
+
+
 
 
     // //y axis label
@@ -185,8 +203,8 @@
     if (typeof dvc.essential.yAxisBreak == "number") {
 
       svg.append("line")
-        .attr("x1", x(d3.timeParse(dvc.essential.timeFormat)(dvc.essential.timePeriods[0])) )
-        .attr("x2", x(d3.timeParse(dvc.essential.timeFormat)(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])))
+        .attr("x1", x(dvc.essential.timePeriods[0]))
+        .attr("x2", x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1]))
         .attr("y1", y(dvc.essential.yAxisBreak))
         .attr("y2", y(dvc.essential.yAxisBreak))
         .attr("stroke", "#8e8e8e")
@@ -194,7 +212,7 @@
         .attr("stroke-dasharray", 4);
 
       svg.append("text")
-       .attr("x", x(d3.timeParse(dvc.essential.timeFormat)(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1]))+5)
+       .attr("x", x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+5)
        .attr("y", y(dvc.essential.yAxisBreak) + 5)
        .html(dvc.essential.yAxisBreakText)
     }
@@ -204,6 +222,7 @@
         .data(d3.entries(lines))
         .enter()
         .append('path')
+        .attr('class',function(d){return d.key.replace(/\s/g, '') + " fadeThis"})
         .style("stroke", function(d,i){return d3.interpolateInferno(0.2+i/(2*names.length))})
         .style("fill", 'none')
         .style("stroke-width", 3)
@@ -218,11 +237,115 @@
         .data(names)
         .enter()
         .append('text')
-        .attr('x',x(d3.timeParse(dvc.essential.timeFormat)(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1]))+5)
+        .attr('class',function(d){return d.replace(/\s/g, '') + " fadeThis"})
+        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+10)
         .attr('y',function(d,i){
             return y(graphic_data.filter(function(e){return e.name==d})[0][rankNames[rankNames.length-1]])+5
         })
         .text(function(d){return d})
+
+
+      svg.append('g').selectAll('text')
+        .data(d3.entries(lines))
+        .enter()
+        .append('text')
+        .attr('text-anchor',"end")
+        .attr('class',function(d){return d.key.replace(/\s/g, '') + " fadeThis"})
+        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+margin.right*0.65)
+        .attr('y',function(d,i){
+            return y(graphic_data.filter(function(e){return e.name==d.key})[0][rankNames[rankNames.length-1]])+5
+        })
+        .text(function(d){return d.value[dvc.essential.timePeriods.length-1].amt})
+
+
+      svg.append('g').selectAll('text')
+        .data(d3.entries(lines))
+        .enter()
+        .append('text')
+        .attr('text-anchor',"end")
+        .attr('class',function(d){return d.key.replace(/\s/g, '') + " fadeThis"})
+        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+margin.right-10)
+        .attr('y',function(d,i){
+            return y(graphic_data.filter(function(e){return e.name==d.key})[0][rankNames[rankNames.length-1]])+5
+        })
+        .text(function(d){return d.value[dvc.essential.timePeriods.length-1].value})
+
+
+      //draw the circles on the lines
+      for(i=0;i<names.length;i++){
+        svg.append('g').selectAll('circle')
+            .data(lines[names[i]])
+            .enter()
+            .append('circle')
+            .attr('class',names[i].replace(/\s/g, '') + " fadeThis")
+            .attr('cx',function(d,i){
+              return x(d.date)
+            })
+            .attr('cy',function(d){return y(d.amt)})
+            .attr('r',5)
+            .style('fill',"white")
+            .style('stroke',function(d,i){return d3.interpolateInferno(0.2+i/(2*names.length))})
+      }
+
+      svg.append('text')
+        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+10)
+        .attr('y',function(d,i){
+            return y(1)-25
+        })
+        .style("font-weight",700)
+        .text("Country")
+
+      svg.append('text')
+        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+margin.right*0.5)
+        .attr('y',function(d,i){
+            return y(1)-25
+        })
+        .style("font-weight",700)
+        .text("Rank")
+
+      svg.append('text')
+        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+margin.right-10)
+        .attr('y',function(d,i){
+            return y(1)-25
+        })
+        .attr('text-anchor',"end")
+        .style("font-weight",700)
+        .text("Value")
+
+
+      //voronoi stuff
+  	  var voronoi = d3.voronoi()
+  	    .x(function(d) {
+  	      return x(d.date);
+  	    })
+  	    .y(function(d) {
+  	      return y(+d.amt);
+  	    })
+  	    .extent([
+  	      [-margin.left, -10],
+  	      [chart_width + margin.right, height + margin.bottom]
+  	    ]);
+
+        var voronoiGroup = svg.append("g")
+    	    .attr("class", "voronoi");
+
+        voronoiGroup.selectAll("path")
+    	    .data(voronoi.polygons(voronoiData))
+    	    .enter().append("path")
+    	    .attr("d", function(d) {
+    	      return d ? "M" + d.join("L") + "Z" : null;
+    	    })
+    	    .on("mouseover", mouseover)
+    	    .on("mouseout", mouseout);
+
+        function mouseover(d, i) {
+          d3.selectAll(".fadeThis").attr('opacity',0.2)
+          d3.selectAll("."+d.data.name.replace(/\s/g, '')).attr('opacity',1)
+        }
+
+        function mouseout(d, i) {
+          d3.selectAll(".fadeThis").attr('opacity',1)
+        }
 
       d3.select(".x.axis path.domain").remove()
 

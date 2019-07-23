@@ -283,8 +283,7 @@
             })
             .attr('cy',function(d){return y(d.amt)})
             .attr('r',5)
-            .style('fill',"white")
-            .style('stroke',function(d,i){return d3.interpolateInferno(0.2+i/(2*names.length))})
+            .style('fill',function(d,j){return d3.interpolateInferno(0.2+i/(2*names.length))})
       }
 
       svg.append('text')

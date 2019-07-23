@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='ext/css'>
+  <title></title>
+
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <link rel="stylesheet" href="../lib/globalStyle.css" />
+<style>
+body{
+  max-width: 700px;
+}
+
+h6 {
+    font-size: 16px;
+    margin: 16px 0 8px 0;
+    font-weight: 700;
+    color:#323132;
+    }
+</style>
+</head>
+
+
+<body>
+
+  <div>
+    <div id="graphic" >
+      <img src="fallback.png" alt="[Chart]" />
+    </div>
+  </div>
+
+  <div id="keypoints">
+    <p></p>
+  </div>
+
+  <div id="footer">
+  </div>
+
+  <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" type="text/javascript"></script>
+  <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
+  <script src="../lib/d3-iconarray.js" type="text/javascript"></script>
+
+  <script>
+    var graphic = d3.select('#graphic');
+    var keypoints = d3.select('#keypoints');
+    var footer = d3.select(".footer");
+    var pymChild = null;
+
+    function drawGraphic(width) {
+          // clear out existing graphics
+      graphic.selectAll("*").remove();
+      keypoints.selectAll("*").remove();
+      footer.selectAll("*").remove();
+
+      margin={top:dvc.optional.margin_lg[0],
+                right:dvc.optional.margin_lg[1],
+                bottom:dvc.optional.margin_lg[2],
+                left:dvc.optional.margin_lg[3]}
+
+
+      chart_width=parseInt(graphic.style('width'))
+      if(chart_width<406){//mobile
+        height = Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
+        gridHeight=10
+        arrayDomain=Math.ceil(dvc.essential.gridWidth/2);
+        dotRadius=0.9*chart_width/dvc.essential.gridWidth
+
+      }else if(chart_width<609){//mobile
+        height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
+        gridHeight=10
+        arrayDomain=Math.ceil(dvc.essential.gridWidth/2);
+        dotRadius=0.9*chart_width/dvc.essential.gridWidth
+
+      }else{//large
+        height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
+        gridHeight=5;
+        arrayDomain=dvc.essential.gridWidth;
+        dotRadius=0.45*chart_width/dvc.essential.gridWidth
+      }
+
+
+
+      var layout = d3_iconarray.layout()
+    	.height(gridHeight)
+      .widthFirst(dvc.essential.widthFirst);
+
+      var dataArray = graphic_data.reduce(function(value,d){
+        for(var i=0;i<d.value;i++){
+          value.push(d.colour);
+        }
+        return value
+      },[]);
+
+
+
+      var grid = layout(dataArray)
+      var arrayScale = d3.scaleLinear()
+        	.domain([ 0, arrayDomain ])
+        	.range([0, chart_width-(margin.left+margin.right)]);
+
+      var legend = d3.select('#graphic')
+              .append('svg')
+                .attr('width',chart_width)
+                .attr('height',height)
+    						.append("g")
+    						.attr("id", "legend")
+                .attr('transform','translate('+margin.left+','+margin.top+')');
+                // .attr("transform",function(){
+                //   if(chart_width<450){return "translate("+margin.left+" "+(24*0.90*chart_width/dvc.essential.gridWidth)+")"}
+                //   else {return "translate("+margin.left+" "+(12*0.45*chart_width/dvc.essential.gridWidth)+")"}
+                // })
+      labels=[]
+      graphic_data.forEach(function(d){
+        labels.push(d.group)
+      })
+      createLegend(labels);
+
+      legendsize=document.getElementById('legend').getBBox()
+
+      var svg = d3.select('svg')
+      		.append('g')
+      			.attr('transform','translate('+margin.left+','+(3*margin.top+legendsize.height)+')');
+
+      svg.selectAll('circle')
+      	.data(grid)
+      		.enter()
+      	.append('circle')
+      		.attr('cx', function(d){
+      			return arrayScale(d.position.x);
+      		})
+      		.attr('cy', function(d){
+      			return arrayScale(d.position.y);
+      		})
+      		.attr('r',dotRadius)
+      		.attr('fill',function(d){ return d.data; })
+
+
+
+
+
+function createLegend(labels){
+  var prevX= 0;
+  var prevY= 0;
+  lineNo = 0;
+  var lineNoOld = 0;
+  labels.forEach(function(d,i) {
+    // draw legend text based on content of var legendLabels ...
+    var_group= d3.select("#legend").append("g");
+
+    var_group.append("circle")
+    .attr("class","rect" + i)
+    .attr("fill", dvc.essential.colour_palette[i])
+    .attr("cx", 0)
+    .attr("cy", 0)
+    .attr("r", dotRadius);
+
+    var_group.append("text")
+    .text(labels[i])
+    .attr("class","legend" + i)
+    .attr("text-anchor", "start")
+    .style("font-size", "12px")
+    .style("fill", "#666")
+    .attr('y',15)
+    .attr('x',0);
+    d3.selectAll(".legend" + (i))
+    .each(calcPosition);
+
+    function calcPosition() {
+      var BBox = this.getBBox()
+      //prevY =BBox.width
+      d3.select(".legend" + (i))
+      .attr("y",function(d){
+      if((prevX+BBox.width +50)>parseInt(graphic.style("width")) ){
+        lineNoOld = lineNo;
+        lineNo=lineNo + 1;
+        prevX = 0;
+      }
+      return eval((lineNo*20) + 20);
+      })
+      .attr("x",function(d){ return prevX+12;})
+      d3.select(".rect" + (i))
+      .attr("cy",function(d){
+      if((prevX+BBox.width +50)>parseInt(graphic.style("width")) ){
+      lineNoOld = lineNo;
+      lineNo=lineNo + 1;
+      prevX = 0;
+      }
+      return eval((lineNo*20)+15);
+      })
+      .attr("cx",function(d){ return prevX; })
+      prevX = prevX + BBox.width +50
+    }; // end function calcPosition()
+
+  }); // end foreach
+}// end function createLegend()
+
+      //create link to source
+      d3.select('#footer').selectAll('*').remove()
+      d3.select('#footer')
+        .append("h6")
+        .attr("id", "source")
+        .html("Source: "+dvc.essential.sourceText[0])
+
+      //use pym to calculate chart dimensions
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+
+    } // ends drawGraphic
+
+
+
+    //check whether browser can cope with svg
+    if (Modernizr.svg) {
+      //load config
+      d3.json("config.json", function(error, config) {
+        dvc = config
+
+        //load chart data
+        d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+          graphic_data = data;
+
+          //use pym to create iframed chart dependent on specified variables
+          pymChild = new pym.Child({
+            renderCallback: drawGraphic
+          });
+        });
+      })
+
+    } else {
+      //use pym to create iframe containing fallback image (which is set as default)
+      pymChild = new pym.Child();
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+  </script>
+</body>
+
+</html>

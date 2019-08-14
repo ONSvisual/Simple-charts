@@ -11,7 +11,6 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
     <link rel="stylesheet" href="../lib/globalStyle.css" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 
     <style type="text/css">
       h6 {
@@ -421,13 +420,13 @@
             if(dvc.essential.circles==true){
               dvc.essential.annotationCXCY.forEach(function(d,i){
                 svg.append("circle")
-                  .attr("cx",x(dvc.essential.annotationCXCY[i][0]))
+                  .attr("cx",x(d3.timeParse(dvc.essential.dateFormat)(dvc.essential.annotationCXCY[i][0])))
                   .attr("cy",y(dvc.essential.annotationCXCY[i][1]))
                   .attr("r",6)
                   .attr("fill",dvc.essential.colour_palette[i])
 
                 svg.append("text")
-                .attr("x",x(dvc.essential.annotationCXCY[i][0])-20)
+                .attr("x",x(d3.timeParse(dvc.essential.dateFormat)(dvc.essential.annotationCXCY[i][0]))-20)
                 .attr("y",y(dvc.essential.annotationCXCY[i][1])-15)
                 .text(dvc.essential.annotationCXCY[i][0])
               })

@@ -6,7 +6,17 @@
 
             "legendLabels" : ["Blue", "Green", "Red"],
             "legendStyle": "line",
-            "colour_palette": [ "#274796" , "green", "#E73F40", "#7BCAE2" ],
+            "directLabeling" : true,
+            "directLabelingAdjust" : {
+              "Blue": {"x": 0, "y": 0},
+              "Green": {"x": 0, "y": 7},
+              "Red": {"x": 0, "y": -7}
+            },
+            "colour_palette": {
+              "Blue": "#274796",
+              "Green": "green",
+              "Red": "#E73F40"
+            },
 
             "sourceText":["Statistics"],
             "sourceURL":["http://www.ons.gov.uk"],
@@ -55,18 +65,18 @@
 
     "optional" : {
             "margin_sm": [50, 10, 55, 30],
-            "margin_md": [50, 10, 55, 30],
-            "margin_lg": [50, 10, 55, 30],
+            "margin_md": [50, 50, 55, 30],
+            "margin_lg": [50, 50, 55, 30],
 
             "aspectRatio_sm" : [16,13],
             "aspectRatio_md" : [16,12],
             "aspectRatio_lg" : [16,10],
 
-            "mobileBreakpoint" : 610,
+            "mobileBreakpoint" : 414,
 
             "xAxisTextFormat_sm_md_lg" : ["%y", "%Y", "%b %y"],
 
-            "x_num_ticks_sm_md_lg" : [6,9,9],    
+            "x_num_ticks_sm_md_lg" : [6,9,9],
             "y_num_ticks_sm_md_lg" : [5,11,11],
 
             "lineMarkers" : true,

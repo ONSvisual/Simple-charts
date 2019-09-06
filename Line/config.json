@@ -56,6 +56,7 @@
                 ["Jan-93","68.4"],
                 ["Jan-08","73"]
             ],
+            "annotationColour": ["green"],
 
             "yAxisLabel":"%",
             "yAxisScale":"auto_zero_max",

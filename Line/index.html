@@ -442,45 +442,42 @@
 
 
 				// add markers
-        // TODO fix this
-				// if (parseInt(graphic.style("width")) > threshold_sm && dvc.optional.lineMarkers == true){
-				// 	var j=0;
-				// 	for (var column in graphic_data[0]) {
-				// 				if (column == 'date') continue;
-				// 									 svg.append("g")
-				// 										.selectAll("circles")
-				// 										.data(lines[column]) // raw data
-				// 										.enter()
-				// 										.append('circle')
-				// 										.style('fill', '#fff')
-				// 										.style('stroke', function(d,i){ return dvc.essential.colour_palette[j]; })
-				// 										.style('stroke-width', 2)
-				// 										.attr("cx", function(d){
-				// 																	return x(d.date);
-				// 																})
-				// 										.attr("cy", function(d){
-				// 																	return y(d.amt);
-				// 																})
-				// 										.attr("r", function(d){if(d[column]!=0){return 3}else{return 0}})
-				// 									j++;
-				// 									}
-				// 								} // ends if
+				if (parseInt(graphic.style("width")) > threshold_sm && dvc.optional.lineMarkers == true){
+					for (var column in graphic_data[0]) {
+								if (column == 'date') continue;
+													 svg.append("g")
+														.selectAll("circles")
+														.data(lines[column]) // raw data
+														.enter()
+														.append('circle')
+														.style('fill', '#fff')
+														.style('stroke', function(d){ return dvc.essential.colour_palette[column]; })
+														.style('stroke-width', 2)
+														.attr("cx", function(d){
+																					return x(d.date);
+																				})
+														.attr("cy", function(d){
+																					return y(d.amt);
+																				})
+														.attr("r", function(d){if(d[column]!=0){return 3}else{return 0}});
+													}
+												} // ends if
 
-        // TODO new colour palette needed for annotations?
-            // if(dvc.essential.circles==true){
-            //   dvc.essential.annotationCXCY.forEach(function(d,i){
-            //     svg.append("circle")
-            //       .attr("cx",x(d3.timeParse(dvc.essential.dateFormat)(dvc.essential.annotationCXCY[i][0])))
-            //       .attr("cy",y(dvc.essential.annotationCXCY[i][1]))
-            //       .attr("r",6)
-            //       .attr("fill",dvc.essential.colour_palette[i])
-            //
-            //     svg.append("text")
-            //     .attr("x",x(d3.timeParse(dvc.essential.dateFormat)(dvc.essential.annotationCXCY[i][0]))-20)
-            //     .attr("y",y(dvc.essential.annotationCXCY[i][1])-15)
-            //     .text(dvc.essential.annotationCXCY[i][0])
-            //   })
-            // }
+        // circle annotations
+            if(dvc.essential.circles==true){
+              dvc.essential.annotationCXCY.forEach(function(d,i){
+                svg.append("circle")
+                  .attr("cx",x(d3.timeParse(dvc.essential.dateFormat)(dvc.essential.annotationCXCY[i][0])))
+                  .attr("cy",y(dvc.essential.annotationCXCY[i][1]))
+                  .attr("r",6)
+                  .attr("fill",dvc.essential.annotationColour)
+
+                svg.append("text")
+                .attr("x",x(d3.timeParse(dvc.essential.dateFormat)(dvc.essential.annotationCXCY[i][0]))-20)
+                .attr("y",y(dvc.essential.annotationCXCY[i][1])-15)
+                .text(dvc.essential.annotationCXCY[i][0])
+              })
+            } // ends if
 
 			writeAnnotation();
 

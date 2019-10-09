@@ -1,0 +1,67 @@
+{
+    "essential" : {
+            "graphic_data_url": "data.csv",
+
+            "sort_data": false,
+            "numbercolumns_sm_md_lg": [2,4,4],
+
+            "colour_palette": ["#0075A3","#E2BC22","#ccc","#234D70"],
+
+            "dateFormat":"",
+            "legendLabels" : ["Social Rent","Other sub-market Rent","Rent to own","Shared ownership/equity"],
+
+
+            "sourceText":["Affordable housing within the United Kingdom: 2008 to 2018, Office for National Statistics"],
+            "sourceURL":["http://www.ons.gov.uk/ons/publications/re-reference-tables.html?edition=tcm%3A77-350752"],
+
+            "annotationChart": [
+                "Lorem ipsum  dolor sit amet",
+                "adipiscing elit  sed do eiusmod"
+            ],
+            "annotationBullet": [
+                "Lorem ipsum  dolor sit amet",
+                "adipiscing elit  sed do eiusmod"
+            ],
+            "annotationXY":[
+                ["Light rail  and tram ","68.4"],
+                ["Underground","20"]
+            ],
+            "annotationAlign":[
+                "middle",
+                "middle"
+            ],
+
+            "circles" : false,
+            "annotationCXCY":[
+                ["Rail","68.4"],
+                ["Underground","73"]
+            ],
+
+            "yAxisLabel":"%",
+            "yAxisScale":[0,100],
+            "yAxisBreak": true,
+            "yAxisBreak_sm_md_lg": [65,65,65]
+    },
+    "optional" : {
+            "margin_sm": [0, 0, 0, 20],
+            "margin_md": [0, 0, 0, 20],
+            "margin_lg": [0, 0, 0, 20],
+
+            "innersm":[50 , 0 , 40 , 30 ],
+            "innermd":[60 , 0 , 50 , 30 ],
+            "innerlg":[50 , 0 , 50 , 30 ],
+
+            "aspectRatio_sm" : [16,25],
+            "aspectRatio_md" : [16,30],
+            "aspectRatio_lg" : [16,40],
+
+            "mobileBreakpoint" : 610,
+
+            "xAxisTextFormat_sm_md_lg" : ["%y", "%Y", "%b %y"],
+
+            "x_num_ticks_sm_md_lg" : [4,2,2],
+            "y_num_ticks_sm_md_lg" : [4,5,5],
+            "centre_line" : false,
+            "centre_line_value" : 0
+    }
+}

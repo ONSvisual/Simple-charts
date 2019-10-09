@@ -4,9 +4,9 @@
 
 ## Getting started
 
-The [wiki](https://github.com/ONSvisual/Simple-charts/wiki) instructions on how to use each template. 
+The [wiki](https://github.com/ONSvisual/Simple-charts/wiki) instructions on how to use each template.
 
-If you download the zip of the repo, you'll find a folder for every template. These templates runs off core libraries in the folder `lib` and images in `images`. Each visualisation is customisable using the options in the `config.json` file. It reads data from a `data.csv` file. 
+If you download the zip of the repo, you'll find a folder for every template. These templates runs off core libraries in the folder `lib` and images in `images`. Each visualisation is customisable using the options in the `config.json` file. It reads data from a `data.csv` file.
 
 ## See them in action
 - [Bar and line](https://onsvisual.github.io/Simple-charts/Bar-and-Line/)
@@ -29,6 +29,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Split bar chart](https://onsvisual.github.io/Simple-charts/Split-bar-chart/)
 - [Slope](https://onsvisual.github.io/Simple-charts/Slope/)
 - [Slope-voronoi](https://onsvisual.github.io/Simple-charts/Slope-voronoi/)
+- [Small Multiples - Stacked Bars Vertical](https://onsvisual.github.io/Simple-charts/Small-Multiples-StackedBar/smallmulti/)
 - [Stacked area charts](https://onsvisual.github.io/Simple-charts/Stacked-Area-Charts/)
 - [Stacked bar horizontal](https://onsvisual.github.io/Simple-charts/Stacked-Bar-Horizontal/)
 - [Stacked bar vertical](https://onsvisual.github.io/Simple-charts/Stacked-Bar-Vertical/)
@@ -36,6 +37,4 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 
 ##### NB
 
-These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisual/Simple-charts/tree/d3v3) if that's your thing. 
-
-
+These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisual/Simple-charts/tree/d3v3) if that's your thing.

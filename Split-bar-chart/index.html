@@ -233,7 +233,7 @@
 
         columnScale.domain(dataFlat.map(column));
 
-        xScale.range([0, columnScale.bandwidth()]).domain([dataFlatMin, dataFlatMax]);
+        xScale.range([0, columnScale.bandwidth()]).domain([d3.min([0,dataFlatMin]), dataFlatMax]);
 
         // Excluding the light colors from the color scheme
         //var colorRange = d3.schemeBuPu[columnScale.domain().length + 2].reverse();

@@ -18,6 +18,12 @@
 
 	}
 
+  #num-region {
+    height: 25px;
+    margin-left: 15px;
+    font-size: 18px;
+  }
+
 	#key line {
 	  stroke: #000;
 	  shape-rendering: crispEdges;
@@ -48,7 +54,7 @@
     </style>
 </head>
 <body>
-
+    <div id="num-region"></div>
   	<div id="graphic">
     	<img src="fallback.png" alt="[Chart]" />
     </div>
@@ -570,12 +576,15 @@
 		}
 
 		function highlight(area) {
-
+      var value = data2.filter(function(d){return d.AREACD==area})[0].value
+      var areaName = data2.filter(function(d){return d.AREACD==area})[0].AREANM
 			//var area=d3.selectAll("." + area);
 			path = d3.select("." + area)._groups[0][0];
 
+      var regionText = d3.select('#num-region')
 
-			//var name =d3.selectAll("." + area).attr("data-nm")
+      regionText.append('p')
+                  .text(areaName+': '+ value +'%.')
 
 			d3.selectAll('.geogg')
 					.append("path")
@@ -597,7 +606,7 @@
 		/* Remove the current selected polygon */
 		function unhighlight() {
 			d3.selectAll('#selected').remove();
-			//d3.select("#areanm").empty();
+			d3.select("#num-region").selectAll("*").remove();
 
 			d3.select(".bar_selected").classed("bar_selected", false)
 

@@ -119,7 +119,7 @@
       dvc = config
 
       var formatLabel = function(d) {
-        return d3.format('.0f')(d) + "%";
+        return d3.format('.0f')(d) + dvc.essential.xAxisLabel;
       };
 
       var chartwidth = parseInt(d3.select(".graphic").style("width"));

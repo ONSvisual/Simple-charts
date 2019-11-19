@@ -277,7 +277,7 @@
 							.attr("y",-5)
 							.attr("x",function(d,i){return x(config2.optional.average)-5})
 							.attr("class","average")
-							.text("UK average: "+config2.optional.average);
+							.text(config2.optional.average_label+": "+config2.optional.average);
 					}
 
 
@@ -682,7 +682,7 @@
   				.attr("x","67")
   				.attr("y",function(d,i){return y(config2.optional.average) - 4})
   				.attr("class","average")
-  				.text("UK average");
+  				.text(config2.optional.average_label);
 
   			g.append("text")
   				.attr("x","25")

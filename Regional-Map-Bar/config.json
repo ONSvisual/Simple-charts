@@ -32,6 +32,7 @@
     "optional" : {
             "display_average": "yes",
             "average": 2.1,
+            "average_label":"UK average",
             "margin_sm": [25, 20, 35, 115],
             "margin_md": [25, 20, 35, 115],
             "margin_lg": [25, 20, 35, 115],

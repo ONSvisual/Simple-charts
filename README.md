@@ -29,11 +29,11 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Split bar chart](https://onsvisual.github.io/Simple-charts/Split-bar-chart/)
 - [Slope](https://onsvisual.github.io/Simple-charts/Slope/)
 - [Slope-voronoi](https://onsvisual.github.io/Simple-charts/Slope-voronoi/)
-- [Small Multiples - Stacked Bars Vertical](https://onsvisual.github.io/Simple-charts/Small-Multiples-StackedBar/smallmulti/)
+- [Small Multiples - Stacked Bars Vertical](https://onsvisual.github.io/Simple-charts/small-multiples-stacked-bar/smallmulti/)
 - [Stacked area charts](https://onsvisual.github.io/Simple-charts/Stacked-Area-Charts/)
 - [Stacked bar horizontal](https://onsvisual.github.io/Simple-charts/Stacked-Bar-Horizontal/)
 - [Stacked bar vertical](https://onsvisual.github.io/Simple-charts/Stacked-Bar-Vertical/)
-- [Tie Fighter](https://onsvisual.github.io/Simple-charts/TieFighter/)
+- [Tie Fighter](https://onsvisual.github.io/Simple-charts/tie-fighter/)
 
 ##### NB
 

@@ -1,0 +1,64 @@
+{
+    "essential" : {
+
+            "dataSets_url": [ "data"],
+
+            "num_lines_url": [ "data00.csv", "data01.csv"],
+
+            "chart_type":  "line",
+
+            "buttonNames": [ "Monthly Index" ],
+
+            "dateFormat":  "%Y",
+
+            "legendLabels" : ["Classification on", "Classification off"],
+
+            "sourceText":["Office for National Statistics"],
+            "sourceURL":[],
+
+            "addline": false,
+            "lineText": "Add line text here",
+
+            "draggable": false,
+            "annotationsChart" : [],
+
+            "wordwrap":[20,15],
+            "annoAlign": [],
+
+            "annotationBullet": [],
+            "annotationXY":[ ],
+            "annotationAlign":["end" ],
+
+            "circles" : false,
+            "annotationCXCY":[],
+
+            "xAxisLabel":[""],
+            "yDomain":[0,50],
+            "yAxisLabel": "November 2018 = 100",
+            "yAxisBreak": true,
+            "yAxisBreak_sm_md_lg": [85,85,85],
+
+	           "numColumns_sm_md_lg":[1,2,2]
+
+    },
+    "optional" : {
+            "margin_sm": [15, 5, 20, 10],
+            "margin_md": [15, 5, 15, 10],
+            "margin_lg": [15, 10, 15, 10],
+
+            "innersm":[50 , 15 , 40 , 30 ],
+            "innermd":[35 , 15 , 50 , 30 ],
+            "innerlg":[35 , 15 , 50 , 30 ],
+
+            "aspectRatio_sm" : [4,3],
+            "aspectRatio_md" : [4,6],
+            "aspectRatio_lg" : [9,9],
+
+            "mobileBreakpoint" : 414,
+            "xAxisTextFormat_sm_md_lg" : ["%y", "%y", "%y"],
+            "x_num_ticks_sm_md_lg" : [5,5,5],
+            "y_num_ticks_sm_md_lg" : [1,1,1],
+            "centre_line" : false,
+            "centre_line_value" :0
+    }
+}

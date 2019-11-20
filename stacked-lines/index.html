@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+  <title>Devices</title>
+
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <link rel="stylesheet" href="../lib/globalStyle.css" />
+  <link rel="stylesheet" href="./styles.css" media="screen">
+  <link rel="stylesheet" href="../lib/bootstrap-grid.css">
+
+  <style type="text/css">
+    #legend .key {
+      display: inline-block;
+      margin: 0 0 1em 0;
+      padding: 0;
+      line-height: 15px;
+    }
+
+    #legend .key li {
+      display: inline-block;
+      margin: 0 18px 0 0;
+      padding: 0;
+      line-height: 15px;
+    }
+
+    #legend .key b {
+      display: inline-block;
+      width: 35px;
+      height: 15px;
+      margin-right: 6px;
+      float: left;
+      background-color: none;
+      margin-top: 8px;
+    }
+
+    .col-xs-12,
+    .col-sm-12 {
+      padding-left: 5px;
+       !important padding-right: 5px;
+       !important
+    }
+
+    .titleTx {
+      font-family: "Open Sans", Helvetica, Arial, sdomainans-serif;
+      font-size: 12px;
+      font-color: #666;
+      font-weight: 600;
+    }
+
+    .border0 {
+      border-top: 2px solid #0075A3;
+    }
+
+    .border1 {
+      border-top: 2px solid #E2BC22;
+    }
+
+    .border2 {
+      border-top: 2px solid #266D4A;
+    }
+
+    .border3 {
+      border-top: 2px solid #36ADD9;
+    }
+
+    .border4 {
+      border-top: 2px solid #234D70;
+    }
+
+    .line-0 {
+      stroke: #0075A3;
+    }
+
+    .line-1 {
+      stroke: #E2BC22;
+    }
+
+    .line-2 {
+      stroke: #266D4A;
+    }
+
+    .line-3 {
+      stroke: #36ADD9;
+    }
+
+    .line-4 {
+      stroke: #234D70;
+    }
+
+
+    .circle {
+      fill: #F90;
+      stroke: #F90;
+    }
+
+    .svgRect {
+      fill: white;
+      fill-opacity: 0.0;
+    }
+
+    #centreline {
+      stroke-width: 2px;
+    }
+
+    .bars {
+      stroke: none;
+      fill: #0f8243;
+      fill-opacity: 0.8;
+    }
+
+    .circle:hover,
+    .bars:hover {
+      cursor: pointer;
+    }
+
+    h6 {
+      font-size: 18px;
+      margin: 16px 0 8px 0;
+      font-weight: 600;
+      color: #323132;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="" style="max-width: 700px;">
+
+
+    <div class="row no-gutters">
+      <div class="col-sm-12 col-xs-12" id="legend">
+      </div>
+    </div>
+
+    <div class="row no-gutters">
+      <div class="col-sm-12 col-xs-12" id="graphic">
+        <img src="fallback.png" alt="[Chart]" />
+      </div>
+    </div>
+
+    <div class="row no-gutters">
+      <div class="col-sm-12 col-xs-12" id="keypoints">
+      </div>
+    </div>
+
+    <div class="row no-gutters">
+      <div class="col-sm-12 col-xs-12">
+        <h6 id="source"></h6>
+      </div>
+    </div>
+
+
+  </div>
+
+  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" charset="utf-8"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/jquery/2.1.4/jquery.min.js"></script>
+  <!-- <script src="../lib/d3-jetpack.js" type="text/javascript"></script> -->
+  <script src="../lib/modernizr.svg.min.js"></script>
+
+
+  <script>
+    var header = $('#header');
+    var graphic = $('#graphic');
+    var keypoints = $('#keypoints');
+    var footer = $("#footer");
+    var height;
+    var dvc = {}; // global object variable to contain all variables prefixed with 'dvc.'
+    var charts;
+    var pymChild = null;
+    var graphHeight;
+    var numberCharts = 4; // to start the program off - first draw
+    var counter = 0; // breadcrumb hack
+    var jump = false;
+
+    function drawGraphic() {
+      // you must clear everything maybe not header with buttons
+      graphic.empty();
+      keypoints.empty();
+      footer.empty();
+
+      var threshold_md = 576;
+      var threshold_sm = dvc.optional.mobileBreakpoint;
+
+      var innerPadding_values = { // May need to make dynamic" && ie 2 charts displayed. Could put this in with button creation.
+        //  t    r    b    l
+        "sm": [50, 15, 20, 50],
+        "md": [50, 20, 30, 50],
+        "lg": [50, 20, 30, 50]
+        /* top , right , bottom , left */
+      }
+
+      //set variables for chart dimensions dependent on width of #graphic. Could put this in with button creation
+      if (graphic.width() + 20 < threshold_sm) {
+        var margin = {
+          top: dvc.optional.margin_sm[0],
+          right: dvc.optional.margin_sm[1],
+          bottom: dvc.optional.margin_sm[2],
+          left: dvc.optional.margin_sm[3]
+        };
+        var chart_width = graphic.width() /* - margin.left - margin.right*/ ;
+        height = (Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom);
+
+        var innerPadding = {
+          top: innerPadding_values.sm[0],
+          right: innerPadding_values.sm[1],
+          bottom: innerPadding_values.sm[2],
+          left: innerPadding_values.sm[3]
+        }
+
+        numberColumns = dvc.essential.numColumns_sm_md_lg[0];
+
+      } else if (graphic.width() + 20 < threshold_md) {
+        var margin = {
+          top: dvc.optional.margin_md[0],
+          right: dvc.optional.margin_md[1],
+          bottom: dvc.optional.margin_md[2],
+          left: dvc.optional.margin_md[3]
+        };
+        var chart_width = graphic.width();
+        height = (Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom);
+
+        var innerPadding = {
+          top: innerPadding_values.md[0],
+          right: innerPadding_values.md[1],
+          bottom: innerPadding_values.md[2],
+          left: innerPadding_values.md[3]
+        }
+
+        numberColumns = dvc.essential.numColumns_sm_md_lg[1];
+
+      } else {
+        var margin = {
+          top: dvc.optional.margin_lg[0],
+          right: dvc.optional.margin_lg[1],
+          bottom: dvc.optional.margin_lg[2],
+          left: dvc.optional.margin_lg[3]
+        }
+        var chart_width = graphic.width() /* - margin.left - margin.right*/ ;
+        height = (Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom);
+
+        var innerPadding = {
+          top: innerPadding_values.lg[0],
+          right: innerPadding_values.lg[1],
+          bottom: innerPadding_values.lg[2],
+          left: innerPadding_values.lg[3]
+        }
+
+        numberColumns = dvc.essential.numColumns_sm_md_lg[2];
+      };
+
+
+      //create legend
+      if (dvc.essential.legendLabels.length > 1) {
+        var legend = d3.select('#legend').append('ul')
+          .attr('class', 'key')
+          .selectAll('g')
+          .data(dvc.essential.legendLabels)
+          .enter().append('li')
+
+        legend.append('b')
+          .attr("class", function(d, i) {
+            return "border" + i
+          })
+          .style('opacity', 0.8)
+
+        legend.append('label')
+          .html(function(d, i) {
+            return dvc.essential.legendLabels[i];
+          });
+      }
+
+
+      var l = 0;
+      // parse data into columns
+      var lines = {};
+      graphic_data = dvc.graphic_data_full;
+
+      var myMinimum = 0;
+      var myMaximum = 0;
+
+      for (var numLines = 0; numLines < dvc.essential.num_lines_url.length; numLines++) { // 2 files at present
+        lines[numLines] = {};
+        for (var column in graphic_data[numLines][0]) {
+          if (column == "date") continue;
+          lines[numLines][column] = graphic_data[numLines].map(function(d, i) {
+            if (+d[column] > myMaximum) {
+              myMaximum = d[column]
+            }
+            if (+d[column] < myMinimum) {
+              myMinimum = d[column]
+            }
+            return { // map data
+              'date': d.date,
+              'amt': +d[column]
+            };
+          }); // end lines
+          l++;
+        } // end column in graphic_data
+      } // end num_lines_url.length
+
+      // Strip out line data if needed
+      if (dvc.essential.addline === true) {
+        var netLine = [];
+        for (var column in lines[0]) {
+          netLine.push(lines[0][column].pop());
+        };
+      };
+
+
+      // lines now has JUST the data needed for all the charts.
+      //myMaxi = myMaximum.toFixed(1);
+
+      if (myMinimum < 0 && myMaximum > (myMinimum) * (-1)) {
+        myMinimum = myMaximum * (-1);
+      } else if (myMinimum < 0 && myMaximum < (myMinimum) * (-1)) {
+        myMaximum = myMinimum * (-1);
+      }
+      //console.log("min,max in "+ myMinimum + " , " + myMaximum);
+
+      dvc.mrtsTicks = calcOptimumTicks(myMinimum, myMaximum);
+      dvc.mrtsTicks[0] = dvc.mrtsTicks[0] - 0.0000001;
+      dvc.mrtsTicks[1] = dvc.mrtsTicks[1] + 0.0000001;
+
+
+
+
+
+      // calcualte SM graph dimensions, and set up margins for base SM SVG ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      numberRows = Math.ceil(numberCharts / numberColumns);
+
+      var graph_unitWidth = (chart_width - margin.left - margin.right - 2) / numberColumns;
+      var graph_unitHeight = height / numberColumns;
+
+      // define x-axis
+      if (dvc.essential.chart_type == "line") {
+
+        if (dvc.essential.addline === true) graphic_data[0][0].pop();
+
+        x = d3.scaleTime()
+          .range([0, (graph_unitWidth - innerPadding.left - innerPadding.right)])
+          .domain(d3.extent(graphic_data[0], function(d) {
+            return d.date;
+          }));
+
+      } else {
+        var xDom = [];
+        graphic_data[0].forEach(function(d, i) {
+          xDom[i] = d3.time.format(dvc.essential.dateFormat)(d.date);
+        });
+
+        if (dvc.essential.addline === true) xDom.pop();
+
+        x = d3.scaleOrdinal()
+          .range([0, (graph_unitWidth - innerPadding.left - innerPadding.right)])
+          .domain(xDom);
+
+      }
+
+
+      // my interpolator
+      dvc.line = d3.line()
+        .defined(function(d) {
+          return d.amt != '';
+        })
+        .x(function(d) {
+          return x(d.date);
+        })
+        .y(function(d) {
+          return y(+d.amt);
+        });
+
+
+      // initial SM graph count variable (k = SM number being created
+      var k = 0;
+      var graphLines = {};
+      var currentColoumn;
+
+      // for each row ...
+      for (var i = 1; i <= numberRows; i++) {
+        // for each column ...
+        for (var j = 1; j <= numberColumns; j++) {
+          // if graph panel [to draw] is greater than for which data is provided in data files ...
+          if (k >= l) {
+            continue;
+          }
+          graphLines = {};
+
+          // for each input data file...
+          for (y = 0; y < dvc.essential.num_lines_url.length; y++) { //y = 0 then 1
+
+            // define and initialise data file column counter ..
+            var l = 0;
+
+            // for each 'column in data file'
+            for (var column in lines[y]) {
+
+              // if column counter is equal to graph panel number to draw
+              if (l == k) {
+
+                // initialise inner object to store data asscoaited with a single line (i.e. one column in a single file)
+                graphLines[y] = {};
+
+                // create lines object
+                graphLines[y][column] = lines[y][column].map(function(d, i) {
+
+                  currentColoumn = column;
+
+                  return {
+                    'date': d.date,
+                    'amt': d.amt
+                  };
+                });
+
+              } //   end if l == k
+
+              l++;
+            } // column in lines[y]
+
+          } // end num_lines_url.length loop
+
+          dvc.numGraphs = k;
+          xCoord = (i - 1) * graph_unitWidth;
+          yCoord = (j - 1) * graph_unitHeight;
+
+          // create and append small SVG panel for each individual graph, k
+          var svg = d3.select('#graphic')
+            .append('svg')
+            .attr("class", "graphUnitSVGs")
+            .attr("id", "svg" + (k + 1))
+            //.attr("x",xCoord)  // (i-1)*graph_unitWidth + graph_unitMargins.left )
+            //.attr("y",yCoord)  //(j-1)*graph_unitHeight + graph_unitMargins.top )
+            .attr("width", graph_unitWidth)
+            .attr("height", graph_unitHeight)
+            //.style("background-color", "#eee")
+            .append("g")
+          //.attr("transform", "translate(" + (0) + "," + (0) + ")");
+
+          xAxis = d3.axisBottom(x);
+
+
+          if (dvc.essential.chart_type /*[dataIndex]*/ === "line") {
+
+            if (graphic.width() < threshold_sm) {
+              xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[0])); //.concat( x.domain() ));
+              xAxis.tickFormat(d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[0]));
+            } else if (graphic.width() <= threshold_md) {
+              xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[1]));
+              xAxis.tickFormat(d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[1]));
+            } else {
+              xAxis.tickValues(x.ticks(dvc.optional.x_num_ticks_sm_md_lg[2]));
+              xAxis.tickFormat(d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[2]));
+            }
+          } else { // bar format
+            xAxis.tickFormat(function(d) {
+              return d.substr(3, 4);
+            }) // Grab just the last digit
+          }
+
+
+          var yDomain = dvc.essential.yDomain[i - 1];
+
+          //set up y-axis scale
+          y = d3.scaleLinear()
+            .domain(yDomain)
+            .range([(graph_unitHeight - innerPadding.top - innerPadding.bottom), 0]);
+
+          yAxis = d3.axisLeft(y);
+
+          //specify number or ticks on y axis
+          if (graphic.width() <= threshold_sm) {
+            yAxis.ticks(dvc.mrtsTicks[2] / dvc.optional.y_num_ticks_sm_md_lg[0])
+          } else if (graphic.width() <= threshold_md) //threshold_md
+          {
+            yAxis.ticks(dvc.mrtsTicks[2] / dvc.optional.y_num_ticks_sm_md_lg[1])
+          } else {
+            yAxis.ticks(dvc.mrtsTicks[2] / dvc.optional.y_num_ticks_sm_md_lg[2])
+          }
+          //yAxis.ticks(dvc.mrtsTicks[2]/dvc.optional.y_num_ticks_sm_md_lg[2]);
+
+          svg.append("g")
+            .attr("class", "y axis")
+            .attr("id", "focusYAxis" + k)
+            .attr("transform", function() {
+              if (j == 1 || j == 3) {
+                return "translate(" + (innerPadding.left) + ", " + (innerPadding.top) + ")";
+              } else {
+                return "translate(" + (innerPadding.left) + ", " + (innerPadding.top) + ")";
+              }
+
+            }) //  + graph_drop
+            .call(yAxis);
+
+          // draw tick grid lines extending from y-axis ticks on axis across graph
+          yticks = d3.select('#focusYAxis' + k).selectAll('.tick');
+          yticks.append('svg:line')
+            .attr('id', "yAxisTicks")
+            .attr('y1', 0)
+            .attr('y2', 0)
+            .attr('x1', 0)
+            .attr('x2', graph_unitWidth - innerPadding.right - innerPadding.left);
+          //.style("opacity" , 0.5);
+
+
+
+          //create centre line if required
+          if (dvc.optional.centre_line == true) {
+            svg.append("line")
+              .attr("id", "centreline")
+              .attr('y1', y(dvc.optional.centre_line_value) + innerPadding.top)
+              .attr('y2', y(dvc.optional.centre_line_value) + innerPadding.top) //   + graph_drop
+              .attr('x1', innerPadding.left)
+              .attr('x2', graph_unitWidth - innerPadding.right);
+          } else if (yDomain[0] < 0) {
+
+            svg.append("line")
+              .attr("id", "centreline")
+              .attr('y1', y(0) + innerPadding.top) //  + graph_drop
+              .attr('y2', y(0) + innerPadding.top) //  + graph_drop
+              .attr('x1', innerPadding.left)
+              .attr('x2', graph_unitWidth - innerPadding.right);
+
+          } // end else if...
+
+          d3.select("#svg1").select("#focusXAxis0").style("display", "none");
+
+          // **** only draw y-axis config labels if drawing graphs in first COLUMN  - find Bootstrap alternative
+          if (j == 1) {
+
+            // add y-axis label and line annotation if they are to both be only on the first in the row
+            svg.append("text")
+              .attr("class", "label")
+              .attr("id", "yAxisLabel" + k)
+              .attr("x", 0)
+              .attr("y", innerPadding.top - 13) //  + graph_drop
+              .style("font-size", "12px")
+              .style("font-weight", "normal")
+              .style("fill", "#727272")
+              .style("text-anchor", "start")
+              .text(dvc.essential.yAxisLabel);
+
+            if (dvc.essential.addline == true) {
+              svg.append("text")
+                .attr("class", "anno")
+                .attr("id", "yAxisLabel" + k)
+                .attr("x", graph_unitWidth + innerPadding.left - innerPadding.right - 40)
+                .attr("y", y(netLine[k].amt) + innerPadding.top - 6) //  + graph_drop
+                .style("font-size", "12px")
+                .style("font-weight", "normal")
+                .style("text-anchor", "end")
+                .text(dvc.essential.lineText);
+            }
+
+          } else { // Not first column
+            d3.select('#focusYAxis' + k).selectAll('text').remove();
+
+          }
+
+          //create x axis on every chart (you can place so bottom row only), if y axis doesn't start at 0 drop x axis accordingly
+          svg.append('g')
+            .attr('class', 'x axis')
+            .attr('id', 'focusXAxis' + k)
+            .attr('transform', function() {
+              if (yDomain[0] != 0) {
+                return "translate(" + (innerPadding.left) + "," + (graph_unitHeight - innerPadding.bottom + innerPadding.bottom / 2.5) + ")"
+              } // + graph_drop
+              else {
+                return "translate(" + (innerPadding.left) + "," + (graph_unitHeight - innerPadding.bottom) + ")";
+              }
+            })
+            .call(xAxis);
+
+
+          // var xTicks = d3.select("#focusXAxis" + k).selectAll("g.tick");
+          // 	xTicks.attr("id", function(d,i){ return "tick"+i; });
+          // 	xTicks.forEach(function(d,i){ if (i%2 == 0) d3.select("#focusXAxis" + k).select("#tick"+i).select("text").remove();  });
+
+
+          if (dvc.essential.chart_type /*[dataIndex]*/ === "line") {
+            //create lines
+            svg.append('g')
+              .attr("id", function() {
+                return 'group' + k;
+              })
+              .attr("transform", function() {
+                if (j == 1 || j == 3) {
+                  return "translate(" + (innerPadding.left) + ", " + (innerPadding.top) + ")";
+                } else {
+                  return "translate(" + (innerPadding.left) + ", " + (innerPadding.top) + ")";
+                }
+
+              })
+              .selectAll('path')
+              .data(d3.values(graphLines))
+              .enter()
+              .append('path')
+              .attr('class', function(d, i) {
+                return 'line line-' + i;
+              })
+              //.attr('id', function(d, i) { return 'smallLine' + k + "-" + i; })  ?!? what this for
+              .style("stroke-width", "2px")
+              .style('opacity', 0.8)
+              .attr('d', function(d, i) {
+                return dvc.line(d[currentColoumn]);
+              });
+            if (dvc.essential.addline == true) {
+              drawLine();
+            };
+          } else {
+            // OR bars - halve the width and move second over this distance.
+            var barData = [];
+
+            lines[0][currentColoumn].forEach(function(d, i) {
+              barData[i] = d;
+            });
+
+            svg.append('g').attr("class", "bars")
+              .selectAll('rect')
+              .data(barData)
+              .enter()
+              .append('rect')
+              .attr('class', function(d, i) {
+                if (d.amt < 0) {
+                  return 'bar_neg bars' + k + " barsNumber" + i;
+                } else {
+                  return 'bar_pos bars' + k + " barsNumber" + i;
+                }
+              })
+              .attr('id', function(d, i) {
+                return 'bar' + k + "-" + i;
+              })
+              .attr("width", graph_unitWidth / 6)
+              .attr("x", function(d, i) {
+                var myDate = d3.time.format("%Y")(d.date).toString();
+                return x(myDate);
+              })
+              .attr("y", function(d, i) {
+                return y(Math.max(0, d.amt));
+              })
+              .attr("height", function(d, i) {
+                return 0 + Math.abs(y(d.amt) - y(0));
+              })
+              .attr("transform", function() {
+                if (j == 1 || j == 3) {
+                  return "translate(" + (innerPadding.left) + ", " + (innerPadding.top) + ")";
+                } else {
+                  return "translate(" + (innerPadding.left) + ", " + (innerPadding.top) + ")";
+                }
+              });
+
+            if (dvc.essential.addline == true) {
+              drawLine();
+            };
+
+          } // ends line/bar
+
+          // only draw x-axis config labels if drawing graphs in final ROW
+          //if ( i == numberRows ) {
+
+          svg.append("text")
+            .attr("class", "label")
+            .attr("id", "xAxisLabel" + k)
+            .attr("x", graph_unitWidth - innerPadding.right)
+            .attr("y", graph_unitHeight - 16) //   + graph_drop
+            //									.attr("y" , function (d,i){
+            //										if (graphic.width() < threshold_sm) { return graph_unitHeight - (0); }
+            //										else if (graphic.width() < threshold_md) { return graph_unitHeight - (0); }
+            //										else { return graph_unitHeight - (10); }
+            //									})
+            .style("font-size", "10px")
+            .style("font-weight", "normal")
+            .style("text-anchor", "end")
+            .text(dvc.essential.xAxisLabel);
+
+          //} // end if ...
+
+
+          // only draws one bar
+          // draw text in upper right corner of each graph with the associated title from data.csv
+          svg.append("text")
+            .attr('class', 'titleTx') //  wrapword
+            .attr('id', function(d) {
+              return currentColoumn.replace(/\d/g, '');
+            })
+            .style("pointer-events", "none")
+            .style("fill", "#666")
+            .attr("text-anchor", "start")
+            .attr('transform', "translate(0,15) ")
+            .text(currentColoumn) //.slice(1))
+          // .tspans(function(d,i){
+          // 					if(jump === true) {
+          // 										return d3.wordwrap(currentColoumn/*.substring(7)*/, 40);
+          // 									} else
+          // 									   {return d3.wordwrap(currentColoumn/*.substring(6)*/, 40); }
+          // 					});
+
+
+          // call function to write annocation to individual graphs if defined in config
+          //if ( graphic.width() > threshold_sm ) {
+          //writeAnnotation(k);
+          //}
+
+          k++; // next row
+
+        } // ends columns j
+
+      } // finally end the rows K *********************************
+
+
+      writeAnnotation();
+
+
+      function drawLine() {
+        svg.append('g')
+          .attr("id", function(d, i) {
+            return 'netLine' + k;
+          })
+          .attr("transform", function() {
+            if (j == 1) {
+              return "translate(" + (innerPadding.left) + ", " + (innerPadding.top) + ")";
+            } else {
+              return "translate(" + (innerPadding.left) + ", " + (innerPadding.top) + ")";
+            }
+          })
+          .append('line')
+          .style("stroke-width", "2px")
+          .style("stroke", "#f93")
+          .style('opacity', 0.8)
+          .attr('x1', 0)
+          .attr('x2', graph_unitWidth - innerPadding.left - innerPadding.right)
+          .attr('y1', y(netLine[k].amt))
+          .attr('y2', y(netLine[k].amt))
+      }
+
+
+      d3.selectAll(".tick text").style("fill", "#727272")
+
+      function writeAnnotation() {
+
+        //create vertical line if required
+        if (dvc.optional.vertical_line == true) {
+
+          dvc.optional.annotateLineX1_Y1_X2_Y2.forEach(function(d, i) {
+
+            d3.select("#svg" + dvc.optional.svgtarget[i]).append("line")
+              .attr('x1', x(d3.timeParse(dvc.essential.dateFormat)(dvc.optional.annotateLineX1_Y1_X2_Y2[i][0][0])))
+              .attr('x2', x(d3.timeParse(dvc.essential.dateFormat)(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][0])))
+              .attr('y1', y(dvc.optional.annotateLineX1_Y1_X2_Y2[i][0][1]))
+              .attr('y2', y(dvc.optional.annotateLineX1_Y1_X2_Y2[i][1][1]))
+              .attr("class", "annotationline-" + i)
+              .style('stroke', '#dadada')
+              .style('stroke-width', 2)
+              .attr("transform", "translate(" + (innerPadding.left) + ", " + (innerPadding.top) + ")")
+            //.style('stroke-dasharray', '5 5');
+          })
+
+          d3.select(".annotationline-4")
+            .style('stroke', '#0075A3')
+            .style('stroke-width', 2)
+            .style('stroke-dasharray', '5 5');
+
+
+          //create annotations
+          dvc.optional.svgtarget2.forEach(function(d, i) {
+
+
+            // draw annotation text based on content of var annotationArray ...
+            d3.select("#svg" + dvc.optional.svgtarget2[i]).append("text")
+              .text(dvc.optional.annotationChart[i])
+              .attr("class", "allannotext annotext" + i)
+              .attr("text-anchor", dvc.optional.annotationAlign[i])
+              .attr('y', y(dvc.optional.annotationXY[i][1]))
+              .attr('x', x(d3.timeParse(dvc.essential.dateFormat)(dvc.optional.annotationXY[i][0])))
+              .attr("transform", "translate(" + (innerPadding.left) + ", " + (innerPadding.top) + ")");
+
+            d3.selectAll(".annotext" + i)
+              .each(insertLinebreaks)
+
+            function insertLinebreaks() {
+
+              var str = this;
+
+              var el1 = dvc.optional.annotationChart[i];
+              var el = el1.data;
+
+              var words = el1.split('  ');
+
+              d3.select(this /*str*/ ).text('');
+
+              for (var j = 0; j < words.length; j++) {
+                var tspan = d3.select(this).append('tspan').text(words[j]);
+                if (j > 0)
+                  tspan.attr('x', x(d3.timeParse(dvc.essential.dateFormat)(dvc.optional.annotationXY[i][0]))).attr('dy', '16');
+              }
+            };
+          })
+        }
+
+
+
+
+
+
+      } // end function writeAnnotation()
+
+
+      //create link to source
+      d3.select('#source').text('Source: ' + dvc.essential.sourceText);
+
+      //use pym to calculate chart dimensions
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+
+    } // end function drawGraphic()
+
+
+    function calcOptimumTicks(inputMin, inputMax) {
+      var mrtsMin;
+      var mrtsMax;
+      var myRange;
+      var myMagnitudeUnrounded;
+      var myMagnitudeFloor;
+      var myMagnitudeCeil;
+      var myRoundingValue;
+      var myBigArray = [];
+      var mrtsArray = [];
+      var myWinner;
+      var mrtsArray;
+
+      //        Calculate
+      if (inputMin > inputMax) {
+        mrtsMin = inputMax;
+        mrtsMax = inputMin;
+      } else {
+        mrtsMin = inputMin;
+        mrtsMax = inputMax;
+      }
+
+      myRange = mrtsMax - mrtsMin;
+
+      if (myRange == 0) {
+        myMagnitudeUnrounded = 1;
+      } else {
+        myMagnitudeUnrounded = Math.log(myRange) / Math.log(10);
+      }
+
+      //myMagnitudeCeil = Math.ceil(myMagnitudeUnrounded.toFixed(1));
+      myMagnitudeFloor = Math.floor(myMagnitudeUnrounded);
+      myRoundingValue = Math.pow(10, (myMagnitudeFloor - 1));
+
+      myBigArray[0] = calculateTicksForGivenStepLength(1 * myRoundingValue, mrtsMin, mrtsMax);
+      myBigArray[1] = calculateTicksForGivenStepLength(2 * myRoundingValue, mrtsMin, mrtsMax);
+      myBigArray[2] = calculateTicksForGivenStepLength(5 * myRoundingValue, mrtsMin, mrtsMax);
+      myBigArray[3] = calculateTicksForGivenStepLength(10 * myRoundingValue, mrtsMin, mrtsMax);
+      myBigArray[4] = calculateTicksForGivenStepLength(20 * myRoundingValue, mrtsMin, mrtsMax);
+      myBigArray[5] = calculateTicksForGivenStepLength(50 * myRoundingValue, mrtsMin, mrtsMax);
+
+      if (myBigArray[0][2] < 9) {
+        myWinner = 0;
+      } else
+      if (myBigArray[1][2] < 9) {
+        myWinner = 1;
+      } else
+      if (myBigArray[2][2] < 9) {
+        myWinner = 2;
+      } else
+      if (myBigArray[3][2] < 9) {
+        myWinner = 3;
+      } else
+      if (myBigArray[4][2] < 9) {
+        myWinner = 4;
+      } else {
+        myWinner = 5;
+      }
+
+      //Handover
+      mrtsArray[0] = myBigArray[myWinner][0];
+      mrtsArray[1] = myBigArray[myWinner][1];
+      mrtsArray[2] = myBigArray[myWinner][2];
+      mrtsArray[3] = myBigArray[myWinner][3];
+      return mrtsArray;
+    }
+
+    function calculateTicksForGivenStepLength(inputStep, inputMin, inputMax) {
+      //        Define local variables
+      var i;
+      var myStep;
+      var myMin;
+      var myMax;
+      var myTicks;
+      var myLowestTick;
+      var myHighestTick;
+      var tickArray = [];
+
+      //        Calculate
+      if (inputStep == 0) {
+        myStep = 1;
+      } else {
+        myStep = inputStep
+      };
+
+      if (inputMin > inputMax) {
+        myMin = inputMax;
+        myMax = inputMin;
+      } else {
+        myMin = inputMin;
+        myMax = inputMax;
+      }
+
+      myLowestTick = myStep * Math.floor(myMin / myStep);
+      myHighestTick = myLowestTick;
+
+      i = 0;
+      do {
+        //myHighestTick=myHighestTick+myStep;
+        myHighestTick = ((myHighestTick * 1000000) + (myStep * 1000000)) / 1000000;
+        i++;
+      } while (myHighestTick < myMax);
+      myTicks = i;
+
+      tickArray[0] = myLowestTick;
+      tickArray[1] = myHighestTick;
+      tickArray[2] = myTicks;
+      tickArray[3] = myStep;
+      return tickArray;
+
+    } // end calcTicks
+
+
+
+    //then, onload, check to see if the web browser can handle 'inline svg'
+    if (Modernizr) {
+      // open and load configuration file.
+      d3.json("config.json", function(error, json) {
+        // strore read in json data from config file as as global dvc. variable ...
+        dvc = json;
+        readData();
+      })
+    } // end if ...
+    else {
+      //use pym to create iframe containing fallback image (which is set as default)
+      pymChild = new pym.Child();
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+
+
+
+    function ready(error, data) {
+      if (error) throw error;
+
+      data.forEach(function(d, i) {
+        d.forEach(function(e, j) {
+          e.date = d3.timeParse(dvc.essential.dateFormat)(e.date)
+        })
+      })
+      dvc.graphic_data_full = data
+      pymChild = new pym.Child({
+        renderCallback: drawGraphic
+      });
+    }
+
+    function readData() {
+
+      dvc.graphic_data_full = [];
+      var q = d3.queue();
+
+      dvc.essential.dataSets_url.forEach(function(dat, j) {
+
+        dvc.essential.num_lines_url.forEach(function(d, i) {
+          graphic_data_url = "var" + i + ".csv";
+
+          q.defer(d3.csv, graphic_data_url)
+
+        }) // end for each	num_lines_url
+      }) // end for each	dataSets_url
+
+      q.awaitAll(ready)
+
+    } // end function readData()
+  </script>
+</body>
+
+</html>

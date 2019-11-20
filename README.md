@@ -33,6 +33,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Stacked area charts](https://onsvisual.github.io/Simple-charts/Stacked-Area-Charts/)
 - [Stacked bar horizontal](https://onsvisual.github.io/Simple-charts/Stacked-Bar-Horizontal/)
 - [Stacked bar vertical](https://onsvisual.github.io/Simple-charts/Stacked-Bar-Vertical/)
+- [Stacked line chart](https://onsvisual.github.io/Simple-charts/stacked-lines/)
 - [Tie Fighter](https://onsvisual.github.io/Simple-charts/tie-fighter/)
 
 ##### NB

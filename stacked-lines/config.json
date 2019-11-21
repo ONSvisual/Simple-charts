@@ -7,8 +7,6 @@
 
             "chart_type":  "line",
 
-            "buttonNames": [ "Monthly Index" ],
-
             "dateFormat":  "%Y",
 
             "legendLabels" : ["Co2 (Mt)", "Coal Consumption (Mt)","Real GDP per Capita (2013 Pounds)"],
@@ -42,26 +40,26 @@
 
     },
     "optional" : {
-		
+
 		 	"vertical_line" : true,
 			"svgtarget": [1,2,1,2,1],
-            "annotateLineX1_Y1_X2_Y2" : [ 
+            "annotateLineX1_Y1_X2_Y2" : [
 				[["2008", "0"],["2008", "30000"]],
 				[["2008", "0"],["2008", "30000"]],
 				[["1956", "0"],["1956", "30000"]],
 				[["1956", "0"],["1956", "30000"]],
 				[["1850", "22277.9"],["2016", "22277.9"]]
 			],
-			
+
 			"svgtarget2":[1,1,1],
 			"annotationChart": ["Clean air act (1956)","Climate change act","1990 Co2 levels"],
-			"annotationAlign": ["end","end","start"], 
+			"annotationAlign": ["end","end","start"],
 			"annotationXY":[
 				["1956",31000],
         		["2008",31000],
 				["1870",24000]
             ],
-            
+
 			"margin_sm": [15, 5, 20, 0],
             "margin_md": [15, 5, 15, 0],
             "margin_lg": [15, 10, 15, 0],

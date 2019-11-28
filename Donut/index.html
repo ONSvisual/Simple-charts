@@ -34,8 +34,6 @@
 <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js" type="text/javascript"></script>
 <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
 <script src="../lib/pym.js" type="text/javascript"></script>
-<script src="../lib/footer.js"></script>
-<script src="../lib/saveSvgAsPng.js" type="text/javascript"></script>
 <script>
 
 	// Location and name of the file - if the csv is in the same folder then all you need to do is point it to the right filename
@@ -43,8 +41,6 @@
 	var keypoints = d3.select('#keypoints');
 	var footer = d3.select("#footer");
 	var pymChild = null;
-
-	d3.select("#buttonid").on("click",function(){saveSvgAsPng(document.getElementById("chart"), "diagram.png")});
 
 	function drawGraphic()
 	{
@@ -157,9 +153,6 @@
 							.attr("cx", "10px");
 
 						d3.select("#keypoints").append("p").text(dvc.essential.annotationBullet[i]);
-
-
-
 
 					})// end foreach
 			}

@@ -1,50 +1,49 @@
 {
-    "essential" : {
-            "graphic_data_url": "data.csv",
+  "essential": {
+    "graphic_data_url": "data.csv",
+    "legendLabels": ["min / max", "really long label for wrapping"],
+    "colour_palette": ["#053D58", "#3A7899"],
+    "sourceText": ["Office for National Statistics"],
 
-            "dateFormat":"",
-
-            "legendLabels" : ["min / max","median"],
-            "legendStyle": "rect",
-            "colour_palette": [ "#F5942F" , "#7BCAE2"],
-
-            "sourceText":["Labour Market Statistics, February 2015, Table A02"],
-            "sourceURL":["http://www.ons.gov.uk/ons/publications/re-reference-tables.html?edition=tcm%3A77-350752"],
-
-            "annotationChart": [
-                "Line annotation",
-                "2nd annotation"
-            ],
-            "annotationBullet": [],
-            "annotationXY":[
-                ["20","London"],
-                ["60","North East"]
-            ],
-            "annotationAlign":[
-                "middle",
-                "middle"
-            ],
-      			"minmaxonly":"false",
-      			"arrows":"starttoend",
-            "tooltip":"true",
-            "xAxisLabel":"Amount",
-            "yAxisLabel":"Regions and Countries",
-            "xAxisScale":"auto_min_max"
-
+    "annotationChart": [
+      "Line annotation",
+      "2nd annotation"
+    ],
+    "annotationBullet": [],
+    "annotationXY": [
+      ["20", "London"],
+      ["60", "North East"]
+    ],
+    "annotationAlign": [
+      "middle",
+      "middle"
+    ],
+    "minmaxonly": true,
+    "arrows": "start",
+    "tooltip": true,
+    "xAxisLabel": "Amount",
+    "yAxisLabel": "Regions and Countries",
+    "xAxisScale": "auto_min_max",
+    "dotsize":5
+  },
+  "optional": {
+    "margin": {
+      "sm": {"top":35,"right":20,"bottom":5,"left":135},
+      "md": {"top":15,"right":20,"bottom":5,"left":135},
+      "lg": {"top":15,"right":20,"bottom":5,"left":135}
     },
-    "optional" : {
-            "margin_sm": [15, 20, 5, 135],
-            "margin_md": [15, 20, 5, 135],
-            "margin_lg": [15, 20, 5, 135],
 
-            "aspectRatio_sm" : [4,6],
-            "aspectRatio_md" : [3,3],
-            "aspectRatio_lg" : [16,10],
+    "aspectRatio":{
+      "sm": [4, 6],
+      "md": [3, 3],
+      "lg": [16, 10]
+    },
 
-            "mobileBreakpoint" : 510,
+    "mobileBreakpoint": 510,
+    "middleBreakpoint": 600,
+    "x_num_ticks":{"sm":6,"md":8,"lg":10},
 
-            "x_num_ticks_sm_md_lg" : [6,8,10],
-            "centre_line" : false,
-            "centre_line_value" : 0
-    }
+    "centre_line": false,
+    "centre_line_value": 0
+  }
 }

@@ -1,0 +1,36 @@
+{
+  "essential" : {
+    "graphic_data_url": "data.csv",
+    "colour": "#244E6E",
+    "opacity": "0.8",
+		"sourceText":["Office for National Statistics – Annual Population Survey 3-year pooled dataset 2015-17"],
+    "xAxisLabel":"",
+    "categoryHeight": {
+      "small": 80,
+      "medium": 100
+    },
+    "timeFormat": "%d/%m/%Y",
+    "xAxisTimeFormat": "%d %b %y",
+    "scaleFactor": 5,
+
+    "keyVals": [2,3]
+  },
+  "optional" : {
+    "margin": {
+      "small": {
+        "top": 8,
+        "right": 35,
+        "bottom": 25,
+        "left": 40
+      },
+      "medium": {
+        "top": 8,
+        "right": 35,
+        "bottom": 60,
+        "left": 40
+      }
+    },
+    "mobileBreakpoint" : 610,
+    "tickDayInterval": 14
+  }
+}

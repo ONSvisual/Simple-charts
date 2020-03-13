@@ -1,0 +1,53 @@
+{
+    "essential" : {
+            "graphic_data_url": "data.csv",
+        
+            "legendStyle": "rect",
+			
+            "legendLabels":[ "variable1" ,	"variable2" ,	"variable3" ],
+        
+			"sourceText":["Source information"],
+            "sourceURL":["http://www.ons.gov.uk/ons"],
+        
+            "annotationChart": [
+                "annotation1",
+                "annotation2"
+            ],
+            "annotationBullet": [
+                "text donut chart annotation1",
+                "text donut chart annotation2"
+            ],
+			
+            "annotationXY":[
+                [0,0],
+                [-50,50]
+            ],
+            "annotationAlign":[
+                "middle",
+                "middle"
+            ],
+
+            "colour_palette":[ 
+                "rgb(79, 166, 184)", 
+                "rgb(70, 70, 70)", 
+                "rgb(111, 111, 111)",
+                "rgb(179, 179, 179)",
+                "rgb(224, 224, 224)",
+                "rgb(240, 240, 240)" 
+            ]
+   
+    },
+    "optional" : {
+            "margin_sm": [10, 50, 35, 40],
+            "margin_md": [10, 50, 35, 40],
+            "margin_lg": [10, 50, 35, 40],
+        
+            "aspectRatio_sm" : [16,13],
+            "aspectRatio_md" : [16,12],
+            "aspectRatio_lg" : [16,10],
+        
+            "mobileBreakpoint" : 610
+    }
+}
+
+

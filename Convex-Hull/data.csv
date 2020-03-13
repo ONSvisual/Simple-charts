@@ -1,0 +1,40 @@
+name,group,gdhi,employment
+London,grp1,4.9,1.7
+England,grp1,3.8,1.1
+United Kingdom,grp1,3.8,1.1
+South East,grp1,3.5,0.9
+West Midlands,grp1,3.2,0.6
+East Midlands,grp1,3.7,0.9
+Northern Ireland,grp1,4.0,1.4
+South West,grp1,3.4,1.2
+Yorkshire and The Humber,grp1,3.5,1.1
+Scotland,grp1,4.2,1.0
+North West,grp1,3.5,1.0
+Wales,grp1,3.5,1.2
+North East,grp1,3.2,0.9
+London,grp2,-0.6,-2.4
+England,grp2,1.8,-1.7
+United Kingdom,grp2,1.7,-1.6
+South East,grp2,1.7,-1.2
+West Midlands,grp2,2.3,-0.6
+East Midlands,grp2,1.7,-1.3
+Northern Ireland,grp2,1.1,0.5
+South West,grp2,0.8,-2.8
+Yorkshire and The Humber,grp2,2.6,-1.0
+Scotland,grp2,1.5,-2.2
+North West,grp2,3.6,-1.4
+Wales,grp2,0.0,-1.0
+North East,grp2,4.6,-1.3
+London,grp3,3.8,2.7
+England,grp3,2.9,1.5
+United Kingdom,grp3,2.9,1.4
+South East,grp3,2.8,1.2
+West Midlands,grp3,2.7,1.4
+East Midlands,grp3,2.7,1.1
+Northern Ireland,grp3,2.6,1.3
+South West,grp3,2.5,1.3
+Yorkshire and The Humber,grp3,2.5,1.2
+Scotland,grp3,2.4,1.0
+North West,grp3,2.3,0.9
+Wales,grp3,2.1,1.2
+North East,grp3,2.1,1.3

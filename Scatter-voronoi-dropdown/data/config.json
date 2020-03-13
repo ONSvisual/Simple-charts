@@ -1,0 +1,47 @@
+{
+    "essential" : {
+            "graphic_data_url": "data/dummydata.csv",
+            "pickxdata":"SPDflows",
+            "pickydata":"Censusflows",
+
+            "sourceText":["Department for Education – Key stage 4 attainment data"],
+            "sourceURL":["http://www.ons.gov.uk/"],
+            "rectannotations":[],
+            "textAnnotations":[{
+                "x":1000,
+                "y":4000,
+                "text":"example annotation text"
+              },{
+                "x":-7000,
+                "y":-1000,
+                "text":"example annotation text"
+                }],
+            "textAnnotationWrap":100,
+            "d3AnnotationWrap":300,
+            "xAxisLabel":"% pupils whose first language is not English",
+            "yAxisLabel":"Average attainment 8 score",
+            "AxisScale":"",
+      			"xAxisScale":[0,80],
+      			"yAxisScale":[0,80]
+
+	},
+    "optional" : {
+            "margin_sm": [50 ,20, 0, 50],
+            "margin_md": [50, 20, 0, 50],
+            "margin_lg": [50, 50, 0, 50],
+
+            "aspectRatio_sm" : [1,1],
+            "aspectRatio_md" : [1,1],
+            "aspectRatio_lg" : [1,1],
+
+            "mobileBreakpoint" : 610,
+
+            "x_num_ticks_sm_md_lg" : [4,4,5],
+            "y_num_ticks_sm_md_lg" : [4,4,5],
+
+            "annotateLineX1_Y1_X2_Y2":[],
+            "lineColor_opcty" : []
+
+
+    }
+}

@@ -1,0 +1,49 @@
+
+.ticks {
+  font: 10px sans-serif;
+}
+
+.track,
+.track-inset,
+.track-overlay {
+  stroke-linecap: round;
+}
+h3 {
+  padding-bottom: 40px;
+}
+
+    .container {
+      font-family: 'Open Sans', Arial, sans-serif;
+      max-width: 800px;
+      padding-top: 10px;
+      padding-left: 0;
+      padding-right: 0;
+      text-align: left;
+      position: relative;
+      margin-top: 48px;
+    }
+
+.track {
+  stroke: #000;
+  stroke-opacity: 0.3;
+  stroke-width: 10px;
+}
+
+.track-inset {
+  stroke: #ddd;
+  stroke-width: 8px;
+}
+
+.track-overlay {
+  pointer-events: stroke;
+  stroke-width: 50px;
+  stroke: transparent;
+  cursor: crosshair;
+}
+
+.handle {
+  fill: #fff;
+  stroke: #000;
+  stroke-opacity: 0.5;
+  stroke-width: 1.25px;
+}

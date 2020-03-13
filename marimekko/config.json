@@ -1,0 +1,37 @@
+{
+    "essential" : {
+            "graphic_data_url": "data.csv",
+
+            "legendLabels" : ["Financial","Real estate, professional, scientific and technical", "Travel", "Information and communication", "Manufacturing",
+             "All other categories"],
+
+             "legendXAnnotation" : "% of total value of service exports",
+
+             "legendYAnnotation" : "total value of service exports",
+
+             "colour_palette" : ["#8165a6", "#3f0057", "#c3c9f4", "#60327e", "#a297cd", "#ccc", "#ccc", "#ccc"],
+
+             "cat_hover" : ["Greater Manchester Combined Authority", "Edinburgh and South East Scotland City Region", "West Midlands Combined Authority", "Glasgow City Region",
+             "Aberdeen City Region","Cardiff Capital Region", "Cambridgeshire & Peterborough Combined Authority", "Liverpool City Region Combined Authority", "West of England Combined Authority",
+             "North of Tyne Combined Authority", "Sheffield City Region", "Tees Valley Combined Authority", "Swansea Bay City Region"],
+
+            "sourceText":["Office for National Statistics"],
+            "sourceURL":["http://www.ons.gov.uk"],
+
+            "xAxisLabel":"%"
+          },
+    "optional" : {
+            "margin_sm": [20, 50, 35, 130],
+            "margin_md": [20, 80, 35, 155],
+            "margin_lg": [20, 80, 35, 155],
+
+            "aspectRatio_sm" : [1,4],
+            "aspectRatio_md" : [16,20],
+            "aspectRatio_lg" : [16,16],
+
+            "mobileBreakpoint" : 610,
+
+            "x_num_ticks_sm_md_lg" : [4,4,4]
+
+    }
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='ext/css'>
+  <title></title>
+
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <link rel="stylesheet" href="../lib/globalStyle.css" />
+  <link rel="stylesheet" href="../lib/bootstrap-grid.css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+
+  <style type="text/css">
+    h6 {
+       font-size: 16px;
+       margin: 16px 0 8px 0;
+       font-weight: 700;
+       color:#323132;
+    }
+  </style>
+
+</head>
+
+
+<body>
+
+  <div class="container-fluid">
+    <div id="graphic" class="row no-gutters">
+      <img src="fallback.png" alt="[Chart]" />
+    </div>
+  </div>
+
+  <h6 id="source"></h6>
+
+  <div id="keypoints">
+    <p></p>
+  </div>
+
+  <div id="footer">
+  </div>
+
+  <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" type="text/javascript"></script>
+  <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
+  <script src="../lib/d3-iconarray.js" type="text/javascript"></script>
+
+  <script>
+    var graphic = d3.select('#graphic');
+    var keypoints = d3.select('#keypoints');
+    var footer = d3.select(".footer");
+    var pymChild = null;
+
+    function drawGraphic(width) {
+          // clear out existing graphics
+      graphic.selectAll("*").remove();
+      keypoints.selectAll("*").remove();
+      footer.selectAll("*").remove();
+
+      chart_width=parseInt(graphic.style('width'))
+
+      dotmargin={top:dvc.essential.dotRadius*2,
+                right:dvc.essential.dotRadius*2,
+                bottom:dvc.essential.dotRadius*2,
+                left:dvc.essential.dotRadius*2}
+
+      var x = d3.scaleLinear()
+				.range([0, (2*dvc.essential.gridWidth+2)*dvc.essential.dotRadius])
+				.domain([0, dvc.essential.gridWidth]);
+
+      var y = d3.scaleLinear()
+          .range([0,dvc.essential.gridHeight*dvc.essential.dotRadius+dotmargin.top])
+          .domain([0,dvc.essential.gridHeight])
+
+      var colour = d3.scaleOrdinal()
+                    .domain(graphic_data.map(function(d){return d.group}))
+                    .range(dvc.essential.colour_palette)
+
+      var layout= d3_iconarray.layout()
+        .width(dvc.essential.gridWidth)
+        .height(dvc.essential.gridHeight)
+        .widthFirst(dvc.essential.widthFirst)
+
+
+      //create layouts for each group
+      layouts={}
+      for(i=0;i<graphic_data.length;i++){
+        layouts[graphic_data[i].group]=layout(d3.range(0,graphic_data[i].value,1))
+      }
+
+      graphic.selectAll('div')
+      .data(graphic_data)
+    	.enter()
+    	.append('div')
+      .attr('class','col-sm')
+    	.call(arrayBars);
+
+
+
+      function arrayBars(parent){
+      		parent.append('p')
+      			.attr('class','bar-label')
+      			.html(function(d){
+      				return d.group + " £" + d.value;
+      			});
+
+      		parent.append('svg')
+      			.attr('width', ((2*dvc.essential.gridWidth+2)*dvc.essential.dotRadius)+dotmargin.left+dotmargin.right)
+            .attr('height', 2*(dvc.essential.gridHeight*dvc.essential.dotRadius+dotmargin.top+dotmargin.bottom))
+      		.append('g')
+      			.attr('transform','translate('+dotmargin.left+','+dotmargin.top+')')
+      			.attr('class',function(d){return d.group})
+      		.selectAll('circle')
+      			.data(function(d){
+              var thislayout = layout( d3.range(0, d.value, 1) );
+              thislayout.forEach(function(e){
+                e["group"]=d.group
+              })
+              return thislayout })
+      		.enter()
+      			.append('circle')
+      				.attr('cx',function(d){ return x(d.position.x); })
+      				.attr('cy',function(d){ return 2*y(d.position.y); })
+      				.attr('r', dvc.essential.dotRadius)
+              .attr('fill',function(d,i){return colour(d.group)})
+      }
+
+      d3.selectAll('svg')
+      .selectAll('circles')
+      .attr('fill',function(d,i){return dvc.essential.colour_palette[i]})
+
+      //create link to source
+      d3.select('#source')
+        .text('Source: ' + dvc.essential.sourceText);
+
+      //use pym to calculate chart dimensions
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+
+    } // ends drawGraphic
+
+
+
+    //check whether browser can cope with svg
+    if (Modernizr.svg) {
+      //load config
+      d3.json("config.json", function(error, config) {
+        dvc = config
+
+        //load chart data
+        d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+          graphic_data = data;
+
+          //use pym to create iframed chart dependent on specified variables
+          pymChild = new pym.Child({
+            renderCallback: drawGraphic
+          });
+        });
+      })
+
+    } else {
+      //use pym to create iframe containing fallback image (which is set as default)
+      pymChild = new pym.Child();
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+  </script>
+</body>
+
+</html>

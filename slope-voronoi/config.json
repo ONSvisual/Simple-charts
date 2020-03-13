@@ -1,0 +1,26 @@
+{
+    "essential" : {
+            "slopeType":"value",
+            "ifValueShowRanks":true,
+            "ifRankCustomRank":true,
+            "ifRankShowValue":true,
+            "dataFile":"data.csv",
+            "leftRightTitles": ["Immediate position","Ultimate position"],
+            "sourceText":["Office for National Statistics, Economic Review"],
+            "sourceURL":[""],
+            "sortby":"ascending",
+            "yAxisScale":"auto_min_max",
+            "yAxisBreak": false,
+            "yAxisBreakText":"TOP 20 &#9650;",
+            "numberFormat":",.0f",
+            "gHeight_sm_md_lg":[40,40,40]
+    },
+    "optional" : {
+            "margin_sm": [40, 180, 20, 75],
+            "margin_md": [40, 210, 10, 210],
+            "margin_lg": [40, 210, 10, 200],
+
+            "mobileBreakpoint" : 501,
+            "mediumBreakpoint":600
+    }
+}

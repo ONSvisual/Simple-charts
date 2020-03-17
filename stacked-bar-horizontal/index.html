@@ -10,34 +10,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-  <link rel="stylesheet" href="../lib/globalStyle2.css" />
+  <link rel="stylesheet" href="../lib/globalStyle.css" />
 
   <style type="text/css">
     .axis path {
       stroke: none !important;
     }
 
-    .key-0 b {
-      margin-top: 0px !important;
-      width: 15px !important;
-    }
-
-    .key-1 b {
-      margin-top: 0px !important;
-      width: 15px !important;
-    }
-
-    .key-2 b {
-      margin-top: 0px !important;
-      width: 15px !important;
-    }
-
-    .key-3 b {
-      margin-top: 0px !important;
-      width: 15px !important;
-    }
-
-    .key-4 b {
+    b {
       margin-top: 0px !important;
       width: 15px !important;
     }
@@ -49,12 +29,22 @@
     }
 
     h6 {
-       font-size: 16px;
-       margin: 16px 0 8px 0;
-       font-weight: 700;
-       color:#323132;
+      font-size: 16px;
+      margin: 16px 0 8px 0;
+      font-weight: 700;
+      color: #323132;
     }
 
+    #graphic .key label {
+      white-space: nowrap;
+      font-size: 12px;
+      color: #333;
+      font-weight: normal;
+    }
+
+    .x.grid line {
+      stroke: #666;
+    }
   </style>
 
 </head>
@@ -85,37 +75,17 @@
     var pymChild = null;
 
     function drawGraphic(width) {
-      var threshold_md = 788;
-      var threshold_sm = dvc.optional.mobileBreakpoint;
-
-      if (parseInt(graphic.style("width")) < threshold_sm) {
-        var margin = {
-          top: dvc.optional.margin_sm[0],
-          right: dvc.optional.margin_sm[1],
-          bottom: dvc.optional.margin_sm[2],
-          left: dvc.optional.margin_sm[3]
-        };
-        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
-      } else if (parseInt(graphic.style("width")) < threshold_md) {
-        var margin = {
-          top: dvc.optional.margin_md[0],
-          right: dvc.optional.margin_md[1],
-          bottom: dvc.optional.margin_md[2],
-          left: dvc.optional.margin_md[3]
-        };
-        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
+      if (parseInt(graphic.style("width")) < dvc.optional.mobileBreakpoint) {
+        size = "sm"
+      } else if (parseInt(graphic.style("width")) < dvc.optional.mediumBreakpoint) {
+        size = "md"
       } else {
-        var margin = {
-          top: dvc.optional.margin_lg[0],
-          right: dvc.optional.margin_lg[1],
-          bottom: dvc.optional.margin_lg[2],
-          left: dvc.optional.margin_lg[3]
-        }
-        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
+        size = "lg"
       }
+
+      var margin = dvc.optional.margin[size]
+      var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+      var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]) - margin.top - margin.bottom;
 
       // clear out existing graphics
       graphic.selectAll("*").remove();
@@ -123,7 +93,7 @@
       footer.selectAll("*").remove();
 
       var y = d3.scaleBand()
-        .rangeRound([0, height])
+        .range([0, height])
         .padding(0.1);
 
       var x = d3.scaleLinear()
@@ -150,13 +120,7 @@
 
       var xAxis = d3.axisBottom(x);
 
-      if (parseInt(graphic.style("width")) <= threshold_sm) {
-        xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[0])
-      } else if (parseInt(graphic.style("width")) <= threshold_md) {
-        xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[1])
-      } else {
-        xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[2])
-      }
+      xAxis.ticks(dvc.optional.x_num_ticks[size])
 
       var x_axis_grid = function() {
         return xAxis;
@@ -221,16 +185,8 @@
         .style("text-anchor", "end")
         .text(dvc.essential.xAxisLabel);
 
-      if (parseInt(graphic.style("width")) < threshold_sm) {
-        d3.selectAll(".y .tick text")
-          .call(wrap, dvc.optional.margin_sm[3]);
-      } else if (parseInt(graphic.style("width")) < threshold_md) {
-        d3.selectAll(".y .tick text")
-          .call(wrap, dvc.optional.margin_md[3]);
-      } else {
-        d3.selectAll(".y .tick text")
-          .call(wrap, dvc.optional.margin_lg[3]);
-      };
+      d3.selectAll(".y .tick text")
+        .call(wrap, margin.left);
 
       svg.append('g')
         .attr('class', 'x grid')
@@ -324,7 +280,7 @@
 
       function writeAnnotation() {
 
-        if (parseInt(graphic.style("width")) < threshold_sm) {
+        if (parseInt(graphic.style("width")) < dvc.optional.mobileBreakpoint) {
 
           dvc.essential.annotationBullet.forEach(function(d, i) {
 

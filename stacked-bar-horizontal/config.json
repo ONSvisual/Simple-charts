@@ -1,51 +1,73 @@
 {
-    "essential" : {
-            "graphic_data_url": "data.csv",
+  "essential": {
+    "graphic_data_url": "data.csv",
 
-            "sort_data": false,
+    "sort_data": false,
 
-            "colour_palette": [ "#E73f40", "#7bcae2", "#f3942f", "#274796", "#979796"],
+    "colour_palette": ["#E73f40", "#7bcae2", "#f3942f", "#274796", "#979796"],
 
-            "dateFormat":"",
+    "dateFormat": "",
 
-            "legendLabels" : ["Under occupied","Standard occupied","Over occupied"],
+    "legendLabels": ["Under occupied", "Standard occupied", "Over occupied"],
 
-            "sourceText":["2011 Census, Office for National Statistics"],
-            "sourceURL":["http://www.ons.gov.uk/ons/rel/census/2011-census-analysis/overcrowding-and-under-occupation-in-england-and-wales/index.html"],
+    "sourceText": ["2011 Census, Office for National Statistics"],
+    "sourceURL": ["http://www.ons.gov.uk/ons/rel/census/2011-census-analysis/overcrowding-and-under-occupation-in-england-and-wales/index.html"],
 
-            "annotationChart": ["Example annotation"],
-            "annotationBullet": ["Example annotation"],
-            "annotationXY":[
-                [90,"Private rented" ]
+    "annotationChart": ["Example annotation"],
+    "annotationBullet": ["Example annotation"],
+    "annotationXY": [
+      [90, "Private rented"]
 
-            ],
-            "annotationAlign":[
-                "middle"
-            ],
+    ],
+    "annotationAlign": [
+      "middle"
+    ],
 
-            "circles" : false,
-            "annotationCXCY":[
-                ["60","Social  rented"]
+    "circles": false,
+    "annotationCXCY": [
+      ["60", "Social  rented"]
 
-            ],
+    ],
 
-            "xAxisLabel":"%",
-            "xAxisScale":"auto_zero_max",
-            "xAxisBreak": true,
-            "xAxisBreak_sm_md_lg": [65,65,65]
+    "xAxisLabel": "%",
+    "xAxisScale": "auto_zero_max",
+    "xAxisBreak": true,
+    "xAxisBreak_sm_md_lg": [65, 65, 65]
+  },
+  "optional": {
+    "margin": {
+      "sm": {
+        "top": 20,
+        "right": 10,
+        "bottom": 35,
+        "left": 60
+      },
+      "md": {
+        "top": 20,
+        "right": 5,
+        "bottom": 35,
+        "left": 60
+      },
+      "lg": {
+        "top": 20,
+        "right": 5,
+        "bottom": 35,
+        "left": 60
+      }
     },
-    "optional" : {
-            "margin_sm": [20, 10, 35, 60],
-            "margin_md": [20, 5, 35, 60],
-            "margin_lg": [20, 5, 35, 60],
+    "aspectRatio": {
+      "sm": [16, 16],
+      "md": [16, 7],
+      "lg": [16, 10]
+    },
+    "mobileBreakpoint": 414,
+    "mediumBreakpoint":600,
 
-            "aspectRatio_sm" : [16,16],
-            "aspectRatio_md" : [16,7],
-            "aspectRatio_lg" : [16,10],
-
-            "mobileBreakpoint" : 610,
-
-            "x_num_ticks_sm_md_lg" : [6,8,10]
-
+    "x_num_ticks": {
+      "sm": 6,
+      "md": 8,
+      "lg": 10
     }
+
+  }
 }

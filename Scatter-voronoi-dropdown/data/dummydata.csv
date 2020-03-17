@@ -1,0 +1,152 @@
+name,group,SPDflows,Censusflows
+Hartlepool,grp1,4.035433071,42.3
+Middlesbrough,grp1,16.02465331,42.4
+Redcar and Cleveland,grp1,1.911667765,43.6
+Stockton-on-Tees,grp1,5.650596164,46.8
+Darlington,grp1,6.472196901,45.8
+Halton,grp1,1.12528132,44.2
+Warrington,grp1,5.243128964,47.2
+Blackburn with Darwen,grp1,33.18753417,45.8
+Blackpool,grp1,4.933920705,38.5
+"Kingston Upon Hull, City of",grp1,12.48876909,43.3
+East Riding of Yorkshire,grp1,2.284988892,48.1
+North East Lincolnshire,grp1,3.189227498,43.4
+North Lincolnshire,grp1,7.804878049,44.8
+York,grp1,5.188387894,49.7
+Derby,grp1,18.85693484,43.2
+Leicester,grp1,51.81066439,42.8
+Rutland,grp1,2.401746725,52.7
+Nottingham,grp1,28.36291913,41.4
+"Herefordshire, County of",grp1,5.109489051,45.9
+Telford and Wrekin,grp1,9.053285049,45.4
+Stoke-on-Trent,grp1,19.83394834,41.9
+Bath and North East Somerset,grp1,4.098360656,48.7
+"Bristol, City of",grp1,18.80645161,45.5
+North Somerset,grp1,3.88862218,46.5
+South Gloucestershire,grp1,6.008064516,44.8
+Plymouth,grp1,4.648342765,44.1
+Torbay,grp1,4.406273338,48.2
+Bournemouth,grp1,12.84768212,50
+Poole,grp1,6.605222734,51.2
+Swindon,grp1,15.16049383,43.9
+Peterborough,grp1,28.81944444,42
+Luton,grp1,51.81569699,43.3
+Southend-on-Sea,grp1,14.41307578,52
+Thurrock,grp1,11.48648649,42.9
+Medway,grp1,8.382200759,46
+Bracknell Forest,grp1,10.35474593,48.1
+West Berkshire,grp1,5.287623475,48.5
+Reading,grp1,24.8603352,49
+Slough,grp1,44.96724241,53.2
+Windsor and Maidenhead,grp1,14.48787062,51.5
+Wokingham,grp1,16.01466993,52.3
+Milton Keynes,grp1,19.19884518,44.5
+Brighton and Hove,grp1,11.34686347,48
+Portsmouth,grp1,13.58244365,41
+Southampton,grp1,21.77589852,43.3
+Isle of Wight,grp1,2.61682243,40.8
+County Durham,grp1,1.604395604,45
+Cheshire East,grp1,4.724186704,48.8
+Cheshire West and Chester,grp1,2.577319588,46.4
+Shropshire,grp1,2.637130802,45.8
+Cornwall,grp1,2.071526285,45.1
+Isles of Scilly,grp1,0,64.8
+Wiltshire,grp1,4.517942067,48.3
+Bedford,grp1,21.2568306,45.8
+Central Bedfordshire,grp1,3.723816912,45.2
+Northumberland,grp1,1.550643352,46.1
+Bolton,grp1,24.7229064,44.6
+Bury,grp1,16.2405303,45.2
+Manchester,grp1,39.99153618,43.2
+Oldham,grp1,30.47034765,42.7
+Rochdale,grp1,28.97574124,43.5
+Salford,grp1,12.87223823,41
+Stockport,grp1,5.609661083,47.3
+Tameside,grp1,14.17761848,43.9
+Trafford,grp1,12.92134831,56.8
+Wigan,grp1,3.259857187,45.3
+Knowsley,grp1,1.937567277,35.3
+Liverpool,grp1,9.508858488,43.5
+St. Helens,grp1,1.710914454,44.6
+Sefton,grp1,3.685152057,44.9
+Wirral,grp1,3.090234858,48.8
+Barnsley,grp1,3.637269557,42.5
+Doncaster,grp1,7.509472959,42.7
+Rotherham,grp1,10.01594896,43.6
+Sheffield,grp1,17.53468731,44.6
+Newcastle upon Tyne,grp1,17.26825267,45.1
+North Tyneside,grp1,2.980308675,46
+South Tyneside,grp1,5.509065551,44.3
+Sunderland,grp1,5.36809816,43.2
+Birmingham,grp1,40.48744094,45.8
+Coventry,grp1,30.32277169,43.3
+Dudley,grp1,8.852258852,43.4
+Sandwell,grp1,28.87847892,40.6
+Solihull,grp1,6.639146887,47.2
+Walsall,grp1,18.62047634,43.8
+Wolverhampton,grp1,22.97970126,44.4
+Bradford,grp1,35.41105121,42.7
+Calderdale,grp1,12.98755187,49.4
+Kirklees,grp1,22.63603925,45.4
+Leeds,grp1,16.73183228,44.8
+Wakefield,grp1,7.017028773,43.5
+Gateshead,grp1,4.774535809,46.2
+Barking and Dagenham,grp1,43.3850365,46.1
+Barnet,grp1,37.34876381,56
+Bexley,grp1,13.71900826,49.6
+Brent,grp1,57.64455481,49.9
+Bromley,grp1,10.11486918,50.3
+Camden,grp1,57.3878628,48
+Croydon,grp1,27.74652058,45.8
+Ealing,grp1,53.25360535,50
+Enfield,grp1,48.23321555,46.3
+Greenwich,grp1,36.7744794,44.5
+Hackney,grp1,47.39912494,49
+Hammersmith and Fulham,grp1,41.08527132,52.9
+Haringey,grp1,49.93135011,46.3
+Harrow,grp1,60.66536204,50.7
+Havering,grp1,11.14718615,46.9
+Hillingdon,grp1,42.5726412,47.8
+Hounslow,grp1,54.21032208,49.4
+Islington,grp1,46.43874644,46.3
+Kensington and Chelsea,grp1,56.76429568,51.6
+Kingston upon Thames,grp1,31.85430464,57.8
+Lambeth,grp1,46.48956357,44.6
+Lewisham,grp1,29.58015267,44.9
+Merton,grp1,37.39316239,49.7
+Newham,grp1,71.05333691,48.7
+Redbridge,grp1,56.83309558,53.1
+Richmond upon Thames,grp1,20.63599459,51.7
+Southwark,grp1,39.0223346,50.2
+Sutton,grp1,22.20990392,58.1
+Tower Hamlets,grp1,75.79857197,46.8
+Waltham Forest,grp1,45.86860137,46.1
+Wandsworth,grp1,42.26260258,50.8
+Westminster,grp1,64.9463807,52.9
+Buckinghamshire,grp1,15.43493635,55
+Cambridgeshire,grp1,10.14172649,48
+Cumbria,grp1,2.452548518,46.7
+Derbyshire,grp1,1.344847112,45.6
+Devon,grp1,3.037240537,45.8
+Dorset,grp1,2.081765739,47.4
+East Sussex,grp1,4.956018022,45.2
+Essex,grp1,5.881933552,46.1
+Gloucestershire,grp1,5.647176412,49.6
+Hampshire,grp1,5.106042417,47.2
+Hertfordshire,grp1,12.80556905,51.5
+Kent,grp1,8.077221074,47.1
+Lancashire,grp1,9.02915126,46.7
+Leicestershire,grp1,5.42873866,46.2
+Lincolnshire,grp1,7.265958914,46.6
+Norfolk,grp1,6.889632107,45.1
+Northamptonshire,grp1,12.69125683,45.1
+North Yorkshire,grp1,3.120805369,48.5
+Nottinghamshire,grp1,5.027557467,47.2
+Oxfordshire,grp1,11.64174031,46.8
+Somerset,grp1,4.907709012,44.9
+Staffordshire,grp1,4.827419744,44.6
+Suffolk,grp1,5.789395953,45.5
+Surrey,grp1,10.64263163,50.2
+Warwickshire,grp1,6.993775174,49.4
+West Sussex,grp1,8.514851485,46.6
+Worcestershire,,6.414879484,46.5

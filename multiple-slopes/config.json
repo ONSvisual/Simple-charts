@@ -1,0 +1,25 @@
+{
+    "essential" : {
+            "dataFile":"data.csv",
+            "sourceText":["Office for National Statistics - Wealth and Assets Survey"],
+            "yAxisScale":[0.30,1],
+            "numberFormat":".0%",
+            "gHeight_sm_md_lg":[30,27.5,25],
+            "legendLabels":["16 to 34 years", "35 to 44 years", "45 to 54 years", "55years to SPa", "SPa and over"],
+            "colour_palette":{
+              "16 to 34 years":"#053D58",
+              "35 to 44 years":"#24A79B",
+              "45 to 54 years":"#3A7899",
+              "55years to SPa":"#ABC149",
+              "SPa and over":"#005D60"
+            }
+    },
+    "optional" : {
+            "margin_sm": [90, 20, 40, 33],
+            "margin_md": [70, 20, 40, 33],
+            "margin_lg": [50, 20, 20, 33],
+
+            "mobileBreakpoint" : 501,
+            "mediumBreakpoint":600
+    }
+}

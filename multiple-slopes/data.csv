@@ -1,0 +1,16 @@
+name,employee,selfemployed,incomelost
+16 to 34 years,0.6507,0.566,25
+35 to 44 years,0.687,0.7056,25
+45 to 54 years,0.7402,0.7668,25
+55years to SPa,0.8222,0.897,25
+SPa and over,0.93,0.9651,25
+16 to 34 years,0.5012,0.4912,50
+35 to 44 years,0.5632,0.607,50
+45 to 54 years,0.6222,0.6348,50
+55years to SPa,0.741,0.7926,50
+SPa and over,0.89,0.9116,50
+16 to 34 years,0.3993,0.3685,75
+35 to 44 years,0.4824,0.5409,75
+45 to 54 years,0.5583,0.5339,75
+55years to SPa,0.7017,0.7559,75
+SPa and over,0.8472,0.891,75

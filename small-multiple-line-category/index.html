@@ -67,7 +67,7 @@
 
 <body>
   <h4>Care home deaths in 2020 are more than double for week 15 (3 to 10 April) compared to the five year average</h4>
-  <h5>Weekly deaths by place of death</h5>
+  <h5>Weekly deaths by place of occurrence, in England and Wales</h5>
   <div id="legend"></div>
   <div id="graphic">
     <img src="fallback.png" alt="[Chart]" />
@@ -113,6 +113,7 @@
 
       var margin = dvc.optional.margin[size]
       var chart_width = parseInt(graphic.style("width")) / 2 - margin.left - margin.right;
+      if(size=="sm"){var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;}
       var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
 
       // clear out existing graphics
@@ -170,8 +171,6 @@
           return d.series
         })
         .entries(graphic_data)
-
-      console.log(nested)
 
       //x domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
       if (dvc.essential.yAxisScale == "auto_zero_max_total") {

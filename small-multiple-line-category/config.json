@@ -1,0 +1,56 @@
+{
+  "essential": {
+    "graphic_data_url": "data.csv",
+    "legendLabels": ["min / max", "really long label for wrapping"],
+    "colour_palette": [{
+        "key": "5 year average",
+        "colour": "darkgrey"
+      },
+      {
+        "key": "2020",
+        "colour": "#206095"
+      }
+    ],
+    "categorySort": ["Hospital", "Care home", "Home", "Hospice", "Elsewhere", "Other communal establishment"],
+    "sourceText": ["Office for National Statistics"],
+    "xAxisLabel": "Amount",
+    "yAxisLabel": "Regions and Countries",
+    "yAxisScale": "auto_zero_max_each"
+  },
+  "optional": {
+    "margin": {
+      "sm": {
+        "top": 35,
+        "right": 20,
+        "bottom": 5,
+        "left": 50
+      },
+      "md": {
+        "top": 20,
+        "right": 20,
+        "bottom": 20,
+        "left": 50
+      },
+      "lg": {
+        "top": 30,
+        "right": 20,
+        "bottom": 50,
+        "left": 50
+      }
+    },
+
+    "aspectRatio": {
+      "sm": [4, 6],
+      "md": [3, 3],
+      "lg": [16, 8]
+    },
+
+    "mobileBreakpoint": 510,
+    "middleBreakpoint": 600,
+    "x_ticks_every": {
+      "sm": 6,
+      "md": 8,
+      "lg": 10
+    }
+  }
+}

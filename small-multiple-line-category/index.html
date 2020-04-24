@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <title></title>
+
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <link rel="stylesheet" href="../lib/globalStyle.css" />
+  <style type="text/css">
+    .x.axis path {
+      display: none;
+    }
+
+    path {
+      fill: none;
+    }
+
+    text {
+      font-family: 'Open Sans'
+    }
+
+    text.x,
+    text.y {
+      font-size: 12px;
+      fill: #666;
+    }
+
+    line.y,
+    line.x {
+      stroke: #ccc;
+      stroke-width: 1px;
+      shape-rendering: crispEdges;
+    }
+
+    h6 {
+      font-size: 16px;
+      margin: 16px 0 8px 0;
+      font-weight: 700;
+      color: #323132;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="legend"></div>
+  <div id="graphic">
+    <img src="fallback.png" alt="[Chart]" />
+  </div>
+
+  <h6 id="source"></h6>
+
+  <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.1.0/d3-annotation.js" type="text/javascript"></script>
+  <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+  <script src="../lib/pym.js" type="text/javascript"></script>
+  <script src="../lib/d3-legend.min.js" type="text/javascript"></script>
+  <script>
+    var graphic = d3.select('#graphic');
+    var legend = d3.select('#legend');
+    var pymChild = null;
+
+    function drawGraphic() {
+
+
+
+
+      var threshold_md = dvc.optional.middleBreakpoint;
+      var threshold_sm = dvc.optional.mobileBreakpoint;
+
+      if (parseInt(graphic.style("width")) < threshold_sm) {
+        size = "sm";
+      } else if (parseInt(graphic.style("width")) < threshold_md) {
+        size = "md";
+      } else {
+        size = "lg";
+      }
+
+      categorySort = {}
+      for (i = 0; i < dvc.essential.categorySort.length; i++) {
+        categorySort[dvc.essential.categorySort[i]] = i;
+      }
+
+      graphic_data.sort(function(a, b) {
+        return categorySort[a.category] - categorySort[b.category]
+      })
+
+
+      var margin = dvc.optional.margin[size]
+      var chart_width = parseInt(graphic.style("width")) / 2 - margin.left - margin.right;
+      var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
+
+      // clear out existing graphics
+      graphic.selectAll("*").remove();
+      legend.selectAll("*").remove();
+
+      //draw legend
+      drawlegend=legend.append('svg').attr("height",60).attr("width",chart_width+margin.left+margin.right).append('g')
+      .attr('transform','translate(10,10)')
+
+      var ordinal = d3.scaleOrdinal()
+        .domain(d3.map(graphic_data, function(d) {
+          return d.series
+        }).keys())
+        .range(dvc.essential.colour_palette.map(function(d) {
+          return d.colour
+        }))
+
+      var legendOrdinal=d3.legendColor()
+          .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
+          .shapePadding(10)
+          .cellFilter(function(d){return d.label !== "e"})
+          .scale(ordinal);
+
+      drawlegend.call(legendOrdinal)
+
+
+
+      x = d3.scalePoint()
+        .range([0, chart_width]);
+
+      x.domain(d3.map(graphic_data, function(d) {
+        return d.date
+      }).keys())
+
+      var xAxis = d3.axisBottom(x)
+        .tickValues(x.domain().filter(function(d, i) {
+          return i % dvc.optional.x_ticks_every[size] === 0
+        }))
+
+
+      line = d3.line()
+        .x(function(d) {
+          return x(d.date)
+        })
+        .y(function(d) {
+          return y[d.category](d.chiffre)
+        })
+
+      nested = d3.nest()
+        .key(function(d) {
+          return d.category
+        })
+        .key(function(d) {
+          return d.series
+        })
+        .entries(graphic_data)
+
+      console.log(nested)
+
+      //x domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
+      if (dvc.essential.yAxisScale == "auto_zero_max_total") {
+        var yDomain = [0, d3.max(graphic_data, function(d) {
+          return d.value
+        })];
+      } else if (dvc.essential.yAxisScale == "auto_min_max_total") {
+        var yDomain = d3.extent(graphic_data, function(d) {
+          return d.value
+        });
+      } else if (dvc.essential.yAxisScale == "auto_min_max_each") {
+        rolledup = d3.nest()
+          .key(function(d) {
+            return d.category
+          })
+          .rollup(function(v) {
+            return [d3.min(v, function(d) {
+              return +d.chiffre
+            }), d3.max(v, function(d) {
+              return +d.chiffre
+            })]
+          })
+          .entries(graphic_data)
+      } else if (dvc.essential.yAxisScale == "auto_zero_max_each") {
+        rolledup = d3.nest()
+          .key(function(d) {
+            return d.category
+          })
+          .rollup(function(v) {
+            return [0, d3.max(v, function(d) {
+              return +d.chiffre
+            })]
+          })
+          .entries(graphic_data)
+      }
+
+      y = {}
+      yAxis = {}
+      rolledup.forEach(function(item, i) {
+        y[item.key] = d3.scaleLinear()
+          .range([height, 0])
+          .domain(item.value)
+          .nice();
+        yAxis[item.key] = d3.axisLeft(y[item.key])
+      });
+
+
+      // sort these hardwired numbers maybe through the dimensions above
+      charts = d3.select('#graphic')
+        .selectAll('svg')
+        .data(nested)
+        .enter()
+        .append('svg')
+        .attr("width", chart_width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+
+      charts
+        .append('text')
+        .attr("x", 0)
+        .attr("y", 12)
+        .text(function(d) {
+          console.log(d);
+          return d.key
+        })
+
+      svg = charts
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+      svg
+        .append('g')
+        .attr('class', 'x axis')
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      //create svg for chart
+
+      drawyaxis = svg
+        .append('g')
+        .attr('class', 'y axis')
+
+      drawyaxis.each(function(d, i) {
+        d3.select(this).call(d3.axisLeft(y[d.key]).tickSize(-chart_width).ticks(5));
+      })
+
+      svg
+        .selectAll('g.line')
+        .data(function(d) {
+          return d.values;
+        })
+        .enter()
+        .append('path')
+        .attr("d", function(d) {
+          // console.log(d)
+          return line(d.values)
+        })
+        .attr("stroke", function(d) {
+          return dvc.essential.colour_palette.filter(function(e) {
+            return e.key == d.key
+          })[0].colour
+        })
+        .attr('stroke-width', "3px")
+
+      //create link to source
+      d3.select('#source')
+        .text('Source: ' + dvc.essential.sourceText);
+
+      //use pym to calculate chart dimensions
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+
+
+    //check whether browser can cope with svg
+    if (Modernizr.svg) {
+      //load config
+      d3.json("config.json", function(error, config) {
+        dvc = config;
+
+        //load chart data
+        d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+          graphic_data = data;
+
+          //use pym to create iframed chart dependent on specified variables
+          pymChild = new pym.Child({
+            renderCallback: drawGraphic
+          });
+        });
+
+      })
+
+    } else {
+      //use pym to create iframe containing fallback image (which is set as default)
+      pymChild = new pym.Child();
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -125,9 +125,9 @@
       .attr('transform','translate(10,10)')
 
       var ordinal = d3.scaleOrdinal()
-        .domain(d3.map(graphic_data, function(d) {
-          return d.series
-        }).keys())
+        .domain(dvc.essential.colour_palette.map(function(d) {
+          return d.key
+        }))
         .range(dvc.essential.colour_palette.map(function(d) {
           return d.colour
         }))
@@ -173,13 +173,28 @@
         .entries(graphic_data)
 
       //x domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
+      y={}
+
+
       if (dvc.essential.yAxisScale == "auto_zero_max_total") {
         var yDomain = [0, d3.max(graphic_data, function(d) {
-          return d.value
+          return +d.chiffre
         })];
+        nested.forEach((item, i) => {
+          y[item.key] = d3.scaleLinear()
+            .range([height, 0])
+            .domain(yDomain)
+            .nice();
+        });
       } else if (dvc.essential.yAxisScale == "auto_min_max_total") {
         var yDomain = d3.extent(graphic_data, function(d) {
-          return d.value
+          return +d.chiffre
+        });
+        nested.forEach((item, i) => {
+          y[item.key] = d3.scaleLinear()
+            .range([height, 0])
+            .domain(yDomain)
+            .nice();
         });
       } else if (dvc.essential.yAxisScale == "auto_min_max_each") {
         rolledup = d3.nest()
@@ -194,6 +209,14 @@
             })]
           })
           .entries(graphic_data)
+
+        rolledup.forEach(function(item, i) {
+          y[item.key] = d3.scaleLinear()
+            .range([height, 0])
+            .domain(item.value)
+            .nice();
+        });
+
       } else if (dvc.essential.yAxisScale == "auto_zero_max_each") {
         rolledup = d3.nest()
           .key(function(d) {
@@ -205,17 +228,17 @@
             })]
           })
           .entries(graphic_data)
+
+        rolledup.forEach(function(item, i) {
+          y[item.key] = d3.scaleLinear()
+            .range([height, 0])
+            .domain(item.value)
+            .nice();
+
+        });
+
       }
 
-      y = {}
-      yAxis = {}
-      rolledup.forEach(function(item, i) {
-        y[item.key] = d3.scaleLinear()
-          .range([height, 0])
-          .domain(item.value)
-          .nice();
-        yAxis[item.key] = d3.axisLeft(y[item.key])
-      });
 
 
       // sort these hardwired numbers maybe through the dimensions above

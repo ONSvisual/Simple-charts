@@ -1,7 +1,6 @@
 {
   "essential": {
     "graphic_data_url": "data.csv",
-    "legendLabels": ["min / max", "really long label for wrapping"],
     "colour_palette": [{
         "key": "5 year average",
         "colour": "darkgrey"
@@ -15,7 +14,7 @@
     "sourceText": ["Office for National Statistics"],
     "xAxisLabel": "Amount",
     "yAxisLabel": "Regions and Countries",
-    "yAxisScale": "auto_zero_max_each"
+    "yAxisScale": "auto_zero_max_total"
   },
   "optional": {
     "margin": {

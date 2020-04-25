@@ -14,7 +14,7 @@
     "sourceText": ["Office for National Statistics"],
     "xAxisLabel": "Amount",
     "yAxisLabel": "Regions and Countries",
-    "yAxisScale": "auto_zero_max_total"
+    "yAxisScale": "auto_zero_max_each"
   },
   "optional": {
     "margin": {
@@ -32,7 +32,7 @@
       },
       "lg": {
         "top": 30,
-        "right": 20,
+        "right": 30,
         "bottom": 50,
         "left": 50
       }
@@ -49,7 +49,7 @@
     "x_ticks_every": {
       "sm": 12,
       "md": 10,
-      "lg": 10
+      "lg": 3
     }
   }
 }

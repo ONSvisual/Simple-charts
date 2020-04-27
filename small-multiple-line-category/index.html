@@ -112,8 +112,7 @@
 
 
       var margin = dvc.optional.margin[size]
-      var chart_width = parseInt(graphic.style("width")) / 2 - margin.left - margin.right;
-      if(size=="sm"){var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;}
+      var chart_width = parseInt(graphic.style("width")) / dvc.optional.chart_every[size] - margin.left - margin.right;
       var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
 
       // clear out existing graphics

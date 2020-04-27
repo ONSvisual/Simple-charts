@@ -37,7 +37,11 @@
         "left": 50
       }
     },
-
+    "chart_every":{
+      "sm": 1,
+      "md": 2,
+      "lg": 2
+    },
     "aspectRatio": {
       "sm": [16, 8],
       "md": [16, 8],
@@ -49,7 +53,7 @@
     "x_ticks_every": {
       "sm": 12,
       "md": 10,
-      "lg": 3
+      "lg": 10
     }
   }
 }

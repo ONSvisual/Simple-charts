@@ -1,0 +1,85 @@
+{
+  "essential": {
+    "graphic_data_url": "data.csv",
+    "reference": "m+sd",
+    "comparison": "m-sd",
+    "dateFormat": "%d/%m/%Y",
+    "legendLabels": ["Deaths this year", "Normal range for the last 5 years"],
+    "colour_palette": ["#206095", "#dadada","#dadada"],
+    "legendStyle": ["line", "rect"],
+    "plotLines": [{
+      "key": "2020",
+      "colour": "#206095"
+    }, {
+      "key": "mean",
+      "colour": "#dadada"
+    }],
+    "directLabels": [{
+        "variable": "mean",
+        "label": "Normal range for past 5 years"
+      },
+      {
+        "variable": 2020,
+        "label": 2020
+      }
+    ],
+    "sourceText": ["Office for National Statistics"],
+    "circles": false,
+    "yAxisLabel": "Weekly deaths",
+    "xAxisLabel": "Week number",
+    "yAxisScale": [0, 25000],
+    "yAxisBreak": false,
+    "yAxisBreakValue": {
+      "sm": 12,
+      "md": 10,
+      "lg": 10
+    }
+  },
+
+  "optional": {
+    "margin": {
+      "sm": {
+        "top": 60,
+        "right": 20,
+        "bottom": 50,
+        "left": 40
+      },
+      "md": {
+        "top": 60,
+        "right": 100,
+        "bottom": 50,
+        "left": 40
+      },
+      "lg": {
+        "top": 60,
+        "right": 120,
+        "bottom": 50,
+        "left": 40
+      }
+    },
+
+    "aspectRatio": {
+      "sm": [16, 8],
+      "md": [16, 8],
+      "lg": [16, 8]
+    },
+
+    "mobileBreakpoint": 414,
+    "middleBreakpoint": 600,
+
+    "x_ticks_every": {
+      "sm": 3,
+      "md": 2,
+      "lg": 1
+    },
+    "y_num_ticks": {
+      "sm": 5,
+      "md": 5,
+      "lg": 5
+    },
+
+    "lineMarkers": false
+
+
+  }
+}

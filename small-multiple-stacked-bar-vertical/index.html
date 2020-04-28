@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <title>Multiple vertical stacked bar chart</title>
+
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <link rel="stylesheet" href="../lib/globalStyle2.css" />
+
+  <style type="text/css">
+    body {
+      max-width: 700px;
+    }
+
+    .axis path {
+      stroke: none;
+    }
+
+    b {
+      margin-top: 0px !important;
+      width: 15px !important;
+    }
+
+    body,
+    tspan,
+    label {
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .x path.domain {
+      display: none;
+    }
+
+    h6 {
+      font-size: 16px;
+      margin: 16px 0 8px 0;
+      font-weight: 700;
+      color: #323132;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="legend"></div>
+
+  <div id="graphic">
+    <img src="fallback.png" alt="[Chart]" />
+  </div>
+
+  <h6 id="source"></h6>
+
+
+  <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js" type="text/javascript"></script>
+  <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+  <script src="../lib/pym.js" type="text/javascript"></script>
+  <script src="../lib/d3-legend.min.js" type="text/javascript"></script>
+
+  <script>
+    var graphic = d3.select('#graphic');
+    var legend = d3.select('#legend');
+
+    var pymChild = null;
+
+
+
+    function drawGraphic(width) {
+      var threshold_md = dvc.essential.mediumBreakpoint;
+      var threshold_sm = dvc.essential.mobileBreakpoint;
+
+      if (parseInt(graphic.style("width")) < threshold_sm) {
+        size = "sm";
+      } else if (parseInt(graphic.style("width")) < threshold_md) {
+        size = "md";
+      } else {
+        size = "lg";
+      }
+
+      var margin = dvc.optional.margin[size]
+      var chart_width = parseInt(graphic.style("width")) / dvc.optional.chart_every[size] - margin.left - margin.right;
+      var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
+
+      // clear out existing graphics
+      graphic.selectAll("*").remove();
+      legend.selectAll("*").remove();
+
+      categoryNames = graphic_data.columns.slice(2) //need this for stack
+
+      x = d3.scaleBand()
+        .range([0, chart_width])
+        .paddingInner(0.1)
+
+      y = d3.scaleLinear()
+        .rangeRound([height, 0]);
+
+      // colour scale
+      var z = d3.scaleOrdinal(dvc.essential.colour_palette)
+        .domain(graphic_data.columns.slice(2));
+
+      x.domain(d3.map(graphic_data, function(d) {
+        return d.date;
+      }).keys());
+
+      var xAxis = d3.axisBottom(x)
+        .tickValues(x.domain().filter(function(d, i) {
+          return i % dvc.optional.x_ticks_every[size] === 0
+        }))
+        .tickPadding(4)
+      // .tickSize(0)
+
+      //draw legend
+      drawlegend = legend.append('svg').attr("height", 60).attr("width", chart_width + margin.left + margin.right).append('g')
+        .attr('transform', 'translate(10,10)')
+
+      var legendOrdinal = d3.legendColor()
+        .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
+        .shapePadding(10)
+        .cellFilter(function(d) {
+          return d.label !== "e"
+        })
+        .scale(z);
+
+      drawlegend.call(legendOrdinal)
+
+
+
+      nested = d3.nest()
+        .key(function(d) {
+          return d.category
+        })
+        .entries(graphic_data)
+
+      yAxis = d3.axisLeft(y)
+        .tickSize(-chart_width)
+        .ticks(dvc.optional.y_num_ticks[size])
+
+      x.domain(d3.map(graphic_data, function(d) {
+        return d.date;
+      }).keys());
+
+      //y domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
+      if (dvc.essential.yAxisScale == "auto_zero_max") {
+        var yDomain = [
+          0, Math.ceil(d3.max(graphic_data, function(d) {
+            return d.total;
+          }))
+        ];
+      } else if (dvc.essential.yAxisScale == "auto_min_max") {
+        var yDomain = [
+          Math.floor(d3.min(graphic_data, function(d) {
+            return d.total
+          })), Math.ceil(d3.max(graphic_data, function(d) {
+            return d.total;
+          }))
+        ];
+      } else {
+        var yDomain = dvc.essential.yAxisScale;
+      }
+
+      y.domain(yDomain);
+
+      charts = d3.select('#graphic')
+        .selectAll('svg')
+        .data(nested)
+        .enter()
+        .append('svg')
+        .style("background-color", "#fff")
+        .attr("width", chart_width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+
+      charts
+        .append('text')
+        .attr("x", 0)
+        .attr("y", 12)
+        .text(function(d) {
+          return d.key
+        })
+
+      svg = charts
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+      svg
+        .append('g')
+        .attr('class', 'x axis')
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .append("text")
+        .attr("x", chart_width)
+        .attr("y", +40)
+        .style("text-anchor", "end")
+        .text(dvc.essential.xAxisLabel);
+
+      svg.append('g')
+        .attr('class', 'y axis')
+        .each(function(d, i) {
+          if (i % dvc.optional.chart_every[size] == 0) {
+            d3.select(this).call(yAxis.tickFormat(d3.format(",.0f")))
+            // .append("text")
+            // .attr("x", -margin.left)
+            // .attr("y", -20)
+            // .style("text-anchor", "start")
+            // .text(dvc.essential.yAxisLabel);
+          }else{
+            d3.select(this).call(yAxis.tickFormat(""))
+          }
+        })
+
+
+      stackthis = d3.stack().keys(categoryNames)
+
+      group = svg.selectAll('g.bars')
+        .data(function(d) {
+          return stackthis(d.values)
+        })
+        .enter().append('g')
+        .attr("class", "g bars")
+        .attr("fill", function(d) {
+          return z(d.key)
+        })
+
+      group.selectAll("rect")
+        .data(function(d) {
+          return d;
+        })
+        .enter().append("rect")
+        .attr("class", function(d, i) {
+          return "bar-" + i
+        })
+        .attr("x", function(d) {
+          return x(d.data.date);
+        })
+        .attr("width", x.bandwidth())
+        .attr("y", function(d) {
+          if (d[1] < 0) {
+            return y(0);
+          } else {
+            return y(d[1]);
+          }
+        })
+        .attr("height", function(d) {
+          return Math.abs(y(d[0]) - y(d[1]));
+        })
+        .style("opacity", 1)
+
+      //create link to source
+      d3.select('#source')
+        .text('Source: ' + dvc.essential.sourceText);
+
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+
+    if (Modernizr.svg) {
+
+      d3.json("config.json", function(error, config) {
+        dvc = config
+
+        d3.csv(dvc.essential.graphic_data_url, type, function(error, data) {
+          graphic_data = data;
+
+          // sort data
+          if (dvc.essential.sort_data === true) {
+            graphic_data.sort(function(a, b) {
+              return b.total - a.total;
+            });
+          }
+
+          pymChild = new pym.Child({
+            renderCallback: drawGraphic
+          });
+
+        });
+      });
+
+      // strings to numbers
+      function type(d, i, columns) {
+        for (i = 2, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
+        d.total = t;
+        return d;
+      }
+
+    } else {
+      pymChild = new pym.Child();
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+  </script>
+</body>
+
+</html>

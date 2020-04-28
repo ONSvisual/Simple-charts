@@ -1,6 +1,6 @@
 {
   "essential": {
-    "graphic_data_url": "data.csv",
+    "graphic_data_url": "data-yeartodate-hospcarehome.csv",
     "colour_palette": [{
         "key": "5 year average",
         "colour": "darkgrey"
@@ -10,18 +10,19 @@
         "colour": "#206095"
       }
     ],
-    "categorySort": ["Hospital", "Care home", "Home", "Hospice", "Elsewhere", "Other communal establishment"],
+    "categorySort": ["Hospital", "Care home", "Home"],
+    "categorySortold": ["Hospital", "Care home", "Home","Hospice","Elsewhere","Other communal establishment"],
     "sourceText": ["Office for National Statistics"],
     "xAxisLabel": "Amount",
     "yAxisLabel": "Regions and Countries",
-    "yAxisScale": "auto_zero_max_each"
+    "yAxisScale": "auto_zero_max_total"
   },
   "optional": {
     "margin": {
       "sm": {
         "top": 30,
         "right": 20,
-        "bottom": 50,
+        "bottom": 45,
         "left": 50
       },
       "md": {
@@ -33,27 +34,27 @@
       "lg": {
         "top": 30,
         "right": 30,
-        "bottom": 50,
-        "left": 50
+        "bottom": 45,
+        "left": 40
       }
     },
     "chart_every":{
       "sm": 1,
       "md": 2,
-      "lg": 2
+      "lg": 3
     },
     "aspectRatio": {
       "sm": [16, 8],
       "md": [16, 8],
-      "lg": [16, 8]
+      "lg": [16, 10]
     },
 
-    "mobileBreakpoint": 510,
+    "mobileBreakpoint": 414,
     "middleBreakpoint": 600,
     "x_ticks_every": {
-      "sm": 12,
-      "md": 10,
-      "lg": 10
+      "sm": 1,
+      "md": 3,
+      "lg": 3
     }
   }
 }

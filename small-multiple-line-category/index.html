@@ -12,7 +12,7 @@
 
   <link rel="stylesheet" href="../lib/globalStyle.css" />
   <style type="text/css">
-    body{
+    body {
       color: #323132;
     }
 
@@ -41,6 +41,10 @@
       shape-rendering: crispEdges;
     }
 
+    #legend {
+      font-size: 12px;
+    }
+
     h4 {
       font-size: 16px;
       line-height: 24px;
@@ -49,7 +53,7 @@
       font-weight: bold;
     }
 
-    h5{
+    h5 {
       font-size: 14px;
       margin: 0 0 16px 0;
       font-weight: normal;
@@ -66,7 +70,7 @@
 </head>
 
 <body>
-  <h4>Care home deaths in 2020 are more than double for week 15 (3 to 10 April) compared to the five year average</h4>
+  <h4>Care home deaths in 2020 are more than triple compared to the five year average for week 16 (week ending 17 April)</h4>
   <h5>Weekly deaths by place of occurrence, in England and Wales</h5>
   <div id="legend"></div>
   <div id="graphic">
@@ -86,9 +90,6 @@
     var pymChild = null;
 
     function drawGraphic() {
-
-
-
 
       var threshold_md = dvc.optional.middleBreakpoint;
       var threshold_sm = dvc.optional.mobileBreakpoint;
@@ -120,24 +121,94 @@
       legend.selectAll("*").remove();
 
       //draw legend
-      drawlegend=legend.append('svg').attr("height",60).attr("width",chart_width+margin.left+margin.right).append('g')
-      .attr('transform','translate(10,10)')
+      legend.append('svg').attr("height", 30).attr("width", dvc.optional.chart_every[size] * (chart_width + margin.left + margin.right)).append('g')
+        .attr('transform', 'translate(5,5)')
 
-      var ordinal = d3.scaleOrdinal()
-        .domain(dvc.essential.colour_palette.map(function(d) {
+      createLegend();
+
+      function createLegend() {
+
+        var prevX = 0;
+        var prevY = 0;
+        lineNo = 0;
+        var lineNoOld = 0;
+
+        dvc.essential.colour_palette.map(function(d) {
           return d.key
-        }))
-        .range(dvc.essential.colour_palette.map(function(d) {
-          return d.colour
-        }))
+        }).forEach(function(d, i) {
 
-      var legendOrdinal=d3.legendColor()
-          .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
-          .shapePadding(10)
-          .cellFilter(function(d){return d.label !== "e"})
-          .scale(ordinal);
+          // draw legend text based on content of var legendLabels ...
+          var_group = d3.select("#legend").select('svg').append("g")
 
-      drawlegend.call(legendOrdinal)
+          var_group.append("rect")
+            .attr("class", "rect" + i)
+            .attr("fill", dvc.essential.colour_palette[i].colour)
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 20)
+            .attr("height", 3)
+
+          var_group.append("text")
+            .text(dvc.essential.colour_palette[i].key)
+            .attr("class", "legend" + i)
+            .attr("text-anchor", "start")
+            .style("font-size", "12px")
+            .style("fill", "#666")
+            .attr('y', 15)
+            .attr('x', 0);
+
+
+          d3.selectAll(".legend" + (i))
+            .each(calcPosition);
+
+          function calcPosition() {
+
+
+            var BBox = this.getBBox()
+
+
+            //prevY =BBox.width
+            d3.select(".legend" + (i))
+              .attr("y", function(d) {
+                if ((prevX + BBox.width + 50) > parseInt(graphic.style("width"))) {
+                  lineNoOld = lineNo;
+                  lineNo = lineNo + 1;
+                  prevX = 0;
+                }
+                return eval((lineNo * 20) + 20);
+              })
+              .attr("x", function(d) {
+                return prevX + 25;
+              })
+
+
+            d3.select(".rect" + (i))
+              .attr("y", function(d) {
+
+                if ((prevX + BBox.width + 50) > parseInt(graphic.style("width"))) {
+                  lineNoOld = lineNo;
+                  lineNo = lineNo + 1;
+                  prevX = 0;
+                }
+
+                if (dvc.essential.legendStyle == "rect") {
+                  return eval((lineNo * 20) + 5);
+                } else {
+                  return eval((lineNo * 20) + 12);
+
+                }
+              })
+              .attr("x", function(d) {
+                return prevX;
+              })
+
+            prevX = prevX + BBox.width + 50
+
+
+
+          }; // end function calcPosition()
+        }); // end foreach
+      } // end function createLegend()
 
 
 
@@ -172,7 +243,7 @@
         .entries(graphic_data)
 
       //x domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
-      y={}
+      y = {}
 
 
       if (dvc.essential.yAxisScale == "auto_zero_max_total") {
@@ -233,7 +304,6 @@
             .range([height, 0])
             .domain(item.value)
             .nice();
-
         });
 
       }
@@ -254,9 +324,10 @@
         .attr("x", 0)
         .attr("y", 12)
         .text(function(d) {
-          console.log(d);
           return d.key
         })
+        .attr('font-weight', 700)
+        .attr('font-size', "14px")
 
       svg = charts
         .append("g")
@@ -267,6 +338,16 @@
         .attr('class', 'x axis')
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
+        .each(function(d, i) {
+          if (i % dvc.optional.chart_every[size] == dvc.optional.chart_every[size] - 1) {
+            d3.select(this).append("text")
+              .text("Week number")
+              .attr("transform", "translate(" + chart_width + "," + (margin.bottom - 5) + ")")
+              .attr('text-anchor', 'end')
+              .attr('fill', "#666");
+          }
+        })
+
       //create svg for chart
 
       drawyaxis = svg
@@ -274,7 +355,15 @@
         .attr('class', 'y axis')
 
       drawyaxis.each(function(d, i) {
-        d3.select(this).call(d3.axisLeft(y[d.key]).tickSize(-chart_width).ticks(5));
+        if (dvc.essential.yAxisScale == "auto_min_max_total" || dvc.essential.yAxisScale == "auto_zero_max_total") {
+          if (i % dvc.optional.chart_every[size] == 0) {
+            d3.select(this).call(d3.axisLeft(y[d.key]).tickSize(-chart_width).ticks(5));
+          } else {
+            d3.select(this).call(d3.axisLeft(y[d.key]).tickSize(-chart_width).tickFormat("").ticks(5))
+          }
+        } else {
+          d3.select(this).call(d3.axisLeft(y[d.key]).tickSize(-chart_width).ticks(5));
+        }
       })
 
       svg

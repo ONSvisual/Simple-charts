@@ -99,7 +99,7 @@
         .rangeRound([height, 0]);
 
       // colour scale
-      var z = d3.scaleOrdinal(dvc.essential.colour_palette)
+      z = d3.scaleOrdinal(dvc.essential.colour_palette.map(function(d){return d.colour}))
         .domain(graphic_data.columns.slice(2));
 
       x.domain(d3.map(graphic_data, function(d) {
@@ -114,19 +114,92 @@
       // .tickSize(0)
 
       //draw legend
-      drawlegend = legend.append('svg').attr("height", 60).attr("width", chart_width + margin.left + margin.right).append('g')
-        .attr('transform', 'translate(10,10)')
+      legend.append('svg').attr("height", 20).attr("width", dvc.optional.chart_every[size]*(chart_width + margin.left + margin.right)).append('g')
+        .attr('transform', 'translate(5,5)')
 
-      var legendOrdinal = d3.legendColor()
-        .shape("path", d3.symbol().type(d3.symbolCircle).size(150)())
-        .shapePadding(10)
-        .cellFilter(function(d) {
-          return d.label !== "e"
-        })
-        .scale(z);
+        createLegend();
 
-      drawlegend.call(legendOrdinal)
+        function createLegend() {
 
+          var prevX = 0;
+          var prevY = 0;
+          lineNo = 0;
+          var lineNoOld = 0;
+
+          dvc.essential.colour_palette.map(function(d){return d.key}).forEach(function(d, i) {
+
+            // draw legend text based on content of var legendLabels ...
+            var_group = d3.select("#legend").select('svg').append("g")
+
+            var_group.append("rect")
+              .attr("class", "rect" + i)
+              .attr("fill", dvc.essential.colour_palette[i].colour)
+              .attr("x", 0)
+              .attr("y", 0)
+              .attr("width", 15)
+              .attr("height", 15)
+
+            var_group.append("text")
+              .text(dvc.essential.colour_palette[i].key)
+              .attr("class", "legend" + i)
+              .attr("text-anchor", "start")
+              .style("font-size", "12px")
+              .style("fill", "#666")
+              .attr('y', 15)
+              .attr('x', 0);
+
+
+            d3.selectAll(".legend" + (i))
+              .each(calcPosition);
+
+            function calcPosition() {
+
+
+              var BBox = this.getBBox()
+
+
+              //prevY =BBox.width
+              d3.select(".legend" + (i))
+                .attr("y", function(d) {
+                  if ((prevX + BBox.width + 50) > parseInt(graphic.style("width"))) {
+                    lineNoOld = lineNo;
+                    lineNo = lineNo + 1;
+                    prevX = 0;
+                  }
+                  return eval((lineNo * 20) + 20);
+                })
+                .attr("x", function(d) {
+                  return prevX + 25;
+                })
+
+
+              d3.select(".rect" + (i))
+                .attr("y", function(d) {
+
+                  if ((prevX + BBox.width + 50) > parseInt(graphic.style("width"))) {
+                    lineNoOld = lineNo;
+                    lineNo = lineNo + 1;
+                    prevX = 0;
+                  }
+
+                  if (dvc.essential.legendStyle == "rect") {
+                    return eval((lineNo * 20) + 5);
+                  } else {
+                    return eval((lineNo * 20) + 12);
+
+                  }
+                })
+                .attr("x", function(d) {
+                  return prevX;
+                })
+
+              prevX = prevX + BBox.width + 50
+
+
+
+            }; // end function calcPosition()
+          }); // end foreach
+        } // end function createLegend()
 
 
       nested = d3.nest()
@@ -180,6 +253,8 @@
         .text(function(d) {
           return d.key
         })
+        .attr('font-weight',700)
+        .attr('font-size',"14px")
 
       svg = charts
         .append("g")
@@ -190,11 +265,16 @@
         .attr('class', 'x axis')
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
-        .append("text")
-        .attr("x", chart_width)
-        .attr("y", +40)
-        .style("text-anchor", "end")
-        .text(dvc.essential.xAxisLabel);
+        .each(function(d,i){
+          if(i%dvc.optional.chart_every[size]==dvc.optional.chart_every[size]-1){
+            d3.select(this).append("text")
+              .text(dvc.essential.xAxisLabel)
+              .attr("transform", "translate("+chart_width+"," + (margin.bottom-5) + ")")
+              .attr('text-anchor','end')
+              .attr('fill',"#666");
+          }
+        })
+
 
       svg.append('g')
         .attr('class', 'y axis')

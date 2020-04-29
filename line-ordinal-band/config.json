@@ -39,19 +39,19 @@
   "optional": {
     "margin": {
       "sm": {
-        "top": 60,
-        "right": 20,
+        "top": 80,
+        "right": 15,
         "bottom": 50,
         "left": 40
       },
       "md": {
-        "top": 60,
+        "top": 30,
         "right": 100,
         "bottom": 50,
         "left": 40
       },
       "lg": {
-        "top": 60,
+        "top": 30,
         "right": 120,
         "bottom": 50,
         "left": 40
@@ -68,8 +68,8 @@
     "middleBreakpoint": 600,
 
     "x_ticks_every": {
-      "sm": 3,
-      "md": 2,
+      "sm": 2,
+      "md": 1,
       "lg": 1
     },
     "y_num_ticks": {

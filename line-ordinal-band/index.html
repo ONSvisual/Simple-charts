@@ -311,39 +311,43 @@
         d3.select("#line2020").raise()
 
 
+      if(size!="sm"){
+        svg.selectAll("text.directlabels")
+          .data(dvc.essential.directLabels)
+          .enter()
+          .append('text')
+          .attr("class", "directlabels")
+          .attr("x", function(d) {
+            return x(x.domain()[x.domain().length - 1]) + 7
+          })
+          .attr("y", function(d) {
+            return y(lines[d.variable].filter(function(e) {
+              return e.date == x.domain()[x.domain().length - 1]
+            })[0].amt) + 6
+          })
+          .text(function(d) {
+            return d.label
+          })
+          .attr('font-size',"14px")
+          .call(wrap,margin.right)
 
-      svg.selectAll("text.directlabels")
-        .data(dvc.essential.directLabels)
-        .enter()
-        .append('text')
-        .attr("class", "directlabels")
-        .attr("x", function(d) {
-          return x(x.domain()[x.domain().length - 1]) + 7
-        })
-        .attr("y", function(d) {
-          return y(lines[d.variable].filter(function(e) {
-            return e.date == x.domain()[x.domain().length - 1]
-          })[0].amt) + 6
-        })
-        .text(function(d) {
-          return d.label
-        })
-        .attr('font-size',"14px")
-        .call(wrap,margin.right)
+          //add custom bracket
+          svg.append('path')
+            .attr('d', function() {
+              return "M" + (x(graphic_data[graphic_data.length - 1]["date"]) + 4) + "," + y(+graphic_data[graphic_data.length - 1]["m+sd"]) + "L" +
+                (x(graphic_data[graphic_data.length - 1]["date"]) + 4) + "," + y(+graphic_data[graphic_data.length - 1]["m-sd"]) + "M" + (x(graphic_data[graphic_data.length - 1]["date"]) + 4) + "," + y(+graphic_data[graphic_data.length - 1]["mean"]) +
+                "h3"
+            })
+            .attr("stroke", "black")
+            .attr("fill", "none")
+            .attr("stroke-width", "1px")
+      }
+
 
         //remove mean line
         d3.select("#linemean").remove()
 
-      //add custom bracket
-      svg.append('path')
-        .attr('d', function() {
-          return "M" + (x(graphic_data[graphic_data.length - 1]["date"]) + 4) + "," + y(+graphic_data[graphic_data.length - 1]["m+sd"]) + "L" +
-            (x(graphic_data[graphic_data.length - 1]["date"]) + 4) + "," + y(+graphic_data[graphic_data.length - 1]["m-sd"]) + "M" + (x(graphic_data[graphic_data.length - 1]["date"]) + 4) + "," + y(+graphic_data[graphic_data.length - 1]["mean"]) +
-            "h3"
-        })
-        .attr("stroke", "black")
-        .attr("fill", "none")
-        .attr("stroke-width", "1px")
+
 
 
       // add markers
@@ -376,7 +380,7 @@
       d3.select('#source')
         .text('Source: ' + dvc.essential.sourceText);
 
-      createLegend();
+      if(size=="sm"){createLegend();}
 
       function createLegend() {
 

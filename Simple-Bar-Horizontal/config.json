@@ -1,52 +1,88 @@
 {
-    "essential" : {
-            "graphic_data_url": "data.csv",
+  "essential": {
+    "graphic_data_url": "data.csv",
 
-            "colour_palette": [ "#274796"],
-            "negative_colour":["#D32F2F"],
-            "sourceText":["Office for National Statistics"],
+    "colour_palette": ["#274796"],
+    "negative_colour": ["#D32F2F"],
+    "sourceText": ["Office for National Statistics"],
 
-            "annotationChart": [
-                "Lorem ipsum dolor sit amet",
-                "adipiscing elit, sed do eiusmod"
-            ],
-            "annotationBullet": [
-                "Lorem ipsum dolor sit amet",
-                "adipiscing elit, sed do eiusmod"
-            ],
-            "annotationXY":[
-                ["-5","London"],
-                ["60","Wales"]
-            ],
-            "annotationAlign":[
-                "middle",
-                "middle"
-            ],
+    "annotationChart": [
+      "Lorem ipsum dolor sit amet",
+      "adipiscing elit, sed do eiusmod"
+    ],
+    "annotationBullet": [
+      "Lorem ipsum dolor sit amet",
+      "adipiscing elit, sed do eiusmod"
+    ],
+    "annotationXY": [
+      ["-5", "London"],
+      ["60", "Wales"]
+    ],
+    "annotationAlign": [
+      "middle",
+      "middle"
+    ],
 
-            "barHeight_sm_md_lg" : [40,50,90],
+    "barHeight_sm_md_lg": [40, 50, 90],
 
 
-            "xAxisLabel":"%",
-            "xAxisScale":[-10,90]
+    "xAxisLabel": "%",
+    "xAxisScale": [-10, 90]
+  },
+  "optional": {
+    "margin": {
+      "sm": {
+        "top": 35,
+        "right": 20,
+        "bottom": 5,
+        "left": 135
+      },
+      "md": {
+        "top": 15,
+        "right": 20,
+        "bottom": 5,
+        "left": 135
+      },
+      "lg": {
+        "top": 15,
+        "right": 20,
+        "bottom": 5,
+        "left": 135
+      }
     },
-    "optional" : {
-            "margin_sm": [5, 20, 5, 135],
-            "margin_md": [5, 20, 5, 135],
-            "margin_lg": [5, 20, 5, 80],
 
-            "aspectRatio_sm" : [4,7],
-            "aspectRatio_md" : [1,1],
-            "aspectRatio_lg" : [16,12],
+    "aspectRatio": {
+      "sm": [4, 6],
+      "md": [3, 3],
+      "lg": [16, 10]
+    },
 
-            "mobileBreakpoint" : 510,
+    "mobileBreakpoint": 510,
+    "middleBreakpoint": 600,
 
-            "x_num_ticks_sm_md_lg" : [6,8,10],
-            "vertical_line" : false,
-            "annotateLineX1_Y1_X2_Y2":[ [[25,"South East"],[25,"East"]]],
-            "annotateRect" : true,
-            "annotateRectX_Y" : [ [[40, "South West"],[75, "West Midlands"]]],
-            "lineColor_opcty" : [["#888", 0.2]],
-            "centre_line" : false,
-            "centre_line_value" : 10
-    }
+    "x_num_ticks": {
+      "sm": 6,
+      "md": 8,
+      "lg": 10
+    },
+    "vertical_line": false,
+    "annotateLineX1_Y1_X2_Y2": [
+      [
+        [25, "South East"],
+        [25, "East"]
+      ]
+    ],
+    "annotateRect": true,
+    "annotateRectX_Y": [
+      [
+        [40, "South West"],
+        [75, "West Midlands"]
+      ]
+    ],
+    "lineColor_opcty": [
+      ["#888", 0.2]
+    ],
+    "centre_line": false,
+    "centre_line_value": 10
+  }
 }

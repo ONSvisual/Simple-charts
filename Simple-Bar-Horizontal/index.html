@@ -12,6 +12,7 @@
 
   <link rel="stylesheet" href="../lib/globalStyle.css" />
   <style type="text/css">
+
   path.domain{
     display:none
   }
@@ -34,23 +35,12 @@
 
   <h6 id="source"></h6>
 
-  <div id="keypoints">
-    <p></p>
-  </div>
-
-  <div class="footer">
-  </div>
-
-  <div id="footer"></div>
-
   <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js" type="text/javascript"></script>
   <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
   <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.js" type="text/javascript"></script>
 
   <script>
     var graphic = d3.select('#graphic');
-    var keypoints = d3.select('#keypoints');
-    var footer = d3.select(".footer");
     var pymChild = null;
 
     function drawGraphic(width) {
@@ -58,39 +48,21 @@
       var threshold_sm = dvc.optional.mobileBreakpoint;
 
       //set variables for chart dimensions dependent on width of #graphic
-      if (parseInt(graphic.style("width")) < threshold_sm) {
-        var margin = {
-          top: dvc.optional.margin_sm[0],
-          right: dvc.optional.margin_sm[1],
-          bottom: dvc.optional.margin_sm[2],
-          left: dvc.optional.margin_sm[3]
-        };
-        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-        var height = dvc.essential.barHeight_sm_md_lg[0] * graphic_data.length - margin.top - margin.bottom;
+      if(parseInt(graphic.style("width"))< threshold_sm){
+        size = "sm";
       } else if (parseInt(graphic.style("width")) < threshold_md) {
-        var margin = {
-          top: dvc.optional.margin_md[0],
-          right: dvc.optional.margin_md[1],
-          bottom: dvc.optional.margin_md[2],
-          left: dvc.optional.margin_md[3]
-        };
-        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-        var height = dvc.essential.barHeight_sm_md_lg[1] * graphic_data.length - margin.top - margin.bottom;
+        size = "md";
       } else {
-        var margin = {
-          top: dvc.optional.margin_lg[0],
-          right: dvc.optional.margin_lg[1],
-          bottom: dvc.optional.margin_lg[2],
-          left: dvc.optional.margin_lg[3]
-        }
-        var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-        var height = dvc.essential.barHeight_sm_md_lg[2] * graphic_data.length - margin.top - margin.bottom;
+        size = "lg";
       }
+
+      var margin = dvc.optional.margin[size]
+      var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+      var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
+
 
       // clear out existing graphics
       graphic.selectAll("*").remove();
-      keypoints.selectAll("*").remove();
-      footer.selectAll("*").remove();
 
       var x = d3.scaleLinear()
         .range([0, chart_width]);
@@ -109,13 +81,7 @@
         .tickSize(-height, 0, 0);
 
       //specify number or ticks on x axis
-      if (parseInt(graphic.style("width")) <= threshold_sm) {
-        xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[0])
-      } else if (parseInt(graphic.style("width")) <= threshold_md) {
-        xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[1])
-      } else {
-        xAxis.ticks(dvc.optional.x_num_ticks_sm_md_lg[2])
-      }
+      xAxis.ticks(dvc.optional.x_num_ticks[size])
 
       // parse data into columns
       var bars = {};
@@ -162,10 +128,6 @@
 
       x.domain(xDomain);
 
-      d3.select("#buttonid").on("click", function() {
-        saveSvgAsPng(document.getElementById("chart"), "diagram.png")
-      });
-
       //create svg for chart
       var svg = d3.select('#graphic').append('svg')
         .attr("id", "chart")
@@ -205,16 +167,8 @@
         })
         .call(yAxis);
 
-      if (parseInt(graphic.style("width")) < threshold_sm) {
-        d3.selectAll(".y .tick text")
-          .call(wrap, dvc.optional.margin_sm[3]-10);
-      } else if (parseInt(graphic.style("width")) < threshold_md) {
-        d3.selectAll(".y .tick text")
-          .call(wrap, dvc.optional.margin_md[3]-10);
-      } else {
-        d3.selectAll(".y .tick text")
-          .call(wrap, dvc.optional.margin_lg[3]-10);
-      };
+      d3.selectAll(".y .tick text")
+          .call(wrap, margin.left-10);
 
       svg.append('g').attr("class", "bars").selectAll('rect')
         .data(bars["value"])
@@ -489,18 +443,8 @@
         d3.csv(dvc.essential.graphic_data_url, function(error, data) {
           graphic_data = data;
 
-          // graphic_data.forEach(function(d) {
-          // 	d.name = d3.time.format(dvc.essential.dateFormat).parse(d.name);
-
-          // });
-
-          names = d3.keys( /*data*/ graphic_data[0]).filter(function(key) {
-            return key !== "state";
-          });
-
-          /*data*/
           graphic_data.forEach(function(d) {
-            //d.ages = names.map(function(name) { return {name: name, value: +d[name]}; });
+            d.value = +d.value
           });
 
           //use pym to create iframed chart dependent on specified variables

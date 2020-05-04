@@ -53,12 +53,6 @@
 
   <h6 id="source"></h6>
 
-  <div id="keypoints">
-    <p></p>
-  </div>
-
-  <div class="footer">
-  </div>
 
   <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.1.0/d3-annotation.js" type="text/javascript"></script>
@@ -66,8 +60,6 @@
   <script src="../lib/pym.js" type="text/javascript"></script>
   <script>
     var graphic = d3.select('#graphic');
-    var keypoints = d3.select('#keypoints');
-    var footer = d3.select(".footer");
     var pymChild = null;
 
     function drawGraphic() {
@@ -84,14 +76,12 @@
 
       var margin = dvc.optional.margin[size]
       var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-      var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]) - margin.top - margin.bottom;
+      var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
 
       ball=dvc.essential.dotsize;
 
       // clear out existing graphics
       graphic.selectAll("*").remove();
-      keypoints.selectAll("*").remove();
-      footer.selectAll("*").remove();
 
       var x = d3.scaleLinear()
         .range([0, chart_width]);

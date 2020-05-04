@@ -22,10 +22,6 @@
       "middle",
       "middle"
     ],
-
-    "barHeight_sm_md_lg": [40, 50, 90],
-
-
     "xAxisLabel": "%",
     "xAxisScale": [-10, 90]
   },

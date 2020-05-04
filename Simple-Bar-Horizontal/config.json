@@ -4,8 +4,7 @@
 
             "colour_palette": [ "#274796"],
             "negative_colour":["#D32F2F"],
-            "sourceText":["Labour Market Statistics, February 2015, Table A02"],
-            "sourceURL":["http://www.ons.gov.uk/ons/publications/re-reference-tables.html?edition=tcm%3A77-350752"],
+            "sourceText":["Office for National Statistics"],
 
             "annotationChart": [
                 "Lorem ipsum dolor sit amet",

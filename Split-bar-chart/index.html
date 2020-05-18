@@ -93,6 +93,26 @@
       font-weight: 700;
       color:#323132;
     }
+
+    h5,h6 {
+      font-size: 16px;
+      margin: 16px 0 8px 0;
+      font-weight: 700;
+      color: #323132;
+    }
+
+    ul, ol {
+      margin: 16px 0;
+      padding-left: 32px;
+    }
+
+    li {
+        margin: 0 0 8px 0;
+        line-height: 32px;
+        font-weight: 400;
+        font-size: 18px;
+        padding: 0;
+    }
   </style>
 </head>
 
@@ -101,10 +121,16 @@
   <div class="graphic">
     <div class="divcolumns"></div>
     <svg class="chart"></svg>
-    <h6 class="source"></h6>
-    <div class="footnote" style="font-size:14px;"></div>
-    <p style="font-size:14px;">Note: Figures include staff in independent schools.</p>
+
   </div>
+  <h6 class="source"></h6>
+  <h6>Notes:</h6>
+  <ol>
+    <li>Figures include deaths of non-residents.</li>
+    <li>Based on date a death was registered rather than occurred.</li>
+    <li>All figures for 2020 are provisional.</li>
+    <li>The ICD-10 definitions for COVID-19 are U07.1 and U07.2.</li>
+  </ol>
 
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
@@ -119,36 +145,29 @@
       dvc = config
 
       var formatLabel = function(d) {
-        return d3.format('.0f')(d) + dvc.essential.xAxisLabel;
+        return d3.format(dvc.essential.numberFormat)(d);
       };
 
       var chartwidth = parseInt(d3.select(".graphic").style("width"));
 
       if (chartwidth < dvc.optional.mobileBreakpoint) {
-        var margin = {
-          top: dvc.optional.margin_sm[0],
-          right: dvc.optional.margin_sm[1],
-          bottom: dvc.optional.margin_sm[2],
-          left: dvc.optional.margin_sm[3]
-        };
-        var height = dvc.essential.barHeight_sm_md_lg[0] + margin.top + margin.bottom;
+        size = "sm"
+      } else if (chartwidth < dvc.optional.middleBreakpoint) {
+        size = "md"
       } else {
-        var margin = {
-          top: dvc.optional.margin_md[0],
-          right: dvc.optional.margin_md[1],
-          bottom: dvc.optional.margin_md[2],
-          left: dvc.optional.margin_md[3]
-        };
-        var height = dvc.essential.barHeight_sm_md_lg[1] + margin.top + margin.bottom;
+        size = "lg"
       }
 
-      width = chartwidth - margin.left - margin.right;
+      var margin = dvc.essential.margin[size]
+      var height = dvc.essential.barHeight[size] + margin.top + margin.bottom;
+      var width = chartwidth - margin.left - margin.right
+
 
       var graphic = d3.select('.graphic')
         .style('width', chartwidth + 'px');
 
       var svg = graphic.select('svg.chart')
-        .attr('width', width + margin.left + margin.right)
+        .attr('width', chartwidth)
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
@@ -215,12 +234,18 @@
             };
           });
 
+        width = chartwidth - margin.left - margin.right;
 
-        if (chartwidth < dvc.optional.mobileBreakpoint) {
-          var height = (dvc.essential.barHeight_sm_md_lg[0] * data[0].values.length);
-        } else {
-          var height = (dvc.essential.barHeight_sm_md_lg[1] * data[0].values.length);
-        }
+        var graphic = d3.select('.graphic')
+          .style('width', chartwidth + 'px');
+
+        var svg = graphic.select('svg.chart')
+          .attr('width', width + margin.left + margin.right)
+          .attr('height', height + margin.top + margin.bottom)
+          .append('g')
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+        var height = (dvc.essential.barHeight[size] * data[0].values.length);
 
         graphic.select('svg.chart')
           .attr('height', height + margin.top + margin.bottom)
@@ -233,7 +258,13 @@
 
         columnScale.domain(dataFlat.map(column));
 
-        xScale.range([0, columnScale.bandwidth()]).domain([d3.min([0,dataFlatMin]), dataFlatMax]);
+        if(dvc.essential.xAxisScale=="auto"){
+          xDomain=[d3.min([0, dataFlatMin]), dataFlatMax]
+        }else{
+          xDomain=dvc.essential.xAxisScale
+        }
+
+        xScale.range([0, columnScale.bandwidth()]).domain(xDomain);
 
         // Excluding the light colors from the color scheme
         //var colorRange = d3.schemeBuPu[columnScale.domain().length + 2].reverse();
@@ -284,7 +315,7 @@
 
         graphicheight = d3.select(".chart").style("height");
         sourceheight = d3.select(".source").style("height");
-        footnoteheight = d3.select(".footnote").style("height");
+        // footnoteheight = d3.select(".footnote").style("height");
 
         d3.select(".divcolumns").style("height", d3.max(divheights) + 'px')
 
@@ -305,7 +336,7 @@
           .enter().append('rect')
           .attr('class', 'bar bar--underlying')
           .attr('x', function(d) {
-            return xScale((dataFlatMin))
+            return xScale(xDomain[0])
           })
           .attr('y', function(d) {
             return yScale(y(d));
@@ -461,13 +492,7 @@
           })
           .enter().append('text')
           .attr('class', 'label')
-          .text(function(d) {
-            if (d.amount != 0) {
-              return formatLabel(x(d))
-            } else {
-              return '*'
-            };
-          })
+          .text(function(d){return formatLabel(x(d))})
           .each(positionLabel);
         if (pymChild) {
           pymChild.sendHeight();

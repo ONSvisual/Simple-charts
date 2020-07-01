@@ -30,7 +30,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Slope](https://onsvisual.github.io/Simple-charts/Slope/)
 - [Slope-voronoi](https://onsvisual.github.io/Simple-charts/Slope-voronoi/)
 - [Small multiples lines](https://onsvisual.github.io/Simple-charts/small-multiple-line/)
-- [Small multiples stacked bars vertical](https://onsvisual.github.io/Simple-charts/small-multiple-stacked-bar/index.html)
+- [Small multiples stacked bars vertical](https://onsvisual.github.io/Simple-charts/small-multiples-stacked-bar/index.html)
 - [Stacked area charts](https://onsvisual.github.io/Simple-charts/Stacked-Area-Charts/)
 - [Stacked bar horizontal](https://onsvisual.github.io/Simple-charts/Stacked-Bar-Horizontal/)
 - [Stacked bar vertical](https://onsvisual.github.io/Simple-charts/Stacked-Bar-Vertical/)

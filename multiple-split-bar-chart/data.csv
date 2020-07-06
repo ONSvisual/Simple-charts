@@ -1,0 +1,17 @@
+category,xcategory,ycategory,amount
+Education,Degree,Associate professional and technical,1
+Education,Higher,Associate professional and technical,7
+Education,A-level,Associate professional and technical,3
+Education,GCSE,Associate professional and technical,5
+Education,Degree,Administrative and secretarial,7
+Education,Higher,Administrative and secretarial,20
+Education,A-level,Administrative and secretarial,0
+Education,GCSE,Administrative and secretarial,3
+Work,Degree,Hard worker,6
+Work,Higher,Hard worker,7
+Work,A-level,Hard worker,3
+Work,GCSE,Hard worker,8
+Work,Degree,Extra hard worker,4
+Work,Higher,Extra hard worker,3
+Work,A-level,Extra hard worker,3
+Work,GCSE,Extra hard worker,-20

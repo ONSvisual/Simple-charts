@@ -1,0 +1,495 @@
+<html>
+
+<head>
+
+  <title>Non UK staff</title>
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0px auto;
+      max-width: 700px;
+      font-family: "Open Sans", sans-serif;
+    }
+
+    .graphic {
+      font-family: "Open Sans", sans-serif;
+      color: #333;
+      fill: #333;
+    }
+
+    .divcolumns {
+      position: relative;
+    }
+
+    .hed {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .dek {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .footnote {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .footnote a {
+      color: #888;
+      text-decoration: underline dashed;
+    }
+
+    .axis path,
+    .axis line {
+      display: none;
+    }
+
+    .axis text,
+    .divcolumn .title2{
+      fill: #4c4c4c;
+      font-size: 12px;
+    }
+
+    .divcolumn .title2{
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .bar {
+      fill: steelblue;
+    }
+
+    .row .bar--underlying {
+      fill: #fff;
+    }
+
+    .label {
+      font-size: 12px;
+      fill: #4c4c4c;
+    }
+
+    .label--white {
+      fill: #fff;
+    }
+
+    .title2 {
+
+      -webkit-user-modify: read-write;
+      -moz-user-modify: read-write;
+      user-modify: read-write;
+      overflow-wrap: break-word;
+      -webkit-line-break: after-white-space;
+      -moz-line-break: after-white-space;
+    }
+
+    .source {
+      font-size: 16px;
+      margin: 16px 0 8px 0;
+      font-weight: 700;
+      color:#323132;
+    }
+
+    h5,h6 {
+      font-size: 16px;
+      margin: 16px 0 8px 0;
+      font-weight: 700;
+      color: #323132;
+    }
+
+    ul, ol {
+      margin: 16px 0;
+      padding-left: 32px;
+    }
+
+    li {
+        margin: 0 0 8px 0;
+        line-height: 32px;
+        font-weight: 400;
+        font-size: 18px;
+        padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="graphic">
+    <div class="divcolumns"></div>
+
+  </div>
+  <h6 class="source"></h6>
+  <h6>Notes:</h6>
+  <ol>
+    <li>Figures include deaths of non-residents.</li>
+    <li>Based on date a death was registered rather than occurred.</li>
+    <li>All figures for 2020 are provisional.</li>
+    <li>The ICD-10 definitions for COVID-19 are U07.1 and U07.2.</li>
+  </ol>
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
+  <script src="../lib/queue.js"></script>
+  <script>
+    var pymChild = null;
+
+    pymChild = new pym.Child();
+
+    d3.json("config.json", function(error, config) {
+      dvc = config
+
+      var formatLabel = function(d) {
+        return d3.format(dvc.essential.numberFormat)(d);
+      };
+
+      var chartwidth = parseInt(d3.select(".graphic").style("width"));
+
+      if (chartwidth < dvc.optional.mobileBreakpoint) {
+        size = "sm"
+      } else if (chartwidth < dvc.optional.middleBreakpoint) {
+        size = "md"
+      } else {
+        size = "lg"
+      }
+
+      var margin = dvc.essential.margin[size]
+      // var height = dvc.essential.barHeight[size] + margin.top + margin.bottom;
+      var width = chartwidth - margin.left - margin.right
+
+
+      x = function(d) {
+          return d.amount;
+        },
+        xScale = d3.scaleLinear(),
+        xValue = function(d) {
+          return xScale(x(d));
+        };
+
+      var y = function(d) {
+          return d.ycategory;
+        }
+
+      var column = function(d) {
+          return d.xcategory;
+        },
+        columnScale = d3.scaleBand().range([0, width]).paddingInner(0.075),
+        columnValue = function(d) {
+          return columnScale(column(d));
+        };
+
+      var color = column,
+        colorScale = d3.scaleOrdinal(),
+        colorValue = function(d) {
+          return colorScale(color(d));
+        };
+
+      function row(d) {
+        return {
+          category: d.category,
+          xcategory: d.xcategory,
+          ycategory: d.ycategory,
+          amount: +d.amount
+        };
+
+      }
+
+      d3.csv(dvc.essential.graphic_data_url, row, function(error, dataFlat) {
+        if (error) throw error;
+
+        nested = d3.nest()
+            .key(function(d){return d.category})
+            .key(function(d){return d.ycategory})
+            .entries(dataFlat)
+
+        var graphic = d3.select('.graphic')
+          .style('width', chartwidth + 'px');
+
+        height={}
+        yScale={}
+
+        nested.forEach(function(d){
+          height[d.key]=d.values.length*dvc.essential.barHeight[size]
+          yScale[d.key]=d3.scaleBand().rangeRound([height[d.key], 0]).padding(0.1)
+            .domain(d.values.map(function(d){return d.key}))
+
+        });
+
+        var svg = graphic.selectAll('svg.chart')
+          .data(nested).enter()
+          .append('svg')
+          .attr('class','chart')
+          .attr('width', chartwidth)
+          .attr('height', function(d){return height[d.key] + margin.top + margin.bottom})
+          .append('g')
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+        svg.append('text')
+          .attr('x',-margin.left)
+          .attr('y',-margin.top+12)
+          .attr('font-size',"14px")
+          .text(function(d){return d.key})
+
+
+        var dataFlatMax = d3.max(dataFlat, function(d) {
+          return d.amount;
+        });
+        var dataFlatMin = d3.min(dataFlat, function(d) {
+          return d.amount;
+        });
+
+        var data = d3.nest()
+          .key(function(d) {
+            return d.xcategory;
+          })
+          .entries(dataFlat)
+          .map(function(d) {
+            return {
+              xcategory: d.key,
+              values: d.values
+            };
+          });
+
+        columnScale.domain(dataFlat.map(column));
+
+        if(dvc.essential.xAxisScale=="auto"){
+          xDomain=[d3.min([0, dataFlatMin]), dataFlatMax]
+        }else{
+          xDomain=dvc.essential.xAxisScale
+        }
+
+        xScale.range([0, columnScale.bandwidth()]).domain(xDomain);
+
+        // Excluding the light colors from the color scheme
+        //var colorRange = d3.schemeBuPu[columnScale.domain().length + 2].reverse();
+        var colorRange = dvc.essential.colour_palette;
+        colorScale
+          .domain(dataFlat.map(color))
+          .range(colorRange);
+
+        svg.append('g').attr('class', 'axis axis--y')
+          .each(function(d){d3.select(this).call(d3.axisLeft(yScale[d.key]))})
+          .selectAll("text")
+          .call(wrap, margin.left - 5);
+
+        var gRow = svg.selectAll('g.row').data(function(d){
+            return d.values
+          })
+          .enter().append('g').attr('class', 'row')
+
+
+        var cells = gRow.selectAll('g.cell').data(function(d){return d.values})
+          .enter().append('g')
+          .attr('class', 'cell')
+          .attr('transform', function(d) {
+            return 'translate('+columnScale(d.xcategory)+','+yScale[d.category](d.ycategory)+')';
+          });
+
+        allowedWidth = xScale.range()[1];
+
+        var divColumn = d3.select(".divcolumns")
+          .selectAll('div').data(data)
+          .enter().append('div')
+          .attr('class', 'divcolumn')
+          .style("width", allowedWidth + "px")
+          .style("position", "absolute")
+          .style('left', function(d) {
+            return (margin.left + columnValue(d)) + "px"
+          });
+
+        divColumn.append('text')
+          .attr("class", "title2")
+          .text(column)
+
+        divheights = [];
+
+        divcolumnheight = d3.selectAll(".divcolumn").each(function(d, i) {
+          currheight = parseInt(d3.select(this).style("height"));
+          divheights.push(currheight);
+        });
+
+        graphicheight = d3.select(".chart").style("height");
+        sourceheight = d3.select(".source").style("height");
+
+        d3.select(".divcolumns").style("height", d3.max(divheights) + 'px')
+
+        d3.select(".source")
+          .text("Source: " + dvc.essential.sourceText);
+
+        cells.append('rect')
+          .attr('class', 'bar bar--underlying')
+          .attr('x', function(d) {
+            return xScale(xDomain[0])
+          })
+          .attr('y', function(d) {
+            return 0//yScale[d.category](y(d));
+          })
+          .attr('width', xScale.range()[1])
+          .attr('height', function(d){return yScale[d.category].bandwidth()})
+          .style('fill', '#E5E6E7');
+
+        cells.append('rect')
+          .attr('class', 'bar bar--overlying')
+          .attr('x', function(d) {
+            return xScale(Math.min(0, d.amount))
+          })
+          .attr('y', function(d) {
+            return 0//yScale[d.category](y(d));
+          })
+          .attr('width', function(d) {
+            return 0 + Math.abs(xScale(x(d)) - xScale((0)));
+          })
+          .attr('height', function(d){return yScale[d.category].bandwidth()})
+          .style('fill', colorValue);
+
+        graphicheight = d3.select(".graphic").style("height");
+
+        // 0 value refference line
+        var barsHeight = d3.select('.cell').node().getBBox().height;
+        // if no minus values, don't draw the line
+        if (dataFlatMin < 0) {
+          cells
+            .append('line')
+            .attr('x1', xScale(0))
+            .attr('x2', xScale(0))
+            .attr('y1', 0)
+            .attr('y2', barsHeight)
+            .style('stroke', '#58595B')
+            .style('stroke-width', '1px')
+        }
+
+        d3.select("body").style("height", graphicheight)
+
+        function wrap(text, width) {
+          text.each(function() {
+            var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.1, // ems
+              y = text.attr("y"),
+              x = text.attr("x"),
+              dy = parseFloat(text.attr("dy")),
+              tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width) {
+                if (lineNumber == 0) {
+                  tspan.attr("dy", -0.2 + "em")
+                } else {
+                  tspan.attr("dy", +1.1 + "em")
+                }
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                ++lineNumber;
+                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", +1.1 + "em").text(word);
+              }
+            }
+          });
+        }
+
+        function wrap3(text, width) {
+          text.each(function() {
+            var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.1, // ems
+              y = text.attr("y"),
+              x = text.attr("x");
+
+            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y) //.attr("dy", dy + "em");
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width) {
+                //if(lineNumber==0){tspan.attr("dy","-1.1em")}else{tspan.attr("dy","0em")}
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                ++lineNumber;
+                tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", 1.1 + "em").text(word);
+              }
+            }
+          });
+        }
+
+        function positionLabel(d) {
+          var xValue = xScale(x(d));
+          var xMax = xScale.range()[1];
+          if (chartwidth > dvc.optional.mobileBreakpoint) {
+            if (d.amount <= 0) {
+              d3.select(this)
+                .classed('label--white', false)
+                .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
+                .attr('dx', 2);
+            } else {
+              if (xValue < (0.4 * xMax)) {
+                d3.select(this)
+                  .classed('label--white', false)
+                  .attr('x', function(d){return columnScale(d.xcategory)+xValue})
+                  .attr('dx', 2);
+              } else {
+                d3.select(this)
+                  .classed('label--white', true)
+                  .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
+                  .attr('dx', 4);
+              }
+
+            }
+          } else {
+            if (d.amount <= 0) {
+              d3.select(this)
+                .classed('label--white', false)
+                .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
+                .attr('dx', 2);
+            } else {
+              if (xValue < (0.4 * xMax)) {
+                d3.select(this)
+                  .classed('label--white', false)
+                  .attr('x', function(d){return columnScale(d.xcategory)+xValue})
+                  .attr('dx', 2);
+              } else {
+                d3.select(this)
+                  .classed('label--white', true)
+                  .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
+                  .attr('dx', 4);
+              }
+            }
+          }
+          d3.select(this)
+            .attr('y', function(d){return yScale[d.category](y(d)) + (yScale[d.category].bandwidth() / 2)})
+            .attr('dy', '0.33em');
+        }
+
+        gRow.append('g').attr('class', 'labels')
+          .selectAll('.label').data(function(d) {
+            return d.values;
+          })
+          .enter().append('text')
+          .attr('class', 'label')
+          .text(function(d){return formatLabel(x(d))})
+          .each(positionLabel);
+        if (pymChild) {
+          pymChild.sendHeight();
+        }
+
+      });
+    })
+  </script>
+</body>
+
+</html>

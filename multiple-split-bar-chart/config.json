@@ -1,0 +1,23 @@
+{
+  "essential": {
+    "graphic_data_url": "data.csv",
+    "colour_palette": ["#0075A3", "#266D4A", "#234D70", "#601552"],
+    "sourceText": ["Office for National Statistics"],
+    "numberFormat":".0f",
+    "xAxisScale": [-20, 20],
+    "barHeight": {
+      "sm": 30,
+      "md": 30,
+      "lg": 40
+    },
+    "margin":{
+      "sm":{"top":20,"right":0,"bottom":25,"left":130},
+      "md":{"top":20,"right":0,"bottom":25,"left":130},
+      "lg":{"top":20,"right":0,"bottom":25,"left":130}
+    }
+  },
+  "optional": {
+    "mobileBreakpoint": 414,
+    "middleBreakpoint": 600
+  }
+}

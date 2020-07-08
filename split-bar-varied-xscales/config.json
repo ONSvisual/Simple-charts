@@ -1,0 +1,21 @@
+{
+    "essential" : {
+          "graphic_data_url": "occs.csv",
+          "colour_palette":[ "#0075A3" , "#266D4A", "#234D70", "#601552","#601552" ],
+      		"sourceText":["Annual Population Survey and Annual Survey of Hours and Earnings - Office for National Statistics"],
+          "sourceURL":[""],
+          "xAxisScale":[[0,1],[0,1], [0,1], [0,32],[0,1050000]],
+          "average_line":[0.5, 0.204, 0.125, 13.21, 355000],
+          "columnTitles": ["Female (%)", "Age 55+ (%)", "BAME (%)", "Hourly earnings (£)", "Total workforce"],
+          "barHeight_sm_md_lg" : [30,40,50],
+          "legendLabel" : ["Average across working population"]
+
+
+    },
+    "optional" : {
+          "margin_sm": [8, 0, 25, 140],
+          "margin_md": [8, 0, 25, 130],
+          "mobileBreakpoint" : 610
+
+    }
+}

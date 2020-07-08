@@ -1,0 +1,717 @@
+<html>
+
+<head>
+
+  <title>Non UK staff</title>
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+
+  <style>
+
+    body {
+      margin: 0px auto;
+      max-width: 700px;
+      font-family: "Open Sans", sans-serif;
+      padding-bottom: 30px;
+    }
+
+
+    .graphic {
+      font-family: "Open Sans", sans-serif;
+      color: #333;
+      fill: #333;
+    }
+
+    .divcolumns {
+      position: relative;
+    }
+
+    .hed {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .dek {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .footnote {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .footnote a {
+      color: #888;
+      text-decoration: underline dashed;
+    }
+
+    .axis path,
+    .axis line {
+      display: none;
+    }
+
+    .axis text,
+    .divcolumn .title2 {
+      fill: #4c4c4c;
+      font-size: 12px;
+      font-family: "Open sans";
+    }
+
+    .bar {
+      fill: steelblue;
+    }
+
+    .column .bar--underlying {
+      fill: #fff;
+    }
+
+    .label {
+      font-size: 12px;
+      fill: #4c4c4c;
+      paint-order: stroke;
+      stroke: white;
+      stroke-width: 3px;
+    }
+
+    .label--white {
+      fill: #fff;
+      paint-order: stroke;
+      stroke: #3a7899;
+      stroke-width: 3px;
+
+    }
+
+    .label2 {
+      font-size: 12px;
+      fill: #4c4c4c;
+    }
+
+    .label2--white {
+      fill: #fff;
+    }
+
+    .title2 {
+
+      -webkit-user-modify: read-write;
+      -moz-user-modify: read-write;
+      user-modify: read-write;
+      overflow-wrap: break-word;
+      -webkit-line-break: after-white-space;
+      -moz-line-break: after-white-space;
+    }
+
+    .source {
+      font-size: 16px;
+      margin: 16px 0 8px 0;
+      font-weight: 700;
+      color:#323132;
+    }
+
+    #legend .key {
+      display: inline-block;
+      margin:0px 0px 0px 130px;
+      padding: 0;
+      line-height: 15px;
+    }
+
+    #legend .key li {
+      display: inline-block;
+      margin: 0 18px 0 0;
+      padding: 0;
+      line-height: 15px;
+      font-size: 12px;
+      font-weight: normal;
+    }
+
+    #legend .key b {
+      display: inline-block;
+      width: 35px;
+      height: 15px;
+      margin-right: 6px;
+      float: left;
+      background-color: none;
+      margin-top: 8px;
+    }
+    .border0 {
+      border-top: 2px dashed rgb(88, 89, 91);
+  }
+
+  </style>
+</head>
+
+<body>
+  <div id="legend">
+    <ul class="key">
+      <li>
+        <b class="border0" style="opacity: 0.8;"></b><label>Average across working population</label>
+      </li>
+    </ul>
+  </div>
+  <div class="graphic">
+    <div class="divcolumns"></div>
+    <svg class="chart"></svg>
+    <div class="footnote" style="font-size:14px;"></div>
+    <p style="font-size:14px;">* Data is based on low sample sizes and should be used with caution</p>
+    <p style="font-size:14px;">** The sample size is too small to produce a reliable estimate</p>
+    <h6 class="source"></h6>
+  </div>
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
+  <script src="../lib/queue.js"></script>
+  <script>
+    var pymChild = null;
+
+    pymChild = new pym.Child();
+
+    d3.json("config.json", function(error, config) {
+      dvc = config
+
+      var chartwidth = parseInt(d3.select(".graphic").style("width"));
+
+      if (chartwidth < dvc.optional.mobileBreakpoint) {
+        var margin = {
+          top: dvc.optional.margin_sm[0],
+          right: dvc.optional.margin_sm[1],
+          bottom: dvc.optional.margin_sm[2],
+          left: dvc.optional.margin_sm[3]
+        };
+        var height = dvc.essential.barHeight_sm_md_lg[0] + margin.top + margin.bottom;
+      } else {
+        var margin = {
+          top: dvc.optional.margin_md[0],
+          right: dvc.optional.margin_md[1],
+          bottom: dvc.optional.margin_md[2],
+          left: dvc.optional.margin_md[3]
+        };
+        var height = dvc.essential.barHeight_sm_md_lg[1] + margin.top + margin.bottom;
+      }
+
+      width = chartwidth - margin.left - margin.right;
+
+      var graphic = d3.select('.graphic')
+        .style('width', chartwidth + 'px');
+
+      var svg = graphic.select('svg.chart')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+       x = function(d) {
+          return d.amount;
+        },
+        xScale = d3.scaleLinear(),
+        xValue = function(d) {
+          return xScale(x(d));
+        };
+
+      var y = function(d) {
+          return d.ycategory;
+        },
+        yScale = d3.scaleBand().range([height, 0]).padding(0.1),
+        yValue = function(d) {
+          return yScale(y(d));
+        },
+        yAxis = d3.axisLeft(yScale);
+
+      var column = function(d) {
+          return d.xcategory;
+        },
+        columnScale = d3.scaleBand().range([0, width]).paddingInner(0.075),
+        columnValue = function(d) {
+          return columnScale(column(d));
+        };
+
+        console.log(d3.scaleOrdinal())
+      var color = column,
+        colorScale = d3.scaleOrdinal(),
+        colorValue = function(d) {
+          return colorScale(color(d));
+        };
+
+      function row(d) {
+        return {
+          xcategory: d.xcategory,
+          ycategory: d.ycategory,
+          amount: +d.amount,
+          sample_female: d.sample_female,
+          sample_age: d.sample_age,
+          sample_bame: d.sample_bame
+        };
+
+      }
+
+      d3.csv(dvc.essential.graphic_data_url, row, function(error, dataFlat) {
+        if (error) throw error;
+
+
+        var dataFlatMax = d3.max(dataFlat, function(d) {
+          return d.amount;
+        });
+        var dataFlatMin = d3.min(dataFlat, function(d) {
+          return d.amount;
+        });
+
+if (chartwidth < dvc.optional.mobileBreakpoint) {
+        var dataFlat = dataFlat.filter(function(d) { return d.xcategory !== 'total'  });
+      //  var dataFlat = dataFlat.filter(function(d) { return d.xcategory !== 'earnings'  });
+}
+        var data = d3.nest()
+          .key(function(d) {
+            return d.xcategory;
+          })
+          .entries(dataFlat)
+          .map(function(d,i){
+              return {
+                xcategory: d.key,
+                values: d.values,
+                xScale: dvc.essential.xAxisScale[i]
+            }
+          });
+
+console.log(data)
+
+
+        if (chartwidth < dvc.optional.mobileBreakpoint) {
+          var height = (dvc.essential.barHeight_sm_md_lg[0] * data[0].values.length);
+        } else {
+          var height = (dvc.essential.barHeight_sm_md_lg[1] * data[0].values.length);
+        }
+
+        graphic.select('svg.chart')
+          .attr('height', height + margin.top + margin.bottom)
+
+        yScale.range([height, 0])
+
+        yScale.domain(dataFlat.map(y).reverse());
+
+        yAxis = d3.axisLeft(yScale);
+
+        columnScale.domain(dataFlat.map(column));
+
+        xScale.range([0, columnScale.bandwidth()]).domain([d3.min([0,dataFlatMin]), dataFlatMax]);
+
+        // Excluding the light colors from the color scheme
+        //var colorRange = d3.schemeBuPu[columnScale.domain().length + 2].reverse();
+        var colorRange = dvc.essential.colour_palette;
+        colorScale
+          .domain(dataFlat.map(color))
+          .range(colorRange);
+
+        svg.append('g').attr('class', 'axis axis--y')
+          .call(yAxis)
+          .selectAll("text")
+          .call(wrap, margin.left - 5);
+
+        var gColumn = svg.append('g').attr('class', 'columns')
+          .selectAll('.column').data(data)
+          .enter().append('g')
+          .attr('class', 'column')
+          .attr('transform', function(d) {
+            return 'translate(' + columnValue(d) + ',0)';
+          });
+
+        allowedWidth = xScale.range()[1];
+
+        var divColumn = d3.select(".divcolumns")
+          .selectAll('div').data(data)
+          .enter().append('div')
+          .attr('class', 'divcolumn')
+          .style("width", allowedWidth + "px")
+          .style("position", "absolute")
+          .style('left', function(d) {
+            return (margin.left + columnValue(d)) + "px"
+          });
+
+        divColumn.append('text')
+          .attr("class", "title2")
+          // .attr('dy', '-0.2em')
+          .text(function(d,i){
+            return dvc.essential.columnTitles[i]
+          })
+        //.call(wrap3, allowedWidth);
+
+        divheights = [];
+
+        divcolumnheight = d3.selectAll(".divcolumn").each(function(d, i) {
+          currheight = parseInt(d3.select(this).style("height"));
+
+          divheights.push(currheight);
+          //return d3.max(divheights)
+        });
+
+        graphicheight = d3.select(".chart").style("height");
+        sourceheight = d3.select(".source").style("height");
+        footnoteheight = d3.select(".footnote").style("height");
+
+        d3.select(".divcolumns").style("height", d3.max(divheights) + 'px')
+
+        d3.select(".source")
+          .text("Source: " + dvc.essential.sourceText);
+
+        gColumn.attr('transform', function(d) {
+          return 'translate(' + columnValue(d) + ',0)';
+        });
+        //d3.selectAll(".title").attr('transform','translate(0,' + -d3.max(textheight) + ')')
+        //d3.selectAll(".axis--y").attr('transform','translate(0,' + d3.max(textheight) + ')')
+
+        var bars = gColumn.append('g').attr('class', 'bars');
+
+        bars.selectAll('.bar--underlying').data(function(d,i) {
+//console.log(d,i)
+            xScale.domain(dvc.essential.xAxisScale[i])
+            return d.values;
+          })
+          .enter().append('rect')
+          .attr('class', 'bar bar--underlying')
+          .attr('x', function(d) {
+            return xScale(Math.min(0, dataFlatMin))
+          })
+          .attr('y', function(d) {
+            return yScale(y(d));
+          })
+          .attr('width', xScale.range()[1])
+          .attr('height', yScale.bandwidth())
+          .style('fill', '#eee');
+
+
+        //set j - we'll need to add to it each time we go down a column.
+        j = 0;
+
+        bars.selectAll('.bar--overlying').data(function(d,i) {
+            //xScale.domain(dvc.essential.xAxisScale[i])
+            return d.values;
+          })
+          .enter().append('rect')
+          .attr('class', 'bar bar--overlying')
+          .attr('x', function(d) {
+            //console.log(d)
+            return xScale(Math.min(0, d.amount))
+          })
+          .attr('y', function(d) {
+            return yScale(y(d));
+          })
+          .attr('width', function(d,i) {
+            //i will reset each time it goes down each column. At which point we'll redefine the xScale domain
+            if(i==0){
+              xScale.domain(dvc.essential.xAxisScale[j])
+
+              //...and add to j
+              j++
+            }
+            return 0 + Math.abs(xScale(x(d)) - xScale((0)));
+          })
+          .attr('height', yScale.bandwidth())
+          .style('fill', /*colorValue*/ "#3a7899");
+
+        graphicheight = d3.select(".graphic").style("height");
+
+        // 0 value refference line
+        var barsHeight = d3.select('.bars').node().getBBox().height;
+        // if no minus values, don't draw the line
+        if (dataFlatMin < 0) {
+          bars
+            .append('line')
+            .attr('x1', xScale(0) )
+            .attr('x2', xScale(0) )
+            .attr('y1', 3)
+            .attr('y2', barsHeight + 3)
+            .style('stroke', '#58595B')
+            .style('stroke-width', '1px')
+        }
+
+
+        //Take the same approach here with j...
+        j=0;
+
+        bars
+          .append('line')
+          .attr('x1', function(d,i){
+            if(i==0){
+              xScale.domain(dvc.essential.xAxisScale[j])
+              j++
+            }
+            return xScale(dvc.essential.average_line[i])
+          } )
+          .attr('x2', function(d,i){
+            return xScale(dvc.essential.average_line[i])
+          } )
+          .attr('y1', 3)
+          .attr('y2', barsHeight + 3)
+          .style('stroke', '#58595B')
+          .style('stroke-dasharray', "5, 5")
+          .style('stroke-width', '1px')
+
+        d3.select("body").style("height", graphicheight)
+
+        function wrap(text, width) {
+          text.each(function() {
+            var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.1, // ems
+              y = text.attr("y"),
+              x = text.attr("x"),
+              dy = parseFloat(text.attr("dy")),
+              tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width) {
+                if (lineNumber == 0) {
+                  tspan.attr("dy", -0.2 + "em")
+                } else {
+                  tspan.attr("dy", +1.1 + "em")
+                }
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                ++lineNumber;
+                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", +1.1 + "em").text(word);
+              }
+            }
+          });
+        }
+
+        function wrap3(text, width) {
+          text.each(function() {
+            var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.1, // ems
+              y = text.attr("y"),
+              x = text.attr("x");
+
+            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y) //.attr("dy", dy + "em");
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width) {
+                //if(lineNumber==0){tspan.attr("dy","-1.1em")}else{tspan.attr("dy","0em")}
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                ++lineNumber;
+                tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", 1.1 + "em").text(word);
+              }
+            }
+          });
+        }
+
+        function positionLabel(selection, d,i) {
+
+        //  console.log(i);
+          if(i==0){
+            xScale.domain(dvc.essential.xAxisScale[j])
+            j++
+          }
+
+          //console.log(xScale.domain())
+          var xValue = xScale(x(d));
+
+        //  console.log(selection)
+          var xMax = xScale.range()[1];
+          if (chartwidth > dvc.optional.mobileBreakpoint) {
+            if (d.amount <= 0) {
+              d3.select(selection)
+                .classed('label--white', false)
+                .attr('x', xScale(0))
+                .attr('dx', 2);
+            } else {
+              if (xValue < (0.4 * xMax)) {
+                d3.select(selection)
+                  .classed('label--white', false)
+                  .attr('x', xValue)
+                  .attr('dx', 2);
+              } else {
+                d3.select(selection)
+                  .classed('label--white', true)
+                  .attr('x', xScale(0))
+                  .attr('dx', 4);
+              }
+
+            }
+          } else {
+            if (d.amount <= 0) {
+              d3.select(selection)
+                .classed('label--white', false)
+                .attr('x', xScale(0))
+                .attr('dx', 2);
+            } else {
+              if (xValue < (0.4 * xMax)) {
+                d3.select(selection)
+                  .classed('label--white', false)
+                  .attr('x', xValue)
+                  .attr('dx', 2);
+              } else {
+                d3.select(selection)
+                  .classed('label--white', true)
+                  .attr('x', xScale(0))
+                  .attr('dx', 4);
+              }
+            }
+          }
+          d3.select(selection)
+            .attr('y', yScale(y(d)) + (yScale.bandwidth() / 2))
+            .attr('dy', '0.33em');
+        }
+
+        function positionLabel2(selection, d,i) {
+
+        //  console.log(i);
+          if(i==0){
+            xScale.domain(dvc.essential.xAxisScale[k])
+            k++
+          }
+
+          //console.log(xScale.domain())
+          var xValue = xScale(x(d));
+
+        //  console.log(selection)
+          var xMax = xScale.range()[1];
+          if (chartwidth > dvc.optional.mobileBreakpoint) {
+            if (d.amount <= 0) {
+              d3.select(selection)
+                .classed('label2--white', false)
+                .attr('x', xScale(0))
+                .attr('dx', 2);
+            } else {
+              if (xValue < (0.4 * xMax)) {
+                d3.select(selection)
+                  .classed('label2--white', false)
+                  .attr('x', xValue)
+                  .attr('dx', 2);
+              } else {
+                d3.select(selection)
+                  .classed('label2--white', true)
+                  .attr('x', xScale(0))
+                  .attr('dx', 4);
+              }
+
+            }
+          } else {
+            if (d.amount <= 0) {
+              d3.select(selection)
+                .classed('label2--white', false)
+                .attr('x', xScale(0))
+                .attr('dx', 2);
+            } else {
+              if (xValue < (0.4 * xMax)) {
+                d3.select(selection)
+                  .classed('label2--white', false)
+                  .attr('x', xValue)
+                  .attr('dx', 2);
+              } else {
+                d3.select(selection)
+                  .classed('label2--white', true)
+                  .attr('x', xScale(0))
+                  .attr('dx', 4);
+              }
+            }
+          }
+          d3.select(selection)
+            .attr('y', yScale(y(d)) + (yScale.bandwidth() / 2))
+            .attr('dy', '0.33em');
+        }
+
+        j = 0;
+        k = 0;
+
+        gColumn.append('g').attr('class', 'labels')
+          .selectAll('.label').data(function(d,i) {
+            xScale.domain(dvc.essential.xAxisScale[i])
+            return d.values;
+          })
+          .enter().append('text')
+          .attr('class', 'label')
+          .text(function(d,i) {
+            console.log(d)
+            if (d.amount != 0) {
+              if(d.xcategory == "total"){
+                  return d3.format(",.3r")(x(d))
+              } else if (d.xcategory == "earnings"){
+                  if (chartwidth < dvc.optional.mobileBreakpoint){
+                    return "£"+d3.format(".0f")(x(d))
+                  } else {
+                    return "£"+d3.format(".2f")(x(d))
+                  }
+              } else {
+                  if(d.xcategory ==  "f_per" && d.sample_female== "1"){
+                      return d3.format(".0%")(x(d))+"*"
+                  } else if (d.xcategory ==  "age55_per" && d.sample_age == "1"){
+                      return d3.format(".0%")(x(d))+"*"
+                  } else if (d.xcategory == "bame_per" && d.sample_bame =="1"){
+                      return d3.format(".0%")(x(d))+"*"
+                  } else if(d.xcategory ==  "f_per" && d.amount == 1){
+                    return "> 95%"
+                  } else {
+                      return d3.format(".0%")(x(d))
+                  }
+              }
+            } else {
+                return '**'
+            };
+          })
+          .each(function(d,i) {positionLabel(this, d,i)});
+
+          gColumn.append('g').attr('class', 'labels2')
+            .selectAll('.label2').data(function(d,i) {
+              xScale.domain(dvc.essential.xAxisScale[i])
+              return d.values;
+            })
+            .enter().append('text')
+            .attr('class', 'label2')
+            .text(function(d,i) {
+              console.log(d)
+              if (d.amount != 0) {
+                if(d.xcategory == "total"){
+                    return d3.format(",.3r")(x(d))
+                } else if (d.xcategory == "earnings"){
+                    if (chartwidth < dvc.optional.mobileBreakpoint){
+                      return "£"+d3.format(".0f")(x(d))
+                    } else {
+                      return "£"+d3.format(".2f")(x(d))
+                    }
+                } else {
+                    if(d.xcategory ==  "f_per" && d.sample_female== "1"){
+                        return d3.format(".0%")(x(d))+"*"
+                    } else if (d.xcategory ==  "age55_per" && d.sample_age == "1"){
+                        return d3.format(".0%")(x(d))+"*"
+                    } else if (d.xcategory == "bame_per" && d.sample_bame =="1"){
+                        return d3.format(".0%")(x(d))+"*"
+                    } else if (d.xcategory ==  "f_per" && d.amount == 1){
+                      return "> 95%"
+                    } else {
+                        return d3.format(".0%")(x(d))
+                    }
+                }
+              } else {
+                  return '**'
+              };
+            })
+            .each(function(d,i) {positionLabel2(this, d,i)});
+
+
+        if (pymChild) {
+          pymChild.sendHeight();
+        }
+
+      });
+    })
+  </script>
+</body>
+
+</html>

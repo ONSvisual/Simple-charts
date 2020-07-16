@@ -317,8 +317,8 @@
           divheights.push(currheight);
         });
 
-        graphicheight = d3.select(".chart").style("height");
-        sourceheight = d3.select(".source").style("height");
+        // graphicheight = d3.select(".chart").style("height");
+        // sourceheight = d3.select(".source").style("height");
 
         d3.select(".divcolumns").style("height", d3.max(divheights) + 'px')
 
@@ -351,7 +351,7 @@
           .attr('height', function(d){return yScale[d.category].bandwidth()})
           .style('fill', colorValue);
 
-        graphicheight = d3.select(".graphic").style("height");
+        // graphicheight = d3.select(".graphic").style("height");
 
         // 0 value refference line
         var barsHeight = d3.select('.cell').node().getBBox().height;

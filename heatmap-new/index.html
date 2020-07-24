@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Non UK staff</title>
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="../lib/globalStyle.css" />
+
+
+  <style>
+    body {
+      margin: 0px auto;
+      max-width: 700px;
+      font-family: "Open Sans", sans-serif;
+    }
+
+    #info{
+      height:30px;
+    }
+
+    h6 {
+      font-size: 16px;
+      margin: 16px 0 8px 0;
+      font-weight: 700;
+      color: #323132;
+    }
+
+    path.domain{
+      display:none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="info">
+    <p id="infotext"></p>
+  </div>
+
+  <div id="graphic"></div>
+  <div id="legend"></div>
+
+  <h6 id="source">Source: Office for National Statistics</h6>
+
+  <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js"></script>
+  <script src="../lib/chroma.min.js"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
+  <script src="../lib/ss.js" type="text/javascript"></script>
+
+  <script>
+    var graphic = d3.select('#graphic');
+    var legend = d3.select('#legend');
+    var pymChild = null;
+
+    function drawGraphic() {
+      if (parseInt(graphic.style("width")) < dvc.optional.mobileBreakpoint) {
+        size = "sm";
+      } else if (parseInt(graphic.style("width")) < dvc.optional.middleBreakpoint) {
+        size = "md";
+      } else {
+        size = "lg";
+      }
+
+      var margin = dvc.optional.margin[size]
+      var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
+      var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
+
+      // clear out existing graphics
+      graphic.selectAll("*").remove();
+      legend.selectAll("*").remove();
+
+      columns = graphic_data.columns.slice(1)
+
+      x = d3.scaleBand()
+        .rangeRound([0, chart_width])
+        .domain(columns)
+        .paddingOuter(0)
+        .paddingInner(0.05)
+
+      y = d3.scaleBand()
+        .range([height, 0])
+        .domain(graphic_data.map(function(d) {
+          return d.yvals
+        }))
+        .paddingInner(0.05)
+
+      if (typeof dvc.essential.colour_palette === 'string') {
+        dvc.colour = chroma.scale(dvc.essential.colour_palette).colors(dvc.essential.numberBreaks)
+      } else {
+        dvc.colour = dvc.essential.colour_palette;
+      }
+
+      //find all values for the scales
+      allvalues = []
+      graphic_data.forEach(function(item, i) {
+        columns.map(function(d) {
+          allvalues.push(+item[d])
+        })
+      });
+
+      allvalues = allvalues.sort(d3.ascending)
+
+      // Use jenks if the option is set
+      if (dvc.essential.breaks == "jenks") {
+        breaks = ss.jenks(allvalues, dvc.essential.numberBreaks);
+      } else {
+        breaks = dvc.essential.breaks;
+      };
+
+      datapoints = []
+      graphic_data.forEach(function(item, i) {
+        columns.map(function(d) {
+          datapoints.push({
+            x: d,
+            y: item.yvals,
+            value: item[d]
+          })
+        })
+      });
+
+      var colorScale = d3.scaleThreshold()
+        .domain(breaks.slice(1))
+        .range(dvc.colour);
+
+      yAxis = d3.axisLeft(y)
+
+      xAxis = d3.axisTop(x)
+
+      svg = d3.select('#graphic')
+        .append('svg')
+        .attr('height', height + margin.top + margin.bottom)
+        .attr('width', chart_width + margin.left + margin.right)
+        .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+
+      svg.selectAll('rect.points')
+        .data(datapoints)
+        .enter().append('rect')
+        .attr('x', function(d) {
+          return x(d.x)
+        })
+        .attr('y', function(d) {
+          return y(d.y)
+        })
+        .attr('width', x.bandwidth())
+        .attr('height', y.bandwidth())
+        .attr('fill', function(d) {
+          return colorScale(d.value)
+        })
+        .on('mouseover',function(d){mouseover(d,this)})
+        .on('mouseout',mouseout)
+
+      svg.append('g')
+        .attr('class', 'y axis')
+        .call(yAxis)
+        .selectAll('text')
+        .each(function(d,i){
+          d3.select(this).call(wrap, margin.left-15)
+          d3.select(this).attr('class','text '+y.domain()[i].replace(/\s|,|&/g, ''))
+        })
+
+
+      svg.append('g')
+        .attr('class', 'x axis')
+        .call(xAxis)
+        .selectAll('text')
+        .each(function(d,i){d3.select(this).attr('class','text '+x.domain()[i].replace(/\s|,/g, ''))})
+
+      //create link to source
+      d3.select('#source')
+        .text('Source: ' + dvc.essential.sourceText);
+
+      createKey()
+
+      //use pym to calculate chart dimensions
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+
+      function mouseover(data,that){
+        d3.select("."+data.x.replace(/\s|,/g, '')).attr("font-weight",700)
+        d3.select("."+data.y.replace(/\s|,|&/g, '')).attr("font-weight",700)
+        d3.select(that).attr('stroke','orange').attr('stroke-width',"2px")
+        updateinfo(data.value)
+      }
+
+      function mouseout(){console.log("mouseout")
+        d3.selectAll("text.text").attr('font-weight',400)
+        d3.selectAll('rect').attr('stroke','none')
+        d3.select("#infotext").text("")
+      }
+
+      function updateinfo(value){
+        d3.select("#infotext").text("Value: "+value)
+      }
+
+      function createKey() {
+        var svgkey = d3.select("#legend")
+          .append("svg")
+          .attr("id", "key")
+          .attr("width", chart_width+margin.left+margin.right)
+          .attr('height', 25)
+          .append('g')
+          .attr('transform','translate('+margin.left+',0)')
+
+        var color = d3.scaleThreshold()
+          .domain(breaks)
+          .range(dvc.colour);
+
+        xKey = d3.scaleLinear()
+          .domain([breaks[0], breaks[breaks.length - 1]])
+          .range([0, chart_width]);
+
+        var xAxisKey = d3.axisBottom(xKey)
+          .tickSize(15)
+          .tickValues(color.domain());
+
+        //horizontal key
+        svgkey.selectAll("rect")
+          .data(color.range().map(function(d, i) {
+
+            console.log(d,i,xKey(color.domain()[i]),xKey(color.domain()[i+1]))
+            return {
+              x0: xKey(color.domain()[i]),
+              x1: i < color.domain().length ? xKey(color.domain()[i + 1]) : xKey.range()[1],
+              z: d
+            };
+          }))
+          .enter().append("rect")
+          .attr("height", 8)
+          .attr("x", function(d) {
+            return d.x0;
+          })
+          .attr("width", function(d) {
+            return d.x1 - d.x0;
+          })
+          .style("opacity", 1)
+          .style("fill", function(d) {
+            return d.z;
+          });
+
+        svgkey.append('g').attr('class','x axis').call(xAxisKey)
+
+      } // end key Function
+
+      function wrap(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y"),
+            x = text.attr("x")
+          dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+          }
+        });
+      }
+
+    } // closes drawGraphic
+
+    if (Modernizr.svg) {
+      d3.json("config.json", function(error, config) {
+        dvc = config;
+
+        d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+
+          graphic_data = data;
+
+          pymChild = new pym.Child({
+            renderCallback: drawGraphic
+          });
+        }) // close d3.csv
+      })
+    } else {
+      pymChild = new pym.Child();
+      pymChild.sendHeight();
+    };
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+{
+  "essential" : {
+    "graphic_data_url": "data.csv",
+		"sourceText":"Office for National Statistics – Annual Population Survey 3-year pooled dataset 2015-17",
+    "breaks":"jenks",
+    "colour_palette":"GnBu",
+    "numberBreaks":5
+  },
+  "optional" : {
+    "margin": {
+      "sm": {
+        "top": 25,
+        "right": 10,
+        "bottom": 10,
+        "left": 200
+      },
+      "md": {
+        "top": 25,
+        "right": 10,
+        "bottom": 10,
+        "left": 150
+      },
+      "lg": {
+        "top": 25,
+        "right": 10,
+        "bottom": 10,
+        "left": 165
+      }
+    },
+    "aspectRatio": {
+      "sm": [16, 16],
+      "md": [16, 16],
+      "lg": [16, 9]
+    },
+
+    "middleBreakpoint": 550,
+    "mobileBreakpoint" : 414
+
+  }
+}

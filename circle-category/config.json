@@ -1,7 +1,7 @@
 {
   "essential" : {
     "graphic_data_url": "data.csv",
-    "colour": "#244E6E",
+    "colour": "#206095",
     "opacity": "0.8",
 		"sourceText":["Office for National Statistics – Annual Population Survey 3-year pooled dataset 2015-17"],
     "xAxisLabel":"",
@@ -16,7 +16,7 @@
       "medium":3
     },
     "legendLabels":["Working for Self", "Partner", "Running a Business", "Sole Director of Own Limited Business", "Sub-contractor", "Free-lancer"],
-    "colour_palette":["#053D58","#24A79B","#3A7899","#ABC149","#005D60","#3383EF"]
+    "colour_palette":["#206095", "#118C7B", "#003C57", "#A8BD3A", "27A0CC","#871A5B"]
   },
   "optional" : {
     "margin": {

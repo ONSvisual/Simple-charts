@@ -6,7 +6,7 @@
 
             "legendLabels" : ["Lower skilled workers", "Upper skilled workers"],
             "legendStyle": "rect",
-            "colour_palette": [ "#0075A3" , "#36ADD9"],
+            "colour_palette": ["#206095", "#118C7B", "#003C57", "#A8BD3A", "27A0CC"],
 
             "sourceText":["Public sector employment, ONS"],
             "sourceURL":["https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/publicsectorpersonnel/bulletins/publicsectoremployment/previousReleases"],

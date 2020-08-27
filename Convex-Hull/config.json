@@ -3,7 +3,7 @@
             "graphic_data_url": "data.csv",
             "pickxdata":"gdhi",
             "pickydata":"employment",
-            "fills":["#1983ac","#3b7b5c","#4ab5dd"],
+            "fills":["#206095", "#118C7B", "#003C57"],
             "sourceText":["My source information text here"],
             "sourceURL":["http://www.ons.gov.uk/"],
             "legendText":"Regional values for different time periods",

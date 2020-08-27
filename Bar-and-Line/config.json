@@ -2,7 +2,7 @@
   "essential": {
     "graphic_data_url": "data.csv",
     "dateFormat": "%Y",
-    "colour_palette": ["#274796", "green", "#E73F40", "#7BCAE2"],
+    "colour_palette": ["#206095", "#118C7B", "#003C57", "#A8BD3A", "27A0CC"],
     "legendLabels": ["data1longerlabeltest", "data2longerlabeltest", "data3"],
     "legendStyle": "rect",
     "sourceText": ["Office for National Statistics"],

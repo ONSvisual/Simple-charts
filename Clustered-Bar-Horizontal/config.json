@@ -3,7 +3,7 @@
 
 			"GraphType" : "clusterBar" ,
             "graphic_data_url": "data.csv",
-            "colour_palette": [ "#274796" , "pink", "#E73F40", "#7BCAE2" ],
+            "colour_palette": ["#206095", "#118C7B", "#003C57", "#A8BD3A", "27A0CC"],
             "dateFormat":"%Y-%y",
             "legendLabels" :[ "Education for under-fives" , "Primary education" , "Secondary education" , "Tertiary education" ],
       			"legendStyle": "rect",

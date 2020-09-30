@@ -101,10 +101,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <!-- End Google Tag Manager (noscript) -->
 
   <h5 id="alt_text" class="visuallyhidden"></h5>
-  <div id="info"></div>
-  <div  id="infohidden" class="visuallyhidden"></div>
-  <div id="graphic">
-    <img src="fallback.png" alt="[Chart]" />
+  <div aria-hidden="true" id="info"></div>
+  <div aria-hidden="true" id="graphic">
+    <img src="fallback.png" alt="Image of sankey diagram showing ....." />
   </div>
 
   <h6 id="source"></h6>
@@ -250,26 +249,11 @@ function drawGraphic(width) {
               .sort(function(a, b) { return b.dy - a.dy; })
               .on('mouseover', function(d) {
                   d3.select("#info").html(d.source.name + " &#8594; " + d.target.name  + ": <span class='bold'> "+ fmt(d.value)+" </span>")
-                  d3.select("#infohidden").html("The number of businesses that answered "+d.source.name  + " in "+ dvc.essential.source_label +" and " + d.target.name  + " in "+ dvc.essential.target_label+" was "+ fmt(d.value))
                   d3.select(this).classed("highlight_path", true)
               })
               .on('mouseout', function() {
                   d3.select("#info").html(null);
-                  d3.select("#infohidden").html(null);
                   d3.selectAll("path").classed("highlight_path", false)
-              })
-              .on("focus",function(d){
-                  d3.select("#info").html(d.source.name  + " &#8594; " + d.target.name  + ": <span class='bold'> "+ fmt(d.value)+" </span>")
-                  d3.select("#infohidden").html("The number of businesses that answered "+d.source.name  + " in "+ dvc.essential.source_label +" and " + d.target.name  + " in "+ dvc.essential.target_label +" was "+ fmt(d.value))
-                  d3.select(this).style("stroke-opacity", 0.7).style("stroke", "orange")
-              })
-              .on("blur", function(d) {
-                d3.select("#info").html(null);
-                d3.select("#infohidden").html(null);
-                d3.selectAll("path").style("stroke-opacity", 0.1)
-                      .style("stroke", function (d){
-                         return color(d.source.name);
-                       })
               })
 
           // add in the nodes
@@ -296,39 +280,15 @@ function drawGraphic(width) {
                  return color(d.name);
                })
               .on('mouseover', function(d) {
-                  if(d.sourceLinks.length != 0){
-                    d3.select("#infohidden").html("The number of businesses that answered "+ d.name  + " in "+ dvc.essential.source_label +" was " + fmt(d.value));
-                  } else {
-                    d3.select("#infohidden").html("The number of businesses that answered "+ d.name  + " in "+ dvc.essential.target_label +" was " + fmt(d.value));
-                  }
                   d3.select("#info").html(d.name + ": <span class='bold'>"+ fmt(d.value) + "</span>");
                   d3.select(this).classed("highlight", true);
                   d3.selectAll("."+this.id).classed("highlight_path", true)
               })
               .on('mouseout', function(d) {
                   d3.select("#info").html(null);
-                  d3.select("#infohidden").html(null);
                   d3.select(this).classed("highlight", false)
                   d3.selectAll("path").classed("highlight_path", false)
               })
-              .on("focus",function(d){
-                  if(d.sourceLinks.length != 0){
-                    d3.select("#infohidden").html("The number of businesses that answered "+ d.name  + " in "+ dvc.essential.source_label +" was " + fmt(d.value));
-                  } else {
-                    d3.select("#infohidden").html("The number of businesses that answered "+ d.name  + " in "+ dvc.essential.target_label +" was " + fmt(d.value));
-                  }
-                  d3.select("#info").html(d.name + ": <span class='bold'>"+ fmt(d.value) + "</span>");
-                  d3.select(this).classed("highlight", true);
-                  d3.selectAll("."+this.id).classed("highlight_path", true)
-                  d3.select(this).classed("focussed", true)
-              })
-              .on("blur", function(d) {
-                d3.select("#info").html(null);
-                d3.select("#infohidden").html(null);
-                d3.select(this).classed("highlight", false)
-                d3.selectAll("."+this.id).classed("highlight_path", false)
-                d3.select(this).classed("focussed", false)
-              });
 
               // add in the title for the nodes
              node.append("text")

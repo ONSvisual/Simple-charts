@@ -54,6 +54,8 @@ These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisu
 * ![#A8BD3A](https://placehold.it/15/A8BD3A/000000?text=+) `#A8BD3A`
 * ![#27A0CC](https://placehold.it/15/27A0CC/000000?text=+) `#27A0CC`
 
+["#206095"],["#118C7B"],["#003C57"],["#A8BD3A"],["#27A0CC"]
+
 
 ### Nine colour palette
 
@@ -66,3 +68,5 @@ These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisu
 * ![#F66068](https://placehold.it/15/F66068/000000?text=+) `#F66068`
 * ![#746CB1](https://placehold.it/15/746CB1/000000?text=+) `#746CB1`
 * ![#22D0B6](https://placehold.it/15/22D0B6/000000?text=+) `#22D0B6`
+
+["#206095"],["#118C7B"],["#003C57"],["#A8BD3A"],["#27A0CC"],["#871A5B"],["#F66068"],["#746CB1"],["#22D0B6"]

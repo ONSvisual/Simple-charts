@@ -46,4 +46,4 @@ These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisu
 ## Current colour palette (as at 1st October 2020)*
 *in the process of being baked into templates
 
-<table><tr><td style='width="50" height="50"><div style='background-color: #232323;'></div></td><td><div style='width="50" height="50" background-color: #232323;'></div></td><td><div style='width="50" height="50" background-color: #232323;'></div></td><td><div style='width="50" height="50" background-color: #232323;'></div></td><td><div style='width="50" height="50" background-color: #232323;'></div></tr></table>
+<table><tr><td style='width="50px" height="50px"><div style='background-color: #232323;'></div></td><td><div style='width="50" height="50" background-color: #232323;'></div></td><td><div style='width="50" height="50" background-color: #232323;'></div></td><td><div style='width="50" height="50" background-color: #232323;'></div></td><td><div style='width="50" height="50" background-color: #232323;'></div></tr></table>

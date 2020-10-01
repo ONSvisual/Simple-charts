@@ -46,8 +46,8 @@ These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisu
 ## Current colour palette (as at 1st October 2020)*
 *in the process of being baked into templates
 
-![#206095](https://placehold.it/15/f03c15/000000?text=+) `#206095`
-![#118C7B](https://placehold.it/15/f03c15/000000?text=+) `#118C7B`
-![#003C57](https://placehold.it/15/f03c15/000000?text=+) `#003C57`
-![#A8BD3A](https://placehold.it/15/f03c15/000000?text=+) `#A8BD3A`
-![#27A0CC](https://placehold.it/15/f03c15/000000?text=+) `#27A0CC`
+![#206095](https://placehold.it/15/206095/000000?text=+) `#206095`
+![#118C7B](https://placehold.it/15/118C7B/000000?text=+) `#118C7B`
+![#003C57](https://placehold.it/15/003C57/000000?text=+) `#003C57`
+![#A8BD3A](https://placehold.it/15/A8BD3A/000000?text=+) `#A8BD3A`
+![#27A0CC](https://placehold.it/15/27A0CC/000000?text=+) `#27A0CC`

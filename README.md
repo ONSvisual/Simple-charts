@@ -46,8 +46,23 @@ These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisu
 ## Current colour palette (as at 1st October 2020)*
 *in the process of being baked into templates
 
+### Five colour palette
+
 * ![#206095](https://placehold.it/15/206095/000000?text=+) `#206095`
 * ![#118C7B](https://placehold.it/15/118C7B/000000?text=+) `#118C7B`
 * ![#003C57](https://placehold.it/15/003C57/000000?text=+) `#003C57`
 * ![#A8BD3A](https://placehold.it/15/A8BD3A/000000?text=+) `#A8BD3A`
 * ![#27A0CC](https://placehold.it/15/27A0CC/000000?text=+) `#27A0CC`
+
+
+### Nine colour palette
+
+* ![#206095](https://placehold.it/15/206095/000000?text=+) `#206095`
+* ![#118C7B](https://placehold.it/15/118C7B/000000?text=+) `#118C7B`
+* ![#003C57](https://placehold.it/15/003C57/000000?text=+) `#003C57`
+* ![#A8BD3A](https://placehold.it/15/A8BD3A/000000?text=+) `#A8BD3A`
+* ![#27A0CC](https://placehold.it/15/27A0CC/000000?text=+) `#27A0CC`
+* ![#871A5B](https://placehold.it/15/871A5B/000000?text=+) `#871A5B`
+* ![#F66068](https://placehold.it/15/F66068/000000?text=+) `#F66068`
+* ![#746CB1](https://placehold.it/15/746CB1/000000?text=+) `#746CB1`
+* ![#22D0B6](https://placehold.it/15/22D0B6/000000?text=+) `#22D0B6`

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <title>Line chart</title>
 
     <meta name="description" content="">
@@ -55,12 +55,29 @@
         margin: 0px 0;
         padding: 6px 0 10px 16px;
       }
+
+      .visuallyhidden {
+         position: absolute;
+         width: 1px;
+         height: 1px;
+         margin: -1px;
+         padding: 0;
+         overflow: hidden;
+         clip: rect(0, 0, 0, 0);
+         border: 0;
+       }
+
     </style>
 
 </head>
 
 
 <body>
+
+    <div class="visuallyhidden">
+        <h5 id="screenreadertext">The chart canvas is hidden from screen readers. The main message is summarised by the chart title and the data behind the chart is available to download below.</h5>
+
+    </div>
 
 	  <div id="graphic">
     	<img src="fallback.png" alt="[Chart]" />
@@ -90,6 +107,7 @@
    		<script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
    		<script src="../lib/d3v4jetpack.js" type="text/javascript"></script>
 		  <script src="../lib/swoopy-drag-d3v4.js" type="text/javascript"></script>
+      <script src="config.js" type="text/javascript"></script>
 
    <script>
 
@@ -100,6 +118,20 @@
 		function drawGraphic(width) {
 		   var threshold_md = 788;
 		   var threshold_sm = dvc.optional.mobileBreakpoint;
+
+       //Replace default alt text for screenreader
+       if(dvc.essential.screenreadertext != "") {
+         d3.select("#screenreadertext").text(dvc.essential.screenreadertext);
+       }
+
+       legendLabels = [];
+
+       for (var column in graphic_data[0]) {
+             if (column == 'date') continue;
+             legendLabels.push(column);
+
+        }
+        console.log(legendLabels)
 
 		  	//set variables for chart dimensions dependent on width of #graphic
 		    if (parseInt(graphic.style("width")) < threshold_sm) {
@@ -305,7 +337,7 @@
 						 svg.append("text")
 							//.attr('class', 'unit')
 							.attr('transform','translate(' + -margin.left + ',-10)') // " + eval(-margin.top + (lineNo+1)*20) + "
-							.attr("font-size","12px")
+							.attr("font-size","14px")
  							.attr("fill","#666")
 							.text(function(d,i) { return dvc.essential.yAxisLabel});
 
@@ -421,9 +453,9 @@
 			        .enter()
 			        .append('path')
 			            //.attr('class', 'line')
-						.style("stroke", function(d){ return dvc.essential.colour_palette[d.key]; })
+						.style("stroke", function(d,i){ return dvc.essential.colour_palette[i]; })
 						.style("fill", 'none')
-						.style("stroke-width", 3)
+						.style("stroke-width", 3.5)
 						.style("stroke-linecap", 'round')
 						.style("stroke-linejoin", 'round')
 			            .attr('d', function(d) {
@@ -434,16 +466,22 @@
 
 				// add markers
 				if (parseInt(graphic.style("width")) > threshold_sm && dvc.optional.lineMarkers == true){
+
 					for (var column in graphic_data[0]) {
 								if (column == 'date') continue;
+
+
+                console.log(column);
+                console.log(legendLabels.indexOf(column));
+
 													 svg.append("g")
 														.selectAll("circles")
 														.data(lines[column]) // raw data
 														.enter()
 														.append('circle')
-														.style('fill', '#fff')
-														.style('stroke', function(d){ return dvc.essential.colour_palette[column]; })
-														.style('stroke-width', 2)
+														.style('fill', function(d){ return dvc.essential.colour_palette[legendLabels.indexOf(column)]; })
+														.style('stroke', function(d){ return dvc.essential.colour_palette[legendLabels.indexOf(column)]; })
+														.style('stroke-width', 1)
 														.attr("cx", function(d){
 																					return x(d.date);
 																				})
@@ -452,6 +490,7 @@
 																				})
 														.attr("r", function(d){if(d[column]!=0){return 3}else{return 0}});
 													}
+
 												} // ends if
 
         // circle annotations
@@ -494,7 +533,7 @@
 
 					d3.select("#keypoints")
 						.append("p")
-						.style("font-size","12px")
+						.style("font-size","14px")
 						.style("font-weight",400)
 						.text(dvc.essential.annotationBullet[i]);
 
@@ -575,14 +614,14 @@ function createLegend(){
 							lineNo = 0;
 							var lineNoOld = 0;
 
-						dvc.essential.legendLabels.forEach(function(d, i) { 
+  						legendLabels.forEach(function(d, i) {
 
 							// draw legend text based on content of var legendLabels ...
 							var_group= d3.select("#legend").append("g")
 
 							var_group.append("rect")
 								.attr("class","rect" + i)
-								.attr("fill", dvc.essential.colour_palette[d])
+								.attr("fill", dvc.essential.colour_palette[legendLabels.indexOf(d)])
 								.attr("x", 0)
 								.attr("y", 0)
 								.attr("width", function(d){
@@ -601,10 +640,10 @@ function createLegend(){
 								})
 
 							var_group.append("text")
-								.text(dvc.essential.legendLabels[i])
+								.text(legendLabels[i])
 								.attr("class","legend" + i)
 								.attr("text-anchor", "start")
-								.style("font-size", "12px")
+								.style("font-size", "14px")
 								.style("fill", "#666")
 								.attr('y',15)
 								.attr('x',0);
@@ -674,7 +713,7 @@ function createLegend(){
             .attr("x", 10)
             .attr("dy", ".35em")
             .attr("class", "label")
-            .style("fill", dvc.essential.colour_palette[column])
+            .style("fill", dvc.essential.colour_palette[legendLabels.indexOf(column)])
             .text(column)
             .call(wrap, margin.right)
         } // end for loop running through data columns
@@ -709,8 +748,8 @@ function createLegend(){
 
 			d3.selectAll("text").attr("font-family","'Open Sans', sans-serif");
 
-			d3.selectAll(".x text").attr("font-size","12px").attr("fill","#666");
-			d3.selectAll(".y text").attr("font-size","12px").attr("fill","#666");
+			d3.selectAll(".x text").attr("font-size","14px").attr("fill","#666");
+			d3.selectAll(".y text").attr("font-size","14px").attr("fill","#666");
 
 			d3.selectAll(".y line")
 					.attr("stroke","#CCC")
@@ -737,12 +776,14 @@ function createLegend(){
 
 	//check whether browser can cope with svg
 		if (Modernizr.svg) {
+
+      console.log(dvc)
 		   //load config
-			d3.json("config.json", function(error, config) {
-			dvc=config
+
 
 				//load chart data
 				d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+
 					graphic_data = data;
 
 					graphic_data.forEach(function(d) {
@@ -753,7 +794,7 @@ function createLegend(){
 					//use pym to create iframed chart dependent on specified variables
 					pymChild = new pym.Child({ renderCallback: drawGraphic});
 				});
-			})
+
 
 		} else {
 			 //use pym to create iframe containing fallback image (which is set as default)

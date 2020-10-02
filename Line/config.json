@@ -1,10 +1,8 @@
 {
     "essential" : {
             "graphic_data_url": "data.csv",
-
+            "screenreadertext": "",
             "dateFormat":"%b-%y",
-
-            "legendLabels" : ["Blue", "Green", "Red"],
             "legendStyle": "line",
             "directLabeling" : true,
             "directLabelingAdjust" : {
@@ -12,13 +10,8 @@
               "Green": {"x": 0, "y": 7},
               "Red": {"x": 0, "y": -7}
             },
-            "colour_palette": {
-              "Blue": "#274796",
-              "Green": "green",
-              "Red": "#E73F40"
-            },
-
-            "sourceText":["Statistics"],
+            "colour_palette": ["#206095","#118C7B","#003C57","#A8BD3A","#27A0CC","#871A5B","#F66068","#746CB1","#22D0B6"],
+            "sourceText":["Office for National Statistics"],
             "sourceURL":["http://www.ons.gov.uk"],
             "draggable": true,
            "annotationsChart" : [
@@ -51,7 +44,7 @@
             "annoAlign": ["middle","middle","end"],
             "annotationBullet" : ["An annotation","Another annotation"],
 
-            "circles" : true,
+            "circles" : false,
             "annotationCXCY":[
                 ["Jan-93","68.4"],
                 ["Jan-08","73"]

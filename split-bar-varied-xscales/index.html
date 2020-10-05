@@ -241,10 +241,11 @@
         return {
           xcategory: d.xcategory,
           ycategory: d.ycategory,
-          amount: +d.amount,
-          sample_female: d.sample_female,
-          sample_age: d.sample_age,
-          sample_bame: d.sample_bame
+          amount: +d.amount
+          //bits left in to deal with supressed values and small sample sizes
+          // sample_female: d.sample_female,
+          // sample_age: d.sample_age,
+          // sample_bame: d.sample_bame
         };
 
       }
@@ -272,7 +273,8 @@ if (chartwidth < dvc.optional.mobileBreakpoint) {
               return {
                 xcategory: d.key,
                 values: d.values,
-                xScale: dvc.essential.xAxisScale[i]
+                xScale: dvc.essential.xAxisScale[i],
+                columnFormat: dvc.essential.columnFormats[i]
             }
           });
 
@@ -649,33 +651,35 @@ if (chartwidth < dvc.optional.mobileBreakpoint) {
           .enter().append('text')
           .attr('class', 'label')
           .text(function(d,i) {
-            // console.log(d)
-            if (d.amount != 0) {
-              if(d.xcategory == "total"){
-                  return d3.format(",.3r")(x(d))
-              } else if (d.xcategory == "earnings"){
-                  if (chartwidth < dvc.optional.mobileBreakpoint){
-                    return "£"+d3.format(".0f")(x(d))
-                  } else {
-                    return "£"+d3.format(".2f")(x(d))
-                  }
-              } else {
-                  if(d.xcategory ==  "f_per" && d.sample_female== "1"){
-                      return d3.format(".0%")(x(d))+"*"
-                  } else if (d.xcategory ==  "age55_per" && d.sample_age == "1"){
-                      return d3.format(".0%")(x(d))+"*"
-                  } else if (d.xcategory == "bame_per" && d.sample_bame =="1"){
-                      return d3.format(".0%")(x(d))+"*"
-                  } else if(d.xcategory ==  "f_per" && d.amount == 1){
-                    return "> 95%"
-                  } else {
-                      return d3.format(".0%")(x(d))
-                  }
-              }
-            } else {
-                return '**'
-            };
-          })
+             fmt = d3.select(this.parentNode).datum().columnFormat
+            return d3.format(fmt)(x(d))
+          //Code left in that deals with special cases for small sample sizes and values over 95%
+          //   if (d.amount != 0) {
+          //     if(d.xcategory == "total"){
+          //         return d3.format(",.3r")(x(d))
+          //     } else if (d.xcategory == "earnings"){
+          //         if (chartwidth < dvc.optional.mobileBreakpoint){
+          //           return "£"+d3.format(".0f")(x(d))
+          //         } else {
+          //           return "£"+d3.format(".2f")(x(d))
+          //         }
+          //     } else {
+          //         if(d.xcategory ==  "f_per" && d.sample_female== "1"){
+          //             return d3.format(".0%")(x(d))+"*"
+          //         } else if (d.xcategory ==  "age55_per" && d.sample_age == "1"){
+          //             return d3.format(".0%")(x(d))+"*"
+          //         } else if (d.xcategory == "bame_per" && d.sample_bame =="1"){
+          //             return d3.format(".0%")(x(d))+"*"
+          //         } else if(d.xcategory ==  "f_per" && d.amount == 1){
+          //           return "> 95%"
+          //         } else {
+          //             return d3.format(".0%")(x(d))
+          //         }
+          //     }
+          //   } else {
+          //       return '**'
+          //   };
+           })
           .each(function(d,i) {positionLabel(this, d,i)});
 
           gColumn.append('g').attr('class', 'labels2')
@@ -686,32 +690,34 @@ if (chartwidth < dvc.optional.mobileBreakpoint) {
             .enter().append('text')
             .attr('class', 'label2')
             .text(function(d,i) {
-              // console.log(d)
-              if (d.amount != 0) {
-                if(d.xcategory == "total"){
-                    return d3.format(",.3r")(x(d))
-                } else if (d.xcategory == "earnings"){
-                    if (chartwidth < dvc.optional.mobileBreakpoint){
-                      return "£"+d3.format(".0f")(x(d))
-                    } else {
-                      return "£"+d3.format(".2f")(x(d))
-                    }
-                } else {
-                    if(d.xcategory ==  "f_per" && d.sample_female== "1"){
-                        return d3.format(".0%")(x(d))+"*"
-                    } else if (d.xcategory ==  "age55_per" && d.sample_age == "1"){
-                        return d3.format(".0%")(x(d))+"*"
-                    } else if (d.xcategory == "bame_per" && d.sample_bame =="1"){
-                        return d3.format(".0%")(x(d))+"*"
-                    } else if (d.xcategory ==  "f_per" && d.amount == 1){
-                      return "> 95%"
-                    } else {
-                        return d3.format(".0%")(x(d))
-                    }
-                }
-              } else {
-                  return '**'
-              };
+              fmt = d3.select(this.parentNode).datum().columnFormat
+             return d3.format(fmt)(x(d))
+              // // console.log(d)
+              // if (d.amount != 0) {
+              //   if(d.xcategory == "total"){
+              //       return d3.format(",.3r")(x(d))
+              //   } else if (d.xcategory == "earnings"){
+              //       if (chartwidth < dvc.optional.mobileBreakpoint){
+              //         return "£"+d3.format(".0f")(x(d))
+              //       } else {
+              //         return "£"+d3.format(".2f")(x(d))
+              //       }
+              //   } else {
+              //       if(d.xcategory ==  "f_per" && d.sample_female== "1"){
+              //           return d3.format(".0%")(x(d))+"*"
+              //       } else if (d.xcategory ==  "age55_per" && d.sample_age == "1"){
+              //           return d3.format(".0%")(x(d))+"*"
+              //       } else if (d.xcategory == "bame_per" && d.sample_bame =="1"){
+              //           return d3.format(".0%")(x(d))+"*"
+              //       } else if (d.xcategory ==  "f_per" && d.amount == 1){
+              //         return "> 95%"
+              //       } else {
+              //           return d3.format(".0%")(x(d))
+              //       }
+              //   }
+              // } else {
+              //     return '**'
+              // };
             })
             .each(function(d,i) {positionLabel2(this, d,i)});
 

@@ -150,7 +150,7 @@
   <div id="legend">
     <ul class="key">
       <li>
-        <b class="border0" style="opacity: 0.8;"></b><label>Average across working population</label>
+        <!-- <b class="border0" style="opacity: 0.8;"></b><label>Average across working population</label> -->
       </li>
     </ul>
   </div>
@@ -158,8 +158,8 @@
     <div class="divcolumns"></div>
     <svg class="chart"></svg>
     <div class="footnote" style="font-size:14px;"></div>
-    <p style="font-size:14px;">* Data is based on low sample sizes and should be used with caution</p>
-    <p style="font-size:14px;">** The sample size is too small to produce a reliable estimate</p>
+    <!-- <p style="font-size:14px;">* Data is based on low sample sizes and should be used with caution</p>
+    <p style="font-size:14px;">** The sample size is too small to produce a reliable estimate</p> -->
     <h6 class="source"></h6>
   </div>
 
@@ -231,7 +231,6 @@
           return columnScale(column(d));
         };
 
-        console.log(d3.scaleOrdinal())
       var color = column,
         colorScale = d3.scaleOrdinal(),
         colorValue = function(d) {
@@ -252,7 +251,6 @@
 
       d3.csv(dvc.essential.graphic_data_url, row, function(error, dataFlat) {
         if (error) throw error;
-
 
         var dataFlatMax = d3.max(dataFlat, function(d) {
           return d.amount;
@@ -278,8 +276,7 @@ if (chartwidth < dvc.optional.mobileBreakpoint) {
             }
           });
 
-console.log(data)
-
+        number_of_rows = data[0].values.length
 
         if (chartwidth < dvc.optional.mobileBreakpoint) {
           var height = (dvc.essential.barHeight_sm_md_lg[0] * data[0].values.length);
@@ -367,8 +364,6 @@ console.log(data)
         var bars = gColumn.append('g').attr('class', 'bars');
 
         bars.selectAll('.bar--underlying').data(function(d,i) {
-//console.log(d,i)
-            xScale.domain(dvc.essential.xAxisScale[i])
             return d.values;
           })
           .enter().append('rect')
@@ -384,19 +379,14 @@ console.log(data)
           .style('fill', '#eee');
 
 
-        //set j - we'll need to add to it each time we go down a column.
-        j = 0;
-
+//         //set j - we'll need to add to it each time we go down a column.
+         j = 0;
+         k = 0;
         bars.selectAll('.bar--overlying').data(function(d,i) {
-            //xScale.domain(dvc.essential.xAxisScale[i])
             return d.values;
           })
           .enter().append('rect')
           .attr('class', 'bar bar--overlying')
-          .attr('x', function(d) {
-            //console.log(d)
-            return xScale(Math.min(0, d.amount))
-          })
           .attr('y', function(d) {
             return yScale(y(d));
           })
@@ -404,14 +394,34 @@ console.log(data)
             //i will reset each time it goes down each column. At which point we'll redefine the xScale domain
             if(i==0){
               xScale.domain(dvc.essential.xAxisScale[j])
-
+              return 0 + Math.abs(xScale(x(d)) - xScale((0)));
+            } else if (i== number_of_rows-1) {
+              widthVal = 0 + Math.abs(xScale(x(d)) - xScale((0)));
               //...and add to j
               j++
+
+              return widthVal
+            } else {
+              return 0 + Math.abs(xScale(x(d)) - xScale((0)));
             }
-            return 0 + Math.abs(xScale(x(d)) - xScale((0)));
+          })
+
+          .attr('x', function(d,i) {
+            //i will reset each time it goes down each column. At which point we'll redefine the xScale domain
+              if(i==0){
+                  xScale.domain(dvc.essential.xAxisScale[k])
+                  return xScale(Math.min(0, d.amount));
+              } else if (i== number_of_rows-1) {
+                xVal = xScale(Math.min(0, d.amount));
+                //...and add to k
+                k++
+                return xVal;
+              } else {
+                return xScale(Math.min(0, d.amount));
+              }
           })
           .attr('height', yScale.bandwidth())
-          .style('fill', /*colorValue*/ "#3a7899");
+          .style('fill', /*colorValue*/ "#206095");
 
         graphicheight = d3.select(".graphic").style("height");
 
@@ -421,8 +431,14 @@ console.log(data)
         if (dataFlatMin < 0) {
           bars
             .append('line')
-            .attr('x1', xScale(0) )
-            .attr('x2', xScale(0) )
+            .attr('x1', function(d,i){
+              xScale.domain(d.xScale)
+              return xScale(0)
+            })
+            .attr('x2', function(d,i){
+              xScale.domain(d.xScale)
+              return xScale(0)
+            })
             .attr('y1', 3)
             .attr('y2', barsHeight + 3)
             .style('stroke', '#58595B')
@@ -430,19 +446,17 @@ console.log(data)
         }
 
 
-        //Take the same approach here with j...
-        j=0;
+        //Take the same approach here with l...
+        l=0;
 
         bars
           .append('line')
           .attr('x1', function(d,i){
-            if(i==0){
-              xScale.domain(dvc.essential.xAxisScale[j])
-              j++
-            }
+            xScale.domain(d.xScale)
             return xScale(dvc.essential.average_line[i])
-          } )
+          })
           .attr('x2', function(d,i){
+            xScale.domain(d.xScale)
             return xScale(dvc.essential.average_line[i])
           } )
           .attr('y1', 3)
@@ -519,10 +533,9 @@ console.log(data)
             j++
           }
 
-          //console.log(xScale.domain())
           var xValue = xScale(x(d));
 
-        //  console.log(selection)
+         // console.log(selection)
           var xMax = xScale.range()[1];
           if (chartwidth > dvc.optional.mobileBreakpoint) {
             if (d.amount <= 0) {
@@ -571,16 +584,14 @@ console.log(data)
 
         function positionLabel2(selection, d,i) {
 
-        //  console.log(i);
+         // console.log(i);
           if(i==0){
             xScale.domain(dvc.essential.xAxisScale[k])
             k++
           }
 
-          //console.log(xScale.domain())
           var xValue = xScale(x(d));
 
-        //  console.log(selection)
           var xMax = xScale.range()[1];
           if (chartwidth > dvc.optional.mobileBreakpoint) {
             if (d.amount <= 0) {
@@ -638,7 +649,7 @@ console.log(data)
           .enter().append('text')
           .attr('class', 'label')
           .text(function(d,i) {
-            console.log(d)
+            // console.log(d)
             if (d.amount != 0) {
               if(d.xcategory == "total"){
                   return d3.format(",.3r")(x(d))
@@ -675,7 +686,7 @@ console.log(data)
             .enter().append('text')
             .attr('class', 'label2')
             .text(function(d,i) {
-              console.log(d)
+              // console.log(d)
               if (d.amount != 0) {
                 if(d.xcategory == "total"){
                     return d3.format(",.3r")(x(d))

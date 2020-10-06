@@ -1,16 +1,16 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
 
-  <title>Split bar chart</title>
+  <title>Split bar chart showing ... broken down by ..., dvcxxx</title>
   <meta name="description" content="">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 
   <style>
-
     body {
       margin: 0px auto;
       max-width: 700px;
@@ -19,7 +19,7 @@
     }
 
 
-    .graphic {
+    #graphic {
       font-family: "Open Sans", sans-serif;
       color: #333;
       fill: #333;
@@ -147,35 +147,30 @@
 </head>
 
 <body>
-  <div id="legend">
-    <ul class="key">
-      <li>
-        <!-- <b class="border0" style="opacity: 0.8;"></b><label>Average across working population</label> -->
-      </li>
-    </ul>
-  </div>
-  <div class="graphic">
+  <h5 id="accessibleSummary" class="visuallyhidden"></h5>
+  <div id="graphic" aria-hidden="true">
     <div class="divcolumns"></div>
     <svg class="chart"></svg>
     <div class="footnote" style="font-size:14px;"></div>
     <!-- <p style="font-size:14px;">* Data is based on low sample sizes and should be used with caution</p>
     <p style="font-size:14px;">** The sample size is too small to produce a reliable estimate</p> -->
     <h6 class="source"></h6>
+    <img src="fallback.png" alt="Image of chart showing ..........." />
   </div>
 
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
   <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
   <script src="../lib/queue.js"></script>
+  <script src="../lib/modernizr.svg.min.js" ></script>
   <script>
-    var pymChild = null;
+  var graphic = d3.select('#graphic');
+  var pymChild = null;
 
-    pymChild = new pym.Child();
+    function drawGraphic(width) {
+      d3.select("img").remove();
 
-    d3.json("config.json", function(error, config) {
-      dvc = config
-
-      var chartwidth = parseInt(d3.select(".graphic").style("width"));
+      var chartwidth = parseInt(d3.select("#graphic").style("width"));
 
       if (chartwidth < dvc.optional.mobileBreakpoint) {
         var margin = {
@@ -197,8 +192,12 @@
 
       width = chartwidth - margin.left - margin.right;
 
-      var graphic = d3.select('.graphic')
-        .style('width', chartwidth + 'px');
+      var graphic = d3.select('#graphic')
+        //.style('width', chartwidth + 'px');
+
+
+        // clear out existing graphics
+        d3.select(".chart").selectAll("*").remove();
 
       var svg = graphic.select('svg.chart')
         .attr('width', width + margin.left + margin.right)
@@ -260,10 +259,10 @@
           return d.amount;
         });
 
-if (chartwidth < dvc.optional.mobileBreakpoint) {
-        var dataFlat = dataFlat.filter(function(d) { return d.xcategory !== 'total'  });
-      //  var dataFlat = dataFlat.filter(function(d) { return d.xcategory !== 'earnings'  });
-}
+// if (chartwidth < dvc.optional.mobileBreakpoint) {
+//         var dataFlat = dataFlat.filter(function(d) { return d.xcategory !== 'total'  });
+//       //  var dataFlat = dataFlat.filter(function(d) { return d.xcategory !== 'earnings'  });
+// }
         var data = d3.nest()
           .key(function(d) {
             return d.xcategory;
@@ -425,7 +424,7 @@ if (chartwidth < dvc.optional.mobileBreakpoint) {
           .attr('height', yScale.bandwidth())
           .style('fill', /*colorValue*/ "#206095");
 
-        graphicheight = d3.select(".graphic").style("height");
+        graphicheight = d3.select("#graphic").style("height");
 
         // 0 value refference line
         var barsHeight = d3.select('.bars').node().getBBox().height;
@@ -726,8 +725,36 @@ if (chartwidth < dvc.optional.mobileBreakpoint) {
           pymChild.sendHeight();
         }
 
-      });
-    })
+      }); //load csv
+
+    } //end drawGraphic
+
+
+
+    //check whether browser can cope with svg
+      if (Modernizr.svg) {
+         //load config
+        d3.json("config.json", function(error, config) {
+        dvc=config
+console.log(dvc)
+          // //load chart data
+          // d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+          //   graphic_data = data;
+
+
+
+            //use pym to create iframed chart dependent on specified variables
+            pymChild = new pym.Child({ renderCallback: drawGraphic});
+          //});
+        })
+
+      } else {
+         //use pym to create iframe containing fallback image (which is set as default)
+         pymChild = new pym.Child();
+        if (pymChild) {
+              pymChild.sendHeight();
+          }
+      }
   </script>
 </body>
 

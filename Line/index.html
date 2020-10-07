@@ -5,9 +5,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <title>Line chart</title>
 
-    <meta name="description" content="">
+    <meta name="description" content="ONS chart">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
     <link rel="stylesheet" href="../lib/globalStyle.css" />
@@ -79,8 +79,7 @@
 
     </div>
 
-	  <div id="graphic">
-    	<img src="fallback.png" alt="[Chart]" />
+	  <div id="graphic" aria-hidden="true">
     </div>
 
     <h6 id="source"></h6>
@@ -131,7 +130,6 @@
              legendLabels.push(column);
 
         }
-        console.log(legendLabels)
 
 		  	//set variables for chart dimensions dependent on width of #graphic
 		    if (parseInt(graphic.style("width")) < threshold_sm) {
@@ -185,16 +183,12 @@
 		            //specify date format for x axis depending on #graphic width
 		            if (parseInt(graphic.style("width")) <= threshold_sm) {
 		                var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[0]);
-						//console.log("S "+fmt(d));
 		                return '\u2019' + fmt(d);
 		            } else if (parseInt(graphic.style("width")) <= threshold_md){
 		                var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[1]);
-						//console.log("M "+fmt(d));
 		                return  fmt(d);
 		            } else {
-						//console.log(dvc.optional.xAxisTextFormat_sm_md_lg[2] + ",  " + d);
 		                var fmt = d3.timeFormat(dvc.optional.xAxisTextFormat_sm_md_lg[2]);
-						//console.log("L "+fmt(d));
 		                return fmt(d);
 		            }
 		        })
@@ -249,7 +243,6 @@
         // do some code to overwrite blanks with the last known point
         keys=d3.keys(lines)
         for(i=0;i<keys.length;i++){
-          // console.log(lines[keys[i]])
           lines[keys[i]].forEach(function(d,j){
             if(d.amt!="null"){
               counter = j;
@@ -295,9 +288,6 @@
 		    }
 
 		    y.domain(yDomain);
-
-				//console.log(chart_width +" , "+ height);
-				//console.log(chart_width + margin.left + margin.right +" , "+ (height + margin.top + margin.bottom));
 
 		    //create svg for chart
 		 var legend = d3.select('#graphic').append('svg')
@@ -469,10 +459,6 @@
 
 					for (var column in graphic_data[0]) {
 								if (column == 'date') continue;
-
-
-                console.log(column);
-                console.log(legendLabels.indexOf(column));
 
 													 svg.append("g")
 														.selectAll("circles")
@@ -699,15 +685,13 @@ function createLegend(){
 
 
       function createLineLabels(){
-        console.log(graphic_data)
         for (var column in graphic_data[0]) {
           if (column == 'date') continue;
-          console.log(column);
           svg.append("text")
             // place the line labels to the right of the lines and add label adjustment from config
             .attr("transform", function(d) {
-              var xcoord = x(graphic_data[graphic_data.length-1]["date"]) + dvc.essential.directLabelingAdjust[column]['x']
-              var ycoord = y(graphic_data[graphic_data.length-1][column]) + dvc.essential.directLabelingAdjust[column]['y'];
+              var xcoord = x(graphic_data[graphic_data.length-1]["date"]) + dvc.essential.directLabelingAdjust[legendLabels.indexOf(column)]['x']
+              var ycoord = y(graphic_data[graphic_data.length-1][column]) + dvc.essential.directLabelingAdjust[legendLabels.indexOf(column)]['y'];
               return "translate(" + xcoord + "," + ycoord + ")";
             })
             .attr("x", 10)
@@ -776,11 +760,6 @@ function createLegend(){
 
 	//check whether browser can cope with svg
 		if (Modernizr.svg) {
-
-      console.log(dvc)
-		   //load config
-
-
 				//load chart data
 				d3.csv(dvc.essential.graphic_data_url, function(error, data) {
 

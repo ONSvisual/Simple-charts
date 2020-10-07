@@ -6,16 +6,12 @@ var dvc = {
             //
             "legendStyle": "line",
             "directLabeling" : true,
-            "directLabelingAdjust" : {
-              "Blue": {"x": 0, "y": 0},
-              "Green": {"x": 0, "y": 7},
-              "Red": {"x": 0, "y": -7}
-            },
+            "directLabelingAdjust" : [{"x": 0, "y": 0},{"x": 0, "y": 7},{"x": 0, "y": -7}],
             "colour_palette": ["#206095","#118C7B","#003C57","#A8BD3A","#27A0CC","#871A5B","#F66068","#746CB1","#22D0B6"],
             "sourceText":["Office for National Statistics"],
             "sourceURL":["http://www.ons.gov.uk"],
             "draggable": false,
-           "annotationsChart" : [
+            "annotationsChart" : [
               // {
               //   "xVal": "2003-06-23T00:00:00.000Z",
               //   "yVal": 160,

@@ -1,0 +1,42 @@
+h6 {
+  font-size: 16px;
+  margin: 16px 0 8px 0;
+  font-weight: 700;
+  color:#323132;
+}
+
+.btn--primary {
+  background-color: #0F8243;
+  color: #fff;
+}
+.btn {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  display: inline-block;
+  width: auto;
+  cursor: pointer;
+  padding: 6px 16px 10px 16px;
+  border: 0 none;
+  text-align: center;
+  -webkit-appearance: none;
+  transition: background-color 0.25s ease-out;
+  line-height: 32px;
+}
+a {
+  text-decoration: underline;
+  word-wrap: break-word;
+}
+
+ul, ol {
+  margin: 0px 0;
+  padding-left: 16px;
+}
+
+li {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0px 0;
+  padding: 6px 0 10px 16px;
+}

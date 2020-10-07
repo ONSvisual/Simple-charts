@@ -23,6 +23,14 @@ h6 {
   transition: background-color 0.25s ease-out;
   line-height: 32px;
 }
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0px 0px 0 3px #FFA23A;
+  color: white;
+  outline-offset: 0px;
+}
+
 a {
   text-decoration: underline;
   word-wrap: break-word;

@@ -67,6 +67,25 @@
          border: 0;
        }
 
+       .legenditem {
+         float:left;
+       }
+
+       .legendtext {
+         padding-right: 25px;
+         padding-left:5px;
+         float:left;
+         font-size: 16px;
+         font-family: "Open Sans", Helvetica, Arial, sans-serif;
+
+       }
+
+       .legendline {
+         margin-top:10px;
+         float:left;
+       }
+
+
     </style>
 
 </head>
@@ -101,12 +120,18 @@
      <a class="btn btn--primary" href="data.csv" target="_blank">.csv</a>
    </div>
 
+
+
    		<script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js" type="text/javascript"></script>
    		<script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
    		<script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
    		<script src="../lib/d3v4jetpack.js" type="text/javascript"></script>
 		  <script src="../lib/swoopy-drag-d3v4.js" type="text/javascript"></script>
       <script src="config.js" type="text/javascript"></script>
+
+      <noscript>
+       <p>Your browser does not support JavaScript. If you're able to please enable Javascript to view the chart.</p>
+      </noscript>
 
    <script>
 
@@ -115,6 +140,8 @@
 		var pymChild = null;
 
 		function drawGraphic(width) {
+
+
 		   var threshold_md = 788;
 		   var threshold_sm = dvc.optional.mobileBreakpoint;
 
@@ -167,7 +194,7 @@
 
 
 		    // clear out existing graphics
-		    graphic.selectAll("*").remove();
+		  graphic.selectAll("*").remove();
 			keypoints.selectAll("*").remove();
 
 		    var x = d3.scaleTime()
@@ -290,22 +317,21 @@
 		    y.domain(yDomain);
 
 		    //create svg for chart
-		 var legend = d3.select('#graphic').append('svg')
-						//.attr("width", chart_width + margin.left + margin.right)
-						//.attr("height", margin.bottom +330) //height + margin.top + margin.bottom +30)
-						.append("g")
-						.attr("id", "legend");
+		 // var legend = d3.select('#graphic').append('svg')
+			// 			//.attr("width", chart_width + margin.left + margin.right)
+			// 			//.attr("height", margin.bottom +330) //height + margin.top + margin.bottom +30)
+			// 			// .append("g")
+			// 			// .attr("id", "legend");
 
 
 				//var svg = d3.select('#graphic').append('svg')
-				var svg = d3.select('svg')
+				var svg = d3.select('#graphic').append('svg')
 							.attr("id","chart")
 							.style("background-color","#fff")
 							.attr("width", chart_width + margin.left + margin.right)
 							.attr("height", height + margin.top + margin.bottom )  //+30)
 							.append("g")
 							.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 
 					svg.append("rect")
 						.style("fill", "#fff")
@@ -595,92 +621,23 @@ else {
 
 function createLegend(){
 
-							var prevX= 0;
-							var prevY= 0;
-							lineNo = 0;
-							var lineNoOld = 0;
 
-  						legendLabels.forEach(function(d, i) {
+        legenditems = d3.select("#graphic")
+          .insert("div","#chart")
+          .attr("id","legend");
 
-							// draw legend text based on content of var legendLabels ...
-							var_group= d3.select("#legend").append("g")
+        legendLabels.forEach(function(d, i) {
 
-							var_group.append("rect")
-								.attr("class","rect" + i)
-								.attr("fill", dvc.essential.colour_palette[legendLabels.indexOf(d)])
-								.attr("x", 0)
-								.attr("y", 0)
-								.attr("width", function(d){
-									if(dvc.essential.legendStyle=="rect"){
-										return 15;
-									} else {
-										return 20;
-									}
-								})
-								.attr("height", function(d){
-									if(dvc.essential.legendStyle=="rect"){
-										return 15;
-									} else {
-										return 3;
-									}
-								})
-
-							var_group.append("text")
-								.text(legendLabels[i])
-								.attr("class","legend" + i)
-								.attr("text-anchor", "start")
-								.style("font-size", "14px")
-								.style("fill", "#666")
-								.attr('y',15)
-								.attr('x',0);
+          legenditem = legenditems.append("div")
+            .attr("class","legenditem");
 
 
-							d3.selectAll(".legend" + (i))
-								.each(calcPosition);
-
-							function calcPosition() {
+          legenditem.append("div").attr("class","legendline").style("width","20px").style("height","3.5px").style("background-color",dvc.essential.colour_palette[i]);
+          legenditem.append("p").attr("class","legendtext").text(d);
 
 
-							var BBox = this.getBBox()
+        });
 
-
-							//prevY =BBox.width
-								d3.select(".legend" + (i))
-										.attr("y",function(d){
-													if((prevX+BBox.width +50)>parseInt(graphic.style("width")) ){
-														lineNoOld = lineNo;
-														lineNo=lineNo + 1;
-														prevX = 0;
-													}
-												return eval((lineNo*20) + 20);
-										})
-										.attr("x",function(d){ return prevX+25;})
-
-
-								d3.select(".rect" + (i))
-										.attr("y",function(d){
-
-												if((prevX+BBox.width +50)>parseInt(graphic.style("width")) ){
-													lineNoOld = lineNo;
-													lineNo=lineNo + 1;
-													prevX = 0;
-												}
-
-												if(dvc.essential.legendStyle=="rect"){
-													return eval((lineNo*20)+5);
-												} else {
-													return eval((lineNo*20)+12);
-
-												}
-										})
-										.attr("x",function(d){ return prevX; })
-
-								prevX = prevX + BBox.width +50
-
-
-
-							}; // end function calcPosition()
-						});	// end foreach
 			}// end function createLegend()
 
 

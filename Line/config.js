@@ -7,12 +7,12 @@ var dvc = {
             "legendStyle": "line",
             "directLabeling" : true,
             "directLabelingAdjust" : [{"x": 0, "y": 0},{"x": 0, "y": 7},{"x": 0, "y": -7}],
-            "colour_palette": ["#206095","#118C7B","#003C57","#A8BD3A","#27A0CC","#871A5B","#F66068","#746CB1","#22D0B6"],
+            "colour_palette": ["#206095","#27A0CC","#003C57","#118C7B","#A8BD3A","#871A5B","#F66068","#746CB1","#22D0B6"],
             "sourceText":["Office for National Statistics"],
             "sourceURL":["http://www.ons.gov.uk"],
             "draggable": false,
             "annotationsChart" : [
-              // {
+            // {
               //   "xVal": "2003-06-23T00:00:00.000Z",
               //   "yVal": 160,
               //   "path": "",
@@ -55,9 +55,9 @@ var dvc = {
     },
 
     "optional" : {
-            "margin_sm": [50, 10, 55, 35],
-            "margin_md": [50, 50, 55, 35],
-            "margin_lg": [50, 50, 55, 35],
+            "margin_sm": [30, 10, 55, 35],
+            "margin_md": [30, 50, 55, 35],
+            "margin_lg": [10, 50, 55, 35],
 
             "aspectRatio_sm" : [16,13],
             "aspectRatio_md" : [16,12],

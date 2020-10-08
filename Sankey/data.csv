@@ -1,0 +1,17 @@
+source,target,value
+Source A,Source A,475
+Source A,Source B,67
+Source A,Source C,15
+Source A,Source D,11
+Source B,Source A,135
+Source B,Source B,154
+Source B,Source C,3
+Source B,Source D,19
+Source C,Source A,124
+Source C,Source B,15
+Source C,Source C,110
+Source C,Source D,7
+Source D,Source A,65
+Source D,Source B,65
+Source D,Source C,10
+Source D,Source D,56

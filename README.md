@@ -20,6 +20,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Marimekko](https://onsvisual.github.io/Simple-charts/Marimekko/)
 - [Quiz](https://onsvisual.github.io/Simple-charts/Quiz/)
 - [Regional bar map](https://onsvisual.github.io/Simple-charts/Regional-Map-Bar/)
+- [Sankey](https://onsvisual.github.io/Simple-charts/Sankey/) **ACCESSIBLE**
 - [Scatter-canvas](https://onsvisual.github.io/Simple-charts/Scatter-canvas/)
 - [Scatter-voronoi-dropdown](https://onsvisual.github.io/Simple-charts/Scatter-voronoi-dropdown/)
 - [Scatter-voronoi-zoom](https://onsvisual.github.io/Simple-charts/Scatter-voronoi-zoom/)

@@ -1,12 +1,11 @@
 var dvc = {
     "essential" : {
             "graphic_data_url": "data.csv",
-            "screenreadertext": "",
+            "screenreadertext": "", //will replace default screenreader text - use if fuller description needed
             "dateFormat":"%b-%y",
-            //
             "legendStyle": "line",
             "directLabeling" : true,
-            "directLabelingAdjust" : [{"x": 0, "y": 0},{"x": 0, "y": 7},{"x": 0, "y": -7}],
+            "directLabelingAdjust" : [{"x": 0, "y": 0},{"x": 0, "y": 7},{"x": 0, "y": -43}],
             "colour_palette": ["#206095","#27A0CC","#003C57","#118C7B","#A8BD3A","#871A5B","#F66068","#746CB1","#22D0B6"],
             "sourceText":["Office for National Statistics"],
             "sourceURL":["http://www.ons.gov.uk"],
@@ -49,15 +48,15 @@ var dvc = {
             //"annotationColour": ["green"],
 
             "yAxisLabel":"%",
-            "yAxisScale":"auto_zero_max",
+            "yAxisScale":"auto_zero_max", //Options: auto_min_max, auto_zero_max, or specify array eg [-20,100]
             "yAxisBreak": false,
             "yAxisBreak_sm_md_lg": [65,65,65]
     },
 
     "optional" : {
-            "margin_sm": [30, 10, 55, 35],
-            "margin_md": [30, 50, 55, 35],
-            "margin_lg": [10, 50, 55, 35],
+            "margin_sm": [30, 10, 25, 35], //[top,right,bottom,left]
+            "margin_md": [30, 82, 25, 35],
+            "margin_lg": [10, 82, 25, 35],
 
             "aspectRatio_sm" : [16,13],
             "aspectRatio_md" : [16,12],

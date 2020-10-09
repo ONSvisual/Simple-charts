@@ -1,0 +1,961 @@
+date,category,chiffre,series
+03/01/2020,North East,644,5-year average
+10/01/2020,North East,714,5-year average
+17/01/2020,North East,699,5-year average
+24/01/2020,North East,695,5-year average
+31/01/2020,North East,665,5-year average
+07/02/2020,North East,635,5-year average
+14/02/2020,North East,608,5-year average
+21/02/2020,North East,634,5-year average
+28/02/2020,North East,583,5-year average
+06/03/2020,North East,604,5-year average
+13/03/2020,North East,569,5-year average
+20/03/2020,North East,537,5-year average
+27/03/2020,North East,525,5-year average
+03/04/2020,North East,534,5-year average
+10/04/2020,North East,536,5-year average
+17/04/2020,North East,540,5-year average
+24/04/2020,North East,564,5-year average
+01/05/2020,North East,513,5-year average
+08/05/2020,North East,519,5-year average
+15/05/2020,North East,536,5-year average
+22/05/2020,North East,510,5-year average
+29/05/2020,North East,438,5-year average
+05/06/2020,North East,526,5-year average
+12/06/2020,North East,492,5-year average
+19/06/2020,North East,490,5-year average
+26/06/2020,North East,482,5-year average
+03/07/2020,North East,481,5-year average
+10/07/2020,North East,481,5-year average
+17/07/2020,North East,493,5-year average
+24/07/2020,North East,480,5-year average
+31/07/2020,North East,487,5-year average
+07/08/2020,North East,482,5-year average
+03/01/2020,North West,1667,5-year average
+10/01/2020,North West,1876,5-year average
+17/01/2020,North West,1750,5-year average
+24/01/2020,North West,1687,5-year average
+31/01/2020,North West,1593,5-year average
+07/02/2020,North West,1566,5-year average
+14/02/2020,North West,1572,5-year average
+21/02/2020,North West,1531,5-year average
+28/02/2020,North West,1474,5-year average
+06/03/2020,North West,1540,5-year average
+13/03/2020,North West,1491,5-year average
+20/03/2020,North West,1410,5-year average
+27/03/2020,North West,1336,5-year average
+03/04/2020,North West,1377,5-year average
+10/04/2020,North West,1425,5-year average
+17/04/2020,North West,1407,5-year average
+24/04/2020,North West,1405,5-year average
+01/05/2020,North West,1357,5-year average
+08/05/2020,North West,1257,5-year average
+15/05/2020,North West,1370,5-year average
+22/05/2020,North West,1338,5-year average
+29/05/2020,North West,1156,5-year average
+05/06/2020,North West,1322,5-year average
+12/06/2020,North West,1253,5-year average
+19/06/2020,North West,1282,5-year average
+26/06/2020,North West,1210,5-year average
+03/07/2020,North West,1278,5-year average
+10/07/2020,North West,1243,5-year average
+17/07/2020,North West,1227,5-year average
+24/07/2020,North West,1210,5-year average
+31/07/2020,North West,1233,5-year average
+07/08/2020,North West,1204,5-year average
+03/01/2020,Yorkshire and The Humber,1240,5-year average
+10/01/2020,Yorkshire and The Humber,1373,5-year average
+17/01/2020,Yorkshire and The Humber,1306,5-year average
+24/01/2020,Yorkshire and The Humber,1252,5-year average
+31/01/2020,Yorkshire and The Humber,1198,5-year average
+07/02/2020,Yorkshire and The Humber,1156,5-year average
+14/02/2020,Yorkshire and The Humber,1163,5-year average
+21/02/2020,Yorkshire and The Humber,1132,5-year average
+28/02/2020,Yorkshire and The Humber,1115,5-year average
+06/03/2020,Yorkshire and The Humber,1118,5-year average
+13/03/2020,Yorkshire and The Humber,1104,5-year average
+20/03/2020,Yorkshire and The Humber,1039,5-year average
+27/03/2020,Yorkshire and The Humber,992,5-year average
+03/04/2020,Yorkshire and The Humber,992,5-year average
+10/04/2020,Yorkshire and The Humber,1031,5-year average
+17/04/2020,Yorkshire and The Humber,1014,5-year average
+24/04/2020,Yorkshire and The Humber,1012,5-year average
+01/05/2020,Yorkshire and The Humber,962,5-year average
+08/05/2020,Yorkshire and The Humber,963,5-year average
+15/05/2020,Yorkshire and The Humber,973,5-year average
+22/05/2020,Yorkshire and The Humber,960,5-year average
+29/05/2020,Yorkshire and The Humber,810,5-year average
+05/06/2020,Yorkshire and The Humber,1004,5-year average
+12/06/2020,Yorkshire and The Humber,926,5-year average
+19/06/2020,Yorkshire and The Humber,919,5-year average
+26/06/2020,Yorkshire and The Humber,926,5-year average
+03/07/2020,Yorkshire and The Humber,895,5-year average
+10/07/2020,Yorkshire and The Humber,917,5-year average
+17/07/2020,Yorkshire and The Humber,874,5-year average
+24/07/2020,Yorkshire and The Humber,888,5-year average
+31/07/2020,Yorkshire and The Humber,874,5-year average
+07/08/2020,Yorkshire and The Humber,900,5-year average
+03/01/2020,East Midlands,1029,5-year average
+10/01/2020,East Midlands,1162,5-year average
+17/01/2020,East Midlands,1112,5-year average
+24/01/2020,East Midlands,1076,5-year average
+31/01/2020,East Midlands,1047,5-year average
+07/02/2020,East Midlands,1024,5-year average
+14/02/2020,East Midlands,985,5-year average
+21/02/2020,East Midlands,962,5-year average
+28/02/2020,East Midlands,937,5-year average
+06/03/2020,East Midlands,987,5-year average
+13/03/2020,East Midlands,956,5-year average
+20/03/2020,East Midlands,911,5-year average
+27/03/2020,East Midlands,863,5-year average
+03/04/2020,East Midlands,858,5-year average
+10/04/2020,East Midlands,890,5-year average
+17/04/2020,East Midlands,893,5-year average
+24/04/2020,East Midlands,878,5-year average
+01/05/2020,East Midlands,848,5-year average
+08/05/2020,East Midlands,833,5-year average
+15/05/2020,East Midlands,880,5-year average
+22/05/2020,East Midlands,843,5-year average
+29/05/2020,East Midlands,697,5-year average
+05/06/2020,East Midlands,862,5-year average
+12/06/2020,East Midlands,818,5-year average
+19/06/2020,East Midlands,783,5-year average
+26/06/2020,East Midlands,795,5-year average
+03/07/2020,East Midlands,772,5-year average
+10/07/2020,East Midlands,794,5-year average
+17/07/2020,East Midlands,792,5-year average
+24/07/2020,East Midlands,754,5-year average
+31/07/2020,East Midlands,770,5-year average
+07/08/2020,East Midlands,761,5-year average
+03/01/2020,West Midlands,1286,5-year average
+10/01/2020,West Midlands,1425,5-year average
+17/01/2020,West Midlands,1379,5-year average
+24/01/2020,West Midlands,1304,5-year average
+31/01/2020,West Midlands,1295,5-year average
+07/02/2020,West Midlands,1260,5-year average
+14/02/2020,West Midlands,1202,5-year average
+21/02/2020,West Midlands,1170,5-year average
+28/02/2020,West Midlands,1195,5-year average
+06/03/2020,West Midlands,1199,5-year average
+13/03/2020,West Midlands,1162,5-year average
+20/03/2020,West Midlands,1067,5-year average
+27/03/2020,West Midlands,997,5-year average
+03/04/2020,West Midlands,1073,5-year average
+10/04/2020,West Midlands,1071,5-year average
+17/04/2020,West Midlands,1101,5-year average
+24/04/2020,West Midlands,1056,5-year average
+01/05/2020,West Midlands,1027,5-year average
+08/05/2020,West Midlands,961,5-year average
+15/05/2020,West Midlands,1067,5-year average
+22/05/2020,West Midlands,1031,5-year average
+29/05/2020,West Midlands,834,5-year average
+05/06/2020,West Midlands,1052,5-year average
+12/06/2020,West Midlands,978,5-year average
+19/06/2020,West Midlands,972,5-year average
+26/06/2020,West Midlands,969,5-year average
+03/07/2020,West Midlands,969,5-year average
+10/07/2020,West Midlands,953,5-year average
+17/07/2020,West Midlands,931,5-year average
+24/07/2020,West Midlands,916,5-year average
+31/07/2020,West Midlands,940,5-year average
+07/08/2020,West Midlands,939,5-year average
+03/01/2020,East,1270,5-year average
+10/01/2020,East,1492,5-year average
+17/01/2020,East,1460,5-year average
+24/01/2020,East,1427,5-year average
+31/01/2020,East,1333,5-year average
+07/02/2020,East,1314,5-year average
+14/02/2020,East,1249,5-year average
+21/02/2020,East,1260,5-year average
+28/02/2020,East,1231,5-year average
+06/03/2020,East,1232,5-year average
+13/03/2020,East,1204,5-year average
+20/03/2020,East,1106,5-year average
+27/03/2020,East,1099,5-year average
+03/04/2020,East,1127,5-year average
+10/04/2020,East,1162,5-year average
+17/04/2020,East,1147,5-year average
+24/04/2020,East,1125,5-year average
+01/05/2020,East,1056,5-year average
+08/05/2020,East,1027,5-year average
+15/05/2020,East,1121,5-year average
+22/05/2020,East,1072,5-year average
+29/05/2020,East,824,5-year average
+05/06/2020,East,1085,5-year average
+12/06/2020,East,1005,5-year average
+19/06/2020,East,995,5-year average
+26/06/2020,East,1007,5-year average
+03/07/2020,East,972,5-year average
+10/07/2020,East,997,5-year average
+17/07/2020,East,971,5-year average
+24/07/2020,East,986,5-year average
+31/07/2020,East,980,5-year average
+07/08/2020,East,1000,5-year average
+03/01/2020,London,1157,5-year average
+10/01/2020,London,1274,5-year average
+17/01/2020,London,1186,5-year average
+24/01/2020,London,1158,5-year average
+31/01/2020,London,1132,5-year average
+07/02/2020,London,1085,5-year average
+14/02/2020,London,1087,5-year average
+21/02/2020,London,1077,5-year average
+28/02/2020,London,1031,5-year average
+06/03/2020,London,1044,5-year average
+13/03/2020,London,1034,5-year average
+20/03/2020,London,988,5-year average
+27/03/2020,London,965,5-year average
+03/04/2020,London,967,5-year average
+10/04/2020,London,976,5-year average
+17/04/2020,London,971,5-year average
+24/04/2020,London,984,5-year average
+01/05/2020,London,920,5-year average
+08/05/2020,London,883,5-year average
+15/05/2020,London,917,5-year average
+22/05/2020,London,910,5-year average
+29/05/2020,London,777,5-year average
+05/06/2020,London,917,5-year average
+12/06/2020,London,878,5-year average
+19/06/2020,London,876,5-year average
+26/06/2020,London,877,5-year average
+03/07/2020,London,833,5-year average
+10/07/2020,London,860,5-year average
+17/07/2020,London,866,5-year average
+24/07/2020,London,869,5-year average
+31/07/2020,London,838,5-year average
+07/08/2020,London,871,5-year average
+03/01/2020,South East,1830,5-year average
+10/01/2020,South East,2151,5-year average
+17/01/2020,South East,2111,5-year average
+24/01/2020,South East,1997,5-year average
+31/01/2020,South East,1856,5-year average
+07/02/2020,South East,1816,5-year average
+14/02/2020,South East,1778,5-year average
+21/02/2020,South East,1758,5-year average
+28/02/2020,South East,1701,5-year average
+06/03/2020,South East,1754,5-year average
+13/03/2020,South East,1695,5-year average
+20/03/2020,South East,1625,5-year average
+27/03/2020,South East,1551,5-year average
+03/04/2020,South East,1572,5-year average
+10/04/2020,South East,1619,5-year average
+17/04/2020,South East,1599,5-year average
+24/04/2020,South East,1626,5-year average
+01/05/2020,South East,1521,5-year average
+08/05/2020,South East,1485,5-year average
+15/05/2020,South East,1561,5-year average
+22/05/2020,South East,1547,5-year average
+29/05/2020,South East,1223,5-year average
+05/06/2020,South East,1497,5-year average
+12/06/2020,South East,1433,5-year average
+19/06/2020,South East,1467,5-year average
+26/06/2020,South East,1448,5-year average
+03/07/2020,South East,1408,5-year average
+10/07/2020,South East,1397,5-year average
+17/07/2020,South East,1371,5-year average
+24/07/2020,South East,1385,5-year average
+31/07/2020,South East,1339,5-year average
+07/08/2020,South East,1373,5-year average
+03/01/2020,South West,1291,5-year average
+10/01/2020,South West,1465,5-year average
+17/01/2020,South West,1367,5-year average
+24/01/2020,South West,1337,5-year average
+31/01/2020,South West,1300,5-year average
+07/02/2020,South West,1297,5-year average
+14/02/2020,South West,1232,5-year average
+21/02/2020,South West,1266,5-year average
+28/02/2020,South West,1181,5-year average
+06/03/2020,South West,1268,5-year average
+13/03/2020,South West,1231,5-year average
+20/03/2020,South West,1159,5-year average
+27/03/2020,South West,1085,5-year average
+03/04/2020,South West,1099,5-year average
+10/04/2020,South West,1096,5-year average
+17/04/2020,South West,1115,5-year average
+24/04/2020,South West,1117,5-year average
+01/05/2020,South West,1087,5-year average
+08/05/2020,South West,1010,5-year average
+15/05/2020,South West,1100,5-year average
+22/05/2020,South West,1089,5-year average
+29/05/2020,South West,849,5-year average
+05/06/2020,South West,1081,5-year average
+12/06/2020,South West,1020,5-year average
+19/06/2020,South West,1026,5-year average
+26/06/2020,South West,981,5-year average
+03/07/2020,South West,999,5-year average
+10/07/2020,South West,1006,5-year average
+17/07/2020,South West,977,5-year average
+24/07/2020,South West,964,5-year average
+31/07/2020,South West,976,5-year average
+07/08/2020,South West,972,5-year average
+03/01/2020,Wales,756,5-year average
+10/01/2020,Wales,856,5-year average
+17/01/2020,Wales,812,5-year average
+24/01/2020,Wales,802,5-year average
+31/01/2020,Wales,760,5-year average
+07/02/2020,Wales,729,5-year average
+14/02/2020,Wales,722,5-year average
+21/02/2020,Wales,724,5-year average
+28/02/2020,Wales,698,5-year average
+06/03/2020,Wales,720,5-year average
+13/03/2020,Wales,727,5-year average
+20/03/2020,Wales,677,5-year average
+27/03/2020,Wales,665,5-year average
+03/04/2020,Wales,667,5-year average
+10/04/2020,Wales,671,5-year average
+17/04/2020,Wales,661,5-year average
+24/04/2020,Wales,662,5-year average
+01/05/2020,Wales,624,5-year average
+08/05/2020,Wales,612,5-year average
+15/05/2020,Wales,635,5-year average
+22/05/2020,Wales,614,5-year average
+29/05/2020,Wales,546,5-year average
+05/06/2020,Wales,610,5-year average
+12/06/2020,Wales,588,5-year average
+19/06/2020,Wales,573,5-year average
+26/06/2020,Wales,571,5-year average
+03/07/2020,Wales,555,5-year average
+10/07/2020,Wales,578,5-year average
+17/07/2020,Wales,557,5-year average
+24/07/2020,Wales,566,5-year average
+31/07/2020,Wales,572,5-year average
+07/08/2020,Wales,571,5-year average
+03/01/2020,North East,673,All deaths
+10/01/2020,North East,707,All deaths
+17/01/2020,North East,647,All deaths
+24/01/2020,North East,612,All deaths
+31/01/2020,North East,561,All deaths
+07/02/2020,North East,564,All deaths
+14/02/2020,North East,573,All deaths
+21/02/2020,North East,539,All deaths
+28/02/2020,North East,572,All deaths
+06/03/2020,North East,568,All deaths
+13/03/2020,North East,590,All deaths
+20/03/2020,North East,522,All deaths
+27/03/2020,North East,542,All deaths
+03/04/2020,North East,770,All deaths
+10/04/2020,North East,849,All deaths
+17/04/2020,North East,1155,All deaths
+24/04/2020,North East,1103,All deaths
+01/05/2020,North East,922,All deaths
+08/05/2020,North East,769,All deaths
+15/05/2020,North East,845,All deaths
+22/05/2020,North East,718,All deaths
+29/05/2020,North East,550,All deaths
+05/06/2020,North East,576,All deaths
+12/06/2020,North East,478,All deaths
+19/06/2020,North East,498,All deaths
+26/06/2020,North East,485,All deaths
+03/07/2020,North East,515,All deaths
+10/07/2020,North East,468,All deaths
+17/07/2020,North East,445,All deaths
+24/07/2020,North East,493,All deaths
+31/07/2020,North East,507,All deaths
+07/08/2020,North East,486,All deaths
+03/01/2020,North West,1806,All deaths
+10/01/2020,North West,1932,All deaths
+17/01/2020,North West,1696,All deaths
+24/01/2020,North West,1529,All deaths
+31/01/2020,North West,1461,All deaths
+07/02/2020,North West,1529,All deaths
+14/02/2020,North West,1427,All deaths
+21/02/2020,North West,1477,All deaths
+28/02/2020,North West,1476,All deaths
+06/03/2020,North West,1490,All deaths
+13/03/2020,North West,1472,All deaths
+20/03/2020,North West,1443,All deaths
+27/03/2020,North West,1538,All deaths
+03/04/2020,North West,2137,All deaths
+10/04/2020,North West,2597,All deaths
+17/04/2020,North West,3195,All deaths
+24/04/2020,North West,3109,All deaths
+01/05/2020,North West,2503,All deaths
+08/05/2020,North West,1790,All deaths
+15/05/2020,North West,1992,All deaths
+22/05/2020,North West,1636,All deaths
+29/05/2020,North West,1337,All deaths
+05/06/2020,North West,1478,All deaths
+12/06/2020,North West,1374,All deaths
+19/06/2020,North West,1234,All deaths
+26/06/2020,North West,1300,All deaths
+03/07/2020,North West,1225,All deaths
+10/07/2020,North West,1154,All deaths
+17/07/2020,North West,1159,All deaths
+24/07/2020,North West,1197,All deaths
+31/07/2020,North West,1272,All deaths
+07/08/2020,North West,1211,All deaths
+03/01/2020,Yorkshire and The Humber,1240,All deaths
+10/01/2020,Yorkshire and The Humber,1339,All deaths
+17/01/2020,Yorkshire and The Humber,1278,All deaths
+24/01/2020,Yorkshire and The Humber,1187,All deaths
+31/01/2020,Yorkshire and The Humber,1136,All deaths
+07/02/2020,Yorkshire and The Humber,1072,All deaths
+14/02/2020,Yorkshire and The Humber,1059,All deaths
+21/02/2020,Yorkshire and The Humber,1087,All deaths
+28/02/2020,Yorkshire and The Humber,1078,All deaths
+06/03/2020,Yorkshire and The Humber,1112,All deaths
+13/03/2020,Yorkshire and The Humber,1053,All deaths
+20/03/2020,Yorkshire and The Humber,1012,All deaths
+27/03/2020,Yorkshire and The Humber,982,All deaths
+03/04/2020,Yorkshire and The Humber,1436,All deaths
+10/04/2020,Yorkshire and The Humber,1503,All deaths
+17/04/2020,Yorkshire and The Humber,1960,All deaths
+24/04/2020,Yorkshire and The Humber,2095,All deaths
+01/05/2020,Yorkshire and The Humber,1844,All deaths
+08/05/2020,Yorkshire and The Humber,1328,All deaths
+15/05/2020,Yorkshire and The Humber,1589,All deaths
+22/05/2020,Yorkshire and The Humber,1236,All deaths
+29/05/2020,Yorkshire and The Humber,1046,All deaths
+05/06/2020,Yorkshire and The Humber,1090,All deaths
+12/06/2020,Yorkshire and The Humber,980,All deaths
+19/06/2020,Yorkshire and The Humber,952,All deaths
+26/06/2020,Yorkshire and The Humber,922,All deaths
+03/07/2020,Yorkshire and The Humber,875,All deaths
+10/07/2020,Yorkshire and The Humber,848,All deaths
+17/07/2020,Yorkshire and The Humber,843,All deaths
+24/07/2020,Yorkshire and The Humber,817,All deaths
+31/07/2020,Yorkshire and The Humber,837,All deaths
+07/08/2020,Yorkshire and The Humber,851,All deaths
+03/01/2020,East Midlands,1060,All deaths
+10/01/2020,East Midlands,1195,All deaths
+17/01/2020,East Midlands,1106,All deaths
+24/01/2020,East Midlands,1024,All deaths
+31/01/2020,East Midlands,1015,All deaths
+07/02/2020,East Midlands,922,All deaths
+14/02/2020,East Midlands,976,All deaths
+21/02/2020,East Midlands,924,All deaths
+28/02/2020,East Midlands,919,All deaths
+06/03/2020,East Midlands,930,All deaths
+13/03/2020,East Midlands,915,All deaths
+20/03/2020,East Midlands,947,All deaths
+27/03/2020,East Midlands,922,All deaths
+03/04/2020,East Midlands,1246,All deaths
+10/04/2020,East Midlands,1452,All deaths
+17/04/2020,East Midlands,1632,All deaths
+24/04/2020,East Midlands,1711,All deaths
+01/05/2020,East Midlands,1418,All deaths
+08/05/2020,East Midlands,1094,All deaths
+15/05/2020,East Midlands,1283,All deaths
+22/05/2020,East Midlands,1041,All deaths
+29/05/2020,East Midlands,863,All deaths
+05/06/2020,East Midlands,931,All deaths
+12/06/2020,East Midlands,967,All deaths
+19/06/2020,East Midlands,835,All deaths
+26/06/2020,East Midlands,800,All deaths
+03/07/2020,East Midlands,827,All deaths
+10/07/2020,East Midlands,771,All deaths
+17/07/2020,East Midlands,816,All deaths
+24/07/2020,East Midlands,798,All deaths
+31/07/2020,East Midlands,729,All deaths
+07/08/2020,East Midlands,798,All deaths
+03/01/2020,West Midlands,1349,All deaths
+10/01/2020,West Midlands,1450,All deaths
+17/01/2020,West Midlands,1407,All deaths
+24/01/2020,West Midlands,1231,All deaths
+31/01/2020,West Midlands,1262,All deaths
+07/02/2020,West Midlands,1052,All deaths
+14/02/2020,West Midlands,1159,All deaths
+21/02/2020,West Midlands,1116,All deaths
+28/02/2020,West Midlands,1174,All deaths
+06/03/2020,West Midlands,1098,All deaths
+13/03/2020,West Midlands,1187,All deaths
+20/03/2020,West Midlands,1115,All deaths
+27/03/2020,West Midlands,1035,All deaths
+03/04/2020,West Midlands,1812,All deaths
+10/04/2020,West Midlands,2182,All deaths
+17/04/2020,West Midlands,2536,All deaths
+24/04/2020,West Midlands,2481,All deaths
+01/05/2020,West Midlands,1975,All deaths
+08/05/2020,West Midlands,1326,All deaths
+15/05/2020,West Midlands,1502,All deaths
+22/05/2020,West Midlands,1319,All deaths
+29/05/2020,West Midlands,970,All deaths
+05/06/2020,West Midlands,1172,All deaths
+12/06/2020,West Midlands,1096,All deaths
+19/06/2020,West Midlands,973,All deaths
+26/06/2020,West Midlands,946,All deaths
+03/07/2020,West Midlands,949,All deaths
+10/07/2020,West Midlands,902,All deaths
+17/07/2020,West Midlands,956,All deaths
+24/07/2020,West Midlands,964,All deaths
+31/07/2020,West Midlands,902,All deaths
+07/08/2020,West Midlands,933,All deaths
+03/01/2020,East,1162,All deaths
+10/01/2020,East,1573,All deaths
+17/01/2020,East,1457,All deaths
+24/01/2020,East,1410,All deaths
+31/01/2020,East,1286,All deaths
+07/02/2020,East,1259,All deaths
+14/02/2020,East,1172,All deaths
+21/02/2020,East,1167,All deaths
+28/02/2020,East,1115,All deaths
+06/03/2020,East,1149,All deaths
+13/03/2020,East,1211,All deaths
+20/03/2020,East,1043,All deaths
+27/03/2020,East,1182,All deaths
+03/04/2020,East,1717,All deaths
+10/04/2020,East,1984,All deaths
+17/04/2020,East,2466,All deaths
+24/04/2020,East,2299,All deaths
+01/05/2020,East,1982,All deaths
+08/05/2020,East,1321,All deaths
+15/05/2020,East,1543,All deaths
+22/05/2020,East,1397,All deaths
+29/05/2020,East,1095,All deaths
+05/06/2020,East,1131,All deaths
+12/06/2020,East,1048,All deaths
+19/06/2020,East,927,All deaths
+26/06/2020,East,880,All deaths
+03/07/2020,East,922,All deaths
+10/07/2020,East,999,All deaths
+17/07/2020,East,945,All deaths
+24/07/2020,East,951,All deaths
+31/07/2020,East,949,All deaths
+07/08/2020,East,955,All deaths
+03/01/2020,London,1113,All deaths
+10/01/2020,London,1272,All deaths
+17/01/2020,London,1073,All deaths
+24/01/2020,London,1028,All deaths
+31/01/2020,London,1092,All deaths
+07/02/2020,London,987,All deaths
+14/02/2020,London,967,All deaths
+21/02/2020,London,1032,All deaths
+28/02/2020,London,1085,All deaths
+06/03/2020,London,982,All deaths
+13/03/2020,London,964,All deaths
+20/03/2020,London,1008,All deaths
+27/03/2020,London,1297,All deaths
+03/04/2020,London,2511,All deaths
+10/04/2020,London,2832,All deaths
+17/04/2020,London,3275,All deaths
+24/04/2020,London,2785,All deaths
+01/05/2020,London,1953,All deaths
+08/05/2020,London,1213,All deaths
+15/05/2020,London,1329,All deaths
+22/05/2020,London,1125,All deaths
+29/05/2020,London,841,All deaths
+05/06/2020,London,891,All deaths
+12/06/2020,London,883,All deaths
+19/06/2020,London,896,All deaths
+26/06/2020,London,791,All deaths
+03/07/2020,London,837,All deaths
+10/07/2020,London,803,All deaths
+17/07/2020,London,806,All deaths
+24/07/2020,London,816,All deaths
+31/07/2020,London,773,All deaths
+07/08/2020,London,832,All deaths
+03/01/2020,South East,1814,All deaths
+10/01/2020,South East,2132,All deaths
+17/01/2020,South East,2064,All deaths
+24/01/2020,South East,1833,All deaths
+31/01/2020,South East,1820,All deaths
+07/02/2020,South East,1729,All deaths
+14/02/2020,South East,1688,All deaths
+21/02/2020,South East,1675,All deaths
+28/02/2020,South East,1587,All deaths
+06/03/2020,South East,1726,All deaths
+13/03/2020,South East,1751,All deaths
+20/03/2020,South East,1657,All deaths
+27/03/2020,South East,1822,All deaths
+03/04/2020,South East,2294,All deaths
+10/04/2020,South East,2604,All deaths
+17/04/2020,South East,3084,All deaths
+24/04/2020,South East,3334,All deaths
+01/05/2020,South East,2853,All deaths
+08/05/2020,South East,1887,All deaths
+15/05/2020,South East,2251,All deaths
+22/05/2020,South East,1937,All deaths
+29/05/2020,South East,1515,All deaths
+05/06/2020,South East,1610,All deaths
+12/06/2020,South East,1530,All deaths
+19/06/2020,South East,1411,All deaths
+26/06/2020,South East,1311,All deaths
+03/07/2020,South East,1454,All deaths
+10/07/2020,South East,1228,All deaths
+17/07/2020,South East,1339,All deaths
+24/07/2020,South East,1340,All deaths
+31/07/2020,South East,1447,All deaths
+07/08/2020,South East,1370,All deaths
+03/01/2020,South West,1225,All deaths
+10/01/2020,South West,1487,All deaths
+17/01/2020,South West,1466,All deaths
+24/01/2020,South West,1253,All deaths
+31/01/2020,South West,1233,All deaths
+07/02/2020,South West,1157,All deaths
+14/02/2020,South West,1169,All deaths
+21/02/2020,South West,1118,All deaths
+28/02/2020,South West,1133,All deaths
+06/03/2020,South West,1170,All deaths
+13/03/2020,South West,1174,All deaths
+20/03/2020,South West,1156,All deaths
+27/03/2020,South West,1092,All deaths
+03/04/2020,South West,1520,All deaths
+10/04/2020,South West,1560,All deaths
+17/04/2020,South West,1854,All deaths
+24/04/2020,South West,1924,All deaths
+01/05/2020,South West,1554,All deaths
+08/05/2020,South West,1218,All deaths
+15/05/2020,South West,1449,All deaths
+22/05/2020,South West,1177,All deaths
+29/05/2020,South West,1011,All deaths
+05/06/2020,South West,1116,All deaths
+12/06/2020,South West,1035,All deaths
+19/06/2020,South West,990,All deaths
+26/06/2020,South West,979,All deaths
+03/07/2020,South West,938,All deaths
+10/07/2020,South West,930,All deaths
+17/07/2020,South West,953,All deaths
+24/07/2020,South West,941,All deaths
+31/07/2020,South West,988,All deaths
+07/08/2020,South West,929,All deaths
+03/01/2020,Wales,787,All deaths
+10/01/2020,Wales,939,All deaths
+17/01/2020,Wales,767,All deaths
+24/01/2020,Wales,723,All deaths
+31/01/2020,Wales,727,All deaths
+07/02/2020,Wales,690,All deaths
+14/02/2020,Wales,728,All deaths
+21/02/2020,Wales,679,All deaths
+28/02/2020,Wales,651,All deaths
+06/03/2020,Wales,652,All deaths
+13/03/2020,Wales,675,All deaths
+20/03/2020,Wales,719,All deaths
+27/03/2020,Wales,719,All deaths
+03/04/2020,Wales,920,All deaths
+10/04/2020,Wales,928,All deaths
+17/04/2020,Wales,1169,All deaths
+24/04/2020,Wales,1124,All deaths
+01/05/2020,Wales,929,All deaths
+08/05/2020,Wales,692,All deaths
+15/05/2020,Wales,772,All deaths
+22/05/2020,Wales,692,All deaths
+29/05/2020,Wales,587,All deaths
+05/06/2020,Wales,700,All deaths
+12/06/2020,Wales,574,All deaths
+19/06/2020,Wales,617,All deaths
+26/06/2020,Wales,552,All deaths
+03/07/2020,Wales,584,All deaths
+10/07/2020,Wales,572,All deaths
+17/07/2020,Wales,550,All deaths
+24/07/2020,Wales,565,All deaths
+31/07/2020,Wales,531,All deaths
+07/08/2020,Wales,563,All deaths
+03/01/2020,North East,0,COVID-19 deaths
+10/01/2020,North East,0,COVID-19 deaths
+17/01/2020,North East,0,COVID-19 deaths
+24/01/2020,North East,0,COVID-19 deaths
+31/01/2020,North East,0,COVID-19 deaths
+07/02/2020,North East,0,COVID-19 deaths
+14/02/2020,North East,0,COVID-19 deaths
+21/02/2020,North East,0,COVID-19 deaths
+28/02/2020,North East,0,COVID-19 deaths
+06/03/2020,North East,0,COVID-19 deaths
+13/03/2020,North East,0,COVID-19 deaths
+20/03/2020,North East,1,COVID-19 deaths
+27/03/2020,North East,15,COVID-19 deaths
+03/04/2020,North East,134,COVID-19 deaths
+10/04/2020,North East,288,COVID-19 deaths
+17/04/2020,North East,475,COVID-19 deaths
+24/04/2020,North East,419,COVID-19 deaths
+01/05/2020,North East,316,COVID-19 deaths
+08/05/2020,North East,271,COVID-19 deaths
+15/05/2020,North East,248,COVID-19 deaths
+22/05/2020,North East,202,COVID-19 deaths
+29/05/2020,North East,141,COVID-19 deaths
+05/06/2020,North East,113,COVID-19 deaths
+12/06/2020,North East,71,COVID-19 deaths
+19/06/2020,North East,30,COVID-19 deaths
+26/06/2020,North East,32,COVID-19 deaths
+03/07/2020,North East,28,COVID-19 deaths
+10/07/2020,North East,8,COVID-19 deaths
+17/07/2020,North East,8,COVID-19 deaths
+24/07/2020,North East,4,COVID-19 deaths
+31/07/2020,North East,5,COVID-19 deaths
+07/08/2020,North East,5,COVID-19 deaths
+03/01/2020,North West,0,COVID-19 deaths
+10/01/2020,North West,0,COVID-19 deaths
+17/01/2020,North West,0,COVID-19 deaths
+24/01/2020,North West,0,COVID-19 deaths
+31/01/2020,North West,0,COVID-19 deaths
+07/02/2020,North West,0,COVID-19 deaths
+14/02/2020,North West,0,COVID-19 deaths
+21/02/2020,North West,0,COVID-19 deaths
+28/02/2020,North West,0,COVID-19 deaths
+06/03/2020,North West,0,COVID-19 deaths
+13/03/2020,North West,1,COVID-19 deaths
+20/03/2020,North West,12,COVID-19 deaths
+27/03/2020,North West,60,COVID-19 deaths
+03/04/2020,North West,418,COVID-19 deaths
+10/04/2020,North West,909,COVID-19 deaths
+17/04/2020,North West,1350,COVID-19 deaths
+24/04/2020,North West,1207,COVID-19 deaths
+01/05/2020,North West,910,COVID-19 deaths
+08/05/2020,North West,597,COVID-19 deaths
+15/05/2020,North West,620,COVID-19 deaths
+22/05/2020,North West,394,COVID-19 deaths
+29/05/2020,North West,282,COVID-19 deaths
+05/06/2020,North West,250,COVID-19 deaths
+12/06/2020,North West,196,COVID-19 deaths
+19/06/2020,North West,134,COVID-19 deaths
+26/06/2020,North West,120,COVID-19 deaths
+03/07/2020,North West,100,COVID-19 deaths
+10/07/2020,North West,62,COVID-19 deaths
+17/07/2020,North West,47,COVID-19 deaths
+24/07/2020,North West,39,COVID-19 deaths
+31/07/2020,North West,32,COVID-19 deaths
+07/08/2020,North West,33,COVID-19 deaths
+03/01/2020,Yorkshire and The Humber,0,COVID-19 deaths
+10/01/2020,Yorkshire and The Humber,0,COVID-19 deaths
+17/01/2020,Yorkshire and The Humber,0,COVID-19 deaths
+24/01/2020,Yorkshire and The Humber,0,COVID-19 deaths
+31/01/2020,Yorkshire and The Humber,0,COVID-19 deaths
+07/02/2020,Yorkshire and The Humber,0,COVID-19 deaths
+14/02/2020,Yorkshire and The Humber,0,COVID-19 deaths
+21/02/2020,Yorkshire and The Humber,0,COVID-19 deaths
+28/02/2020,Yorkshire and The Humber,0,COVID-19 deaths
+06/03/2020,Yorkshire and The Humber,0,COVID-19 deaths
+13/03/2020,Yorkshire and The Humber,0,COVID-19 deaths
+20/03/2020,Yorkshire and The Humber,5,COVID-19 deaths
+27/03/2020,Yorkshire and The Humber,12,COVID-19 deaths
+03/04/2020,Yorkshire and The Humber,174,COVID-19 deaths
+10/04/2020,Yorkshire and The Humber,374,COVID-19 deaths
+17/04/2020,Yorkshire and The Humber,690,COVID-19 deaths
+24/04/2020,Yorkshire and The Humber,755,COVID-19 deaths
+01/05/2020,Yorkshire and The Humber,647,COVID-19 deaths
+08/05/2020,Yorkshire and The Humber,432,COVID-19 deaths
+15/05/2020,Yorkshire and The Humber,452,COVID-19 deaths
+22/05/2020,Yorkshire and The Humber,297,COVID-19 deaths
+29/05/2020,Yorkshire and The Humber,237,COVID-19 deaths
+05/06/2020,Yorkshire and The Humber,210,COVID-19 deaths
+12/06/2020,Yorkshire and The Humber,136,COVID-19 deaths
+19/06/2020,Yorkshire and The Humber,111,COVID-19 deaths
+26/06/2020,Yorkshire and The Humber,69,COVID-19 deaths
+03/07/2020,Yorkshire and The Humber,58,COVID-19 deaths
+10/07/2020,Yorkshire and The Humber,47,COVID-19 deaths
+17/07/2020,Yorkshire and The Humber,30,COVID-19 deaths
+24/07/2020,Yorkshire and The Humber,32,COVID-19 deaths
+31/07/2020,Yorkshire and The Humber,23,COVID-19 deaths
+07/08/2020,Yorkshire and The Humber,16,COVID-19 deaths
+03/01/2020,East Midlands,0,COVID-19 deaths
+10/01/2020,East Midlands,0,COVID-19 deaths
+17/01/2020,East Midlands,0,COVID-19 deaths
+24/01/2020,East Midlands,0,COVID-19 deaths
+31/01/2020,East Midlands,0,COVID-19 deaths
+07/02/2020,East Midlands,0,COVID-19 deaths
+14/02/2020,East Midlands,0,COVID-19 deaths
+21/02/2020,East Midlands,0,COVID-19 deaths
+28/02/2020,East Midlands,0,COVID-19 deaths
+06/03/2020,East Midlands,0,COVID-19 deaths
+13/03/2020,East Midlands,0,COVID-19 deaths
+20/03/2020,East Midlands,3,COVID-19 deaths
+27/03/2020,East Midlands,24,COVID-19 deaths
+03/04/2020,East Midlands,185,COVID-19 deaths
+10/04/2020,East Midlands,424,COVID-19 deaths
+17/04/2020,East Midlands,558,COVID-19 deaths
+24/04/2020,East Midlands,562,COVID-19 deaths
+01/05/2020,East Midlands,438,COVID-19 deaths
+08/05/2020,East Midlands,334,COVID-19 deaths
+15/05/2020,East Midlands,319,COVID-19 deaths
+22/05/2020,East Midlands,222,COVID-19 deaths
+29/05/2020,East Midlands,180,COVID-19 deaths
+05/06/2020,East Midlands,152,COVID-19 deaths
+12/06/2020,East Midlands,135,COVID-19 deaths
+19/06/2020,East Midlands,96,COVID-19 deaths
+26/06/2020,East Midlands,89,COVID-19 deaths
+03/07/2020,East Midlands,62,COVID-19 deaths
+10/07/2020,East Midlands,34,COVID-19 deaths
+17/07/2020,East Midlands,31,COVID-19 deaths
+24/07/2020,East Midlands,35,COVID-19 deaths
+31/07/2020,East Midlands,23,COVID-19 deaths
+07/08/2020,East Midlands,16,COVID-19 deaths
+03/01/2020,West Midlands,0,COVID-19 deaths
+10/01/2020,West Midlands,0,COVID-19 deaths
+17/01/2020,West Midlands,0,COVID-19 deaths
+24/01/2020,West Midlands,0,COVID-19 deaths
+31/01/2020,West Midlands,0,COVID-19 deaths
+07/02/2020,West Midlands,0,COVID-19 deaths
+14/02/2020,West Midlands,0,COVID-19 deaths
+21/02/2020,West Midlands,0,COVID-19 deaths
+28/02/2020,West Midlands,0,COVID-19 deaths
+06/03/2020,West Midlands,0,COVID-19 deaths
+13/03/2020,West Midlands,2,COVID-19 deaths
+20/03/2020,West Midlands,14,COVID-19 deaths
+27/03/2020,West Midlands,67,COVID-19 deaths
+03/04/2020,West Midlands,400,COVID-19 deaths
+10/04/2020,West Midlands,807,COVID-19 deaths
+17/04/2020,West Midlands,999,COVID-19 deaths
+24/04/2020,West Midlands,880,COVID-19 deaths
+01/05/2020,West Midlands,651,COVID-19 deaths
+08/05/2020,West Midlands,443,COVID-19 deaths
+15/05/2020,West Midlands,382,COVID-19 deaths
+22/05/2020,West Midlands,290,COVID-19 deaths
+29/05/2020,West Midlands,184,COVID-19 deaths
+05/06/2020,West Midlands,158,COVID-19 deaths
+12/06/2020,West Midlands,104,COVID-19 deaths
+19/06/2020,West Midlands,93,COVID-19 deaths
+26/06/2020,West Midlands,69,COVID-19 deaths
+03/07/2020,West Midlands,49,COVID-19 deaths
+10/07/2020,West Midlands,48,COVID-19 deaths
+17/07/2020,West Midlands,25,COVID-19 deaths
+24/07/2020,West Midlands,15,COVID-19 deaths
+31/07/2020,West Midlands,17,COVID-19 deaths
+07/08/2020,West Midlands,13,COVID-19 deaths
+03/01/2020,East,0,COVID-19 deaths
+10/01/2020,East,0,COVID-19 deaths
+17/01/2020,East,0,COVID-19 deaths
+24/01/2020,East,0,COVID-19 deaths
+31/01/2020,East,0,COVID-19 deaths
+07/02/2020,East,0,COVID-19 deaths
+14/02/2020,East,0,COVID-19 deaths
+21/02/2020,East,0,COVID-19 deaths
+28/02/2020,East,0,COVID-19 deaths
+06/03/2020,East,0,COVID-19 deaths
+13/03/2020,East,0,COVID-19 deaths
+20/03/2020,East,3,COVID-19 deaths
+27/03/2020,East,12,COVID-19 deaths
+03/04/2020,East,283,COVID-19 deaths
+10/04/2020,East,564,COVID-19 deaths
+17/04/2020,East,835,COVID-19 deaths
+24/04/2020,East,814,COVID-19 deaths
+01/05/2020,East,631,COVID-19 deaths
+08/05/2020,East,373,COVID-19 deaths
+15/05/2020,East,401,COVID-19 deaths
+22/05/2020,East,295,COVID-19 deaths
+29/05/2020,East,204,COVID-19 deaths
+05/06/2020,East,188,COVID-19 deaths
+12/06/2020,East,122,COVID-19 deaths
+19/06/2020,East,77,COVID-19 deaths
+26/06/2020,East,59,COVID-19 deaths
+03/07/2020,East,67,COVID-19 deaths
+10/07/2020,East,48,COVID-19 deaths
+17/07/2020,East,45,COVID-19 deaths
+24/07/2020,East,23,COVID-19 deaths
+31/07/2020,East,14,COVID-19 deaths
+07/08/2020,East,11,COVID-19 deaths
+03/01/2020,London,0,COVID-19 deaths
+10/01/2020,London,0,COVID-19 deaths
+17/01/2020,London,0,COVID-19 deaths
+24/01/2020,London,0,COVID-19 deaths
+31/01/2020,London,0,COVID-19 deaths
+07/02/2020,London,0,COVID-19 deaths
+14/02/2020,London,0,COVID-19 deaths
+21/02/2020,London,0,COVID-19 deaths
+28/02/2020,London,0,COVID-19 deaths
+06/03/2020,London,0,COVID-19 deaths
+13/03/2020,London,0,COVID-19 deaths
+20/03/2020,London,44,COVID-19 deaths
+27/03/2020,London,237,COVID-19 deaths
+03/04/2020,London,1170,COVID-19 deaths
+10/04/2020,London,1506,COVID-19 deaths
+17/04/2020,London,1818,COVID-19 deaths
+24/04/2020,London,1406,COVID-19 deaths
+01/05/2020,London,785,COVID-19 deaths
+08/05/2020,London,439,COVID-19 deaths
+15/05/2020,London,365,COVID-19 deaths
+22/05/2020,London,220,COVID-19 deaths
+29/05/2020,London,115,COVID-19 deaths
+05/06/2020,London,113,COVID-19 deaths
+12/06/2020,London,71,COVID-19 deaths
+19/06/2020,London,50,COVID-19 deaths
+26/06/2020,London,35,COVID-19 deaths
+03/07/2020,London,43,COVID-19 deaths
+10/07/2020,London,28,COVID-19 deaths
+17/07/2020,London,18,COVID-19 deaths
+24/07/2020,London,16,COVID-19 deaths
+31/07/2020,London,22,COVID-19 deaths
+07/08/2020,London,8,COVID-19 deaths
+03/01/2020,South East,0,COVID-19 deaths
+10/01/2020,South East,0,COVID-19 deaths
+17/01/2020,South East,0,COVID-19 deaths
+24/01/2020,South East,0,COVID-19 deaths
+31/01/2020,South East,0,COVID-19 deaths
+07/02/2020,South East,0,COVID-19 deaths
+14/02/2020,South East,0,COVID-19 deaths
+21/02/2020,South East,0,COVID-19 deaths
+28/02/2020,South East,0,COVID-19 deaths
+06/03/2020,South East,0,COVID-19 deaths
+13/03/2020,South East,2,COVID-19 deaths
+20/03/2020,South East,17,COVID-19 deaths
+27/03/2020,South East,69,COVID-19 deaths
+03/04/2020,South East,411,COVID-19 deaths
+10/04/2020,South East,729,COVID-19 deaths
+17/04/2020,South East,1109,COVID-19 deaths
+24/04/2020,South East,1232,COVID-19 deaths
+01/05/2020,South East,966,COVID-19 deaths
+08/05/2020,South East,551,COVID-19 deaths
+15/05/2020,South East,598,COVID-19 deaths
+22/05/2020,South East,409,COVID-19 deaths
+29/05/2020,South East,269,COVID-19 deaths
+05/06/2020,South East,219,COVID-19 deaths
+12/06/2020,South East,174,COVID-19 deaths
+19/06/2020,South East,117,COVID-19 deaths
+26/06/2020,South East,85,COVID-19 deaths
+03/07/2020,South East,73,COVID-19 deaths
+10/07/2020,South East,62,COVID-19 deaths
+17/07/2020,South East,69,COVID-19 deaths
+24/07/2020,South East,40,COVID-19 deaths
+31/07/2020,South East,45,COVID-19 deaths
+07/08/2020,South East,24,COVID-19 deaths
+03/01/2020,South West,0,COVID-19 deaths
+10/01/2020,South West,0,COVID-19 deaths
+17/01/2020,South West,0,COVID-19 deaths
+24/01/2020,South West,0,COVID-19 deaths
+31/01/2020,South West,0,COVID-19 deaths
+07/02/2020,South West,0,COVID-19 deaths
+14/02/2020,South West,0,COVID-19 deaths
+21/02/2020,South West,0,COVID-19 deaths
+28/02/2020,South West,0,COVID-19 deaths
+06/03/2020,South West,0,COVID-19 deaths
+13/03/2020,South West,0,COVID-19 deaths
+20/03/2020,South West,1,COVID-19 deaths
+27/03/2020,South West,19,COVID-19 deaths
+03/04/2020,South West,155,COVID-19 deaths
+10/04/2020,South West,298,COVID-19 deaths
+17/04/2020,South West,501,COVID-19 deaths
+24/04/2020,South West,531,COVID-19 deaths
+01/05/2020,South West,404,COVID-19 deaths
+08/05/2020,South West,276,COVID-19 deaths
+15/05/2020,South West,239,COVID-19 deaths
+22/05/2020,South West,126,COVID-19 deaths
+29/05/2020,South West,103,COVID-19 deaths
+05/06/2020,South West,85,COVID-19 deaths
+12/06/2020,South West,48,COVID-19 deaths
+19/06/2020,South West,36,COVID-19 deaths
+26/06/2020,South West,16,COVID-19 deaths
+03/07/2020,South West,17,COVID-19 deaths
+10/07/2020,South West,7,COVID-19 deaths
+17/07/2020,South West,11,COVID-19 deaths
+24/07/2020,South West,5,COVID-19 deaths
+31/07/2020,South West,2,COVID-19 deaths
+07/08/2020,South West,2,COVID-19 deaths
+03/01/2020,Wales,0,COVID-19 deaths
+10/01/2020,Wales,0,COVID-19 deaths
+17/01/2020,Wales,0,COVID-19 deaths
+24/01/2020,Wales,0,COVID-19 deaths
+31/01/2020,Wales,0,COVID-19 deaths
+07/02/2020,Wales,0,COVID-19 deaths
+14/02/2020,Wales,0,COVID-19 deaths
+21/02/2020,Wales,0,COVID-19 deaths
+28/02/2020,Wales,0,COVID-19 deaths
+06/03/2020,Wales,0,COVID-19 deaths
+13/03/2020,Wales,0,COVID-19 deaths
+20/03/2020,Wales,2,COVID-19 deaths
+27/03/2020,Wales,21,COVID-19 deaths
+03/04/2020,Wales,134,COVID-19 deaths
+10/04/2020,Wales,304,COVID-19 deaths
+17/04/2020,Wales,409,COVID-19 deaths
+24/04/2020,Wales,413,COVID-19 deaths
+01/05/2020,Wales,281,COVID-19 deaths
+08/05/2020,Wales,211,COVID-19 deaths
+15/05/2020,Wales,180,COVID-19 deaths
+22/05/2020,Wales,134,COVID-19 deaths
+29/05/2020,Wales,105,COVID-19 deaths
+05/06/2020,Wales,100,COVID-19 deaths
+12/06/2020,Wales,57,COVID-19 deaths
+19/06/2020,Wales,39,COVID-19 deaths
+26/06/2020,Wales,30,COVID-19 deaths
+03/07/2020,Wales,35,COVID-19 deaths
+10/07/2020,Wales,22,COVID-19 deaths
+17/07/2020,Wales,11,COVID-19 deaths
+24/07/2020,Wales,7,COVID-19 deaths
+31/07/2020,Wales,10,COVID-19 deaths
+07/08/2020,Wales,24,COVID-19 deaths

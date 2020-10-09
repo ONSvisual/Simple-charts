@@ -1,0 +1,31 @@
+.labels text {
+  font-size: 12px;
+  fill: #666666;
+}
+
+#xAxis text {
+  font-size: 22px;
+  fill: none;
+}
+
+#graphic .axis line {
+  fill: none;
+  shape-rendering: crispEdges;
+}
+
+#graphic .axis.x path {
+  display: none;
+}
+
+.labels line {
+  fill: none;
+  stroke: #666;
+  shape-rendering: crispEdges;
+}
+
+h6 {
+  font-size: 16px;
+  margin: 16px 0 8px 0;
+  font-weight: 700;
+  color: #323132;
+}

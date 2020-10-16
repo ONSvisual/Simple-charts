@@ -321,7 +321,7 @@
           .filter(function(d,i){
             return i % dvc.optional.x_ticks_every[size] === 0&&i<dates.length-dvc.optional.x_ticks_every[size] || i==dates.length-1 //Rob's fussy comment about labelling the last date
           }))
-          .tickFormat(d3.timeFormat("%d %b"))
+          .tickFormat(d3.timeFormat(dvc.essential.displayTicksFormat))
 
       line = d3.line()
         .x(function(d) {

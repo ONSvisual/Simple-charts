@@ -16,7 +16,6 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Clustered bar vertical](https://onsvisual.github.io/Simple-charts/all-templates/clustered-bar-vertical/)
 - [Donut](https://onsvisual.github.io/Simple-charts/all-templates/donut)
 - [Heatmap](https://onsvisual.github.io/Simple-charts/all-templates/heatmap-new)
-- [Donut](https://onsvisual.github.io/Simple-charts/all-templates/donut)
 - [Icon array](https://onsvisual.github.io/Simple-charts/all-templates/icon-array)
 - [Line](https://onsvisual.github.io/Simple-charts/all-templates/line/)
 - [Line ordinal](https://onsvisual.github.io/Simple-charts/all-templates/line-ordinal/)
@@ -27,7 +26,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Regional bar map](https://onsvisual.github.io/Simple-charts/all-templates/regional-map-bar/)
 - [Sankey](https://onsvisual.github.io/Simple-charts/all-templates/sankey/) **ACCESSIBLE**
 - [Scatter - canvas](https://onsvisual.github.io/Simple-charts/all-templates/scatter-canvas/)
-- [Scatter with voronoi](https://onsvisual.github.io/Simple-charts/all-templates/Scatter-voronoi/)
+- [Scatter with voronoi](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi/)
 - [Scatter with voronoi and dropdown](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi-dropdown/)
 - [Scatter with voronoi and zoom](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi-zoom/)
 - [Scatter with groups](https://onsvisual.github.io/Simple-charts/all-templates/scatter-with-groups/)

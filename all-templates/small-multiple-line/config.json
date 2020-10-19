@@ -2,7 +2,7 @@
   "essential": {
     "graphic_data_url": "regions.csv",
     "dateFormat": "%d/%m/%Y",
-
+    "displayTicksFormat":"%d %b",
     "colour_palette": [{
         "key": "5-year average",
         "colour": "darkgrey"

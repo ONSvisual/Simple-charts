@@ -454,6 +454,18 @@
         .append('g')
         .attr('class', 'y axis')
 
+      //y axis label
+         svg
+          .each(function(d, i) { //only label the first graph
+            if (i % dvc.optional.chart_every[size] == 0) {
+              d3.select(this).append("text")
+              .attr('transform','translate(' + (19 - margin.left) + ', 0)')
+              .attr("font-size","11px")
+              .attr("fill","#666")
+              .text(function(d,i) { return dvc.essential.yAxisLabel});
+            }
+          })
+
       drawyaxis.each(function(d, i) {
         if (i % dvc.optional.chart_every[size] == 0) {
           d3.select(this).call(d3.axisLeft(y[d.key]).tickSize(-chart_width).ticks(3));

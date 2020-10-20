@@ -14,7 +14,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Circle timeline](https://onsvisual.github.io/Simple-charts/all-templates/circle-timeline)
 - [Clustered bar horizontal](https://onsvisual.github.io/Simple-charts/all-templates/clustered-bar-horizontal/)
 - [Clustered bar vertical](https://onsvisual.github.io/Simple-charts/all-templates/clustered-bar-vertical/)
-- [Heatmap](https://onsvisual.github.io/Simple-charts/all-templates/heatmap-new)
+- [Heatmap](https://onsvisual.github.io/Simple-charts/all-templates/heatmap)
 - [Icon array](https://onsvisual.github.io/Simple-charts/all-templates/icon-array)
 - [Line](https://onsvisual.github.io/Simple-charts/all-templates/line/)
 - [Line ordinal](https://onsvisual.github.io/Simple-charts/all-templates/line-ordinal/)

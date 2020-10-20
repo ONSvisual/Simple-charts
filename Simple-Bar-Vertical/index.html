@@ -3,7 +3,7 @@
 
 <head>
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-	<title>Bar chart</title>
+	<title>Suitable unique description of bar chart, dvc xxx</title>
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -83,7 +83,7 @@
 		    var y = d3.scaleLinear()
 		        .range([ height, 0]);
 
-		    x.domain(graphic_data.map(function(d) { return d.date; }));
+		    x.domain(graphic_data.map(function(d) { return d[legendLabels[0]]; }));
 
 		    var xAxis = d3.axisBottom(x)
 		        .tickFormat(function(d,i) {
@@ -121,21 +121,20 @@
 		    //gridlines
 		    var y_axis_grid = function() { return yAxis; }
 
-		    var bar = d3.line()
-		        .x(function(d) { return x(d.date); })
-		        .y(function(d) { return y(d.amt); });
+						// parse data into columns
+			      var bars = {};
 
-		    // parse data into columns
-		    var bars = {};
-		    for (var column in graphic_data[0]) {
-		        if (column == 'date') continue;
-		        bars[column] = graphic_data.map(function(d) {
-		            return {
-		                'date': d.date,
-		                'amt': d[column]
-		            };
-		        });
-		    }
+			      for (var column in graphic_data[0]) {
+			        legendLabels.push(column);
+			        if (column == legendLabels[0]) continue;
+			        bars[column] = graphic_data.map(function(d) {
+			          return {
+			            'date': d[legendLabels[0]],
+			            'amt': d[column]
+			          };
+			        });
+			      }
+
 
 		 //    var startDate = new Date(bars["growth"][0].date);
 			// var endDate = new Date(bars["growth"][bars["growth"].length-1].date);
@@ -244,7 +243,7 @@
 
 
 			svg.append('g').attr("class","bars").selectAll('rect')
-					.data(bars["growth"])
+					.data(bars[legendLabels[1]])
 					.enter()
 					.append('rect')
 					.attr("fill", function(d) { if(d.amt>0){return dvc.essential.colour_palette[0]}else{return dvc.essential.negative_colour}})
@@ -290,7 +289,7 @@
 
 							d3.select("#keypoints")
 								.append("p")
-								.style("font-size","12px")
+								.style("font-size","16px")
 								.style("font-weight",400)
 								.text(dvc.essential.annotationBullet[i]);
 
@@ -393,7 +392,7 @@
 			svg.append("text")
 				 .attr('class', 'unit')
 				 .attr('transform',"translate(" + -margin.left + "," + eval(-margin.top + (lineNo+1)*20) + ")")
-				 .attr("font-size","12px")
+				 .attr("font-size","16px")
 				 .attr("fill","#666")
 				 .text(function(d,i) { return dvc.essential.yAxisLabel});
 
@@ -404,8 +403,8 @@
 
 			d3.selectAll("text").attr("font-family","'Open Sans', sans-serif");
 
-			d3.selectAll(".y text").attr("font-size","12px").attr("fill","#666");
-			d3.selectAll(".x text").attr("font-size","12px").attr("fill","#666"); // dates - timelines
+			d3.selectAll(".y text").attr("font-size","14px").attr("fill","#666");
+			d3.selectAll(".x text").attr("font-size","14px").attr("fill","#666"); // dates - timelines
 
 			d3.selectAll(".y line")
 				.attr("stroke","#CCC")
@@ -429,11 +428,7 @@
 
 					// });
 
-					names = d3.keys(/*data*/graphic_data[0]).filter(function(key) { return key !== "state"; });
-
-					/*data*/graphic_data.forEach(function(d) {
-					  d.ages = names.map(function(name) { return {name: name, value: +d[name]}; });
-					});
+					legendLabels = d3.keys(graphic_data[0])
 
 						//use pym to create iframed chart dependent on specified variables
 						pymChild = new pym.Child({ renderCallback: drawGraphic});

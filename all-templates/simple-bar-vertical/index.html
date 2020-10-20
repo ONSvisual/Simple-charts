@@ -3,14 +3,14 @@
 
 <head>
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-	<title>Bar chart</title>
+	<title>Suitable unique description of bar chart, dvc xxx</title>
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
     <link rel="stylesheet" href="../lib/globalStyle.css" />
-	<style type="text/css">
+	<style>
 
 		h6 {
 	     font-size: 16px;
@@ -23,24 +23,22 @@
 </head>
 <body>
 
-	<div id="graphic">
-    	<img src="fallback.png" alt="[Chart]" />
-    </div>
+		<div class="visuallyhidden">
+			<h5 id="screenreadertext">The chart canvas is hidden from screen readers. The main message is summarised by the chart title and the data behind the chart is available to download below.</h5>
+		</div>
+		<div id="graphic" aria-hidden="true">
+	  </div>
 
 		<h6 id="source"></h6>
 
-    <div id="keypoints">
-        <p></p>
-    </div>
+	  <div id="keypoints" aria-hidden="true">
+	      <p></p>
+	  </div>
 
-   <div id="footer">
-   </div>
-
-    <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js" type="text/javascript"></script>
-    <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
-    <script src="../lib/pym.js" type="text/javascript"></script>
-	<script src="../lib/saveSvgAsPng.js" type="text/javascript"></script>
-    <script src="../lib/footer.js"></script>
+    <script src="https://cdn.ons.gov.uk/vendor/d3/4.2.7/d3.min.js"></script>
+    <script src="../lib/modernizr.svg.min.js"></script>
+    <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" ></script>
+		<script src="config.js"></script>
 
     <script>
 
@@ -73,6 +71,9 @@
 			keypoints.selectAll("*").remove();
 			footer.selectAll("*").remove();
 
+			if(dvc.essential.screenreadertext != ""){
+				d3.select("#screenreadertext").text(dvc.essential.screenreadertext)
+		  }
 
 			var x = d3.scaleBand()
 				.rangeRound([0, chart_width])
@@ -82,7 +83,7 @@
 		    var y = d3.scaleLinear()
 		        .range([ height, 0]);
 
-		    x.domain(graphic_data.map(function(d) { return d.date; }));
+		    x.domain(graphic_data.map(function(d) { return d[legendLabels[0]]; }));
 
 		    var xAxis = d3.axisBottom(x)
 		        .tickFormat(function(d,i) {
@@ -120,21 +121,20 @@
 		    //gridlines
 		    var y_axis_grid = function() { return yAxis; }
 
-		    var bar = d3.line()
-		        .x(function(d) { return x(d.date); })
-		        .y(function(d) { return y(d.amt); });
+						// parse data into columns
+			      var bars = {};
 
-		    // parse data into columns
-		    var bars = {};
-		    for (var column in graphic_data[0]) {
-		        if (column == 'date') continue;
-		        bars[column] = graphic_data.map(function(d) {
-		            return {
-		                'date': d.date,
-		                'amt': d[column]
-		            };
-		        });
-		    }
+			      for (var column in graphic_data[0]) {
+			        legendLabels.push(column);
+			        if (column == legendLabels[0]) continue;
+			        bars[column] = graphic_data.map(function(d) {
+			          return {
+			            'date': d[legendLabels[0]],
+			            'amt': d[column]
+			          };
+			        });
+			      }
+
 
 		 //    var startDate = new Date(bars["growth"][0].date);
 			// var endDate = new Date(bars["growth"][bars["growth"].length-1].date);
@@ -243,7 +243,7 @@
 
 
 			svg.append('g').attr("class","bars").selectAll('rect')
-					.data(bars["growth"])
+					.data(bars[legendLabels[1]])
 					.enter()
 					.append('rect')
 					.attr("fill", function(d) { if(d.amt>0){return dvc.essential.colour_palette[0]}else{return dvc.essential.negative_colour}})
@@ -289,7 +289,7 @@
 
 							d3.select("#keypoints")
 								.append("p")
-								.style("font-size","12px")
+								.style("font-size","16px")
 								.style("font-weight",400)
 								.text(dvc.essential.annotationBullet[i]);
 
@@ -377,9 +377,9 @@
 							.attr('y',y(dvc.optional.annotateRectX_Y[i][0][1]))
 							.attr('height',y( dvc.optional.annotateRectX_Y[i][1][1] ) - y(dvc.optional.annotateRectX_Y[i][0][1]))
 							.attr('width',x(dvc.optional.annotateRectX_Y[i][1][0]) - x(dvc.optional.annotateRectX_Y[i][0][0]))
-							.style('fill', dvc.optional.lineColor_opcty[i][0] )
+							.style('fill', dvc.optional.rectStyle[i][0] )
 							.style('stroke-width', 2)
-							.style('opacity', dvc.optional.lineColor_opcty[i][1] );
+							.style('opacity', dvc.optional.rectStyle[i][1] );
 
 					})
 				}
@@ -392,7 +392,7 @@
 			svg.append("text")
 				 .attr('class', 'unit')
 				 .attr('transform',"translate(" + -margin.left + "," + eval(-margin.top + (lineNo+1)*20) + ")")
-				 .attr("font-size","12px")
+				 .attr("font-size","16px")
 				 .attr("fill","#666")
 				 .text(function(d,i) { return dvc.essential.yAxisLabel});
 
@@ -403,8 +403,8 @@
 
 			d3.selectAll("text").attr("font-family","'Open Sans', sans-serif");
 
-			d3.selectAll(".y text").attr("font-size","12px").attr("fill","#666");
-			d3.selectAll(".x text").attr("font-size","12px").attr("fill","#666"); // dates - timelines
+			d3.selectAll(".y text").attr("font-size","14px").attr("fill","#666");
+			d3.selectAll(".x text").attr("font-size","14px").attr("fill","#666"); // dates - timelines
 
 			d3.selectAll(".y line")
 				.attr("stroke","#CCC")
@@ -419,10 +419,6 @@
 
 		//check whether browser can cope with svg
 		if (Modernizr.svg) {
-		   //load config
-			d3.json("config.json", function(error, config) {
-			dvc=config
-
 				//load chart data
 				d3.csv(dvc.essential.graphic_data_url, function(error, data) {
 					graphic_data = data;
@@ -432,16 +428,12 @@
 
 					// });
 
-					names = d3.keys(/*data*/graphic_data[0]).filter(function(key) { return key !== "state"; });
-
-					/*data*/graphic_data.forEach(function(d) {
-					  d.ages = names.map(function(name) { return {name: name, value: +d[name]}; });
-					});
+					legendLabels = d3.keys(graphic_data[0])
 
 						//use pym to create iframed chart dependent on specified variables
 						pymChild = new pym.Child({ renderCallback: drawGraphic});
 					});
-			})
+
 
 		} else {
 			 //use pym to create iframe containing fallback image (which is set as default)

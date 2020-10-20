@@ -1,81 +1,33 @@
-﻿soc,ycategory,score,risk,xcategory,amount,sample_female,sample_age,sample_bame
-6143,Dental nurses,98.75,VH,f_per,1,0,0,0
-6143,Dental nurses,98.75,VH,age55_per,0.049,0,1,0
-6143,Dental nurses,98.75,VH,bame_per,0.061,0,0,1
-6143,Dental nurses,98.75,VH,earnings,10.14805664,0,0,0
-6143,Dental nurses,98.75,VH,total,52096,0,0,0
-2215,Dental practitioners,93.5,VH,f_per,0.526,0,0,0
-2215,Dental practitioners,93.5,VH,age55_per,0.118,0,1,0
-2215,Dental practitioners,93.5,VH,bame_per,0.282,0,0,0
-2215,Dental practitioners,93.5,VH,earnings,24.75534424,0,0,0
-2215,Dental practitioners,93.5,VH,total,41006,0,0,0
-2232,Midwives,93,VH,f_per,1,0,0,0
-2232,Midwives,93,VH,age55_per,0.165,0,0,0
-2232,Midwives,93,VH,bame_per,0.113,0,0,1
-2232,Midwives,93,VH,earnings,20.99424805,0,0,0
-2232,Midwives,93,VH,total,44615,0,0,0
-3213,Paramedics,93,VH,f_per,0.442,0,0,0
-3213,Paramedics,93,VH,age55_per,0.091,0,1,0
-3213,Paramedics,93,VH,bame_per,0,0,0,0
-3213,Paramedics,93,VH,earnings,19.82540405,0,0,0
-3213,Paramedics,93,VH,total,28441,0,0,0
-6142,Ambulance staff (exc. paramedics),93,VH,f_per,0.341,0,0,0
-6142,Ambulance staff (exc. paramedics),93,VH,age55_per,0.372,0,0,0
-6142,Ambulance staff (exc. paramedics),93,VH,bame_per,0.07,0,0,1
-6142,Ambulance staff (exc. paramedics),93,VH,earnings,12.02611206,0,0,0
-6142,Ambulance staff (exc. paramedics),93,VH,total,23291,0,0,0
-2231,Nurses,92.75,VH,total,668999,0,0,0
-2231,Nurses,91.75,VH,earnings,18.04296753,0,0,0
-2231,Nurses,90.75,VH,bame_per,0.194,0,0,0
-2211,Medical practitioners,90.1875,VH,f_per,0.489,0,0,0
-2211,Medical practitioners,90.1875,VH,age55_per,0.165,0,0,0
-2211,Medical practitioners,90.1875,VH,bame_per,0.279,0,0,0
-2211,Medical practitioners,90.1875,VH,earnings,31.26536621,0,0,0
-2211,Medical practitioners,90.1875,VH,total,296415,0,0,0
-2216,Veterinarians,90,VH,f_per,0.62,0,0,0
-2216,Veterinarians,90,VH,age55_per,0.08,0,1,0
-2216,Veterinarians,90,VH,bame_per,0,0,0,0
-2216,Veterinarians,90,VH,earnings,19.66204956,0,0,0
-2216,Veterinarians,90,VH,total,26893,0,0,0
-2231,Nurses,89.75,VH,age55_per,0.213,0,0,0
-6144,Houseparents & residential wardens,89.35714286,VH,f_per,0.756,0,0,0
-6144,Houseparents & residential wardens,89.35714286,VH,age55_per,0.35,0,0,0
-6144,Houseparents & residential wardens,89.35714286,VH,bame_per,0.103,0,0,1
-6144,Houseparents & residential wardens,89.35714286,VH,earnings,12.12793213,0,0,0
-6144,Houseparents & residential wardens,89.35714286,VH,total,49126,0,0,0
-6147,Care escorts,89.35714286,VH,f_per,0.74,0,0,0
-6147,Care escorts,89.35714286,VH,age55_per,0.504,0,0,0
-6147,Care escorts,89.35714286,VH,bame_per,0.062,0,0,1
-6147,Care escorts,89.35714286,VH,earnings,9.451223145,0,0,0
-6147,Care escorts,89.35714286,VH,total,13261,0,0,0
-2217,Medical radiographers,89.25,VH,f_per,0.784,0,0,0
-2217,Medical radiographers,89.25,VH,age55_per,0.129,0,1,0
-2217,Medical radiographers,89.25,VH,bame_per,0.202,0,0,1
-2217,Medical radiographers,89.25,VH,earnings,19.99509033,0,0,0
-2217,Medical radiographers,89.25,VH,total,33921,0,0,0
-3218,Medical & dental technicians,89.25,VH,f_per,0.591,0,0,0
-3218,Medical & dental technicians,89.25,VH,age55_per,0.213,0,0,0
-3218,Medical & dental technicians,89.25,VH,bame_per,0.148,0,0,1
-3218,Medical & dental technicians,89.25,VH,earnings,14.84219727,0,0,0
-3218,Medical & dental technicians,89.25,VH,total,42015,0,0,0
-2231,Nurses,88.75,VH,f_per,0.885,0,0,0
-6141,Nursing auxiliaries & assistants,88.5,VH,f_per,0.81,0,0,0
-6141,Nursing auxiliaries & assistants,88.5,VH,age55_per,0.222,0,0,0
-6141,Nursing auxiliaries & assistants,88.5,VH,bame_per,0.185,0,0,0
-6141,Nursing auxiliaries & assistants,88.5,VH,earnings,10.93077637,0,0,0
-6141,Nursing auxiliaries & assistants,88.5,VH,total,337703,0,0,0
-6131,Veterinary nurses,83.5,VH,f_per,0.938,0,0,0
-6131,Veterinary nurses,83.5,VH,age55_per,0.059,0,1,0
-6131,Veterinary nurses,83.5,VH,bame_per,0,0,0,0
-6131,Veterinary nurses,83.5,VH,earnings,11,0,0,0
-6131,Veterinary nurses,83.5,VH,total,17975,0,0,0
-2214,Ophthalmic opticians,82.5,VH,f_per,0.539,0,0,0
-2214,Ophthalmic opticians,82.5,VH,age55_per,0.208,0,1,0
-2214,Ophthalmic opticians,82.5,VH,bame_per,0.272,0,0,1
-2214,Ophthalmic opticians,82.5,VH,earnings,23.13703613,0,0,0
-2214,Ophthalmic opticians,82.5,VH,total,17849,0,0,0
-3314,Prison service officers (below principal officer),77.25,VH,f_per,0.302,0,0,0
-3314,Prison service officers (below principal officer),77.25,VH,age55_per,0.241,0,0,0
-3314,Prison service officers (below principal officer),77.25,VH,bame_per,0.094,0,0,1
-3314,Prison service officers (below principal officer),77.25,VH,earnings,14.8476709,0,0,0
-3314,Prison service officers (below principal officer),77.25,VH,total,41896,0,0,0
+﻿soc,ycategory,score,risk,xcategory,amount,sample_female,sample_age,sample_bame,,
+6143,Arab,98.75,VH,bame_per, 0.06 ,1,0,1,,
+6143,Arab,98.75,VH,earnings, 10.00 ,0,0,0,,
+2215,Bangladeshi,93.5,VH,bame_per, 0.28 ,0,0,0,,
+2215,Bangladeshi,93.5,VH,earnings, 8.00 ,0,0,0,,
+2232,Black African,93,VH,bame_per, 0.11 ,0,0,1,,
+2232,Black African,93,VH,earnings, 17.00 ,0,0,0,,
+3213,Black Caribbean,93,VH,bame_per, 0.10 ,0,0,0,,
+3213,Black Caribbean,93,VH,earnings, 14.00 ,0,0,0,,
+6142,Chinese,93,VH,bame_per,-0.41 ,0,0,1,,
+6142,Chinese,93,VH,earnings, 12.00 ,0,0,0,,
+2231,Indian,91.75,VH,earnings, 13.00 ,0,0,0,,
+2231,Indian,90.75,VH,bame_per, 0.19 ,0,0,0,,
+2211,Other Asian background,90.1875,VH,bame_per, 0.28 ,0,0,0,,
+2211,Other Asian background,90.1875,VH,earnings, 16.00 ,0,0,0,,
+2216,Other Black,90,VH,bame_per, 0.20 ,0,0,0,,
+2216,Other Black,90,VH,earnings, 15.00 ,0,0,0,,
+6144,Other ethnic group,89.35714286,VH,bame_per, 0.10 ,0,0,1,,
+6144,Other ethnic group,89.35714286,VH,earnings, 11.00 ,0,0,0,,
+6147,Other mixed,89.35714286,VH,bame_per, 0.06 ,0,0,1,,
+6147,Other mixed,89.35714286,VH,earnings, 17.00 ,0,0,0,,
+2217,Other White,89.25,VH,bame_per, 0.20 ,0,0,1,,
+2217,Other White,89.25,VH,earnings, 14.00 ,0,0,0,,
+3218,Pakistani,89.25,VH,bame_per, 0.15 ,0,0,1,,
+3218,Pakistani,89.25,VH,earnings, 14.00 ,0,0,0,,
+6141,White and Asian,88.5,VH,bame_per, 0.19 ,0,0,0,,
+6141,White and Asian,88.5,VH,earnings, 11.00 ,0,0,0,,
+6131,White and Black African,83.5,VH,bame_per, 0.15 ,0,0,0,,
+6131,White and Black African,83.5,VH,earnings, 18.00 ,0,0,0,,
+2214,White and Black Caribbean,82.5,VH,bame_per, 0.27 ,0,0,1,,
+2214,White and Black Caribbean,82.5,VH,earnings, 16.00 ,0,0,0,,
+3314,White Irish,77.25,VH,bame_per,-0.23 ,0,0,1,,
+3314,White Irish,77.25,VH,earnings, 9.00 ,0,0,0,,

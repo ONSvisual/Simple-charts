@@ -2,6 +2,7 @@
   "essential": {
     "graphic_data_url": "data.csv",
     "colour_palette": ["#0075A3", "#266D4A", "#234D70", "#601552"],
+    "screenreadertext":"",
     "sourceText": ["Office for National Statistics"],
     "numberFormat":".0f",
     "xAxisScale": [-20, 20],

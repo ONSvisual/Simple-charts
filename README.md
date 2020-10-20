@@ -16,7 +16,6 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Clustered bar vertical](https://onsvisual.github.io/Simple-charts/all-templates/clustered-bar-vertical/)
 - [Donut](https://onsvisual.github.io/Simple-charts/all-templates/donut)
 - [Heatmap](https://onsvisual.github.io/Simple-charts/all-templates/heatmap-new)
-- [Donut](https://onsvisual.github.io/Simple-charts/all-templates/donut)
 - [Icon array](https://onsvisual.github.io/Simple-charts/all-templates/icon-array)
 - [Line](https://onsvisual.github.io/Simple-charts/all-templates/line/)
 - [Line ordinal](https://onsvisual.github.io/Simple-charts/all-templates/line-ordinal/)
@@ -27,7 +26,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Regional bar map](https://onsvisual.github.io/Simple-charts/all-templates/regional-map-bar/)
 - [Sankey](https://onsvisual.github.io/Simple-charts/all-templates/sankey/) **ACCESSIBLE**
 - [Scatter - canvas](https://onsvisual.github.io/Simple-charts/all-templates/scatter-canvas/)
-- [Scatter with voronoi](https://onsvisual.github.io/Simple-charts/all-templates/Scatter-voronoi/)
+- [Scatter with voronoi](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi/)
 - [Scatter with voronoi and dropdown](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi-dropdown/)
 - [Scatter with voronoi and zoom](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi-zoom/)
 - [Scatter with groups](https://onsvisual.github.io/Simple-charts/all-templates/scatter-with-groups/)
@@ -40,9 +39,9 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Small multiples line category](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-line-category/)
 - [Small multiples stacked bars vertical](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-stacked-bar-vertical/)
 - [Small multiples stacked bars](https://onsvisual.github.io/Simple-charts/all-templates/small-multiples-stacked-bar/)
-- [Split bar](https://onsvisual.github.io/Simple-charts/all-templates/split-bar/)
-- [Split bar multiple](https://onsvisual.github.io/Simple-charts/all-templates/split-bar-multiple/)
-- [Split bar varied x scales](https://onsvisual.github.io/Simple-charts/all-templates/split-bar-varied-xscales/)
+- [Split bar](https://onsvisual.github.io/Simple-charts/all-templates/split-bar/)**ACCESSIBLE**
+- [Split bar multiple](https://onsvisual.github.io/Simple-charts/all-templates/split-bar-multiple/)**ACCESSIBLE**
+- [Split bar varied x scales](https://onsvisual.github.io/Simple-charts/all-templates/split-bar-varied-xscales/)**ACCESSIBLE**
 - [Stacked area](https://onsvisual.github.io/Simple-charts/all-templates/stacked-area/)
 - [Stacked bar horizontal](https://onsvisual.github.io/Simple-charts/all-templates/stacked-bar-horizontal/)
 - [Stacked bar vertical](https://onsvisual.github.io/Simple-charts/all-templates/stacked-bar-vertical/)

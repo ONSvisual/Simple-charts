@@ -1,14 +1,16 @@
 {
     "essential" : {
-          "graphic_data_url": "occs.csv",
-          "colour_palette":[ "#0075A3" , "#266D4A", "#234D70", "#601552","#601552" ],
-      		"sourceText":["Annual Population Survey and Annual Survey of Hours and Earnings - Office for National Statistics"],
+          "graphic_data_url": "data.csv",
+          "colour_palette":["#206095"],
+          "accessibleSummary":"Description of what the chart is showing....",
+      		"sourceText":["Office for National Statistics - Annual Population Survey"],
           "sourceURL":[""],
-          "xAxisScale":[[0,1],[0,1], [0,1], [0,32],[0,1050000]],
-          "average_line":[0.5, 0.204, 0.125, 13.21, 355000],
-          "columnTitles": ["Female (%)", "Age 55+ (%)", "BAME (%)", "Hourly earnings (£)", "Total workforce"],
+          "xAxisScale":[[-1,1],[-20,100],[-2000, 25000]],
+          "average_line":[-0.1,1,2000],
+          "columnTitles": ["Measure 1 (%)", "Measure 2","Measure 3"],
+          "columnFormats": [".0%", ",.3r",",.0f"],
           "barHeight_sm_md_lg" : [30,40,50],
-          "legendLabel" : ["Average across working population"]
+          "legendLabel" : [""]
 
 
     },

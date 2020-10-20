@@ -1,16 +1,16 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
 
-  <title>Split bar chart</title>
+  <title>Split bar chart showing ... broken down by ..., dvcxxx</title>
   <meta name="description" content="">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 
   <style>
-
     body {
       margin: 0px auto;
       max-width: 700px;
@@ -19,7 +19,7 @@
     }
 
 
-    .graphic {
+    #graphic {
       font-family: "Open Sans", sans-serif;
       color: #333;
       fill: #333;
@@ -75,14 +75,12 @@
     .label {
       font-size: 12px;
       fill: #4c4c4c;
-      paint-order: stroke;
       stroke: white;
       stroke-width: 3px;
     }
 
     .label--white {
       fill: #fff;
-      paint-order: stroke;
       stroke: #3a7899;
       stroke-width: 3px;
 
@@ -97,14 +95,8 @@
       fill: #fff;
     }
 
-    .title2 {
-
-      -webkit-user-modify: read-write;
-      -moz-user-modify: read-write;
-      user-modify: read-write;
-      overflow-wrap: break-word;
-      -webkit-line-break: after-white-space;
-      -moz-line-break: after-white-space;
+    .title2{
+      font-weight: 600;
     }
 
     .source {
@@ -136,46 +128,50 @@
       height: 15px;
       margin-right: 6px;
       float: left;
-      background-color: none;
       margin-top: 8px;
     }
     .border0 {
       border-top: 2px dashed rgb(88, 89, 91);
   }
 
+  .visuallyhidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
   </style>
 </head>
 
 <body>
-  <div id="legend">
-    <ul class="key">
-      <li>
-        <b class="border0" style="opacity: 0.8;"></b><label>Average across working population</label>
-      </li>
-    </ul>
-  </div>
-  <div class="graphic">
+  <h5 id="accessibleSummary" class="visuallyhidden"></h5>
+  <div id="graphic" aria-hidden="true">
     <div class="divcolumns"></div>
     <svg class="chart"></svg>
     <div class="footnote" style="font-size:14px;"></div>
-    <p style="font-size:14px;">* Data is based on low sample sizes and should be used with caution</p>
-    <p style="font-size:14px;">** The sample size is too small to produce a reliable estimate</p>
+    <!-- <p style="font-size:14px;">* Data is based on low sample sizes and should be used with caution</p>
+    <p style="font-size:14px;">** The sample size is too small to produce a reliable estimate</p> -->
     <h6 class="source"></h6>
+    <img src="fallback.png" alt="Image of chart showing ..........." />
   </div>
 
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js"></script>
   <script src="../lib/queue.js"></script>
+  <script src="../lib/modernizr.svg.min.js" ></script>
   <script>
-    var pymChild = null;
+  var graphic = d3.select('#graphic');
+  var pymChild = null;
 
-    pymChild = new pym.Child();
+    function drawGraphic(width) {
+      d3.select("img").remove();
 
-    d3.json("config.json", function(error, config) {
-      dvc = config
-
-      var chartwidth = parseInt(d3.select(".graphic").style("width"));
+      var chartwidth = parseInt(d3.select("#graphic").style("width"));
 
       if (chartwidth < dvc.optional.mobileBreakpoint) {
         var margin = {
@@ -197,8 +193,12 @@
 
       width = chartwidth - margin.left - margin.right;
 
-      var graphic = d3.select('.graphic')
-        .style('width', chartwidth + 'px');
+      var graphic = d3.select('#graphic')
+        //.style('width', chartwidth + 'px');
+
+
+        // clear out existing graphics
+        d3.select(".chart").selectAll("*").remove();
 
       var svg = graphic.select('svg.chart')
         .attr('width', width + margin.left + margin.right)
@@ -231,7 +231,6 @@
           return columnScale(column(d));
         };
 
-        console.log(d3.scaleOrdinal())
       var color = column,
         colorScale = d3.scaleOrdinal(),
         colorValue = function(d) {
@@ -242,17 +241,17 @@
         return {
           xcategory: d.xcategory,
           ycategory: d.ycategory,
-          amount: +d.amount,
-          sample_female: d.sample_female,
-          sample_age: d.sample_age,
-          sample_bame: d.sample_bame
+          amount: +d.amount
+          //bits left in to deal with supressed values and small sample sizes
+          // sample_female: d.sample_female,
+          // sample_age: d.sample_age,
+          // sample_bame: d.sample_bame
         };
 
       }
 
       d3.csv(dvc.essential.graphic_data_url, row, function(error, dataFlat) {
         if (error) throw error;
-
 
         var dataFlatMax = d3.max(dataFlat, function(d) {
           return d.amount;
@@ -261,10 +260,10 @@
           return d.amount;
         });
 
-if (chartwidth < dvc.optional.mobileBreakpoint) {
-        var dataFlat = dataFlat.filter(function(d) { return d.xcategory !== 'total'  });
-      //  var dataFlat = dataFlat.filter(function(d) { return d.xcategory !== 'earnings'  });
-}
+// if (chartwidth < dvc.optional.mobileBreakpoint) {
+//         var dataFlat = dataFlat.filter(function(d) { return d.xcategory !== 'total'  });
+//       //  var dataFlat = dataFlat.filter(function(d) { return d.xcategory !== 'earnings'  });
+// }
         var data = d3.nest()
           .key(function(d) {
             return d.xcategory;
@@ -274,12 +273,12 @@ if (chartwidth < dvc.optional.mobileBreakpoint) {
               return {
                 xcategory: d.key,
                 values: d.values,
-                xScale: dvc.essential.xAxisScale[i]
+                xScale: dvc.essential.xAxisScale[i],
+                columnFormat: dvc.essential.columnFormats[i]
             }
           });
 
-console.log(data)
-
+        number_of_rows = data[0].values.length
 
         if (chartwidth < dvc.optional.mobileBreakpoint) {
           var height = (dvc.essential.barHeight_sm_md_lg[0] * data[0].values.length);
@@ -334,6 +333,7 @@ console.log(data)
 
         divColumn.append('text')
           .attr("class", "title2")
+          //.attr("tabindex", -1)
           // .attr('dy', '-0.2em')
           .text(function(d,i){
             return dvc.essential.columnTitles[i]
@@ -358,6 +358,9 @@ console.log(data)
         d3.select(".source")
           .text("Source: " + dvc.essential.sourceText);
 
+        d3.select("#accessibleSummary")
+          .text(dvc.essential.accessibleSummary);
+
         gColumn.attr('transform', function(d) {
           return 'translate(' + columnValue(d) + ',0)';
         });
@@ -367,8 +370,6 @@ console.log(data)
         var bars = gColumn.append('g').attr('class', 'bars');
 
         bars.selectAll('.bar--underlying').data(function(d,i) {
-//console.log(d,i)
-            xScale.domain(dvc.essential.xAxisScale[i])
             return d.values;
           })
           .enter().append('rect')
@@ -384,19 +385,14 @@ console.log(data)
           .style('fill', '#eee');
 
 
-        //set j - we'll need to add to it each time we go down a column.
-        j = 0;
-
+//         //set j - we'll need to add to it each time we go down a column.
+         j = 0;
+         k = 0;
         bars.selectAll('.bar--overlying').data(function(d,i) {
-            //xScale.domain(dvc.essential.xAxisScale[i])
             return d.values;
           })
           .enter().append('rect')
           .attr('class', 'bar bar--overlying')
-          .attr('x', function(d) {
-            //console.log(d)
-            return xScale(Math.min(0, d.amount))
-          })
           .attr('y', function(d) {
             return yScale(y(d));
           })
@@ -404,25 +400,52 @@ console.log(data)
             //i will reset each time it goes down each column. At which point we'll redefine the xScale domain
             if(i==0){
               xScale.domain(dvc.essential.xAxisScale[j])
-
+              return 0 + Math.abs(xScale(x(d)) - xScale((0)));
+            } else if (i== number_of_rows-1) {
+              widthVal = 0 + Math.abs(xScale(x(d)) - xScale((0)));
               //...and add to j
               j++
+
+              return widthVal
+            } else {
+              return 0 + Math.abs(xScale(x(d)) - xScale((0)));
             }
-            return 0 + Math.abs(xScale(x(d)) - xScale((0)));
+          })
+
+          .attr('x', function(d,i) {
+            //i will reset each time it goes down each column. At which point we'll redefine the xScale domain
+              if(i==0){
+                  xScale.domain(dvc.essential.xAxisScale[k])
+                  return xScale(Math.min(0, d.amount));
+              } else if (i== number_of_rows-1) {
+                xVal = xScale(Math.min(0, d.amount));
+                //...and add to k
+                k++
+                return xVal;
+              } else {
+                return xScale(Math.min(0, d.amount));
+              }
           })
           .attr('height', yScale.bandwidth())
-          .style('fill', /*colorValue*/ "#3a7899");
+          .style('fill', /*colorValue*/ "#206095");
 
-        graphicheight = d3.select(".graphic").style("height");
+        graphicheight = d3.select("#graphic").style("height");
 
         // 0 value refference line
         var barsHeight = d3.select('.bars').node().getBBox().height;
+
         // if no minus values, don't draw the line
         if (dataFlatMin < 0) {
           bars
             .append('line')
-            .attr('x1', xScale(0) )
-            .attr('x2', xScale(0) )
+            .attr('x1', function(d,i){
+              xScale.domain(d.xScale)
+              return xScale(0)
+            })
+            .attr('x2', function(d,i){
+              xScale.domain(d.xScale)
+              return xScale(0)
+            })
             .attr('y1', 3)
             .attr('y2', barsHeight + 3)
             .style('stroke', '#58595B')
@@ -430,19 +453,17 @@ console.log(data)
         }
 
 
-        //Take the same approach here with j...
-        j=0;
+        //Take the same approach here with l...
+        l=0;
 
         bars
           .append('line')
           .attr('x1', function(d,i){
-            if(i==0){
-              xScale.domain(dvc.essential.xAxisScale[j])
-              j++
-            }
+            xScale.domain(d.xScale)
             return xScale(dvc.essential.average_line[i])
-          } )
+          })
           .attr('x2', function(d,i){
+            xScale.domain(d.xScale)
             return xScale(dvc.essential.average_line[i])
           } )
           .attr('y1', 3)
@@ -519,10 +540,9 @@ console.log(data)
             j++
           }
 
-          //console.log(xScale.domain())
           var xValue = xScale(x(d));
 
-        //  console.log(selection)
+         // console.log(selection)
           var xMax = xScale.range()[1];
           if (chartwidth > dvc.optional.mobileBreakpoint) {
             if (d.amount <= 0) {
@@ -571,16 +591,14 @@ console.log(data)
 
         function positionLabel2(selection, d,i) {
 
-        //  console.log(i);
+         // console.log(i);
           if(i==0){
             xScale.domain(dvc.essential.xAxisScale[k])
             k++
           }
 
-          //console.log(xScale.domain())
           var xValue = xScale(x(d));
 
-        //  console.log(selection)
           var xMax = xScale.range()[1];
           if (chartwidth > dvc.optional.mobileBreakpoint) {
             if (d.amount <= 0) {
@@ -638,33 +656,35 @@ console.log(data)
           .enter().append('text')
           .attr('class', 'label')
           .text(function(d,i) {
-            console.log(d)
-            if (d.amount != 0) {
-              if(d.xcategory == "total"){
-                  return d3.format(",.3r")(x(d))
-              } else if (d.xcategory == "earnings"){
-                  if (chartwidth < dvc.optional.mobileBreakpoint){
-                    return "£"+d3.format(".0f")(x(d))
-                  } else {
-                    return "£"+d3.format(".2f")(x(d))
-                  }
-              } else {
-                  if(d.xcategory ==  "f_per" && d.sample_female== "1"){
-                      return d3.format(".0%")(x(d))+"*"
-                  } else if (d.xcategory ==  "age55_per" && d.sample_age == "1"){
-                      return d3.format(".0%")(x(d))+"*"
-                  } else if (d.xcategory == "bame_per" && d.sample_bame =="1"){
-                      return d3.format(".0%")(x(d))+"*"
-                  } else if(d.xcategory ==  "f_per" && d.amount == 1){
-                    return "> 95%"
-                  } else {
-                      return d3.format(".0%")(x(d))
-                  }
-              }
-            } else {
-                return '**'
-            };
-          })
+             fmt = d3.select(this.parentNode).datum().columnFormat
+            return d3.format(fmt)(x(d))
+          //Code left in that deals with special cases for small sample sizes and values over 95%
+          //   if (d.amount != 0) {
+          //     if(d.xcategory == "total"){
+          //         return d3.format(",.3r")(x(d))
+          //     } else if (d.xcategory == "earnings"){
+          //         if (chartwidth < dvc.optional.mobileBreakpoint){
+          //           return "£"+d3.format(".0f")(x(d))
+          //         } else {
+          //           return "£"+d3.format(".2f")(x(d))
+          //         }
+          //     } else {
+          //         if(d.xcategory ==  "f_per" && d.sample_female== "1"){
+          //             return d3.format(".0%")(x(d))+"*"
+          //         } else if (d.xcategory ==  "age55_per" && d.sample_age == "1"){
+          //             return d3.format(".0%")(x(d))+"*"
+          //         } else if (d.xcategory == "bame_per" && d.sample_bame =="1"){
+          //             return d3.format(".0%")(x(d))+"*"
+          //         } else if(d.xcategory ==  "f_per" && d.amount == 1){
+          //           return "> 95%"
+          //         } else {
+          //             return d3.format(".0%")(x(d))
+          //         }
+          //     }
+          //   } else {
+          //       return '**'
+          //   };
+           })
           .each(function(d,i) {positionLabel(this, d,i)});
 
           gColumn.append('g').attr('class', 'labels2')
@@ -675,32 +695,34 @@ console.log(data)
             .enter().append('text')
             .attr('class', 'label2')
             .text(function(d,i) {
-              console.log(d)
-              if (d.amount != 0) {
-                if(d.xcategory == "total"){
-                    return d3.format(",.3r")(x(d))
-                } else if (d.xcategory == "earnings"){
-                    if (chartwidth < dvc.optional.mobileBreakpoint){
-                      return "£"+d3.format(".0f")(x(d))
-                    } else {
-                      return "£"+d3.format(".2f")(x(d))
-                    }
-                } else {
-                    if(d.xcategory ==  "f_per" && d.sample_female== "1"){
-                        return d3.format(".0%")(x(d))+"*"
-                    } else if (d.xcategory ==  "age55_per" && d.sample_age == "1"){
-                        return d3.format(".0%")(x(d))+"*"
-                    } else if (d.xcategory == "bame_per" && d.sample_bame =="1"){
-                        return d3.format(".0%")(x(d))+"*"
-                    } else if (d.xcategory ==  "f_per" && d.amount == 1){
-                      return "> 95%"
-                    } else {
-                        return d3.format(".0%")(x(d))
-                    }
-                }
-              } else {
-                  return '**'
-              };
+              fmt = d3.select(this.parentNode).datum().columnFormat
+             return d3.format(fmt)(x(d))
+              // // console.log(d)
+              // if (d.amount != 0) {
+              //   if(d.xcategory == "total"){
+              //       return d3.format(",.3r")(x(d))
+              //   } else if (d.xcategory == "earnings"){
+              //       if (chartwidth < dvc.optional.mobileBreakpoint){
+              //         return "£"+d3.format(".0f")(x(d))
+              //       } else {
+              //         return "£"+d3.format(".2f")(x(d))
+              //       }
+              //   } else {
+              //       if(d.xcategory ==  "f_per" && d.sample_female== "1"){
+              //           return d3.format(".0%")(x(d))+"*"
+              //       } else if (d.xcategory ==  "age55_per" && d.sample_age == "1"){
+              //           return d3.format(".0%")(x(d))+"*"
+              //       } else if (d.xcategory == "bame_per" && d.sample_bame =="1"){
+              //           return d3.format(".0%")(x(d))+"*"
+              //       } else if (d.xcategory ==  "f_per" && d.amount == 1){
+              //         return "> 95%"
+              //       } else {
+              //           return d3.format(".0%")(x(d))
+              //       }
+              //   }
+              // } else {
+              //     return '**'
+              // };
             })
             .each(function(d,i) {positionLabel2(this, d,i)});
 
@@ -709,8 +731,30 @@ console.log(data)
           pymChild.sendHeight();
         }
 
-      });
-    })
+      }); //load csv
+
+    } //end drawGraphic
+
+
+
+    //check whether browser can cope with svg
+      if (Modernizr.svg) {
+         //load config
+        d3.json("config.json", function(error, config) {
+        dvc=config
+
+            //use pym to create iframed chart dependent on specified variables
+            pymChild = new pym.Child({ renderCallback: drawGraphic});
+          //});
+        })
+
+      } else {
+         //use pym to create iframe containing fallback image (which is set as default)
+         pymChild = new pym.Child();
+        if (pymChild) {
+              pymChild.sendHeight();
+          }
+      }
   </script>
 </body>
 

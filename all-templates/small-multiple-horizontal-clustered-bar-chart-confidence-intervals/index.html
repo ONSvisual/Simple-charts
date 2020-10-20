@@ -3,12 +3,9 @@
 
 <head>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-  <title>Weekly deaths by English regions and Wales over time</title>
+  <title>Prevalence by existing health condition</title>
 
-  <meta name="description" content="">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
   <link rel="stylesheet" href="../lib/globalStyle.css" />
   <style type="text/css">
@@ -114,24 +111,37 @@
     }
 
     .btn--primary:focus {
-    background-color: #0b5d30;
-}
+        background-color: #0b5d30;
+    }
 
     .btn--primary {
-    background-color: #0F8243;
-    color: #fff;
-}
+        background-color: #0F8243;
+        color: #fff;
+    }
+
+    .visuallyhidden{
+    	position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+     	clip: rect(0,0,0,0);
+      border: 0;
+    }
+
   </style>
 </head>
 
 <body>
-  <div id="legend"></div>
-  <div id="graphic" style="position:relative">
+  <h5 class="visuallyhidden" id="screenreadertext"></h5>
+  <div aria-hidden="true" id="legend"></div>
+  <div aria-hidden="true" id="graphic" style="position:relative">
     <img src="fallback.png" alt="[Chart]" />
   </div>
 
   <h6 id="source"></h6>
-  <h6>Notes:</h6>
+  <!-- <h6>Notes:</h6>
     <ol>
       <li>Based on area of usual residence, boundaries correct as of May 2020.</li>
       <li>Figures exclude deaths of non-residents.</li>
@@ -140,7 +150,7 @@
       <li>The International Classification of Diseases, Tenth Edition (ICD-10) definitions are as follows: coronavirus (COVID-19) (U07.1 and U07.2).</li>
     </ol>
   <h5>Download this chart</h5>
-  <a class="btn btn--primary print--hide" title="Download as xlsx" href="datadownload.xlsx">.xlsx</a>
+  <a class="btn btn--primary print--hide" title="Download as xlsx" href="datadownload.xlsx">.xlsx</a> -->
 
   <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" type="text/javascript"></script>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.1.0/d3-annotation.js" type="text/javascript"></script> -->
@@ -153,6 +163,7 @@
     var pymChild = null;
 
     function drawGraphic() {
+      d3.select("#screenreadertext").text(dvc.essential.screenreadertext)
 
       maxweek=d3.max(graphic_data,function(d){return d.date})
 
@@ -207,7 +218,7 @@
       }
 
       var margin = dvc.optional.margin[size]
-      var chart_width = parseInt(graphic.style("width")) / dvc.optional.chart_every[size] - margin.left - margin.right;
+      var chart_width = (parseInt(graphic.style("width"))-dvc.optional.margin_special_left) / dvc.optional.chart_every[size] - margin.left - margin.right;
       var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
 
       // clear out existing graphics
@@ -215,7 +226,10 @@
       legend.selectAll("*").remove();
 
       //draw legend
-      legend.append('svg').attr("height", dvc.optional.legendHeight[size]).attr("width", dvc.optional.chart_every[size] * (chart_width + margin.left + margin.right)).append('g')
+      legend
+      .append('svg')
+      .attr("height", dvc.optional.legendHeight[size])
+      .attr("width", dvc.optional.chart_every[size] * (chart_width + margin.left + margin.right)+dvc.optional.margin_special_left).append('g')
         .attr('transform', 'translate(5,5)')
 
       createLegend();
@@ -240,7 +254,7 @@
             .attr("x", 0)
             .attr("y", 0)
             .attr("width", 20)
-            .attr("height", 3)
+            .attr("height", 20)
 
           var_group.append("text")
             .text(dvc.essential.colour_palette[i].key)
@@ -248,7 +262,7 @@
             .attr("text-anchor", "start")
             .style("font-size", "12px")
             .style("fill", "#666")
-            .attr('y', 15)
+            .attr('y', 20)
             .attr('x', 0);
 
 
@@ -269,7 +283,7 @@
                   lineNo = lineNo + 1;
                   prevX = 0;
                 }
-                return eval((lineNo * 20) + 20);
+                return eval((lineNo * 30) + 25);
               })
               .attr("x", function(d) {
                 return prevX + 25;
@@ -288,7 +302,7 @@
                 if (dvc.essential.legendStyle == "rect") {
                   return eval((lineNo * 20) + 5);
                 } else {
-                  return eval((lineNo * 20) + 12);
+                  return eval((lineNo * 30) + 12);
 
                 }
               })
@@ -304,33 +318,24 @@
         }); // end foreach
       } // end function createLegend()
 
-      x = d3.scaleTime()
+      x = d3.scaleLinear()
         .range([0, chart_width]);
 
-      x.domain(d3.extent(graphic_data, function(d) {
-        return d.date
-      }))
-
-      dates=d3.map(graphic_data,function(d){return d.date}).keys()
 
 
-      var xAxis = d3.axisBottom(x)
-          .tickValues(d3.map(graphic_data,function(d){return d.date}).keys()
-          .map(function(d){return d3.timeParse("%a %b %d %Y")(d.match(/\b[\w']+(?:[^\w\n]+[\w']+){1,3}\b/g)[0])})
-          .sort(function(a,b){return a - b})
-          .filter(function(d,i){
-            return i % dvc.optional.x_ticks_every[size] === 0&&i<dates.length-dvc.optional.x_ticks_every[size] || i==dates.length-1 //Rob's fussy comment about labelling the last date
-          }))
-          .tickFormat(d3.timeFormat(dvc.essential.displayTicksFormat))
+      x.domain([d3.min(graphic_data,function(d){return d.lower}),d3.max(graphic_data, function(d) {
+        return d.upper
+      })])
 
-      line = d3.line()
-        .x(function(d) {
-          return x(d.date)
-        })
-        .y(function(d) {
-          return y[d.category](d.chiffre)
-        })
+      xCat = d3.scaleOrdinal()
+          .range([x(1),x(2),x(3),x(4)])
+          .domain(["The same rate","2x the rate", "3x the rate","4x the rate"])
 
+      colour = d3.scaleOrdinal()
+        .range(dvc.essential.colour_palette.map(function(d){return d.colour}))
+        .domain(dvc.essential.colour_palette.map(function(d){return d.key}))
+
+      var xAxis = d3.axisBottom(xCat).tickSize(-height).tickValues(xCat.domain().map(function(d,i){if(i%dvc.optional.x_ticks_every[size]==0){return d}}))
 
       nested = d3.nest()
         .key(function(d) {
@@ -342,174 +347,164 @@
         .sortValues(function(a,b) { return a.date - b.date; } )
         .entries(graphic_data)
 
-      //x domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
-      y = {}
+      y0 = d3.scaleBand().rangeRound([0, height]).paddingInner(0.1);;
 
 
-      if (dvc.essential.yAxisScale == "auto_zero_max_total") {
-        var yDomain = [0, d3.max(graphic_data, function(d) {
-          return +d.chiffre
-        })];
-        nested.forEach(function(item, i) {
-          y[item.key] = d3.scaleLinear()
-            .range([height, 0])
-            .domain(yDomain)
-            .nice();
-        });
-      } else if (dvc.essential.yAxisScale == "auto_min_max_total") {
-        var yDomain = d3.extent(graphic_data, function(d) {
-          return +d.chiffre
-        });
-        nested.forEach(function(item, i) {
-          y[item.key] = d3.scaleLinear()
-            .range([height, 0])
-            .domain(yDomain)
-            .nice();
-        });
-      } else if (dvc.essential.yAxisScale == "auto_min_max_each") {
-        rolledup = d3.nest()
-          .key(function(d) {
-            return d.category
-          })
-          .rollup(function(v) {
-            return [d3.min(v, function(d) {
-              return +d.chiffre
-            }), d3.max(v, function(d) {
-              return +d.chiffre
-            })]
-          })
-          .entries(graphic_data)
+      y0.domain(d3.map(graphic_data,function(d) {
+        return d.date;
+      }).keys());
 
-        rolledup.forEach(function(item, i) {
-          y[item.key] = d3.scaleLinear()
-            .range([height, 0])
-            .domain(item.value)
-            .nice();
-        });
+      y1 = d3.scaleBand();
+      y1.domain(d3.map(graphic_data,function(d){return d.series}).keys()).range([0, y0.bandwidth()]);
 
-      } else if (dvc.essential.yAxisScale == "auto_zero_max_each") {
-        rolledup = d3.nest()
-          .key(function(d) {
-            return d.category
-          })
-          .rollup(function(v) {
-            return [0, d3.max(v, function(d) {
-              return +d.chiffre
-            })]
-          })
-          .entries(graphic_data)
-
-        rolledup.forEach(function(item, i) {
-          y[item.key] = d3.scaleLinear()
-            .range([height, 0])
-            .domain(item.value)
-            .nice();
-        });
-
+      for(i=0;i<nested.length;i++){
+        if(i%dvc.optional.chart_every[size]==0){
+          drawLeftAxis()
+          drawchart(nested[i].key,nested[i].values,i)
+        }else{
+          drawchart(nested[i].key,nested[i].values,i)
+        }
       }
 
+      function drawchart(key,data,i){
+        var chart = d3.select("#graphic")
+          .append('svg')
+          .attr("width", chart_width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
 
-
-      // sort these hardwired numbers maybe through the dimensions above
-      charts = d3.select('#graphic')
-        .selectAll('svg')
-        .data(nested)
-        .enter()
-        .append('svg')
-        .attr("width", chart_width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-
-      charts
-        .append('text')
-        .attr("x", margin.left)
-        .attr("y", 12)
-        .text(function(d) {
-          return d.key
-        })
-        .attr('font-weight', 700)
-        .attr('font-size', "14px")
-
-      svg = charts
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-
-      svg
-        .append('g')
-        .attr('class', 'x axis')
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis)
-        .each(function(d, i) {
-          if (i % dvc.optional.chart_every[size] == dvc.optional.chart_every[size] - 1||i==nested.length-1) {
-            d3.select(this).append("text")
-              .text(dvc.essential.xAxisLabel)
-              .attr("transform", "translate(" + chart_width + "," + (margin.bottom - 5) + ")")
-              .attr('text-anchor', 'end')
-              .attr('fill', "#666");
-          }
-        })
-
-      //create svg for chart
-
-      drawyaxis = svg
-        .append('g')
-        .attr('class', 'y axis')
-
-      //y axis label
-         svg
-          .each(function(d, i) { //only label the first graph
-            if (i % dvc.optional.chart_every[size] == 0) {
-              d3.select(this).append("text")
-              .attr('transform','translate(' + (19 - margin.left) + ', 0)')
-              .attr("font-size","11px")
-              .attr("fill","#666")
-              .text(function(d,i) { return dvc.essential.yAxisLabel});
-            }
+          chart.append('text')
+          .attr("x", margin.left)
+          .attr("y", 12)
+          .text(function() {
+            return key
           })
+          .attr('font-weight', 700)
+          .attr('font-size', "14px")
 
-      drawyaxis.each(function(d, i) {
-        if (i % dvc.optional.chart_every[size] == 0) {
-          d3.select(this).call(d3.axisLeft(y[d.key]).tickSize(-chart_width).ticks(3));
-        } else {
-          d3.select(this).call(d3.axisLeft(y[d.key]).tickSize(-chart_width).tickFormat("").ticks(3))
-        }
+          if(i%dvc.optional.chart_every[size]==0){
+            chart.append('text')
+            .attr("x", margin.left)
+            .attr("y", 30)
+            .text("Comparison group: White")
+            .attr('font-weight', 400)
+            .attr('font-size', "14px")
+          }
 
-      })
+          svg = chart
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-      svg
-        .selectAll('g.line')
-        .data(function(d) {
-          return d.values;
-        })
-        .enter()
-        .append('path')
-        .attr("d", function(d) {
-          // console.log(d)
-          return line(d.values)
-        })
-        .attr("class",function(d){return "line"+d.key.replace(/\s/g, '')})
-        .attr("stroke", function(d) {
-          return dvc.essential.colour_palette.filter(function(e) {
-            return e.key == d.key
-          })[0].colour
-        })
-        .attr('stroke-width', "3px")
+          svg
+            .append('g')
+            .attr('class', 'x axis')
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .selectAll("text")
+            .call(wrap,x(2)-x(1))
 
-      // create a big SVG over the top for annotations
-      annotationsLayer=d3.select("#graphic")
-        .append('svg')
-        .attr('id','annotationLayer')
-        .attr('height', Math.ceil(nested.length / dvc.optional.chart_every[size]) * (height + margin.top + margin.bottom))
-        .attr('width',dvc.optional.chart_every[size]*(chart_width+margin.top+margin.bottom))
-        .style('background-color',"rgba(255, 255, 255, 0)")
-        .style('position','absolute')
-        .style('left', "0px")
-        .style('top',"0px")
+          svg.selectAll('g.x.axis')
+            .each(function() {
+              if (i % dvc.optional.chart_every[size] == dvc.optional.chart_every[size] - 1||i==nested.length-1) {
+                d3.select(this).append("text")
+                  .text(dvc.essential.xAxisLabel)
+                  .attr("transform", "translate(" + chart_width + "," + margin.bottom/2 + ")")
+                  .attr('text-anchor', 'end')
+                  .attr('fill', "#666")
+                  .call(wrap,chart_width)
+              }
+            })
+
+          series= svg.selectAll("g.series")
+          .data(data)
+          .enter()
+          .append('g')
+
+          series.selectAll("rect")
+          .data(function(d){return d.values})
+          .enter()
+          .append('rect')
+          .attr('x',function(d){return x(Math.min(1,d.chiffre))})
+          .attr('y',function(d){return y0(d.date)+y1(d.series)})
+          .attr('height',y1.bandwidth())
+          .attr('width',function(d){return Math.abs(x(d.chiffre)-x(1))})
+          .attr('fill',function(d){return colour(d.series)})
+          //
+          series.selectAll('line.between')
+          .data(function(d){return d.values})
+          .enter()
+          .append('line')
+          .attr('class',"between")
+          .attr('x1',function(d){return x(d.lower)})
+          .attr('x2',function(d){return x(d.upper)})
+          .attr('y1',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()/2})
+          .attr('y2',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()/2})
+          .attr('stroke',"#414042")
+          .attr('stroke-width',"1.5px")
+
+          series.selectAll('line.lower')
+          .data(function(d){return d.values})
+          .enter()
+          .append('line')
+          .attr('class',"lower")
+          .attr('x1',function(d){return x(d.lower)})
+          .attr('x2',function(d){return x(d.lower)})
+          .attr('y1',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()*0.25})
+          .attr('y2',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()*0.75})
+          .attr('stroke',"#414042")
+          .attr('stroke-width',"1.5px")
+
+          series.selectAll('line.upper')
+          .data(function(d){return d.values})
+          .enter()
+          .append('line')
+          .attr('class',"upper")
+          .attr('x1',function(d){return x(d.upper)})
+          .attr('x2',function(d){return x(d.upper)})
+          .attr('y1',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()*0.25})
+          .attr('y2',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()*0.75})
+          .attr('stroke',"#414042")
+          .attr('stroke-width',"1.5px")
+      }
+
+      function drawLeftAxis(){
+        var svg = d3.select("#graphic")
+          .append('svg')
+          .attr("width", dvc.optional.margin_special_left)
+          .attr("height", height + margin.top + margin.bottom)
+          .append('g')
+          .attr("transform", "translate(" + dvc.optional.margin_special_left + "," + margin.top + ")")
+          .append('g')
+          .attr('class', 'y axis')
+          .call(d3.axisLeft(y0))
+      }
+
+      function wrap(text, width) {
+        text.each(function() {
+          var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.1, // ems
+              y = text.attr("y") != undefined ? text.attr("y") : 0,
+              dy =  text.attr("dy") != undefined ? parseFloat(text.attr("dy")) : 0 ,
+              tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+          }
+        });
+      }
 
       //create link to source
       d3.select('#source')
         .text('Source: ' + dvc.essential.sourceText);
-
-      d3.selectAll(".line2020").raise()
 
       //use pym to calculate chart dimensions
       if (pymChild) {
@@ -529,7 +524,10 @@
           graphic_data = data;
 
           graphic_data.forEach(function(d){
-            d.date=d3.timeParse(dvc.essential.dateFormat)(d.date)
+            // d.date=d3.timeParse(dvc.essential.dateFormat)(d.date)
+            d.chiffre=+d.chiffre
+            d.lower=+d.lower
+            d.upper=+d.upper
           })
           //use pym to create iframed chart dependent on specified variables
           pymChild = new pym.Child({

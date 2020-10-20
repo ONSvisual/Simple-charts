@@ -1,0 +1,27 @@
+{
+  "essential": {
+    "graphic_data_url": "data.csv",
+    "useRanks":true,
+    "timeFormat": "%Y",
+    "timePeriods":[2014,2015,2016,2017],
+    "colour_palette": ["#36ADD9", "#BBBDBF", "#BBBDBF","#BBBDBF", "#BBBDBF", "#BBBDBF"],
+    "sourceText": ["Office for National Statistics"],
+    "yAxisLabel":"Rank",
+    "yAxisBreak":10.5,
+    "yAxisBreakText":"Top 10 &#9650;",
+    "screenreadertext":"This chart has been purposely hidden to screenreaders as it is burdonsome to the user. Only 13 countries have been included among the top ten highest-value ultimate investors between 2014 and 2017"
+  },
+
+  "optional": {
+    "margin_sm": [50, 200, 20, 15],
+    "margin_md": [50, 250, 20, 15],
+    "margin_lg": [50, 250, 20, 15],
+
+    "aspectRatio_sm": [4.5, 24],
+    "aspectRatio_md": [5, 16],
+    "aspectRatio_lg": [6, 10],
+
+    "mobileBreakpoint": 414,
+    "tabletBreakpoint": 576
+  }
+}

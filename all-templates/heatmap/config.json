@@ -1,21 +1,40 @@
 {
-    "essential" : {
-            "graphic_data_url": "data.csv",
-            "sourceText":["ONS International Trade in Services"],
-            "sourceURL":["https://www.ons.gov.uk"],
-            "varcolour": ["#f03b20","#ffffb2","#fecc5c","#fd8d3c","#bd0026"],
-            "numberBreaks":4,
-            "breaks":[0,5,10,40,70],
-            "brickRatio_S_M_L":[0.22,0.5,0.7],
-            "unittext":"NUTS1 share of product: ",
-            "tooltipFormat":",.1f"
+  "essential" : {
+    "graphic_data_url": "data.csv",
+		"sourceText":"Office for National Statistics – Annual Population Survey 3-year pooled dataset 2015-17",
+    "breaks":"jenks",
+    "colour_palette":"GnBu",
+    "numberBreaks":5
+  },
+  "optional" : {
+    "margin": {
+      "sm": {
+        "top": 25,
+        "right": 10,
+        "bottom": 10,
+        "left": 200
+      },
+      "md": {
+        "top": 25,
+        "right": 10,
+        "bottom": 10,
+        "left": 150
+      },
+      "lg": {
+        "top": 25,
+        "right": 10,
+        "bottom": 10,
+        "left": 165
+      }
     },
-    "optional" : {
-            "margin_sm": [5, 0, 30, 80],
-            "margin_md": [5, 0, 30, 80],
-            "margin_lg": [5, 0, 50, 176],
+    "aspectRatio": {
+      "sm": [16, 16],
+      "md": [16, 16],
+      "lg": [16, 9]
+    },
 
-            "mobileBreakpoint" : 450,
-            "tabletBreakpoint" : 600
-    }
+    "middleBreakpoint": 550,
+    "mobileBreakpoint" : 414
+
+  }
 }

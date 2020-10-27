@@ -20,7 +20,8 @@
     "sourceText": ["Office for National Statistics – Deaths registered weekly in England and Wales"],
     "xAxisLabel": "Week ending",
     "yAxisLabel": "Weekly Deaths",
-    "yAxisScale": "auto_zero_max_total"
+    "yAxisScale": "auto_zero_max_total",
+    "screenreadertext":"REPLACE ME"
   },
   "optional": {
     "margin": {

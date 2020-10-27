@@ -125,8 +125,9 @@
 </head>
 
 <body>
-  <div id="legend"></div>
-  <div id="graphic" style="position:relative">
+  <h5 class="visuallyhidden" id="screenreadertext"></h5>
+  <div aria-hidden="true" id="legend"></div>
+  <div aria-hidden="true" id="graphic" style="position:relative">
     <img src="fallback.png" alt="[Chart]" />
   </div>
 
@@ -153,6 +154,8 @@
     var pymChild = null;
 
     function drawGraphic() {
+      //set the screenreader H5
+      d3.select("#screenreadertext").text(dvc.essential.screenreadertext)
 
       maxweek=d3.max(graphic_data,function(d){return d.date})
 

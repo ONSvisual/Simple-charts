@@ -1,0 +1,31 @@
+{
+    "essential" : {
+            "graphic_data_url": "data.csv",
+            "colour_palette": [
+                "#206095",
+                "#118C7B",
+                "#003C57",
+                "#A8BD3A",
+                "#27A0CC"
+              ],
+            "source_label":"2001",
+            "target_label":"2012",
+            "unit_preffix": "£",
+            "unit_suffix": "million",
+            "format": ",.0f",
+            "load_filter": "filter 1",
+            "alt_text": "Use title from tracker here to provide an explanation of chart",
+            "source":"ONS ...."
+    },
+    "optional" : {
+            "margin_sm": [10, 10, 10, 10],
+            "margin_md": [10, 10, 10, 10],
+            "margin_lg": [10, 10, 10, 10],
+
+            "aspectRatio_sm" : [7,3],
+            "aspectRatio_md" : [7,4],
+            "aspectRatio_lg" : [7,5],
+
+            "mobileBreakpoint" : 400
+    }
+}

@@ -93,6 +93,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     outline-style:none;
     }
 
+.chosen-drop{
+  width: 200px;
+}
 
       </style>
 </head>
@@ -180,11 +183,8 @@ function drawGraphic(width) {
 
     // Build dropdown for filters
 		var optns = d3.select("#filter_dropdown")
-      // .append("div")
-      // .attr("id","sel")
       .append("select")
 			.attr("id","filters")
-      .attr("style", "width:170px")
 			.attr("class","chosen-select");
 
 		optns.append("option")
@@ -196,7 +196,7 @@ function drawGraphic(width) {
 			.text(function(d){ return d});
 
 
-		 $('#filters').chosen({placeholder_text_single: dvc.essential.load_filter})
+		 $('#filters').chosen({placeholder_text_single: dvc.essential.load_filter, "disable_search": true, width: "200px"})
 
 		 d3.select('input.chosen-search-input').attr('id','chosensearchinput')
      d3.select('div.chosen-search').insert('label','input.chosen-search-input').attr('class','visuallyhidden').attr('for','chosensearchinput').html("Type to select a filter")
@@ -218,7 +218,8 @@ function drawGraphic(width) {
 
 function createSankey (){
   var formatNumber = d3.format(dvc.essential.format),    // zero decimal places
-      fmt = function(d) { return dvc.essential.unit_preffix+""+ formatNumber(d) + " " + dvc.essential.unit_suffix; },
+      fmt = function(d) { return dvc.essential.unit_preffix+""+ formatNumber(d) + " " + dvc.essential.unit_suffix; }
+
       color = d3.scaleOrdinal(dvc.essential.colour_palette);
 
   colors =  []
@@ -274,7 +275,7 @@ function createSankey (){
             })
 
         // add in the nodes
-        var node = svg.append("g").selectAll(".node")
+         node = svg.append("g").selectAll(".node")
             .data(graph.nodes)
           .enter().append("g")
             .attr("class", "node")
@@ -283,7 +284,7 @@ function createSankey (){
             });
 
         // add the rectangles for the nodes
-        node.append("rect")
+        rects = node.append("rect")
             .attr("id", function(d,){
                 if(d.sourceLinks.length != 0){
                   return "S_"+colors.indexOf(d.name);
@@ -308,18 +309,26 @@ function createSankey (){
             })
 
             // add in the title for the nodes
-           node.append("text")
+        text = node.append("text")
+              //have to assign a class name rather than apply filter as filter doesn't work when data updates
+               .attr("class", function(d){
+                 if(d.sourceLinks.length == 0 ) {
+                   return "rightLabel"
+                 } else {
+                   return "leftLabel"
+                 }
+               })
                .attr("x", -6)
                .attr("y", function(d) { return d.dy / 2; })
                .attr("dy", ".35em")
                .attr("text-anchor", "end")
                .attr("transform", null)
-               .attr("display","none")
                .text(function(d) { return d.name; })
-             .filter(function(d) { return d.x < chart_width / 2; })
-               .attr("x", 6 + sankey.nodeWidth())
-               .attr("text-anchor", "start")
-               .attr("display","auto");
+
+
+          d3.selectAll(".leftLabel")
+          .attr("x", 6 + sankey.nodeWidth())
+          .attr("text-anchor", "start")
 
           d3.select("#alt_text").text(dvc.essential.alt_text)
 } //end createSankey
@@ -389,29 +398,31 @@ function updateSankey(){
         })
         .attr("d", path)
        .attr("stroke-width", function(d) {
-         console.log(d)
            return Math.max(1, d.dy);
         })
-      // .sort(function(a, b) { return b.dy - a.dy; })
+        .attr("stroke", function (d){
+           return color(d.source.name);
+         })
 
-
-
-    // add in the nodes
-    d3.selectAll(".node")
-        .data(graph.nodes)
-        .transition()
-        .duration(500)
-        .attr("transform", function(d) {
-            return "translate(" + d.x + "," + d.y + ")";
-        });
+      // add in the nodes
+      node.data(graph.nodes)
+          .transition()
+          .duration(500)
+          .attr("transform", function(d) {
+              return "translate(" + d.x + "," + d.y + ")";
+          });
 
         // add the rectangles for the nodes
-        d3.selectAll(".node").selectAll("rect")
-          //  .data(graph.nodes)
+        rects.data(graph.nodes)
             .transition()
             .duration(500)
-            .attr("height", function(d) { console.log(d); return d.dy; })
+            .attr("height", function(d) {  return d.dy; })
             .attr("width", sankey.nodeWidth())
+
+        text.data(graph.nodes)
+            .transition()
+            .duration(500)
+            .attr("y", function(d) { console.log(d, d.dy); return d.dy / 2; })
 
 } //end updateSankey
 

@@ -19,23 +19,27 @@
       font-family: 'Open Sans';
     }
 
-    table.center {
-      margin: 0 auto;
-    }
-
-    tbody thead {
+    tbody{
       color: #206095;
     }
 
-    th,
+    tr th{
+      border-bottom: 3px solid #ddd;
+      font-weight: 700;
+      vertical-align: bottom;
+    }
+
     td {
       border-bottom: 2px solid #ddd;
       font-size: 16px;
-      font-weight: 700;
       text-align: left;
     }
 
-    tr {
+    td:first-child{
+      min-width: 25px;
+    }
+
+    /* tr {
       height: 50px;
       vertical-align: middle;
       text-align: left;
@@ -48,9 +52,13 @@
     td,
     html p {
       color: #206095;
+    } */
+
+    td img{
+      vertical-align: text-top;
     }
 
-    td.dash0 p {
+    /* td.dash0 p {
       text-decoration: underline dashed;
       cursor: pointer;
     }
@@ -88,7 +96,7 @@
     #sortarrow:focus,
     #sortarrow:hover {
       box-shadow: 0 0 0 3px #206095;
-    }
+    } */
 
     /* tippy styling */
     .tippy-tooltip.ons-theme[x-placement^='top'] .tippy-arrow {
@@ -155,8 +163,6 @@
     //var pymChild = null;
     var graphic = d3.select('#graphic');
     var dvc = {};
-    var fmt = d3.format(",.1f");
-    var updown = true;
 
 
     //start tooltips
@@ -171,24 +177,6 @@
 
 
     function drawTable() {
-      var threshold_md = dvc.optional.middleBreakpoint;
-      var threshold_sm = dvc.optional.mobileBreakpoint;
-
-      if (parseInt(graphic.style("width")) < threshold_sm) {
-        size = "sm";
-      } else if (parseInt(graphic.style("width")) < threshold_md) {
-        size = "md";
-      } else {
-        size = "lg";
-      }
-      var threshold_md = 700;
-      dvc.threshold_sm = dvc.optional.mobileBreakpoint;
-
-      //set variables for chart dimensions dependent on width of #graphic
-      var margin = dvc.optional.margin[size]
-      var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-      var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
-
       d3.select('#graphic').selectAll("*").remove();
 
       //  create Table using d3
@@ -196,106 +184,40 @@
       .append('table')
 
       table.append("caption")
-      .attr("class", "visuallyhidden").text(dvc.essential.caption)
+      .attr("class", "visuallyhidden").text(dvc.caption)
 
       var headers = table.append('thead').append('tr');
-      headings = dvc.essential.headings;
 
-      if (parseInt(graphic.style("width")) < dvc.threshold_sm) headings.pop();
+      tableData = graphicData.map(function(d,i){
+        return ["images/OPN"+i+".svg",d.Indicator,d["This week"],+d["This week"]-d["Last week"]]
+      })
 
       var tdata = headers.selectAll('td')
-        .data(headings).enter()
+        .data(dvc.headings)
+        .enter()
         .append('th')
         .attr('scope', 'col')
-        // .attr('width', 60 + "px")
         .text(function(d) {
           return d;
         });
 
-      var rowAmount = [];
-      for (var x = 0; x < dvc.essential.tableLayout[0]; x++) {
-        rowAmount.push(x);
-      };
-
       var rows = table.append('tbody').selectAll('tr')
-        .data(rowAmount).enter()
+        .data(tableData).enter()
         .append('tr')
         .attr('id', function(d, i) {
           return 'row' + i;
         });
-      // rows.append('th')
-      //     .attr('scope','row')
-      //     .attr('class','dash0');
 
-      var colAmount = [];
-      for (var x = 0; x < dvc.essential.tableLayout[1]; x++) {
-        colAmount.push(x);
-      };
-
-      if (parseInt(graphic.style("width")) < dvc.threshold_sm) colAmount.pop();
-
-      rows.selectAll('td')
-        .data(colAmount)
-        .enter()
-        .append('td')
-        .attr("class", function(d, i) {
-          return "dash" + i;
-        });
-
-
-      var td = d3.select("tbody").selectAll("tr").selectAll("td");
-      var th = d3.select("thead").selectAll("tr").selectAll("td");
-
-      th.attr("id", function(d, i) {
-        return "hdash" + i;
-      }); // add 0-7 to each row
-      d3.select('#hdash2').append('span')
-        .attr('tabindex', 0)
-        .attr('id', 'sortarrow')
-        .attr('aria-label', 'sort table by descending annual change %')
-        .attr('role', 'button').html('&#9650');
-
-      d3.select('#sortarrow').on('click', sortTable).on('keypress', function() {
-        if (d3.event.keyCode == 13 || d3.event.keyCode == 32) {
-          d3.event.preventDefault();
-          sortTable()
+      rows.selectAll('td').data(function(d){return d;})
+      .enter()
+      .append('td')
+      .each(function(d,i){
+        if(i==0){
+          d3.select(this).append('img').attr('src',d).attr('height',100).attr('width',"100")
+        }else{
+          d3.select(this).append('text').text(d)
         }
-      });
-
-
-      var incidents = [],
-        source = [],
-        units = [],
-        change = [],
-        positive = [],
-        dp = [];
-        bwtype = [],
-        source = [];
-        start = [],
-        end = [];
-
-      var width = 180,
-        height = 70;
-
-      var fmt = d3.format(".1%");
-      //  fmd = d3.format(",.0f");
-
-      //console.log(graphicData);
-
-      for (var column in graphicData[0]) {
-        if (column == "Indicator") continue;
-        //console.log(column);
-        //  incidents.push(graphicData[0][column]);
-        source.push(graphicData[0][column]);
-        units.push(graphicData[1][column]);
-        change.push(graphicData[2][column]);
-        positive.push(graphicData[3][column]);
-        dp.push(graphicData[4][column]);
-        start.push(graphicData[5][column]);
-        end.push(graphicData[6][column]);
-        bwtype.push(column);
-      }
-      //console.log(start,end);//incidents,source,units,change,positive,
+      })
 
       d3.selectAll(".dash0")
         .html(function(d, i) {
@@ -322,214 +244,12 @@
           }
         });
 
-      if (dvc.essential.sparkData === true) {
-
-        var timeseries = [];
-
-        d3.csv('data/timeseries.csv').then(function(tsdata) {
-          timeseries = tsdata;
-          // sort data
-          lines = {};
-          for (var column in timeseries[0]) {
-            if (column == 'date') continue;
-            lines[column] = timeseries.map(function(d) {
-              //  if (d[column] != 'null'){
-              return {
-                'date': d.date,
-                'obs': d[column]
-              };
-              //  } // ends if
-            });
-          }
-
-          var ct = 0;
-          for (var column in timeseries[0]) {
-            if (column == 'date') continue;
-            var startend = [];
-            //place = row[n].td.dash3
-            var place = d3.select('#row' + ct).select('.dash3');
-            startend.push({
-              date: start[ct]
-            });
-            startend.push({
-              date: end[ct]
-            });
-            if (ct < dvc.essential.tableLayout[0]) {
-              spark(lines[column], place, width, height, startend, dp[ct]);
-            }
-            ct++;
-          }
-        });
-
-      }
       //use pym to calculate chart dimensions
       setTimeout(function() {
         pymChild = new pym.Child();
         pymChild.sendHeight();
       }, 750)
     } // ends drawTable
-
-
-    function spark(lineData, container, swidth, sheight, sparkDates, dec) {
-
-      var fmdec = d3.format(",." + dec + "f");
-
-      var parseTime = d3.timeParse(dvc.essential.dateFormat);
-      var x = d3.scaleTime()
-        .range([0, swidth - 10]) // - Padding.left - Padding.right)])
-        .domain(d3.extent(lineData, function(d) {
-          if (d.obs != 'null') {
-            return parseTime(d.date);
-          }
-        }));
-      //console.log(x.domain());
-
-      var y = d3.scaleLinear()
-        .domain([d3.min(lineData, function(d) {
-            return Math.floor(d.obs);
-          }),
-          d3.max(lineData, function(d) {
-            return Math.ceil(d.obs);
-          })
-        ])
-        .range([sheight - 41, 0]);
-      //console.log(y.domain());
-
-
-      // my interpolator
-      var spline = d3.line()
-        .defined(function(d) {
-          return d.obs != 'null' //&& d.obs != 'none';
-        })
-        .x(function(d) {
-          return x(parseTime(d.date));
-        })
-        .y(function(d) {
-          return y(+d.obs);
-        });
-
-      var endPoints = [];
-      var inc = 0;
-      while (lineData[inc].obs == "null") {
-        inc++;
-      }
-      endPoints.push(lineData[inc]);
-
-      while (lineData[inc].obs != "null" && inc < lineData.length - 1) {
-        inc++;
-      }
-
-      if (lineData[inc].obs == 'null') {
-        //  console.log("data not the end");
-        endPoints.push(lineData[inc - 1]);
-      } else {
-        //  console.log("data till the end");
-        endPoints.push(lineData[inc]);
-      }
-
-
-      if (parseFloat(endPoints[0].obs) > parseFloat(endPoints[1].obs)) {
-        fallingRising = " falling to "
-      } else if (parseFloat(endPoints[1].obs) > parseFloat(endPoints[0].obs)) {
-        fallingRising = " rising to "
-      } else {
-        fallingRising = " remaining the same "
-      }
-
-      groupLine = container.append('svg')
-        .attr('aria-label', fmdec(endPoints[0].obs) + " on " + sparkDates[0].date + fallingRising + fmdec(endPoints[1].obs) + " on " + sparkDates[1].date)
-        .attr('role', 'img')
-        .attr('width', swidth)
-        .attr('height', sheight);
-
-      groupLine.append("title").text("Chart showing trend of this indicator over time");
-      groupLine.append("desc")
-        .text(fmdec(endPoints[0].obs) + " on " + sparkDates[0].date + fallingRising + fmdec(endPoints[1].obs) + " on " + sparkDates[1].date);
-      //  console.log(fmdec(endPoints[0].obs) + " on " + sparkDates[0].date + fallingRising + fmdec(endPoints[1].obs) + " on " +   sparkDates[1].date);
-
-      groupLine.append('g')
-        .append('path')
-        .style("fill", "none")
-        .style("stroke-width", "2px")
-        .style("stroke", '#206095')
-        //.style('stroke-linecap', 'butt')
-        .style('opacity', 1)
-        .attr('d', spline(d3.values(lineData)))
-        .attr('transform', "translate(5,3)");
-
-
-      if (dvc.essential.nodes) {
-        //d3.select('#row'+lp).select('.dash3');
-
-        groupLine.selectAll('circles')
-          .data(d3.values(endPoints))
-          .enter()
-          .append('circle')
-          .attr('r', 3 + 'px')
-          .style('fill', '#FF9933')
-          .attr('cx', function(d) {
-            return x(parseTime(d.date));
-          })
-          .attr('cy', function(d) {
-            return y(+d.obs);
-          })
-          .attr('transform', "translate(5,3)");
-      }
-      // add values
-      if (dvc.essential.values) {
-        groupLine.selectAll('text')
-          .data(d3.values(endPoints))
-          .enter()
-          .append('text')
-          .attr('class', 'sparkNo')
-
-          .attr('x', function(d, i) {
-            if (i == 0) {
-              return 4;
-            } else {
-              return swidth - 4;
-            }
-          })
-          .attr('y', 50)
-          .attr('text-anchor', function(d, i) {
-            if (i == 0) {
-              return 'start';
-            } else {
-              return 'end';
-            }
-          })
-          .text(function(d) {
-            return fmdec(d.obs);
-          })
-
-
-        groupLine.selectAll('.sparkDate')
-          .data(sparkDates)
-          .enter()
-          .append('text')
-          .attr('class', 'sparkNo')
-
-          .attr('x', function(d, i) {
-            if (i == 0) {
-              return 4;
-            } else {
-              return swidth - 4;
-            }
-          })
-          .attr('y', 65)
-          .attr('text-anchor', function(d, i) {
-            if (i == 0) {
-              return 'start';
-            } else {
-              return 'end';
-            }
-          })
-          .text(function(d) {
-            // return timefmt(parseTime(d.date));
-            return d.date;
-          })
-      }
-    } // ends spark F
 
 
     function sortTable() {
@@ -628,8 +348,7 @@
       d3.json('config.json').then(function(config) {
         dvc = config;
 
-        timefmt = d3.timeFormat(dvc.essential.dateFormatDisplay);
-        d3.csv('data/data.csv').then(function(data) {
+        d3.csv('data/datanew.csv').then(function(data) {
           graphicData = data;
 
           pymChild = new pym.Child({

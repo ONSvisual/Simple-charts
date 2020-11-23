@@ -1,47 +1,4 @@
 {
-    "essential" : {
-            "tableLayout": [11,4],
-            "dateFormat": "%d/%m/%Y",
-			      "dateFormatDisplay": "%d %b %y",
-            "sparkData": false,
-            "sparkDataName":"sparkdata",
-            "caption":"A summary table of the main faster indicators and how they changed in the last week and over time.",
-            "headings": ["Indicator", "Units", "Latest change", "Timeline"],
-            "xAxisinview":false,
-            "xAxisLabel":"",
-            "yAxisinview":false,
-            "nodes": true,
-            "values": true,
-
-            "margin_centre": [2,2,2]
-    },
-    "optional" : {
-      "margin": {
-        "sm": {
-          "top": 30,
-          "right": 23,
-          "bottom": 45,
-          "left": 50
-        },
-        "md": {
-          "top": 30,
-          "right": 23,
-          "bottom": 50,
-          "left": 50
-        },
-        "lg": {
-          "top": 30,
-          "right": 23,
-          "bottom": 45,
-          "left": 35
-        }
-      },
-      "aspectRatio": {
-        "sm": [16, 8],
-        "md": [16, 8],
-        "lg": [16, 10]
-      },
-            "mobileBreakpoint": 414,
-            "middleBreakpoint":510
-    }
+  "caption":"A summary table of the main faster indicators and how they changed in the last week and over time.",
+  "headings": ["","Indicator", "This week(%)", "Change from last week (%)"]
 }

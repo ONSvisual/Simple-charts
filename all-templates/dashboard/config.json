@@ -3,7 +3,7 @@
             "tableLayout": [11,4],
             "dateFormat": "%d/%m/%Y",
 			      "dateFormatDisplay": "%d %b %y",
-            "sparkData": true,
+            "sparkData": false,
             "sparkDataName":"sparkdata",
             "caption":"A summary table of the main faster indicators and how they changed in the last week and over time.",
             "headings": ["Indicator", "Units", "Latest change", "Timeline"],

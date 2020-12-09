@@ -1,0 +1,82 @@
+{
+  "essential": {
+    "graphic_data_url": "regions.csv",
+    "dateFormat": "%d/%m/%Y",
+
+    "colour_palette": [
+      {
+        "key": "Adjusted for age",
+        "colour": "#A8BD3A"
+      },
+      {
+        "key": "+ Geography",
+        "colour": "#549E99"
+      },
+      {
+        "key": "+ Socio-economics",
+        "colour": "#1E7F81"
+      },
+      {
+        "key": "+ Self-reported health/disability",
+        "colour": "#175A7A"
+      },
+      {
+        "key":"+ Hospital-based comorbidities",
+        "colour":"#003c57"
+      }
+
+    ],
+    "categorySort": ["Cardiovascular disease","Metabolic","East","Respiratory","Cancer","Musculoskeletal","Renal","Renal","Mental/behavioural","Neurological"],
+    "sourceText": ["Office for National Statistics – Explaining ethnic background contrasts in deaths involving Coronavirus (COVID-19)"],
+    "xAxisLabel": "Rate of death compared to White ethnic group",
+    "yAxisLabel": "Regions and Countries",
+    "yAxisScale": "auto_zero_max_total",
+    "screenreadertext":"Rate of death involving COVID-19 by ethnic group and sex relative to the White population for people in private households, England, 2 March to 28 July 2020"
+  },
+  "optional": {
+    "margin": {
+      "sm": {
+        "top": 40,
+        "right": 20,
+        "bottom": 80,
+        "left": 8
+      },
+      "md": {
+        "top": 40,
+        "right": 20,
+        "bottom": 80,
+        "left": 8
+      },
+      "lg": {
+        "top": 40,
+        "right": 20,
+        "bottom": 80,
+        "left": 8
+      }
+    },
+    "margin_special_left":180,
+    "chart_every":{
+      "sm": 1,
+      "md": 2,
+      "lg": 2
+    },
+    "aspectRatio": {
+      "sm": [4, 12],
+      "md": [8, 16],
+      "lg": [16, 24]
+    },
+    "legendHeight":{
+      "sm": 120,
+      "md": 60,
+      "lg": 60
+    },
+
+    "mobileBreakpoint": 400,
+    "middleBreakpoint": 550,
+    "x_ticks_every": {
+      "sm": 2,
+      "md": 2,
+      "lg": 1
+    }
+  }
+}

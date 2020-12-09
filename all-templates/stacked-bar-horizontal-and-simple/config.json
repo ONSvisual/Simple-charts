@@ -5,50 +5,61 @@
 
     "colour_palette": [
       {
-        "key": "Adjusted for age",
+        "key": "White",
+        "colour": "#206095"
+      },
+      {
+        "key": "Indian",
         "colour": "#A8BD3A"
       },
       {
-        "key": "+ Geography",
-        "colour": "#549E99"
+        "key": "Other",
+        "colour": "#118C7B"
       },
       {
-        "key": "+ Socio-economics",
-        "colour": "#1E7F81"
+        "key": "Black",
+        "colour": "#003C57"
       },
       {
-        "key": "+ Self-reported health/disability",
-        "colour": "#175A7A"
+        "key":"Bangladeshi or Pakistani",
+        "colour":"#27A0CC"
       },
       {
-        "key":"+ Hospital-based comorbidities",
-        "colour":"#003c57"
+        "key":"Mixed",
+        "colour":"#871A5B"
+      },
+      {
+        "key":"Chinese",
+        "colour":"#F66068"
+      },
+      {
+        "key":"Death rate",
+        "colour":"#746CB1"
       }
-
     ],
     "categorySort": ["Cardiovascular disease","Metabolic","East","Respiratory","Cancer","Musculoskeletal","Renal","Renal","Mental/behavioural","Neurological"],
-    "sourceText": ["Office for National Statistics – Explaining ethnic background contrasts in deaths involving Coronavirus (COVID-19)"],
-    "xAxisLabel": "Rate of death compared to White ethnic group",
+    "sourceText": ["Office for National Statistics – Coronavirus and ethnicity: a summary of what we know"],
+    "xAxisLabel": ["Proportion of ethnicity in occupation (%)","Rate of death involving COVID-19 per 100,000"],
     "yAxisLabel": "Regions and Countries",
     "yAxisScale": "auto_zero_max_total",
-    "screenreadertext":"Rate of death involving COVID-19 by ethnic group and sex relative to the White population for people in private households, England, 2 March to 28 July 2020"
+    "screenreadertext":"A graph showing occupation by proportion of ethnicities and rate of death involving COVID-19 "
   },
   "optional": {
     "margin": {
       "sm": {
-        "top": 40,
+        "top": 30,
         "right": 20,
         "bottom": 80,
         "left": 8
       },
       "md": {
-        "top": 40,
+        "top": 20,
         "right": 20,
         "bottom": 80,
         "left": 8
       },
       "lg": {
-        "top": 40,
+        "top": 20,
         "right": 20,
         "bottom": 80,
         "left": 8
@@ -61,9 +72,9 @@
       "lg": 2
     },
     "aspectRatio": {
-      "sm": [4, 12],
+      "sm": [2, 16],
       "md": [8, 16],
-      "lg": [16, 24]
+      "lg": [10, 24]
     },
     "legendHeight":{
       "sm": 120,
@@ -73,10 +84,10 @@
 
     "mobileBreakpoint": 400,
     "middleBreakpoint": 550,
-    "x_ticks_every": {
+    "x_ticks": {
       "sm": 2,
-      "md": 2,
-      "lg": 1
+      "md": 5,
+      "lg": 5
     }
   }
 }

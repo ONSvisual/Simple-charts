@@ -3,7 +3,7 @@
 
 <head>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-  <title>Prevalence by existing health condition</title>
+  <title>Occupations by ethnicity and date rate</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -58,83 +58,84 @@
       padding-top: 0;
     }
 
-    h5,h6 {
+    h5,
+    h6 {
       font-size: 16px;
       margin: 16px 0 8px 0;
       font-weight: 700;
       color: #323132;
     }
 
-    ul, ol {
+    ul,
+    ol {
       margin: 16px 0;
       padding-left: 32px;
     }
 
     li {
-        margin: 0 0 8px 0;
-        line-height: 32px;
-        font-weight: 400;
-        font-size: 18px;
-        padding: 0;
+      margin: 0 0 8px 0;
+      line-height: 32px;
+      font-weight: 400;
+      font-size: 18px;
+      padding: 0;
     }
 
-    @media (max-width:767px){
-        li{
-          font-size:16px;
-        }
+    @media (max-width:767px) {
+      li {
+        font-size: 16px;
+      }
     }
 
-  	.line5-yearaverage {
-  		stroke: #666;
-  		stroke-dasharray: 5 8 !important;
-  		stroke-linecap: round !important;
-  		stroke-width: 2px !important;
-  	}
+    .line5-yearaverage {
+      stroke: #666;
+      stroke-dasharray: 5 8 !important;
+      stroke-linecap: round !important;
+      stroke-width: 2px !important;
+    }
 
     a {
-        text-decoration: underline;
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 32px;
+      text-decoration: underline;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 32px;
     }
 
     .btn {
-        font-family: "Open Sans",Helvetica,Arial,sans-serif;
-        display: inline-block;
-        width: auto;
-        cursor: pointer;
-        padding: 6px 16px 10px 16px;
-        border: 0 none;
-        text-align: center;
-        -webkit-appearance: none;
-        transition: background-color 0.25s ease-out;
+      font-family: "Open Sans", Helvetica, Arial, sans-serif;
+      display: inline-block;
+      width: auto;
+      cursor: pointer;
+      padding: 6px 16px 10px 16px;
+      border: 0 none;
+      text-align: center;
+      -webkit-appearance: none;
+      transition: background-color 0.25s ease-out;
     }
 
     .btn--primary:focus {
-        background-color: #0b5d30;
+      background-color: #0b5d30;
     }
 
     .btn--primary {
-        background-color: #0F8243;
-        color: #fff;
+      background-color: #0F8243;
+      color: #fff;
     }
 
-    .visuallyhidden{
-    	position: absolute;
+    .visuallyhidden {
+      position: absolute;
       width: 1px;
       height: 1px;
       margin: -1px;
       padding: 0;
       overflow: hidden;
-     	clip: rect(0,0,0,0);
+      clip: rect(0, 0, 0, 0);
       border: 0;
     }
-
   </style>
 </head>
 
 <body>
-  <h5 class="visuallyhidden" id="screenreadertext"></h5>
+  <h5 class="visuallyhidden" id="screenreadertext">This is set from the config, change before publication</h5>
   <div aria-hidden="true" id="legend"></div>
   <div aria-hidden="true" id="graphic" style="position:relative">
     <img src="fallback.png" alt="[Chart]" />
@@ -163,9 +164,13 @@
     var pymChild = null;
 
     function drawGraphic() {
+      //set the screenreader text dynamically
       d3.select("#screenreadertext").text(dvc.essential.screenreadertext)
 
-      maxweek=d3.max(graphic_data,function(d){return d.date})
+      //flip the data from excel's sorting
+      // graphic_data.reverse()
+
+      // maxweek=d3.max(graphic_data,function(d){return d.date})
 
       var threshold_md = dvc.optional.middleBreakpoint;
       var threshold_sm = dvc.optional.mobileBreakpoint;
@@ -179,7 +184,7 @@
       }
 
       categorySort = {}
-      if(Array.isArray(dvc.essential.categorySort)){
+      if (Array.isArray(dvc.essential.categorySort)) {
         for (i = 0; i < dvc.essential.categorySort.length; i++) {
           categorySort[dvc.essential.categorySort[i]] = i;
         }
@@ -188,37 +193,41 @@
           return categorySort[a.category] - categorySort[b.category]
         })
 
-        categories=Object.keys(categorySort)
-      } else if(dvc.essential.categorySort=="descending"){
+        categories = Object.keys(categorySort)
+      } else if (dvc.essential.categorySort == "descending") {
         //auto sort the array by biggest value
-        graphic_data.filter(function(d){
-          return d.date==maxweek
-        }).sort(function(a,b){return +b.chiffre - (+a.chiffre)}).forEach(function(item, i){
-          categorySort[item.category]=i
+        graphic_data.filter(function(d) {
+          return d.date == maxweek
+        }).sort(function(a, b) {
+          return +b.chiffre - (+a.chiffre)
+        }).forEach(function(item, i) {
+          categorySort[item.category] = i
         });
 
         graphic_data.sort(function(a, b) {
           return categorySort[a.category] - categorySort[b.category]
         })
 
-        categories=Object.keys(categorySort)
-      } else if (dvc.essential.categorySort=="ascending"){
-        graphic_data.filter(function(d){
-          return d.date==maxweek
-        }).sort(function(a,b){return +a.chiffre - (+b.chiffre)}).forEach(function(item, i){
-          categorySort[item.category]=i
+        categories = Object.keys(categorySort)
+      } else if (dvc.essential.categorySort == "ascending") {
+        graphic_data.filter(function(d) {
+          return d.date == maxweek
+        }).sort(function(a, b) {
+          return +a.chiffre - (+b.chiffre)
+        }).forEach(function(item, i) {
+          categorySort[item.category] = i
         });
 
         graphic_data.sort(function(a, b) {
           return categorySort[a.category] - categorySort[b.category]
         })
 
-        categories=Object.keys(categorySort)
+        categories = Object.keys(categorySort)
 
       }
 
       var margin = dvc.optional.margin[size]
-      var chart_width = (parseInt(graphic.style("width"))-dvc.optional.margin_special_left) / dvc.optional.chart_every[size] - margin.left - margin.right;
+      var chart_width = (parseInt(graphic.style("width")) - dvc.optional.margin_special_left) / dvc.optional.chart_every[size] - margin.left - margin.right;
       var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
 
       // clear out existing graphics
@@ -227,9 +236,9 @@
 
       //draw legend
       legend
-      .append('svg')
-      .attr("height", dvc.optional.legendHeight[size])
-      .attr("width", dvc.optional.chart_every[size] * (chart_width + margin.left + margin.right)+dvc.optional.margin_special_left).append('g')
+        .append('svg')
+        .attr("height", dvc.optional.legendHeight[size])
+        .attr("width", dvc.optional.chart_every[size] * (chart_width + margin.left + margin.right) + dvc.optional.margin_special_left).append('g')
         .attr('transform', 'translate(5,5)')
 
       createLegend();
@@ -302,7 +311,7 @@
                 if (dvc.essential.legendStyle == "rect") {
                   return eval((lineNo * 20) + 5);
                 } else {
-                  return eval((lineNo * 30) + 12);
+                  return eval((lineNo * 30) + 10);
 
                 }
               })
@@ -318,24 +327,17 @@
         }); // end foreach
       } // end function createLegend()
 
-      x = d3.scaleLinear()
-        .range([0, chart_width]);
 
-
-
-      x.domain([d3.min(graphic_data,function(d){return d.lower}),d3.max(graphic_data, function(d) {
-        return d.upper
-      })])
-
-      xCat = d3.scaleOrdinal()
-          .range([x(1),x(2),x(3),x(4)])
-          .domain(["The same rate","2x the rate", "3x the rate","4x the rate"])
 
       colour = d3.scaleOrdinal()
-        .range(dvc.essential.colour_palette.map(function(d){return d.colour}))
-        .domain(dvc.essential.colour_palette.map(function(d){return d.key}))
+        .range(dvc.essential.colour_palette.map(function(d) {
+          return d.colour
+        }))
+        .domain(dvc.essential.colour_palette.map(function(d) {
+          return d.key
+        }))
 
-      var xAxis = d3.axisBottom(xCat).tickSize(-height).tickValues(xCat.domain().map(function(d,i){if(i%dvc.optional.x_ticks_every[size]==0){return d}}))
+
 
       nested = d3.nest()
         .key(function(d) {
@@ -344,35 +346,64 @@
         .key(function(d) {
           return d.series
         })
-        .sortValues(function(a,b) { return a.date - b.date; } )
+        // .sortValues(function(a, b) {
+        //   return a.date - b.date;
+        // })
         .entries(graphic_data)
 
-      y0 = d3.scaleBand().rangeRound([0, height]).paddingInner(0.1);;
+      x = {}
+
+      nested.forEach(function(d, i) {
+        x[d.key] = d3.scaleLinear().range([0, chart_width]);
+
+        if (d.key == "Ethnicity") {
+          x[d.key].domain([0, 100]) // hard code the xdomain for ethnicity
+        } else {
+          x[d.key].domain([0, d3.max(graphic_data.filter(function(e) {
+            return e.category == d.key
+          }).map(function(e) {
+            return e.chiffre
+          }))])
+        }
+      });
 
 
-      y0.domain(d3.map(graphic_data,function(d) {
+      y = d3.scaleBand().rangeRound([0, height]).paddingInner(0.1);;
+
+      y.domain(d3.map(graphic_data, function(d) {
         return d.date;
       }).keys());
 
-      y1 = d3.scaleBand();
-      y1.domain(d3.map(graphic_data,function(d){return d.series}).keys()).range([0, y0.bandwidth()]);
-
-      for(i=0;i<nested.length;i++){
-        if(i%dvc.optional.chart_every[size]==0){
+      if(size=="sm"){
+        for (i = 0; i < nested.length; i++) {
           drawLeftAxis()
-          drawchart(nested[i].key,nested[i].values,i)
-        }else{
-          drawchart(nested[i].key,nested[i].values,i)
+          if (i == 0) {
+            drawStackedChart(nested[i].key, graphic_data.filter(function(d){return d.category=="Ethnicity"}), i)
+          } else {
+            drawSimpleChart(nested[i].key, nested[i].values, i)
+          }
+        }
+
+      }else{
+        for (i = 0; i < nested.length; i++) {
+          if (i % dvc.optional.chart_every[size] == 0) {
+            drawLeftAxis()
+            drawStackedChart(nested[i].key, graphic_data.filter(function(d){return d.category=="Ethnicity"}), i)
+          } else {
+            drawSimpleChart(nested[i].key, nested[i].values, i)
+          }
         }
       }
 
-      function drawchart(key,data,i){
+
+
+      function drawStackedChart(key, data, i) {
         var chart = d3.select("#graphic")
           .append('svg')
           .attr("width", chart_width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
 
-          chart.append('text')
+        chart.append('text')
           .attr("x", margin.left)
           .attr("y", 12)
           .text(function() {
@@ -380,93 +411,138 @@
           })
           .attr('font-weight', 700)
           .attr('font-size', "14px")
+          .call(wrap,chart_width)
 
-          if(i%dvc.optional.chart_every[size]==0){
-            chart.append('text')
-            .attr("x", margin.left)
-            .attr("y", 30)
-            .text("Comparison group: White")
-            .attr('font-weight', 400)
-            .attr('font-size', "14px")
-          }
 
-          svg = chart
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        svg = chart
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-          svg
-            .append('g')
-            .attr('class', 'x axis')
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-            .selectAll("text")
-            .call(wrap,x(2)-x(1))
+        svg
+          .append('g')
+          .attr('class', 'x axis')
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x[key]).ticks(5))
 
-          svg.selectAll('g.x.axis')
-            .each(function() {
-              if (i % dvc.optional.chart_every[size] == dvc.optional.chart_every[size] - 1||i==nested.length-1) {
-                d3.select(this).append("text")
-                  .text(dvc.essential.xAxisLabel)
-                  .attr("transform", "translate(" + chart_width + "," + margin.bottom/2 + ")")
-                  .attr('text-anchor', 'end')
-                  .attr('fill', "#666")
-                  .call(wrap,chart_width)
-              }
+        svg.selectAll('g.x.axis')
+          .each(function() {
+              d3.select(this).append("text")
+                .text(dvc.essential.xAxisLabel[i])
+                .attr("transform", "translate(" + chart_width + "," + margin.bottom / 2 + ")")
+                .attr('text-anchor', 'end')
+                .attr('fill', "#666")
+                .call(wrap, chart_width)
             })
 
-          series= svg.selectAll("g.series")
+        keys = d3.map(data,function(d){return d.series}).keys()
+        transformData=transformData(data)
+
+        series = svg.selectAll("g.series")
+          .data(d3.stack().keys(keys)(transformData))
+          .enter()
+          .append('g')
+          .attr("fill",function(d,i){return dvc.essential.colour_palette[i].colour})
+
+        series.selectAll("rect")
+          .data(function(d) {
+            return d
+          })
+          .enter()
+          .append('rect')
+          .attr('x', function(d) {
+            return x[key](d[0])
+          })
+          .attr('y', function(d) {
+            return y(d.data.key)
+          })
+          .attr('height', y.bandwidth())
+          .attr('width', function(d) {
+            return Math.abs(x[key](d[0]) - x[key](d[1]))
+          })
+      }
+
+      function transformData(data){
+        var nested = d3.nest()
+        .key(function(d){return d.date})
+        .entries(data)
+
+        var arr=[]
+        nested.forEach(function(item, i){
+          var obj={}
+          obj.key=item.key
+          item.values.forEach(function(e, j){
+            obj[e.series]=e.chiffre
+          });
+          arr.push(obj)
+        });
+
+        return arr
+      }
+
+      //
+      function drawSimpleChart(key, data, i) {
+        var chart = d3.select("#graphic")
+          .append('svg')
+          .attr("width", chart_width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+
+        chart.append('text')
+          .attr("x", margin.left)
+          .attr("y", 12)
+          .text(function() {
+            return key
+          })
+          .attr('font-weight', 700)
+          .attr('font-size', "14px")
+          .call(wrap,chart_width)
+
+        svg = chart
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+        svg
+          .append('g')
+          .attr('class', 'x axis')
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x[key]).tickSize(-height).ticks(dvc.optional.x_ticks[size]))
+
+        svg.selectAll('g.x.axis')
+          .each(function() {
+              d3.select(this).append("text")
+                .text(dvc.essential.xAxisLabel[i])
+                .attr("transform", "translate(" + chart_width + "," + margin.bottom / 2 + ")")
+                .attr('text-anchor', 'end')
+                .attr('fill', "#666")
+                .call(wrap, chart_width)
+          })
+
+        series = svg.selectAll("g.series")
           .data(data)
           .enter()
           .append('g')
 
-          series.selectAll("rect")
-          .data(function(d){return d.values})
+        series.selectAll("rect")
+          .data(function(d) {
+            return d.values
+          })
           .enter()
           .append('rect')
-          .attr('x',function(d){return x(Math.min(1,d.chiffre))})
-          .attr('y',function(d){return y0(d.date)+y1(d.series)})
-          .attr('height',y1.bandwidth())
-          .attr('width',function(d){return Math.abs(x(d.chiffre)-x(1))})
-          .attr('fill',function(d){return colour(d.series)})
-          //
-          series.selectAll('line.between')
-          .data(function(d){return d.values})
-          .enter()
-          .append('line')
-          .attr('class',"between")
-          .attr('x1',function(d){return x(d.lower)})
-          .attr('x2',function(d){return x(d.upper)})
-          .attr('y1',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()/2})
-          .attr('y2',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()/2})
-          .attr('stroke',"#414042")
-          .attr('stroke-width',"1.5px")
-
-          series.selectAll('line.lower')
-          .data(function(d){return d.values})
-          .enter()
-          .append('line')
-          .attr('class',"lower")
-          .attr('x1',function(d){return x(d.lower)})
-          .attr('x2',function(d){return x(d.lower)})
-          .attr('y1',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()*0.25})
-          .attr('y2',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()*0.75})
-          .attr('stroke',"#414042")
-          .attr('stroke-width',"1.5px")
-
-          series.selectAll('line.upper')
-          .data(function(d){return d.values})
-          .enter()
-          .append('line')
-          .attr('class',"upper")
-          .attr('x1',function(d){return x(d.upper)})
-          .attr('x2',function(d){return x(d.upper)})
-          .attr('y1',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()*0.25})
-          .attr('y2',function(d){return y0(d.date)+y1(d.series)+y1.bandwidth()*0.75})
-          .attr('stroke',"#414042")
-          .attr('stroke-width',"1.5px")
+          .attr('x', function(d) {
+            return x[key](Math.min(1, d.chiffre))
+          })
+          .attr('y', function(d) {
+            return y(d.date)
+          })
+          .attr('height', y.bandwidth())
+          .attr('width', function(d) {
+            return Math.abs(x[key](d.chiffre) - x[key](1))
+          })
+          .attr('fill', function(d) {
+            return colour(d.series)
+          })
       }
 
-      function drawLeftAxis(){
+      function drawLeftAxis() {
         var svg = d3.select("#graphic")
           .append('svg')
           .attr("width", dvc.optional.margin_special_left)
@@ -475,20 +551,22 @@
           .attr("transform", "translate(" + dvc.optional.margin_special_left + "," + margin.top + ")")
           .append('g')
           .attr('class', 'y axis')
-          .call(d3.axisLeft(y0))
+          .call(d3.axisLeft(y))
+          .selectAll('text')
+          .call(wrap,dvc.optional.margin_special_left)
       }
 
       function wrap(text, width) {
         text.each(function() {
           var text = d3.select(this),
-              words = text.text().split(/\s+/).reverse(),
-              word,
-              line = [],
-              lineNumber = 0,
-              lineHeight = 1.1, // ems
-              y = text.attr("y") != undefined ? text.attr("y") : 0,
-              dy =  text.attr("dy") != undefined ? parseFloat(text.attr("dy")) : 0 ,
-              tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y") != undefined ? text.attr("y") : 0,
+            dy = text.attr("dy") != undefined ? parseFloat(text.attr("dy")) : 0,
+            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
           while (word = words.pop()) {
             line.push(word);
             tspan.text(line.join(" "));
@@ -523,11 +601,9 @@
         d3.csv(dvc.essential.graphic_data_url, function(error, data) {
           graphic_data = data;
 
-          graphic_data.forEach(function(d){
+          graphic_data.forEach(function(d) {
             // d.date=d3.timeParse(dvc.essential.dateFormat)(d.date)
-            d.chiffre=+d.chiffre
-            d.lower=+d.lower
-            d.upper=+d.upper
+            d.chiffre = +d.chiffre
           })
           //use pym to create iframed chart dependent on specified variables
           pymChild = new pym.Child({

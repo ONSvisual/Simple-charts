@@ -80,3 +80,14 @@ These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisu
 * ![#22D0B6](https://placehold.it/15/22D0B6/000000?text=+) `#22D0B6`
 
 ["#206095"],["#118C7B"],["#003C57"],["#A8BD3A"],["#27A0CC"],["#871A5B"],["#F66068"],["#746CB1"],["#22D0B6"]
+
+If using these colours for direct labelling, some need to be made darker to meet contrast guidelines. For text at least 14pt in bold or 18pt in regular text, these colours are 3:1 contrast against white.
+
+Spring green
+![#A8BD3A](https://placehold.it/15/A8BD3A/000000?text=+) `#A8BD3A`  > ![#8A9B2E](https://placehold.it/15/8A9B2E/000000?text=+) `#8A9B2E`
+
+Mint green
+![#22D0B6](https://placehold.it/15/22D0B6/000000?text=+)`#22D0B6` > ![#1AA590](https://placehold.it/15/1AA590/000000?text=+)`#1AA590`
+
+Highlight orange
+![#F39431](https://placehold.it/15/F39431/000000?text=+)`#F39431` > ![#F56927](https://placehold.it/15/F56927/000000?text=+)`#F56927`

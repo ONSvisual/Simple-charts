@@ -2,8 +2,6 @@
   "essential": {
     "graphic_data_url": "data.csv",
     "useRanks":true,
-    "showValues": true,
-    "squashBottomRanks": true,
     "timeFormat": "%Y",
     "timePeriods":[2014,2015,2016,2017,2018],
     "colour_palette": ["#003C57", "#0f8575"],

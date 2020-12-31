@@ -11,6 +11,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 
 ## See them in action
 - [Bar and line](https://onsvisual.github.io/Simple-charts/all-templates/bar-and-line/)
+- [Bump chart](https://onsvisual.github.io/Simple-charts/all-templates/bump-chart/)
 - [Circle category](https://onsvisual.github.io/Simple-charts/all-templates/circle-category)
 - [Circle timeline](https://onsvisual.github.io/Simple-charts/all-templates/circle-timeline)
 - [Clustered bar horizontal](https://onsvisual.github.io/Simple-charts/all-templates/clustered-bar-horizontal/)

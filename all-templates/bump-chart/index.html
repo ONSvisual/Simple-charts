@@ -3,16 +3,17 @@
 
 <head>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='ext/css'>
-  <title>Bump chart</title>
+  <title>The three highest inward FDI positions in 2018 were with the United States, Hong Kong and the Netherlands</title>
 
-
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
   <link rel="stylesheet" href="../lib/globalStyle.css" />
   <link rel="stylesheet" href="../lib/bootstrap-grid.css" />
 
-  <style>
+  <style type="text/css">
     .voronoi path {
       fill: none;
       pointer-events: all;
@@ -71,35 +72,16 @@
 
 
 <body>
-  <h5 class='visuallyhidden' id="screenreadertext"></h5>
+  <h5 class=visuallyhidden>The three highest inward FDI positions in 2018 were with the United States, Hong Kong and the Netherlands</h5>
   <div aria-hidden="true" id="graphic" class="row no-gutters">
     <img src="fallback.png" alt="[Chart]" />
   </div>
 
   <h5 id="source"></h5>
 
-  <div id="keypoints">
-    <p></p>
-  </div>
-
-  <div id="footer">
-  </div>
-  <h5 style="  font-size: 16px;
-    margin: 16px 0 8px 0;
-    line-height: 24px;
-    color: #323132;
-    font-weight: 700;">Notes:</h5>
-  <ol>
-    <li>Statistics for the rank and ultimate position are for 2017.</li>
-  </ol>
-  <h5>Download this chart</h5>
-  <a class="btn btn--primary" href="image.png" download>Image</a>
-  <a class="btn btn--primary" href="data.xlsx">.xlsx</a>
-  <a class="btn btn--primary" href="datadownload.csv">.csv</a>
-
-  <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js"></script>
-  <script src="../lib/modernizr.svg.min.js"></script>
-  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" type="text/javascript"></script>
+  <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
 
   <script>
     var graphic = d3.select('#graphic');
@@ -108,7 +90,6 @@
     var pymChild = null;
 
     function drawGraphic(width) {
-      d3.select('#screenreadertext').text(dvc.essential.screenreadertext)
       // clear out existing graphics
       graphic.selectAll("*").remove();
       keypoints.selectAll("*").remove();
@@ -123,7 +104,7 @@
           left: dvc.optional.margin_sm[3]
         };
         var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_sm[1]) / dvc.optional.aspectRatio_sm[0]) - margin.top - margin.bottom;
+        var height = dvc.optional.heightPer.sm * graphic_data.length;
       } else if (parseInt(graphic.style("width")) < dvc.optional.tabletBreakpoint) {
         var margin = {
           top: dvc.optional.margin_md[0],
@@ -132,7 +113,7 @@
           left: dvc.optional.margin_md[3]
         };
         var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - margin.top - margin.bottom;
+        var height = dvc.optional.heightPer.md * graphic_data.length;
       } else {
         var margin = {
           top: dvc.optional.margin_lg[0],
@@ -141,7 +122,7 @@
           left: dvc.optional.margin_lg[3]
         };
         var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-        var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - margin.top - margin.bottom;
+        var height = dvc.optional.heightPer.lg * graphic_data.length;
       }
 
       //if using the values
@@ -187,17 +168,17 @@
 
       }
 
-      var xAxis = d3.axisBottom(x)
-        .tickSize(0)
+      var xAxis = d3.axisTop(x)
+        .tickSize(15)
         // .tickFormat("")
 
       var yAxis = d3.axisLeft(y);
 
       var line = d3.line()
-          // .defined(function(d){return d.amt || d.amt !== '0';})
+          // .defined(function(d){return d.rank || d.rank !== '0';})
           // .curve(d3.curveLinear)
           .x(function(d) { return x(d.date); })
-          .y(function(d) { return y(d.amt); });
+          .y(function(d) { return y(d.rank); });
 
       // parse data into columns
       var lines = {};
@@ -210,18 +191,20 @@
           for(j=0;j<rankNames.length;j++){
             lines[names[i]].push({
             'date':dvc.essential.timePeriods[j],
-            'amt':+d[rankNames[j]],
+            'rank':+d[rankNames[j]],
             'value':+d[valueNames[j]]
             })
           }
         })
       }
 
+      var interpolator = d3.interpolateRgb(dvc.essential.colour_palette[0],dvc.essential.colour_palette[1])
+
       voronoiData=[]
 
       graphic_data.forEach(function(d){
         dvc.essential.timePeriods.forEach(function(e,i){
-          voronoiData.push({'name':d.name,'date':dvc.essential.timePeriods[i],'amt':+d[rankNames[i]]})
+          voronoiData.push({'name':d.name,'date':dvc.essential.timePeriods[i],'rank':+d[rankNames[i]]})
         })
       })
       console.log(voronoiData)
@@ -241,7 +224,7 @@
 
       svg.append('g')
           .attr('class', 'x axis')
-          .attr("transform", "translate(" + 0 + "," + (height+5) + ")")
+          .attr("transform", "translate(" + 0 + "," + (-15) + ")")
           .call(xAxis);
 
 
@@ -260,14 +243,14 @@
         .attr("x2", x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1]))
         .attr("y1", y(dvc.essential.yAxisBreak))
         .attr("y2", y(dvc.essential.yAxisBreak))
-        .attr("stroke", "#8e8e8e")
+        .attr("stroke", "#666")
         .attr("stroke-width", "2px")
         .attr("stroke-dasharray", 4);
 
       svg.append("text")
        .attr("x", x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+10)
        .attr("y", y(dvc.essential.yAxisBreak) + 5)
-       .attr('fill',"#8e8e8e")
+       .attr('fill',"#666")
        .html(dvc.essential.yAxisBreakText)
     }
 
@@ -277,7 +260,7 @@
         .enter()
         .append('path')
         .attr('class',function(d){return d.key.replace(/\s/g, '') + " fadeThis"})
-        .style("stroke", function(d,i){return d3.interpolateInferno(0.2+i/(2*names.length))})
+        .style("stroke", function(d,i) { return interpolator(i/(names.length)) })
         .style("fill", 'none')
         .style("stroke-width", 3)
         .style("stroke-linecap", 'round')
@@ -287,84 +270,69 @@
         });
 
       //add line line labels
-      svg.append('g').selectAll('text')
+      svg.append('g').classed("glinelabels", true)
+        .attr("transform", "translate(" + (20 + x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1]) ) + ",0)")
+        .selectAll('text')
         .data(names)
         .enter()
         .append('text')
-        .attr('class',function(d){return d.replace(/\s/g, '') + " fadeThis"})
-        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+10)
+        .attr('class',function(d){return d.replace(/\s/g, '') + " fadeThis linelabels"})
         .attr('y',function(d,i){
             return y(graphic_data.filter(function(e){return e.name==d})[0][rankNames[rankNames.length-1]])+5
         })
         .text(function(d){return d})
+        .call(wrap, margin.right)
 
 
-      svg.append('g').selectAll('text')
-        .data(d3.entries(lines))
-        .enter()
-        .append('text')
-        .attr('text-anchor',"end")
-        .attr('class',function(d){return d.key.replace(/\s/g, '') + " fadeThis"})
-        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+margin.right*0.65)
-        .attr('y',function(d,i){
-            return y(graphic_data.filter(function(e){return e.name==d.key})[0][rankNames[rankNames.length-1]])+5
-        })
-        .text(function(d){return d.value[dvc.essential.timePeriods.length-1].amt})
-
-
-      svg.append('g').selectAll('text')
-        .data(d3.entries(lines))
-        .enter()
-        .append('text')
-        .attr('text-anchor',"end")
-        .attr('class',function(d){return d.key.replace(/\s/g, '') + " fadeThis"})
-        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+margin.right-10)
-        .attr('y',function(d,i){
-            return y(graphic_data.filter(function(e){return e.name==d.key})[0][rankNames[rankNames.length-1]])+5
-        })
-        .text(function(d){return d.value[dvc.essential.timePeriods.length-1].value})
-
+      // svg.append('g').selectAll('text')
+      //   .data(d3.entries(lines))
+      //   .enter()
+      //   .append('text')
+      //   .attr('text-anchor',"end")
+      //   .attr('class',function(d){return d.key.replace(/\s/g, '') + " fadeThis rank"})
+      //   .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+margin.right*0.65)
+      //   .attr('y',function(d,i){
+      //       return y(graphic_data.filter(function(e){return e.name==d.key})[0][rankNames[rankNames.length-1]])+5
+      //   })
+      //   .text(function(d){return d.value[dvc.essential.timePeriods.length-1].value})
 
       //draw the circles on the lines
+      svg.append('g').classed("circles", true)
+      svg.append('g').classed("circletext", true)
       for(i=0;i<names.length;i++){
-        svg.append('g').selectAll('circle')
-            .data(lines[names[i]])
-            .enter()
-            .append('circle')
-            .attr('class',names[i].replace(/\s/g, '') + " fadeThis")
-            .attr('cx',function(d,i){
-              return x(d.date)
-            })
-            .attr('cy',function(d){return y(d.amt)})
-            .attr('r',5)
-            .style('fill',function(d,j){return d3.interpolateInferno(0.2+i/(2*names.length))})
-            // .style('stroke',function(d,j){return d3.interpolateInferno(0.2+i/(2*names.length))})
+        d3.select(".circles").append('g').classed(names[i], true)
+          .selectAll('circle')
+          .data(lines[names[i]])
+          .enter()
+          .append('circle')
+          .attr('class',names[i].replace(/\s/g, '') + " fadeThis")
+          .attr('cx',function(d,i){
+            return x(d.date)
+          })
+          .attr('cy',function(d){return y(d.rank)})
+          .attr('r',10)
+          .style('fill',function(){ return interpolator(i/names.length)});
+
+        d3.select(".circletext").append('g').classed(names[i], true)
+          .selectAll('text')
+          .data(lines[names[i]])
+          .enter()
+          .append('text')
+          .text(function(d) {console.log(d); return d.value})
+          .attr("x", function(d) {return x(d.date);})
+          .attr("y", function(d) {return y(d.rank) + 4})
+          .attr("text-anchor", "middle")
+          .style("fill", "white")
+          .style("font-size", "12px");
       }
 
       svg.append('text')
-        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+10)
+        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+20)
         .attr('y',function(d,i){
             return y(1)-25
         })
         .style("font-weight",700)
         .text("Country")
-
-      svg.append('text')
-        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+margin.right*0.5)
-        .attr('y',function(d,i){
-            return y(1)-25
-        })
-        .style("font-weight",700)
-        .text("Rank")
-
-      svg.append('text')
-        .attr('x',x(dvc.essential.timePeriods[dvc.essential.timePeriods.length-1])+margin.right-10)
-        .attr('y',function(d,i){
-            return y(1)-25
-        })
-        .attr('text-anchor',"end")
-        .style("font-weight",700)
-        .text("£bn")
 
 
       //voronoi stuff
@@ -373,7 +341,7 @@
   	      return x(d.date);
   	    })
   	    .y(function(d) {
-  	      return y(+d.amt);
+  	      return y(+d.rank);
   	    })
   	    .extent([
   	      [-margin.left, -10],
@@ -407,6 +375,30 @@
       d3.select('#source')
         .text('Source: ' + dvc.essential.sourceText);
 
+      function wrap(text, width) {
+        text.each(function(d,i) {
+          var text = d3.select(this),
+              words = text.text().split(/\s+/).reverse(),
+              word,
+              line = [],
+              lineNumber = 0,
+              lineHeight = 1.1, // ems
+              y = text.attr("y"),
+              dy = parseFloat(text.attr("dy")),
+              tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + "em").text(word);
+            }
+          }
+        });
+      }
+
       //use pym to calculate chart dimensions
       if (pymChild) {
         pymChild.sendHeight();
@@ -425,6 +417,7 @@
         //load chart data
         d3.csv(dvc.essential.graphic_data_url, function(error, data) {
           graphic_data = data;
+          console.log(graphic_data);
 
           //use pym to create iframed chart dependent on specified variables
           pymChild = new pym.Child({

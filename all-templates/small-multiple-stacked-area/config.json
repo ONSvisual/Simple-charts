@@ -1,7 +1,7 @@
 {
   "essential": {
     "graphic_data_url": "data.csv",
-    "screenreadertext":"Deaths with the highest age specific rates (10 to 24-year-olds and 45 to 64-year-olds) have seen the greatest increases in hanging."
+    "screenreadertext":"Deaths with the highest age specific rates (10 to 24-year-olds and 45 to 64-year-olds) have seen the greatest increases in hanging.",
     "dateFormat": "%Y",
     "displayTicksFormat":"%Y",
     "colour_palette": [{
@@ -37,7 +37,7 @@
     "sourceText": ["Office for National Statistics"],
     "xAxisLabel": "",
     "yAxisLabel": "%",
-    "yAxisScale": "auto_zero_max_total",
+    "yAxisScale": "auto_zero_max_total"
   },
   "optional": {
     "margin": {

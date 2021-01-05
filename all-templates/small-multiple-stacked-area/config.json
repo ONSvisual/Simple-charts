@@ -1,0 +1,88 @@
+{
+  "essential": {
+    "graphic_data_url": "data.csv",
+    "dateFormat": "%Y",
+    "displayTicksFormat":"%Y",
+    "colour_palette": [{
+        "key": "Hanging, strangulation and suffocation",
+        "colour": "#206095"
+      },
+      {
+          "key": "Poisoning",
+          "colour": "#118C7B"
+      },
+      {
+          "key": "Jumping or lying before moving object",
+          "colour": "#003C57"
+      },
+      {
+          "key": "Drowning",
+          "colour": "#A8BD3A"
+      },
+      {
+          "key": "Fall and Fracture",
+          "colour": "#27A0CC"
+      },
+      {
+          "key": "Sharp object",
+          "colour": "#871A5B"
+      },
+      {
+          "key": "Other",
+          "colour": "#F66068"
+      }
+    ],
+    "categorySort": [],
+    "sourceText": ["Office for National Statistics"],
+    "xAxisLabel": "",
+    "yAxisLabel": "%",
+    "yAxisScale": "auto_zero_max_total",
+    "screenreadertext":"Deaths with the highest age specific rates (10 to 24-year-olds and 45 to 64-year-olds) have seen the greatest increases in hanging."
+  },
+  "optional": {
+    "margin": {
+      "sm": {
+        "top": 25,
+        "right": 30,
+        "bottom": 45,
+        "left": 23
+      },
+      "md": {
+        "top": 25,
+        "right": 23,
+        "bottom": 45,
+        "left": 23
+      },
+      "lg": {
+        "top": 25,
+        "right": 15,
+        "bottom": 25,
+        "left": 23
+      }
+    },
+    "chart_every":{
+      "sm": 1,
+      "md": 3,
+      "lg": 3
+    },
+    "aspectRatio": {
+      "sm": [16, 13],
+      "md": [16, 13],
+      "lg": [16, 15]
+    },
+    "legendHeight":{
+      "sm": 115,
+      "md": 80,
+      "lg": 60
+    },
+    "legendStyle": "rect",
+
+    "mobileBreakpoint": 480,
+    "middleBreakpoint": 645,
+    "x_ticks_every": {
+      "sm": 8,
+      "md": 8,
+      "lg": 8
+    }
+  }
+}

@@ -372,55 +372,58 @@
             .domain(yDomain)
             .nice();
         });
-      } else if (dvc.essential.yAxisScale == "auto_min_max_total") {
-        var yDomain = d3.extent(graphic_data, function(d) {
-          return +d.chiffre
-        });
-        nested.forEach(function(item, i) {
-          y[item.key] = d3.scaleLinear()
-            .range([height, 0])
-            .domain(yDomain)
-            .nice();
-        });
-      } else if (dvc.essential.yAxisScale == "auto_min_max_each") {
-        rolledup = d3.nest()
-          .key(function(d) {
-            return d.category
-          })
-          .rollup(function(v) {
-            return [d3.min(v, function(d) {
-              return +d.chiffre
-            }), d3.max(v, function(d) {
-              return +d.chiffre
-            })]
-          })
-          .entries(graphic_data)
+      // The following yAxisScales won't work - only auto_zero_max_total.
+      // But the rest shouldn't be necessary for a stacked area chart anyway.
 
-        rolledup.forEach(function(item, i) {
-          y[item.key] = d3.scaleLinear()
-            .range([height, 0])
-            .domain(item.value)
-            .nice();
-        });
-
-      } else if (dvc.essential.yAxisScale == "auto_zero_max_each") {
-        rolledup = d3.nest()
-          .key(function(d) {
-            return d.category
-          })
-          .rollup(function(v) {
-            return [0, d3.max(v, function(d) {
-              return +d.chiffre
-            })]
-          })
-          .entries(graphic_data)
-
-        rolledup.forEach(function(item, i) {
-          y[item.key] = d3.scaleLinear()
-            .range([height, 0])
-            .domain(item.value)
-            .nice();
-        });
+      // } else if (dvc.essential.yAxisScale == "auto_min_max_total") {
+      //   var yDomain = d3.extent(graphic_data, function(d) {
+      //     return +d.chiffre
+      //   });
+      //   nested.forEach(function(item, i) {
+      //     y[item.key] = d3.scaleLinear()
+      //       .range([height, 0])
+      //       .domain(yDomain)
+      //       .nice();
+      //   });
+      // } else if (dvc.essential.yAxisScale == "auto_min_max_each") {
+      //   rolledup = d3.nest()
+      //     .key(function(d) {
+      //       return d.category
+      //     })
+      //     .rollup(function(v) {
+      //       return [d3.min(v, function(d) {
+      //         return +d.chiffre
+      //       }), d3.max(v, function(d) {
+      //         return +d.chiffre
+      //       })]
+      //     })
+      //     .entries(graphic_data)
+      //
+      //   rolledup.forEach(function(item, i) {
+      //     y[item.key] = d3.scaleLinear()
+      //       .range([height, 0])
+      //       .domain(item.value)
+      //       .nice();
+      //   });
+      //
+      // } else if (dvc.essential.yAxisScale == "auto_zero_max_each") {
+      //   rolledup = d3.nest()
+      //     .key(function(d) {
+      //       return d.category
+      //     })
+      //     .rollup(function(v) {
+      //       return [0, d3.max(v, function(d) {
+      //         return +d.chiffre
+      //       })]
+      //     })
+      //     .entries(graphic_data)
+      //
+      //   rolledup.forEach(function(item, i) {
+      //     y[item.key] = d3.scaleLinear()
+      //       .range([height, 0])
+      //       .domain(item.value)
+      //       .nice();
+      //   });
       }
 
       // var z = d3.scaleOrdinal().range(dvc.essential.colour_palette);
@@ -433,11 +436,8 @@
                   .y0(function(d) { return y[d.data.category](d[0]); })
                   .y1(function(d) { return y[d.data.category](d[1]); });
 
-      // var layer = svg.selectAll
+      // console.log(stack(nested[0].values));
 
-      console.log(stack(nested[0].values));
-
-      // sort these hardwired numbers maybe through the dimensions above
       charts = d3.select('#graphic')
         .selectAll('svg')
         .data(nested)

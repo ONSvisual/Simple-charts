@@ -1,0 +1,97 @@
+date,category,chiffre,series
+United States,Total Services,27.67271927,Exports
+Germany,Total Services,5.989163548,Exports
+Netherlands,Total Services,5.830806485,Exports
+France,Total Services,4.716626071,Exports
+Japan,Total Services,2.451338934,Exports
+China,Total Services,1.903125244,Exports
+Australia,Total Services,2.155218327,Exports
+New Zealand,Total Services,0.2194275,Exports
+United States,"Technical, trade-related and other business services",26.32769866,Exports
+Germany,"Technical, trade-related and other business services",5.470517769,Exports
+Netherlands,"Technical, trade-related and other business services",4.973601313,Exports
+France,"Technical, trade-related and other business services",1.890057234,Exports
+Japan,"Technical, trade-related and other business services",1.428634811,Exports
+China,"Technical, trade-related and other business services",1.149119304,Exports
+Australia,"Technical, trade-related and other business services",1.575047695,Exports
+New Zealand,"Technical, trade-related and other business services",0,Exports
+United States,Professional and management consulting services,35.74843389,Exports
+Germany,Professional and management consulting services,5.19699967,Exports
+Netherlands,Professional and management consulting services,7.414276294,Exports
+France,Professional and management consulting services,4.080118694,Exports
+Japan,Professional and management consulting services,1.417738213,Exports
+China,Professional and management consulting services,0.906693043,Exports
+Australia,Professional and management consulting services,1.533135509,Exports
+New Zealand,Professional and management consulting services,0,Exports
+United States,Explicitly charged and other financial services,27.2254167,Exports
+Germany,Explicitly charged and other financial services,5.942936167,Exports
+Netherlands,Explicitly charged and other financial services,7.183928961,Exports
+France,Explicitly charged and other financial services,6.860033481,Exports
+Japan,Explicitly charged and other financial services,4.654632797,Exports
+China,Explicitly charged and other financial services,0.436713007,Exports
+Australia,Explicitly charged and other financial services,1.164568018,Exports
+New Zealand,Explicitly charged and other financial services,0.083703326,Exports
+United States,Intellectual property,17.61651132,Exports
+Germany,Intellectual property,6.844207723,Exports
+Netherlands,Intellectual property,4.540612517,Exports
+France,Intellectual property,3.089214381,Exports
+Japan,Intellectual property,1.970705726,Exports
+China,Intellectual property,10.14647137,Exports
+Australia,Intellectual property,0.838881491,Exports
+New Zealand,Intellectual property,0.319573901,Exports
+United States,Personal travel,13.75588154,Exports
+Germany,Personal travel,5.521727097,Exports
+Netherlands,Personal travel,3.639634653,Exports
+France,Personal travel,5.314143371,Exports
+Japan,Personal travel,0.678106836,Exports
+China,Personal travel,2.643232771,Exports
+Australia,Personal travel,4.027124273,Exports
+New Zealand,Personal travel,0.982562967,Exports
+United States,Total Services,23.8,Imports
+Germany,Total Services,6,Imports
+Netherlands,Total Services,3.7,Imports
+France,Total Services,6.3,Imports
+Japan,Total Services,3.1,Imports
+China,Total Services,1,Imports
+Australia,Total Services,1.3,Imports
+New Zealand,Total Services,0.1,Imports
+United States,"Technical, trade-related and other business services",33,Imports
+Germany,"Technical, trade-related and other business services",0,Imports
+Netherlands,"Technical, trade-related and other business services",3.1,Imports
+France,"Technical, trade-related and other business services",5.5,Imports
+Japan,"Technical, trade-related and other business services",1.4,Imports
+China,"Technical, trade-related and other business services",0.6,Imports
+Australia,"Technical, trade-related and other business services",2,Imports
+New Zealand,"Technical, trade-related and other business services",0,Imports
+United States,Professional and management consulting services,11.8,Imports
+Germany,Professional and management consulting services,5.1,Imports
+Netherlands,Professional and management consulting services,5.9,Imports
+France,Professional and management consulting services,5.2,Imports
+Japan,Professional and management consulting services,0.9,Imports
+China,Professional and management consulting services,0.5,Imports
+Australia,Professional and management consulting services,0.8,Imports
+New Zealand,Professional and management consulting services,0,Imports
+United States,Explicitly charged and other financial services,37,Imports
+Germany,Explicitly charged and other financial services,3.9,Imports
+Netherlands,Explicitly charged and other financial services,2.2,Imports
+France,Explicitly charged and other financial services,5,Imports
+Japan,Explicitly charged and other financial services,10.2,Imports
+China,Explicitly charged and other financial services,1,Imports
+Australia,Explicitly charged and other financial services,1.8,Imports
+New Zealand,Explicitly charged and other financial services,0,Imports
+United States,Intellectual property,12.4,Imports
+Germany,Intellectual property,1.8,Imports
+Netherlands,Intellectual property,2.1,Imports
+France,Intellectual property,1.1,Imports
+Japan,Intellectual property,19.7,Imports
+China,Intellectual property,0,Imports
+Australia,Intellectual property,0.3,Imports
+New Zealand,Intellectual property,0,Imports
+United States,Personal travel,9.7,Imports
+Germany,Personal travel,2.6,Imports
+Netherlands,Personal travel,2.4,Imports
+France,Personal travel,9.6,Imports
+Japan,Personal travel,0.4,Imports
+China,Personal travel,0.5,Imports
+Australia,Personal travel,1.4,Imports
+New Zealand,Personal travel,0.4,Imports

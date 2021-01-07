@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <title>dvc1070 - The USA contributed the largest proportion of imports and exports across the top 5 service types except for intellectual property imports</title>
+
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <link rel="stylesheet" href="../lib/globalStyle.css" type="text/css"/>
+  <style type="text/css">
+    body {
+      color: #323132;
+      /* max-width:944px; */
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 400;
+      max-width: 700px;
+    }
+
+    .x.axis path {
+      display: none;
+    }
+
+    path {
+      fill: none;
+    }
+
+    text {
+      font-family: 'Open Sans'
+    }
+
+    text.x,
+    text.y {
+      font-size: 12px;
+      fill: #666;
+    }
+
+    line.y,
+    line.x {
+      stroke: #ccc;
+      stroke-width: 1px;
+      shape-rendering: crispEdges;
+    }
+
+    #legend {
+      font-size: 12px;
+    }
+
+    h4 {
+      font-size: 16px;
+      line-height: 24px;
+      margin: 16px 0 16px 0;
+      padding: 24px 0 0 0;
+      font-weight: bold;
+    }
+
+    h5 {
+      font-size: 14px;
+      margin: 0 0 16px 0;
+      font-weight: normal;
+      padding-top: 0;
+    }
+
+    h5,h6 {
+      font-size: 16px;
+      margin: 16px 0 8px 0;
+      font-weight: 700;
+      color: #323132;
+    }
+
+    ul, ol {
+      margin: 16px 0;
+      padding-left: 32px;
+    }
+
+    li {
+        margin: 0 0 8px 0;
+        line-height: 32px;
+        font-weight: 400;
+        font-size: 18px;
+        padding: 0;
+    }
+
+    @media (max-width:767px){
+        li{
+          font-size:16px;
+        }
+    }
+
+  	.line5-yearaverage {
+  		stroke: #666;
+  		stroke-dasharray: 5 8 !important;
+  		stroke-linecap: round !important;
+  		stroke-width: 2px !important;
+  	}
+
+    a {
+        text-decoration: underline;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 32px;
+    }
+
+    .btn {
+        font-family: "Open Sans",Helvetica,Arial,sans-serif;
+        display: inline-block;
+        width: auto;
+        cursor: pointer;
+        padding: 6px 16px 10px 16px;
+        border: 0 none;
+        text-align: center;
+        -webkit-appearance: none;
+        transition: background-color 0.25s ease-out;
+    }
+
+    .btn--primary:focus {
+    background-color: #0b5d30;
+    }
+
+    .btn--primary {
+    background-color: #0F8243;
+    color: #fff;
+    }
+
+    .visuallyhidden {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+      clip: rect(0,0,0,0);  border: 0;
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <h5 class="visuallyhidden">The USA contributed the largest proportion of imports and exports across the top 5 service types except for intellectual property imports</h5>
+
+  <div id="legend" aria-hidden="true"></div>
+  <div id="graphic" aria-hidden="true" style="position:relative;">
+    <img src="fallback.png" alt="[Chart]" />
+  </div>
+
+  <h6 id="source"></h6>
+
+  <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" type="text/javascript"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.1.0/d3-annotation.js" type="text/javascript"></script> -->
+  <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
+  <script src="https://cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js" type="text/javascript"></script>
+  <!-- <script src="../lib/d3-legend.min.js" type="text/javascript"></script> -->
+  <script>
+    var graphic = d3.select('#graphic');
+    var legend = d3.select('#legend');
+    var pymChild = null;
+
+    function drawGraphic() {
+
+      maxweek=d3.max(graphic_data,function(d){return d.date})
+
+      var threshold_md = dvc.optional.middleBreakpoint;
+      var threshold_sm = dvc.optional.mobileBreakpoint;
+
+      if (parseInt(graphic.style("width")) < threshold_sm) {
+        size = "sm";
+      } else if (parseInt(graphic.style("width")) < threshold_md) {
+        size = "md";
+      } else {
+        size = "lg";
+      }
+
+      categorySort = {}
+      if(Array.isArray(dvc.essential.categorySort)){
+        for (i = 0; i < dvc.essential.categorySort.length; i++) {
+          categorySort[dvc.essential.categorySort[i]] = i;
+        }
+
+        graphic_data.sort(function(a, b) {
+          return categorySort[a.category] - categorySort[b.category]
+        })
+
+        categories=Object.keys(categorySort)
+      } else if(dvc.essential.categorySort=="descending"){
+        //auto sort the array by biggest value
+        graphic_data.filter(function(d){
+          return d.date==maxweek
+        }).sort(function(a,b){return +b.chiffre - (+a.chiffre)}).forEach(function(item, i){
+          categorySort[item.category]=i
+        });
+
+        graphic_data.sort(function(a, b) {
+          return categorySort[a.category] - categorySort[b.category]
+        })
+
+        categories=Object.keys(categorySort)
+      } else if (dvc.essential.categorySort=="ascending"){
+        graphic_data.filter(function(d){
+          return d.date==maxweek
+        }).sort(function(a,b){return +a.chiffre - (+b.chiffre)}).forEach(function(item, i){
+          categorySort[item.category]=i
+        });
+
+        graphic_data.sort(function(a, b) {
+          return categorySort[a.category] - categorySort[b.category]
+        })
+
+        categories=Object.keys(categorySort)
+
+      }
+
+      var margin = dvc.optional.margin[size]
+      var chart_width = (parseInt(graphic.style("width")) - dvc.optional.margin.groupMargin.left) / dvc.optional.chart_every[size] - margin.left - margin.right - 10;
+      var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
+
+      // clear out existing graphics
+      graphic.selectAll("*").remove();
+      d3.select("#graphic2").selectAll("*").remove();
+      legend.selectAll("*").remove();
+
+      //draw legend
+      // legend.append('svg').attr("height", dvc.optional.legendHeight[size]).attr("width", dvc.optional.chart_every[size] * (chart_width + margin.left + margin.right)).append('g')
+      //   .attr('transform', 'translate(5,5)')
+
+      // createLegend();
+
+      function createLegend() {
+
+        var prevX = 0;
+        var prevY = 0;
+        lineNo = 0;
+        var lineNoOld = 0;
+
+        dvc.essential.colour_palette.map(function(d) {
+          return d.key
+        }).forEach(function(d, i) {
+
+          // draw legend text based on content of var legendLabels ...
+          var_group = d3.select("#legend").select('svg').append("g")
+
+          var_group.append("rect")
+            .attr("class", "rect" + i)
+            .attr("fill", dvc.essential.colour_palette[i].colour)
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 20)
+            .attr("height", 3)
+
+          var_group.append("text")
+            .text(dvc.essential.colour_palette[i].key)
+            .attr("class", "legend" + i)
+            .attr("text-anchor", "start")
+            .style("font-size", "12px")
+            .style("fill", "#666")
+            .attr('y', 15)
+            .attr('x', 0);
+
+
+          d3.selectAll(".legend" + (i))
+            .each(calcPosition);
+
+          function calcPosition() {
+
+
+            var BBox = this.getBBox()
+
+
+            //prevY =BBox.width
+            d3.select(".legend" + (i))
+              .attr("y", function(d) {
+                if ((prevX + BBox.width + 50) > parseInt(graphic.style("width"))) {
+                  lineNoOld = lineNo;
+                  lineNo = lineNo + 1;
+                  prevX = 0;
+                }
+                return eval((lineNo * 20) + 20);
+              })
+              .attr("x", function(d) {
+                return prevX + 25;
+              })
+
+
+            d3.select(".rect" + (i))
+              .attr("y", function(d) {
+
+                if ((prevX + BBox.width + 50) > parseInt(graphic.style("width"))) {
+                  lineNoOld = lineNo;
+                  lineNo = lineNo + 1;
+                  prevX = 0;
+                }
+
+                if (dvc.essential.legendStyle == "rect") {
+                  return eval((lineNo * 20) + 5);
+                } else {
+                  return eval((lineNo * 20) + 12);
+
+                }
+              })
+              .attr("x", function(d) {
+                return prevX;
+              })
+
+            prevX = prevX + BBox.width + 50
+
+
+
+          }; // end function calcPosition()
+        }); // end foreach
+      } // end function createLegend()
+
+
+      var x = d3.scaleLinear()
+        .range([0, chart_width]);
+
+      var y = d3.scaleBand()
+        .rangeRound([0, height])
+        .paddingInner(0.1);
+
+      dates=d3.map(graphic_data,function(d){return d.date}).keys()
+      y.domain(dates)
+
+      x.domain(d3.extent(graphic_data.map(function(d) {return +d.chiffre})))
+
+
+      var xAxis = d3.axisBottom(x)
+        .tickSize(-height)
+          // .tickValues(d3.map(graphic_data,function(d){return d.date}).keys()
+          // .map(function(d){return d3.timeParse("%a %b %d %Y")(d.match(/\b[\w']+(?:[^\w\n]+[\w']+){1,3}\b/g)[0])})
+          // .sort(function(a,b){return a - b})
+          // .filter(function(d,i){
+          //   return i % dvc.optional.x_ticks_every[size] === 0&&i<dates.length-dvc.optional.x_ticks_every[size] || i==dates.length-1 //Rob's fussy comment about labelling the last date
+          // }))
+          // .tickFormat(d3.timeFormat("%d %b"))
+
+      // line = d3.line()
+      //   .x(function(d) {
+      //     return x(d.date)
+      //   })
+      //   .y(function(d) {
+      //     return y[d.category](d.chiffre)
+      //   })
+
+
+      nested = d3.nest()
+        .key(function(d) {
+          return d.series
+        })
+        .key(function(d) {
+          return d.category
+        })
+        .sortValues(function(a,b) { return a.date - b.date; } )
+        .entries(graphic_data);
+
+
+      chartSeries = d3.select('#graphic')
+        .selectAll('div')
+        .data(nested)
+        .enter()
+        .append("div")
+        .classed("chart-series", true)
+
+      chartHeaders = chartSeries.append("h1")
+        .style("font-size", "18px")
+        .style("font-weight", 700)
+        .style("margin-left", margin.left)
+        .style("margin-bottom", "15px")
+        .style("color", function(d, i) { console.log(d); return dvc.essential.colour_palette[d.key] })
+        .text(function(d) {return d.key})
+
+      chartContainers = chartSeries.selectAll("div")
+        .data(function(d) {console.log(d.values); return d.values})
+        .enter()
+        .append('div')
+        .classed("chart-container", true)
+
+        .style("float", "left");
+
+      chartContainers.append("p")
+        .text(function(d) {
+          return d.key
+        })
+        .style('font-weight', 700)
+        .style('font-size', "14px")
+        .style("margin-left", function(d,i) { return margin.left + calculateExtraMargin(i) + "px" })
+        .style("position", "absolute")
+        .style("max-width", chart_width + margin.right + "px");
+        // .style("float", "left");
+
+      charts = chartContainers.append("svg")
+        .attr("width", function(d,i) {
+          return chart_width + margin.left + margin.right + calculateExtraMargin(i);
+        })
+        .attr("height", height + margin.top + margin.bottom)
+        // .style("position", "relative");
+
+      function calculateExtraMargin(i) {
+        var extra_margin = 0;
+        if (i % dvc.optional.chart_every[size] == 0) {
+          extra_margin = dvc.optional.margin.groupMargin.left
+        };
+        return extra_margin
+      };
+
+      svg = charts
+        .append("g")
+        .attr("transform", function(d,i) {
+          // return "translate(" + (margin.left + dvc.optional.margin.groupMargin.left) + "," + margin.top + ")"
+          return "translate(" + (margin.left + calculateExtraMargin(i)) + "," + margin.top + ")"
+        });
+
+      svg
+        .append('g')
+        .attr('class', 'x axis')
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .each(function(d, i) {
+          if (i % dvc.optional.chart_every[size] == dvc.optional.chart_every[size] - 1||i==nested[0].values.length-1) {
+            d3.select(this).append("text")
+              .text(dvc.essential.xAxisLabel)
+              .attr("transform", "translate(" + chart_width + "," + 25 + ")")
+              .attr('text-anchor', 'end')
+              .attr('fill', "#666");
+          }
+        });
+
+      //create svg for chart
+
+      drawyaxis = svg
+        .append('g')
+        .attr('class', 'y axis');
+
+      drawyaxis.each(function(d, i) {
+        if (i % dvc.optional.chart_every[size] == 0) {
+          d3.select(this).call(d3.axisLeft(y).ticks(3));
+        // } else {
+        //   d3.select(this).call(d3.axisLeft(y).tickFormat("").ticks(3))
+        }
+
+      })
+
+      svg
+        .selectAll('g.line')
+        .data(function(d) {
+          console.log(d.values)
+          return d.values;
+        })
+        .enter()
+        .append('rect')
+        .attr("fill", function(d) {return dvc.essential.colour_palette[d.series]} )
+        .attr("x", x(0))
+        .attr("y", function(d) {return y(d.date)})
+        .attr("width", function(d) {
+          return x(d.chiffre)
+        })
+        .attr("height", y.bandwidth())
+
+        // .append('path')
+        // .attr("d", function(d) {
+        //   // console.log(d)
+        //   return line(d.values)
+        // })
+        // .attr("class",function(d){return "line"+d.key.replace(/\s/g, '')})
+        // .attr("stroke", function(d) {
+        //   console.log("d.key")
+        //   console.log(d.key)
+        //   console.log(dvc.essential.colour_palette.filter(function(e) {
+        //     console.log(e.key)
+        //     return e.key == d.key
+        //   }))
+        //   return dvc.essential.colour_palette.filter(function(e) {
+        //     return e.key == d.key
+        //   })[0].colour
+        // })
+        // .attr('stroke-width', "3px")
+
+      // create a big SVG over the top for annotations
+      annotationsLayer=d3.select("#graphic")
+        .append('svg')
+        .attr('id','annotationLayer')
+        .attr('height', Math.ceil(nested.length / dvc.optional.chart_every[size]) * (height + margin.top + margin.bottom))
+        .attr('width',dvc.optional.chart_every[size]*(chart_width+margin.top+margin.bottom))
+        .style('background-color',"rgba(255, 255, 255, 0)")
+        .style('position','absolute')
+        .style('left', "0px")
+        .style('top',"0px")
+
+      //create link to source
+      d3.select('#source')
+        .text('Source: ' + dvc.essential.sourceText);
+
+      d3.selectAll(".line2020").raise()
+
+      //use pym to calculate chart dimensions
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+
+
+    //check whether browser can cope with svg
+    if (Modernizr.svg) {
+      //load config
+      d3.json("config.json", function(error, config) {
+        dvc = config;
+
+        //load chart data
+        d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+          graphic_data = data;
+
+          // graphic_data.forEach(function(d){
+          //   d.date=d3.timeParse(dvc.essential.dateFormat)(d.date)
+          // })
+          //use pym to create iframed chart dependent on specified variables
+          pymChild = new pym.Child({
+            renderCallback: drawGraphic
+          });
+        });
+
+      })
+
+    } else {
+      //use pym to create iframe containing fallback image (which is set as default)
+      pymChild = new pym.Child();
+      if (pymChild) {
+        pymChild.sendHeight();
+      }
+    }
+  </script>
+</body>
+
+</html>

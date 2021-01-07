@@ -1,5 +1,6 @@
 {
   "essential": {
+    "screenreadertext": "Set of small bar charts",
     "graphic_data_url": "data.csv",
     "dateFormat": "%d/%m/%Y",
 
@@ -8,11 +9,12 @@
       "Imports": "#003C57"
     },
     "categorySort": [
-      "Legal, accounting, management consulting and public relations",
-      "Explicitly charged and other financial services",
+      "Total Services",
       "Technical, trade-related and other business services",
-      "Direct insurance",
-      "Research and Development"
+      "Professional and management consulting services",
+      "Explicitly charged and other financial services",
+      "Intellectual Property",
+      "Personal Travel"
     ],
     "sourceText": ["Office for National Statistics"],
     "xAxisLabel": "%",
@@ -64,10 +66,10 @@
 
     "mobileBreakpoint": 400,
     "middleBreakpoint": 600,
-    "x_ticks_every": {
-      "sm": 3,
+    "x_ticks_num": {
+      "sm": 8,
       "md": 8,
-      "lg": 11
+      "lg": 8
     }
   }
 }

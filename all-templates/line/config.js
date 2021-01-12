@@ -7,6 +7,8 @@ var dvc = {
             "directLabeling" : true,
             "directLabelingAdjust" : [{"x": 0, "y": 0},{"x": 0, "y": 7},{"x": 0, "y": -43}],
             "colour_palette": ["#206095","#27A0CC","#003C57","#118C7B","#A8BD3A","#871A5B","#F66068","#746CB1","#22D0B6"],
+            // for darker text required by accessibility rules on colour contrast
+            "colour_palette_labels": ["#206095","#057FAC","#003C57","#118C7B","#8A9B2E","#871A5B","#F66068","#746CB1","#1AA590"],
             "sourceText":["Office for National Statistics"],
             "sourceURL":["http://www.ons.gov.uk"],
             "draggable": false,

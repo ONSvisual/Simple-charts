@@ -635,7 +635,7 @@ function createLegend(){
             .attr("x", 10)
             .attr("dy", ".35em")
             .attr("class", "label")
-            .style("fill", dvc.essential.colour_palette[legendLabels.indexOf(column)])
+            .style("fill", dvc.essential.colour_palette_labels[legendLabels.indexOf(column)])
             .text(column)
             .call(wrap, margin.right)
         } // end for loop running through data columns

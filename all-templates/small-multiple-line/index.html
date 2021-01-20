@@ -61,66 +61,68 @@
       padding-top: 0;
     }
 
-    h5,h6 {
+    h5,
+    h6 {
       font-size: 16px;
       margin: 16px 0 8px 0;
       font-weight: 700;
       color: #323132;
     }
 
-    ul, ol {
+    ul,
+    ol {
       margin: 16px 0;
       padding-left: 32px;
     }
 
     li {
-        margin: 0 0 8px 0;
-        line-height: 32px;
-        font-weight: 400;
-        font-size: 18px;
-        padding: 0;
+      margin: 0 0 8px 0;
+      line-height: 32px;
+      font-weight: 400;
+      font-size: 18px;
+      padding: 0;
     }
 
-    @media (max-width:767px){
-        li{
-          font-size:16px;
-        }
+    @media (max-width:767px) {
+      li {
+        font-size: 16px;
+      }
     }
 
-  	.line5-yearaverage {
-  		stroke: #666;
-  		stroke-dasharray: 5 8 !important;
-  		stroke-linecap: round !important;
-  		stroke-width: 2px !important;
-  	}
+    .line5-yearaverage {
+      stroke: #666;
+      stroke-dasharray: 5 8 !important;
+      stroke-linecap: round !important;
+      stroke-width: 2px !important;
+    }
 
     a {
-        text-decoration: underline;
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 32px;
+      text-decoration: underline;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 32px;
     }
 
     .btn {
-        font-family: "Open Sans",Helvetica,Arial,sans-serif;
-        display: inline-block;
-        width: auto;
-        cursor: pointer;
-        padding: 6px 16px 10px 16px;
-        border: 0 none;
-        text-align: center;
-        -webkit-appearance: none;
-        transition: background-color 0.25s ease-out;
+      font-family: "Open Sans", Helvetica, Arial, sans-serif;
+      display: inline-block;
+      width: auto;
+      cursor: pointer;
+      padding: 6px 16px 10px 16px;
+      border: 0 none;
+      text-align: center;
+      -webkit-appearance: none;
+      transition: background-color 0.25s ease-out;
     }
 
     .btn--primary:focus {
-    background-color: #0b5d30;
-}
+      background-color: #0b5d30;
+    }
 
     .btn--primary {
-    background-color: #0F8243;
-    color: #fff;
-}
+      background-color: #0F8243;
+      color: #fff;
+    }
   </style>
 </head>
 
@@ -133,13 +135,13 @@
 
   <h6 id="source"></h6>
   <h6>Notes:</h6>
-    <ol>
-      <li>Based on area of usual residence, boundaries correct as of May 2020.</li>
-      <li>Figures exclude deaths of non-residents.</li>
-      <li>Based on date a death was registered rather than occurred.</li>
-      <li>All figures for 2020 are provisional.</li>
-      <li>The International Classification of Diseases, Tenth Edition (ICD-10) definitions are as follows: coronavirus (COVID-19) (U07.1 and U07.2).</li>
-    </ol>
+  <ol>
+    <li>Based on area of usual residence, boundaries correct as of May 2020.</li>
+    <li>Figures exclude deaths of non-residents.</li>
+    <li>Based on date a death was registered rather than occurred.</li>
+    <li>All figures for 2020 are provisional.</li>
+    <li>The International Classification of Diseases, Tenth Edition (ICD-10) definitions are as follows: coronavirus (COVID-19) (U07.1 and U07.2).</li>
+  </ol>
   <h5>Download this chart</h5>
   <a class="btn btn--primary print--hide" title="Download as xlsx" href="datadownload.xlsx">.xlsx</a>
 
@@ -157,7 +159,9 @@
       //set the screenreader H5
       d3.select("#screenreadertext").text(dvc.essential.screenreadertext)
 
-      maxweek=d3.max(graphic_data,function(d){return d.date})
+      maxweek = d3.max(graphic_data, function(d) {
+        return d.date
+      })
 
       var threshold_md = dvc.optional.middleBreakpoint;
       var threshold_sm = dvc.optional.mobileBreakpoint;
@@ -171,7 +175,7 @@
       }
 
       categorySort = {}
-      if(Array.isArray(dvc.essential.categorySort)){
+      if (Array.isArray(dvc.essential.categorySort)) {
         for (i = 0; i < dvc.essential.categorySort.length; i++) {
           categorySort[dvc.essential.categorySort[i]] = i;
         }
@@ -180,32 +184,36 @@
           return categorySort[a.category] - categorySort[b.category]
         })
 
-        categories=Object.keys(categorySort)
-      } else if(dvc.essential.categorySort=="descending"){
+        categories = Object.keys(categorySort)
+      } else if (dvc.essential.categorySort == "descending") {
         //auto sort the array by biggest value
-        graphic_data.filter(function(d){
-          return d.date==maxweek
-        }).sort(function(a,b){return +b.chiffre - (+a.chiffre)}).forEach(function(item, i){
-          categorySort[item.category]=i
+        graphic_data.filter(function(d) {
+          return d.date == maxweek
+        }).sort(function(a, b) {
+          return +b.chiffre - (+a.chiffre)
+        }).forEach(function(item, i) {
+          categorySort[item.category] = i
         });
 
         graphic_data.sort(function(a, b) {
           return categorySort[a.category] - categorySort[b.category]
         })
 
-        categories=Object.keys(categorySort)
-      } else if (dvc.essential.categorySort=="ascending"){
-        graphic_data.filter(function(d){
-          return d.date==maxweek
-        }).sort(function(a,b){return +a.chiffre - (+b.chiffre)}).forEach(function(item, i){
-          categorySort[item.category]=i
+        categories = Object.keys(categorySort)
+      } else if (dvc.essential.categorySort == "ascending") {
+        graphic_data.filter(function(d) {
+          return d.date == maxweek
+        }).sort(function(a, b) {
+          return +a.chiffre - (+b.chiffre)
+        }).forEach(function(item, i) {
+          categorySort[item.category] = i
         });
 
         graphic_data.sort(function(a, b) {
           return categorySort[a.category] - categorySort[b.category]
         })
 
-        categories=Object.keys(categorySort)
+        categories = Object.keys(categorySort)
 
       }
 
@@ -314,17 +322,30 @@
         return d.date
       }))
 
-      dates=d3.map(graphic_data,function(d){return d.date}).keys()
+      dates = d3.map(graphic_data, function(d) {
+        return d.date
+      }).keys()
 
 
       var xAxis = d3.axisBottom(x)
-          .tickValues(d3.map(graphic_data,function(d){return d.date}).keys()
-          .map(function(d){return d3.timeParse("%a %b %d %Y")(d.match(/\b[\w']+(?:[^\w\n]+[\w']+){1,3}\b/g)[0])})
-          .sort(function(a,b){return a - b})
-          .filter(function(d,i){
-            return i % dvc.optional.x_ticks_every[size] === 0&&i<dates.length-dvc.optional.x_ticks_every[size] || i==dates.length-1 //Rob's fussy comment about labelling the last date
-          }))
-          .tickFormat(d3.timeFormat(dvc.essential.displayTicksFormat))
+        .tickValues(graphic_data
+          .map(function(d) {
+            return d.date.getTime()
+          }) //just get dates as seconds past unix epoch
+          .filter(function(d, i, arr) {
+            return arr.indexOf(d) == i
+          }) //find unique
+          .map(function(d) {
+            return new Date(d)
+          }) //map back to dates
+          .sort(function(a, b) {
+            return a - b
+          })
+          .filter(function(d, i) {
+            return i % dvc.optional.x_ticks_every[size] === 0 && i < dates.length - dvc.optional.x_ticks_every[size] || i == dates.length - 1 //Rob's fussy comment about labelling the last date
+          })
+        )
+        .tickFormat(d3.timeFormat(dvc.essential.displayTicksFormat))
 
       line = d3.line()
         .x(function(d) {
@@ -342,7 +363,9 @@
         .key(function(d) {
           return d.series
         })
-        .sortValues(function(a,b) { return a.date - b.date; } )
+        .sortValues(function(a, b) {
+          return a.date - b.date;
+        })
         .entries(graphic_data)
 
       //x domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
@@ -442,7 +465,7 @@
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
         .each(function(d, i) {
-          if (i % dvc.optional.chart_every[size] == dvc.optional.chart_every[size] - 1||i==nested.length-1) {
+          if (i % dvc.optional.chart_every[size] == dvc.optional.chart_every[size] - 1 || i == nested.length - 1) {
             d3.select(this).append("text")
               .text(dvc.essential.xAxisLabel)
               .attr("transform", "translate(" + chart_width + "," + (margin.bottom - 5) + ")")
@@ -458,16 +481,18 @@
         .attr('class', 'y axis')
 
       //y axis label
-         svg
-          .each(function(d, i) { //only label the first graph
-            if (i % dvc.optional.chart_every[size] == 0) {
-              d3.select(this).append("text")
-              .attr('transform','translate(' + (19 - margin.left) + ', 0)')
-              .attr("font-size","11px")
-              .attr("fill","#666")
-              .text(function(d,i) { return dvc.essential.yAxisLabel});
-            }
-          })
+      svg
+        .each(function(d, i) { //only label the first graph
+          if (i % dvc.optional.chart_every[size] == 0) {
+            d3.select(this).append("text")
+              .attr('transform', 'translate(' + (19 - margin.left) + ', 0)')
+              .attr("font-size", "11px")
+              .attr("fill", "#666")
+              .text(function(d, i) {
+                return dvc.essential.yAxisLabel
+              });
+          }
+        })
 
       drawyaxis.each(function(d, i) {
         if (i % dvc.optional.chart_every[size] == 0) {
@@ -489,7 +514,9 @@
           // console.log(d)
           return line(d.values)
         })
-        .attr("class",function(d){return "line"+d.key.replace(/\s/g, '')})
+        .attr("class", function(d) {
+          return "line" + d.key.replace(/\s/g, '')
+        })
         .attr("stroke", function(d) {
           return dvc.essential.colour_palette.filter(function(e) {
             return e.key == d.key
@@ -498,15 +525,15 @@
         .attr('stroke-width', "3px")
 
       // create a big SVG over the top for annotations
-      annotationsLayer=d3.select("#graphic")
+      annotationsLayer = d3.select("#graphic")
         .append('svg')
-        .attr('id','annotationLayer')
+        .attr('id', 'annotationLayer')
         .attr('height', Math.ceil(nested.length / dvc.optional.chart_every[size]) * (height + margin.top + margin.bottom))
-        .attr('width',dvc.optional.chart_every[size]*(chart_width+margin.top+margin.bottom))
-        .style('background-color',"rgba(255, 255, 255, 0)")
-        .style('position','absolute')
+        .attr('width', dvc.optional.chart_every[size] * (chart_width + margin.top + margin.bottom))
+        .style('background-color', "rgba(255, 255, 255, 0)")
+        .style('position', 'absolute')
         .style('left', "0px")
-        .style('top',"0px")
+        .style('top', "0px")
 
       //create link to source
       d3.select('#source')
@@ -531,8 +558,8 @@
         d3.csv(dvc.essential.graphic_data_url, function(error, data) {
           graphic_data = data;
 
-          graphic_data.forEach(function(d){
-            d.date=d3.timeParse(dvc.essential.dateFormat)(d.date)
+          graphic_data.forEach(function(d) {
+            d.date = d3.timeParse(dvc.essential.dateFormat)(d.date)
           })
           //use pym to create iframed chart dependent on specified variables
           pymChild = new pym.Child({

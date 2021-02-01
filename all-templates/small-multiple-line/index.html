@@ -174,48 +174,51 @@
         size = "lg";
       }
 
-      categorySort = {}
-      if (Array.isArray(dvc.essential.categorySort)) {
-        for (i = 0; i < dvc.essential.categorySort.length; i++) {
-          categorySort[dvc.essential.categorySort[i]] = i;
+      if(dvc.essential.categorySort.on==true){
+        categorySort = {}
+        if (Array.isArray(dvc.essential.categorySort.sortby)) {
+          for (i = 0; i < dvc.essential.categorySort.sortby.length; i++) {
+            categorySort[dvc.essential.categorySort.sortby[i]] = i;
+          }
+
+          graphic_data.sort(function(a, b) {
+            return categorySort[a.category] - categorySort[b.category]
+          })
+
+          categories = Object.keys(categorySort)
+        } else if (dvc.essential.categorySort.sortby == "descending") {
+          //auto sort the array by biggest value
+          graphic_data.filter(function(d) {
+            return d.date == maxweek
+          }).sort(function(a, b) {
+            return +b.chiffre - (+a.chiffre)
+          }).forEach(function(item, i) {
+            categorySort[item.category] = i
+          });
+
+          graphic_data.sort(function(a, b) {
+            return categorySort[a.category] - categorySort[b.category]
+          })
+
+          categories = Object.keys(categorySort)
+        } else if (dvc.essential.categorySort.sortby == "ascending") {
+          graphic_data.filter(function(d) {
+            return d.date == maxweek
+          }).sort(function(a, b) {
+            return +a.chiffre - (+b.chiffre)
+          }).forEach(function(item, i) {
+            categorySort[item.category] = i
+          });
+
+          graphic_data.sort(function(a, b) {
+            return categorySort[a.category] - categorySort[b.category]
+          })
+
+          categories = Object.keys(categorySort)
+
         }
-
-        graphic_data.sort(function(a, b) {
-          return categorySort[a.category] - categorySort[b.category]
-        })
-
-        categories = Object.keys(categorySort)
-      } else if (dvc.essential.categorySort == "descending") {
-        //auto sort the array by biggest value
-        graphic_data.filter(function(d) {
-          return d.date == maxweek
-        }).sort(function(a, b) {
-          return +b.chiffre - (+a.chiffre)
-        }).forEach(function(item, i) {
-          categorySort[item.category] = i
-        });
-
-        graphic_data.sort(function(a, b) {
-          return categorySort[a.category] - categorySort[b.category]
-        })
-
-        categories = Object.keys(categorySort)
-      } else if (dvc.essential.categorySort == "ascending") {
-        graphic_data.filter(function(d) {
-          return d.date == maxweek
-        }).sort(function(a, b) {
-          return +a.chiffre - (+b.chiffre)
-        }).forEach(function(item, i) {
-          categorySort[item.category] = i
-        });
-
-        graphic_data.sort(function(a, b) {
-          return categorySort[a.category] - categorySort[b.category]
-        })
-
-        categories = Object.keys(categorySort)
-
       }
+
 
       var margin = dvc.optional.margin[size]
       var chart_width = parseInt(graphic.style("width")) / dvc.optional.chart_every[size] - margin.left - margin.right;

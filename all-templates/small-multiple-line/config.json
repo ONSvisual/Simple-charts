@@ -16,7 +16,10 @@
         "colour":"#d32f2f"
       }
     ],
-    "categorySort": ["South East","North West","East","West Midlands","London","Yorkshire and The Humber","South West","East Midlands","North East","Wales"],
+    "categorySort": {
+      "on":true,
+      "sortby":["South East","North West","East","West Midlands","London","Yorkshire and The Humber","South West","East Midlands","North East","Wales"]
+      },
     "sourceText": ["Office for National Statistics – Deaths registered weekly in England and Wales"],
     "xAxisLabel": "Week ending",
     "yAxisLabel": "Weekly Deaths",

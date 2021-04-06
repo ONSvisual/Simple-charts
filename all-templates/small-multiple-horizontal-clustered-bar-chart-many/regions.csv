@@ -1,0 +1,181 @@
+date,series,chiffre,lower,upper,category
+Bangladeshi,Male,14.99,14.65,15.33,Cardiovascular
+Bangladeshi,Female,13.97,13.7,14.25,Cardiovascular
+Pakistani,Male,13.53,13.36,13.69,Cardiovascular
+Pakistani,Female,13.2,13.05,13.36,Cardiovascular
+Bangladeshi,Male,12.08,11.77,12.39,Metabolic
+Indian,Male,11.98,11.88,12.08,Cardiovascular
+Bangladeshi,Female,11.89,11.64,12.14,Metabolic
+Black Caribbean ,Female,11.59,11.46,11.72,Cardiovascular
+Other,Male,10.48,10.36,10.59,Cardiovascular
+Black Caribbean ,Male,10.31,10.16,10.45,Cardiovascular
+Pakistani,Female,10.14,10.01,10.28,Metabolic
+Indian,Female,10.07,9.98,10.16,Cardiovascular
+Black African,Male,9.94,9.76,10.13,Cardiovascular
+White,Male,9.88,9.87,9.89,Cardiovascular
+Pakistani,Male,9.88,9.74,10.02,Metabolic
+Black African,Female,9.68,9.52,9.84,Cardiovascular
+Mixed,Male,9.31,9.13,9.48,Cardiovascular
+Other,Female,9.1,8.99,9.2,Cardiovascular
+Mixed,Female,8.72,8.57,8.88,Cardiovascular
+Pakistani,Female,8.55,8.44,8.66,Respiratory
+White,Female,8.28,8.27,8.29,Cardiovascular
+Indian,Male,7.35,7.27,7.43,Metabolic
+Bangladeshi,Female,7.34,7.15,7.52,Respiratory
+Bangladeshi,Male,7.27,7.05,7.5,Respiratory
+Mixed,Female,6.86,6.75,6.98,Respiratory
+Pakistani,Male,6.82,6.71,6.93,Respiratory
+Black Caribbean ,Female,6.68,6.58,6.77,Respiratory
+White,Female,6.5,6.49,6.51,Respiratory
+Chinese,Male,6.44,6.25,6.62,Cardiovascular
+Other,Male,6.23,6.14,6.32,Metabolic
+Indian,Female,5.98,5.91,6.05,Metabolic
+Black Caribbean ,Female,5.95,5.86,6.05,Metabolic
+Black Caribbean ,Male,5.69,5.58,5.8,Metabolic
+Chinese,Female,5.59,5.44,5.75,Cardiovascular
+Indian,Female,5.3,5.24,5.37,Respiratory
+Other,Female,5.26,5.19,5.33,Respiratory
+Mixed,Male,5.2,5.08,5.32,Respiratory
+Black African,Male,5.16,5.03,5.3,Metabolic
+Black Caribbean ,Female,5.15,5.07,5.24,Cancer
+Pakistani,Female,5.14,5.05,5.24,Musculoskeletal
+White,Male,5.03,5.02,5.04,Respiratory
+Other,Female,4.92,4.85,4.99,Metabolic
+Indian,Male,4.9,4.84,4.96,Respiratory
+Black Caribbean ,Male,4.67,4.58,4.76,Respiratory
+Other,Male,4.51,4.44,4.59,Respiratory
+Black African,Female,4.37,4.27,4.48,Metabolic
+Bangladeshi,Female,4.29,4.13,4.44,Musculoskeletal
+White,Male,4.26,4.25,4.27,Cancer
+Mixed,Male,4.23,4.11,4.35,Metabolic
+Indian,Female,4.16,4.1,4.22,Musculoskeletal
+White,Female,4.14,4.13,4.15,Cancer
+White,Female,4.12,4.11,4.13,Musculoskeletal
+Bangladeshi,Male,4.12,3.93,4.3,Renal
+Black African,Female,4.06,3.97,4.15,Respiratory
+Black Caribbean ,Male,4.03,3.94,4.13,Cancer
+Black African,Female,3.99,3.91,4.07,Cancer
+Mixed,Female,3.9,3.81,3.99,Cancer
+Mixed,Female,3.89,3.79,3.99,Musculoskeletal
+Mixed,Female,3.71,3.61,3.81,Metabolic
+Black Caribbean ,Female,3.63,3.56,3.71,Musculoskeletal
+Bangladeshi,Female,3.52,3.4,3.65,Cancer
+Other,Female,3.46,3.4,3.53,Musculoskeletal
+Pakistani,Male,3.42,3.33,3.5,Renal
+Other,Female,3.39,3.33,3.44,Cancer
+Mixed,Male,3.37,3.26,3.47,Cancer
+Pakistani,Female,3.28,3.21,3.34,Cancer
+Black African,Male,3.2,3.09,3.3,Cancer
+White,Male,3.2,3.19,3.21,Metabolic
+Chinese,Male,3.11,2.99,3.24,Metabolic
+Black Caribbean ,Male,3.11,3.03,3.19,Renal
+Indian,Female,3.09,3.04,3.14,Cancer
+Bangladeshi,Female,3.09,2.96,3.23,Renal
+Black African,Male,3.09,2.99,3.19,Respiratory
+Black African,Female,3.05,2.95,3.14,Musculoskeletal
+Bangladeshi,Male,2.97,2.82,3.12,Cancer
+Other,Male,2.92,2.86,2.98,Cancer
+Pakistani,Female,2.9,2.82,2.98,Renal
+Chinese,Female,2.87,2.78,2.97,Cancer
+Chinese,Male,2.69,2.58,2.81,Cancer
+Indian,Male,2.69,2.64,2.74,Renal
+Indian,Male,2.65,2.6,2.7,Cancer
+Black African,Male,2.65,2.55,2.75,Renal
+Bangladeshi,Male,2.59,2.45,2.73,Musculoskeletal
+Chinese,Female,2.55,2.45,2.66,Metabolic
+Pakistani,Male,2.53,2.46,2.6,Cancer
+Black Caribbean ,Female,2.53,2.47,2.59,Renal
+Chinese,Male,2.48,2.37,2.59,Respiratory
+Pakistani,Male,2.46,2.39,2.53,Musculoskeletal
+White,Female,2.4,2.4,2.41,Metabolic
+Chinese,Female,2.37,2.28,2.47,Respiratory
+Mixed,Male,2.32,2.23,2.41,Renal
+White,Male,2.31,2.3,2.32,Musculoskeletal
+Other,Male,2.31,2.26,2.37,Renal
+White,Male,2.12,2.12,2.13,Renal
+Indian,Male,2.03,1.98,2.07,Musculoskeletal
+Mixed,Male,2.03,1.95,2.11,Musculoskeletal
+Indian,Female,2.02,1.98,2.06,Renal
+Chinese,Female,1.96,1.87,2.05,Musculoskeletal
+Mixed,Female,1.9,1.83,1.97,Renal
+Bangladeshi,Female,1.88,1.79,1.97,Digestive
+White,Female,1.85,1.84,1.86,Renal
+Black African,Female,1.8,1.72,1.87,Renal
+Black Caribbean ,Male,1.78,1.72,1.84,Musculoskeletal
+Other,Male,1.78,1.73,1.83,Musculoskeletal
+Bangladeshi,Male,1.71,1.61,1.81,Digestive
+Other,Female,1.68,1.63,1.72,Renal
+Black African,Male,1.52,1.44,1.6,Musculoskeletal
+Pakistani,Female,1.5,1.45,1.54,Digestive
+Indian,Male,1.46,1.43,1.5,Digestive
+Chinese,Male,1.45,1.36,1.54,Renal
+Pakistani,Male,1.36,1.32,1.4,Digestive
+Black Caribbean ,Male,1.29,1.24,1.34,Mental health conditions
+Mixed,Female,1.25,1.2,1.3,Digestive
+White,Female,1.23,1.23,1.24,Digestive
+White,Male,1.19,1.19,1.2,Digestive
+Other,Male,1.17,1.13,1.2,Digestive
+Mixed,Male,1.16,1.11,1.21,Digestive
+Indian,Female,1.15,1.13,1.18,Digestive
+Mixed,Male,1.13,1.09,1.17,Mental health conditions
+Other,Female,1.04,1.01,1.07,Digestive
+Mixed,Female,1.04,1,1.08,Mental health conditions
+White,Female,1.02,1.02,1.03,Neurological
+Black Caribbean ,Female,1.01,0.97,1.04,Mental health conditions
+Black Caribbean ,Female,1,0.96,1.04,Digestive
+Chinese,Female,0.98,0.91,1.04,Renal
+Mixed,Female,0.97,0.92,1.01,Neurological
+Mixed,Male,0.94,0.89,0.99,Neurological
+White,Male,0.93,0.92,0.93,Neurological
+Bangladeshi,Female,0.9,0.82,0.98,Alzheimers and Dementia
+Bangladeshi,Female,0.89,0.83,0.95,Mental health conditions
+Black Caribbean ,Female,0.88,0.84,0.91,Neurological
+Bangladeshi,Male,0.86,0.77,0.94,Alzheimers and Dementia
+Chinese,Male,0.86,0.79,0.93,Musculoskeletal
+Black Caribbean ,Female,0.85,0.82,0.89,Alzheimers and Dementia
+Black Caribbean ,Male,0.85,0.81,0.89,Digestive
+Chinese,Male,0.84,0.78,0.9,Digestive
+Black Caribbean ,Male,0.84,0.8,0.88,Neurological
+Bangladeshi,Male,0.8,0.75,0.86,Mental health conditions
+Pakistani,Male,0.8,0.76,0.84,Neurological
+Pakistani,Female,0.79,0.76,0.82,Neurological
+Black African,Male,0.76,0.72,0.79,Mental health conditions
+Black Caribbean ,Male,0.75,0.71,0.79,Alzheimers and Dementia
+Black African,Female,0.75,0.71,0.79,Digestive
+Indian,Male,0.74,0.72,0.77,Neurological
+Black African,Male,0.72,0.68,0.77,Digestive
+Black African,Female,0.69,0.66,0.72,Mental health conditions
+Other,Male,0.69,0.66,0.72,Neurological
+Pakistani,Male,0.68,0.65,0.7,Mental health conditions
+Bangladeshi,Male,0.68,0.61,0.74,Neurological
+Indian,Female,0.67,0.64,0.69,Neurological
+Mixed,Female,0.66,0.62,0.71,Alzheimers and Dementia
+Black African,Male,0.64,0.59,0.68,Neurological
+Other,Male,0.63,0.61,0.65,Mental health conditions
+White,Male,0.63,0.62,0.63,Mental health conditions
+Pakistani,Female,0.62,0.59,0.66,Alzheimers and Dementia
+Chinese,Female,0.62,0.58,0.67,Digestive
+Pakistani,Female,0.62,0.59,0.64,Mental health conditions
+Pakistani,Male,0.61,0.57,0.65,Alzheimers and Dementia
+Black African,Male,0.6,0.54,0.65,Alzheimers and Dementia
+White,Female,0.6,0.6,0.61,Mental health conditions
+Bangladeshi,Female,0.6,0.55,0.65,Neurological
+Other,Female,0.59,0.57,0.62,Neurological
+Other,Female,0.58,0.55,0.61,Alzheimers and Dementia
+White,Female,0.58,0.58,0.59,Alzheimers and Dementia
+Other,Female,0.57,0.55,0.59,Mental health conditions
+Mixed,Male,0.55,0.5,0.6,Alzheimers and Dementia
+Black African,Female,0.53,0.49,0.58,Alzheimers and Dementia
+Other,Male,0.52,0.49,0.55,Alzheimers and Dementia
+Black African,Female,0.5,0.47,0.53,Neurological
+Indian,Male,0.49,0.46,0.51,Alzheimers and Dementia
+Indian,Female,0.49,0.47,0.51,Alzheimers and Dementia
+White,Male,0.49,0.49,0.49,Alzheimers and Dementia
+Indian,Male,0.49,0.47,0.51,Mental health conditions
+Indian,Female,0.49,0.47,0.5,Mental health conditions
+Chinese,Female,0.41,0.36,0.45,Alzheimers and Dementia
+Chinese,Male,0.38,0.33,0.42,Neurological
+Chinese,Male,0.33,0.28,0.38,Alzheimers and Dementia
+Chinese,Female,0.29,0.26,0.32,Mental health conditions
+Chinese,Female,0.28,0.25,0.32,Neurological
+Chinese,Male,0.26,0.23,0.29,Mental health conditions

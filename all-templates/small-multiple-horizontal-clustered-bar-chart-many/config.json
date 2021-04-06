@@ -1,0 +1,68 @@
+{
+  "essential": {
+    "graphic_data_url": "regions.csv",
+    "dateFormat": "%d/%m/%Y",
+
+    "colour_palette": [{
+        "key": "Males",
+        "colour": "#234d70"
+      },
+      {
+        "key": "Females",
+        "colour": "#00a5a1"
+      }
+
+    ],
+    "categorySort": ["Cardiovascular disease","Metabolic","East","Respiratory","Cancer","Musculoskeletal","Renal","Renal","Mental/behavioural","Neurological"],
+    "sourceText": ["Office for National Statistics – Deaths registered weekly in England and Wales"],
+    "xAxisLabel": "Age standardised prevalence rate (%)",
+    "yAxisLabel": "Regions and Countries",
+    "yAxisScale": "auto_zero_max_total"
+  },
+  "optional": {
+    "margin": {
+      "sm": {
+        "top": 25,
+        "right": 20,
+        "bottom": 45,
+        "left": 5
+      },
+      "md": {
+        "top": 25,
+        "right": 20,
+        "bottom": 50,
+        "left": 5
+      },
+      "lg": {
+        "top": 40,
+        "right": 20,
+        "bottom": 60,
+        "left": 5
+      }
+    },
+    "margin_special_left":100,
+    "chart_every":{
+      "sm": 1,
+      "md": 2,
+      "lg": 4
+    },
+    "aspectRatio": {
+      "sm": [16, 12],
+      "md": [16, 20],
+      "lg": [16, 20]
+    },
+    "legendHeight":{
+      "sm": 45,
+      "md": 30,
+      "lg": 30
+    },
+
+    "mobileBreakpoint": 480,
+    "middleBreakpoint": 670,
+    "x_ticks_every": {
+      "sm": 7,
+      "md": 7,
+      "lg": 7
+    }
+  }
+}

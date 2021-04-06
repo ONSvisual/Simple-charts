@@ -63,36 +63,36 @@ These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisu
 
 ### Five colour palette
 
-* ![#206095](https://placehold.it/15/206095/000000?text=+) `#206095`
-* ![#118C7B](https://placehold.it/15/118C7B/000000?text=+) `#118C7B`
-* ![#003C57](https://placehold.it/15/003C57/000000?text=+) `#003C57`
-* ![#A8BD3A](https://placehold.it/15/A8BD3A/000000?text=+) `#A8BD3A`
-* ![#27A0CC](https://placehold.it/15/27A0CC/000000?text=+) `#27A0CC`
+* ![#206095](img/206095.png) `#206095`
+* ![#118C7B](img/118C7B.png) `#118C7B`
+* ![#003C57](img/003C57.png) `#003C57`
+* ![#A8BD3A](img/A8BD3A.png) `#A8BD3A`
+* ![#27A0CC](img/27A0CC.png) `#27A0CC`
 
 ["#206095"],["#118C7B"],["#003C57"],["#A8BD3A"],["#27A0CC"]
 
 
 ### Nine colour palette
 
-* ![#206095](https://placehold.it/15/206095/000000?text=+) `#206095`
-* ![#118C7B](https://placehold.it/15/118C7B/000000?text=+) `#118C7B`
-* ![#003C57](https://placehold.it/15/003C57/000000?text=+) `#003C57`
-* ![#A8BD3A](https://placehold.it/15/A8BD3A/000000?text=+) `#A8BD3A`
-* ![#27A0CC](https://placehold.it/15/27A0CC/000000?text=+) `#27A0CC`
-* ![#871A5B](https://placehold.it/15/871A5B/000000?text=+) `#871A5B`
-* ![#F66068](https://placehold.it/15/F66068/000000?text=+) `#F66068`
-* ![#746CB1](https://placehold.it/15/746CB1/000000?text=+) `#746CB1`
-* ![#22D0B6](https://placehold.it/15/22D0B6/000000?text=+) `#22D0B6`
+* ![#206095](img/206095.png) `#206095`
+* ![#118C7B](img/118C7B.png) `#118C7B`
+* ![#003C57](img/003C57.png) `#003C57`
+* ![#A8BD3A](img/A8BD3A.png) `#A8BD3A`
+* ![#27A0CC](img/27A0CC.png) `#27A0CC`
+* ![#871A5B](img/871A5B.png) `#871A5B`
+* ![#F66068](img/F66068.png) `#F66068`
+* ![#746CB1](img/746CB1.png) `#746CB1`
+* ![#22D0B6](img/22D0B6.png) `#22D0B6`
 
 ["#206095"],["#118C7B"],["#003C57"],["#A8BD3A"],["#27A0CC"],["#871A5B"],["#F66068"],["#746CB1"],["#22D0B6"]
 
 If using these colours for direct labelling, some need to be made darker to meet contrast guidelines. For text at least 14pt in bold or 18pt in regular text, these colours are 3:1 contrast against white.
 
 Spring green
-![#A8BD3A](https://placehold.it/15/A8BD3A/000000?text=+) `#A8BD3A`  > ![#8A9B2E](https://placehold.it/15/8A9B2E/000000?text=+) `#8A9B2E`
+![#A8BD3A](img/A8BD3A.png) `#A8BD3A`  > ![#8A9B2E](img/8A9B2E.png) `#8A9B2E`
 
 Mint green
-![#22D0B6](https://placehold.it/15/22D0B6/000000?text=+)`#22D0B6` > ![#1AA590](https://placehold.it/15/1AA590/000000?text=+)`#1AA590`
+![#22D0B6](img/22D0B6.png)`#22D0B6` > ![#1AA590](img/1AA590.png)`#1AA590`
 
 Highlight orange
-![#F39431](https://placehold.it/15/F39431/000000?text=+)`#F39431` > ![#F56927](https://placehold.it/15/F56927/000000?text=+)`#F56927`
+![#F39431](img/F39431.png)`#F39431` > ![#F56927](img/F56927.png)`#F56927`

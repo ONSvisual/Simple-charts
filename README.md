@@ -40,7 +40,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Small multiples stacked area](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-stacked-area)
 - [Small multiples bars horizontal (with multiple series of charts)](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-bar-horizontal)
 - [Small multiples clustered bars horizontal (with confidence intervals and a single y-axis)](http://onsvisual.github.io/Simple-charts/all-templates/small-multiple-horizontal-clustered-bar-chart-confidence-intervals/index.html)
-- Small multiple clustered bars horiztonal (with confidence intervals and individual y-axis)[https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-horizontal-clustered-bar-chart-many/index.html] 
+- [Small multiple clustered bars horiztonal (with confidence intervals and individual y-axis)][https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-horizontal-clustered-bar-chart-many/index.html] 
 - [Small multiples stacked bars vertical](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-stacked-bar-vertical/)
 - [Small multiples stacked bars](https://onsvisual.github.io/Simple-charts/all-templates/small-multiples-stacked-bar/)
 - [Split bar](https://onsvisual.github.io/Simple-charts/all-templates/split-bar/)**ACCESSIBLE**

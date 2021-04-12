@@ -351,8 +351,6 @@
 							})
 				        .call(xAxis);
 
-				 d3.select(".x").select("path").style("stroke", "#666")
-
 				//create icon to symbolise break in y axis if required
 				if(yDomain[0] > 0 && dvc.essential.yAxisBreak == true){
 					var paths = svg.append("defs")

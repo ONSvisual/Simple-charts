@@ -1,0 +1,122 @@
+.x.axis path {
+  display: none;
+}
+
+/* Full width */
+
+.btn-form-fullwidth {
+  display: inline-flex;
+  font-family: 'Open Sans', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.form-group-fullwidth {
+  display: flex;
+  cursor: pointer;
+  height: 50px;
+  box-sizing: border-box;
+  text-align: center;
+  width: 100%;
+  margin-top: 3px;
+  margin-right: 4px;
+}
+
+.form-group-fullwidth:last-child {
+  /*  border-right: solid 3px #206095;*/
+}
+
+.form-group-fullwidth:focus {
+  outline: orange 3px solid;
+}
+
+.label-primary-fullwidth {
+  padding: 12px 16px;
+  cursor: pointer;
+  color: #206095;
+  background: #fff;
+  border-top: solid 3px #206095;
+  border-left: solid 3px #206095;
+  border-bottom: solid 3px #206095;
+  border-right: solid 3px #206095;
+  width: 100%;
+}
+
+.label-primary-fullwidth:hover,
+.label-primary-fullwidth:focus {
+  background: #206095;
+  color: #fff;
+  border-color: #206095;
+  width: 100%;
+}
+
+.label-primary-fullwidth:focus {
+  outline: orange 3px solid;
+}
+
+.radio-primary-fullwidth:checked+.label-primary-fullwidth {
+  background: #206095;
+  color: #fff;
+  border-color: #206095;
+  cursor: default;
+  width: 100%;
+}
+
+.radio-primary-fullwidth {
+  display: none;
+}
+
+h5 {
+  font-size: 16px;
+  margin: 16px 0 8px 0;
+  font-weight: 700;
+  color: #323132;
+}
+
+.visuallyhidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* stuff for legend */
+#legend{
+  display:flex;
+  margin-bottom: 20px;
+}
+
+.legenditem {
+  display:flex;
+  font-size: 14px;
+  padding-right:25px;
+}
+
+.square {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+}
+
+.legendtext{
+  font-size:16px;
+  color:#707070;
+}
+
+p{
+  line-height:1em;
+  margin-bottom:10px;
+}
+
+@media (max-width: 400px) {
+  .legend{
+    flex-flow:column;
+  }
+}

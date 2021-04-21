@@ -85,7 +85,7 @@
         return d.name;
       }));
 
-      var yAxis = d3.axisLeft(y)
+      var yAxis = d3.axisLeft(y).tickSize(0);
 
       var xAxis = d3.axisBottom(x);
 
@@ -170,8 +170,6 @@
       svg.append('g')
         .attr('class', 'y axis')
         .call(yAxis);
-
-      d3.select(".y.axis").selectAll("line").remove();
 
       svg.append("text")
         .attr('class', 'unit')

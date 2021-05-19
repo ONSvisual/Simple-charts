@@ -22,6 +22,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 - [Line ordinal](https://onsvisual.github.io/Simple-charts/all-templates/line-ordinal/)
 - [Line ordinal band](https://onsvisual.github.io/Simple-charts/all-templates/line-ordinal-band/)
 - [Line with difference](https://onsvisual.github.io/Simple-charts/all-templates/line-with-difference/)
+- [Line with dropdown](https://onsvisual.github.io/Simple-charts/all-templates/line-with-dropdown/)
 - [Marimekko](https://onsvisual.github.io/Simple-charts/all-templates/marimekko/)
 - [Quiz](https://onsvisual.github.io/Simple-charts/all-templates/quiz/)
 - [Regional bar map](https://onsvisual.github.io/Simple-charts/all-templates/regional-map-bar/)

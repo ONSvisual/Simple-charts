@@ -105,3 +105,9 @@ Mint green
 
 Highlight orange
 ![#F39431](img/F39431.png)`#F39431` > ![#F56927](img/F56927.png)`#F56927`
+
+The primary and alternate palettes, with these adjustments for labelling applied, are as follows:
+
+["#206095", "#27A0CC", "#003C57", "#118C7B", "#8A9B2E", "#871A5B", "#F66068", "#746CB1", "#1AA590"]
+
+["#206095", "#27A0CC", "#871A5B", "#8A9B2E", "#F66068"]

@@ -60,33 +60,40 @@ These charts use D3v4. Head over to the [D3v3 branch](https://github.com/ONSvisu
 
 
 
-## Current colour palette (as at 1st October 2020)*
-*in the process of being baked into templates
+## Current colour palette (as at 21 May 2021)
 
-### Five colour palette
+These colours are from the [ONS Brand Guidelines](https://www.notion.so/Colours-9cd14589e0764e33a3b3c5a6762f37ae),
+and are shown here for convenience.  We are in the process of updating the templates to match these colour palettes.
 
-* ![#206095](img/206095.png) `#206095`
-* ![#118C7B](img/118C7B.png) `#118C7B`
-* ![#003C57](img/003C57.png) `#003C57`
-* ![#A8BD3A](img/A8BD3A.png) `#A8BD3A`
-* ![#27A0CC](img/27A0CC.png) `#27A0CC`
-
-["#206095"],["#118C7B"],["#003C57"],["#A8BD3A"],["#27A0CC"]
-
-
-### Nine colour palette
+### Primary chart colour palette (nine colours)
 
 * ![#206095](img/206095.png) `#206095`
-* ![#118C7B](img/118C7B.png) `#118C7B`
-* ![#003C57](img/003C57.png) `#003C57`
-* ![#A8BD3A](img/A8BD3A.png) `#A8BD3A`
 * ![#27A0CC](img/27A0CC.png) `#27A0CC`
+* ![#003C57](img/003C57.png) `#003C57`
+* ![#118C7B](img/118C7B.png) `#118C7B`
+* ![#A8BD3A](img/A8BD3A.png) `#A8BD3A`
 * ![#871A5B](img/871A5B.png) `#871A5B`
 * ![#F66068](img/F66068.png) `#F66068`
 * ![#746CB1](img/746CB1.png) `#746CB1`
 * ![#22D0B6](img/22D0B6.png) `#22D0B6`
 
-["#206095"],["#118C7B"],["#003C57"],["#A8BD3A"],["#27A0CC"],["#871A5B"],["#F66068"],["#746CB1"],["#22D0B6"]
+["#206095", "#27A0CC", "#003C57", "#118C7B", "#A8BD3A", "#871A5B", "#F66068", "#746CB1", "#22D0B6"]
+
+### Alternate chart colour order (five colours)
+
+* ![#206095](img/206095.png) `#206095`
+* ![#27A0CC](img/27A0CC.png) `#27A0CC`
+* ![#871A5B](img/871A5B.png) `#871A5B`
+* ![#A8BD3A](img/A8BD3A.png) `#A8BD3A`
+* ![#F66068](img/F66068.png) `#F66068`
+
+["#206095", "#27A0CC", "#871A5B", "#A8BD3A", "#F66068"]
+
+### Highlight colour
+
+* !["#F39431"](img/F39431.png) `#F39431`
+
+### Adjustments for text
 
 If using these colours for direct labelling, some need to be made darker to meet contrast guidelines. For text at least 14pt in bold or 18pt in regular text, these colours are 3:1 contrast against white.
 

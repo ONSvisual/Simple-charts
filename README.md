@@ -10,48 +10,49 @@ The [wiki](https://github.com/ONSvisual/Simple-charts/wiki) instructions on how 
 If you download the zip of the repo, you'll find a folder for every template. These templates runs off core libraries in the folder `lib` and images in `images`. Each visualisation is customisable using the options in the `config.json` file. It reads data from a `data.csv` file.
 
 ## See them in action
-- [Bar and line](https://onsvisual.github.io/Simple-charts/all-templates/bar-and-line/)
-- [Bump chart](https://onsvisual.github.io/Simple-charts/all-templates/bump-chart/)
-- [Circle category](https://onsvisual.github.io/Simple-charts/all-templates/circle-category)
-- [Circle timeline](https://onsvisual.github.io/Simple-charts/all-templates/circle-timeline)
-- [Clustered bar horizontal](https://onsvisual.github.io/Simple-charts/all-templates/clustered-bar-horizontal/)
-- [Clustered bar vertical](https://onsvisual.github.io/Simple-charts/all-templates/clustered-bar-vertical/)
-- [Heatmap](https://onsvisual.github.io/Simple-charts/all-templates/heatmap)
-- [Icon array](https://onsvisual.github.io/Simple-charts/all-templates/icon-array)
-- [Line](https://onsvisual.github.io/Simple-charts/all-templates/line/)
-- [Line ordinal](https://onsvisual.github.io/Simple-charts/all-templates/line-ordinal/)
-- [Line ordinal band](https://onsvisual.github.io/Simple-charts/all-templates/line-ordinal-band/)
-- [Line with difference](https://onsvisual.github.io/Simple-charts/all-templates/line-with-difference/)
-- [Marimekko](https://onsvisual.github.io/Simple-charts/all-templates/marimekko/)
-- [Quiz](https://onsvisual.github.io/Simple-charts/all-templates/quiz/)
-- [Regional bar map](https://onsvisual.github.io/Simple-charts/all-templates/regional-map-bar/)
-- [Sankey](https://onsvisual.github.io/Simple-charts/all-templates/sankey/)
-- [Scatter - canvas](https://onsvisual.github.io/Simple-charts/all-templates/scatter-canvas/)
-- [Scatter with voronoi](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi/)
-- [Scatter with voronoi and dropdown](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi-dropdown/)
-- [Scatter with groups](https://onsvisual.github.io/Simple-charts/all-templates/scatter-with-groups/)
-- [Simple bar horizontal](https://onsvisual.github.io/Simple-charts/all-templates/simple-bar-horizontal/)
-- [Simple bar vertival](https://onsvisual.github.io/Simple-charts/all-templates/simple-bar-vertical/)
-- [Slope](https://onsvisual.github.io/Simple-charts/all-templates/slope/)
-- [Slope multiple](https://onsvisual.github.io/Simple-charts/all-templates/slope-multiple/)
-- [Slope with voronoi](https://onsvisual.github.io/Simple-charts/all-templates/slope-voronoi/)
-- [Small multiples lines](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-line/)
-- [Small multiples line category](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-line-category/)
-- [Small multiples stacked area](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-stacked-area)
-- [Small multiples bars horizontal (with multiple series of charts)](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-bar-horizontal)
-- [Small multiples clustered bars horizontal (with confidence intervals and a single y-axis)](http://onsvisual.github.io/Simple-charts/all-templates/small-multiple-horizontal-clustered-bar-chart-confidence-intervals/index.html)
-- [Small multiple clustered bars horiztonal (with confidence intervals and individual y-axis)](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-horizontal-clustered-bar-chart-many/index.html)
-- [Small multiples stacked bars vertical](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-stacked-bar-vertical/)
-- [Small multiples stacked bars](https://onsvisual.github.io/Simple-charts/all-templates/small-multiples-stacked-bar/)
-- [Split bar](https://onsvisual.github.io/Simple-charts/all-templates/split-bar/)**ACCESSIBLE**
-- [Split bar multiple](https://onsvisual.github.io/Simple-charts/all-templates/split-bar-multiple/)**ACCESSIBLE**
-- [Split bar varied x scales](https://onsvisual.github.io/Simple-charts/all-templates/split-bar-varied-xscales/)**ACCESSIBLE**
-- [Stacked area](https://onsvisual.github.io/Simple-charts/all-templates/stacked-area/)
-- [Stacked bar horizontal](https://onsvisual.github.io/Simple-charts/all-templates/stacked-bar-horizontal/)
-- [Stacked bar vertical](https://onsvisual.github.io/Simple-charts/all-templates/stacked-bar-vertical/)
-- [Stacked line chart](https://onsvisual.github.io/Simple-charts/all-templates/stacked-lines/)
-- [Tie Fighter](https://onsvisual.github.io/Simple-charts/all-templates/tie-fighter/)
-- [Tie Fighter with buttons](https://onsvisual.github.io/Simple-charts/all-templates/tiefighter-with-buttons/)
+|Chart type | Graphic | Code | Accessible |
+|:--- |:--- |:--- |:--- |
+|Area - stacked | [View](https://onsvisual.github.io/Simple-charts/all-templates/stacked-area) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/stacked-area) | &cross; |
+|Area - stacked - small multiple | [View](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-stacked-area) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiple-stacked-area) | &cross; |
+|Bar | [View](https://onsvisual.github.io/Simple-charts/all-templates/simple-bar-horizontal) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/simple-bar-horizontal) | &cross; |
+|Bar - small multiple | [View](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-bar-horizontal) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiple-bar-horizontal) | &cross; |
+|Bar - grouped | [View](https://onsvisual.github.io/Simple-charts/all-templates/clustered-bar-horizontal/) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/clustered-bar-horizontal) | &cross; |
+|Bar - grouped with confidence intervals - small multiple | [View](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-horizontal-clustered-bar-chart-confidence-intervals) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiple-horizontal-clustered-bar-chart-confidence-intervals) | &cross; |
+|Bar - stacked | [View](https://onsvisual.github.io/Simple-charts/all-templates/stacked-bar-horizontal) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/stacked-bar-horizontal) | &cross; |
+|Bar and map | [View](https://onsvisual.github.io/Simple-charts/all-templates/regional-map-bar) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/regional-map-bar) | &cross; |
+|Bump | [View](https://onsvisual.github.io/Simple-charts/all-templates/bump-chart/) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/bump-chart/) | &cross; |
+|Circle - category | [View](https://onsvisual.github.io/Simple-charts/all-templates/circle-category) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/circle-category/) | &cross; |
+|Circle - timeline | [View](https://onsvisual.github.io/Simple-charts/all-templates/circle-timeline) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/circle-timeline) | &cross; |
+|Column | [View](https://onsvisual.github.io/Simple-charts/all-templates/simple-bar-vertical) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/simple-bar-vertical) | &cross; |
+|Column - grouped | [View](https://onsvisual.github.io/Simple-charts/all-templates/clustered-bar-vertical/) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/clustered-bar-vertical) | &cross; |
+|Column - stacked | [View](https://onsvisual.github.io/Simple-charts/all-templates/stacked-bar-vertical) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/stacked-bar-vertical) | &cross; |
+|Column - stacked - small multiple | [View](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-stacked-bar-vertical) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiple-stacked-bar-vertical) | &cross; |
+|Column - grouped and stacked - small multiple | [View](https://onsvisual.github.io/Simple-charts/all-templates/small-multiples-stacked-bar) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiples-stacked-bar) | &cross; |
+|Column and line | [View](https://onsvisual.github.io/Simple-charts/all-templates/bar-and-line/) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/bar-and-line) | &cross; |
+|Connected dot plot | [View](https://onsvisual.github.io/Simple-charts/all-templates/tie-fighter) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/tie-fighter) | &cross; |
+|Connected dot plot - buttons | [View](https://onsvisual.github.io/Simple-charts/all-templates/tiefighter-with-buttons) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/tiefighter-with-buttons) | &cross; |
+|Heatmap | [View](https://onsvisual.github.io/Simple-charts/all-templates/heatmap) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/heatmap) | &cross; |
+|Line | [View](https://onsvisual.github.io/Simple-charts/all-templates/line) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/line) | &cross; |
+|Line - small multiple | [View](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-line) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiple-line) | &cross; |
+|Line - ordinal | [View](https://onsvisual.github.io/Simple-charts/all-templates/line-ordinal) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/line-ordinal) | &cross; |
+|Line - ordinal band | [View](https://onsvisual.github.io/Simple-charts/all-templates/line-ordinal-band) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/line-ordinal-band) | &cross; |
+|Line - shaded area | [View](https://onsvisual.github.io/Simple-charts/all-templates/line-with-difference) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/line-with-difference) | &cross; |
+|Line - stacked | [View](https://onsvisual.github.io/Simple-charts/all-templates/stacked-lines) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/stacked-lines) | &cross; |
+|Line - dropdown | [View](https://onsvisual.github.io/Simple-charts/all-templates/line-with-dropdown) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/line-with-dropdown) | &cross; |
+|Marimekko | [View](https://onsvisual.github.io/Simple-charts/all-templates/marimekko) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/marimekko) | &cross; |
+|Quiz | [View](https://onsvisual.github.io/Simple-charts/all-templates/quiz) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/quiz) | &cross; |
+|Sankey | [View](https://onsvisual.github.io/Simple-charts/all-templates/sankey) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/sankey) | &cross; |
+|Scatter - canvas | [View](https://onsvisual.github.io/Simple-charts/all-templates/scatter-canvas) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-canvas) | &cross; |
+|Scatter - voronoi | [View](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-voronoi) | &cross; |
+|Scatter - voronoi - dropdown | [View](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi-dropdown) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-voronoi-dropdown) | &cross; |
+|Scatter - groups | [View](https://onsvisual.github.io/Simple-charts/all-templates/scatter-with-groups) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-with-groups) | &cross; |
+|Slope | [View](https://onsvisual.github.io/Simple-charts/all-templates/slope) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/slope) | &cross; |
+|Slope - small multiple | [View](https://onsvisual.github.io/Simple-charts/all-templates/slope-multiple) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/slope-multiple) | &cross; |
+|Slope - voronoi | [View](https://onsvisual.github.io/Simple-charts/all-templates/slope-voronoi) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/slope-voronoi) | &cross; |
+|Split bar | [View](https://onsvisual.github.io/Simple-charts/all-templates/split-bar) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/split-bar) | &check; |
+|Split bar - small multiple | [View](https://onsvisual.github.io/Simple-charts/all-templates/split-bar-multiple) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/split-bar-multiple) | &check; |
+|Split bar - varied x scales | [View](https://onsvisual.github.io/Simple-charts/all-templates/split-bar-varied-xscales) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/split-bar-varied-xscales) | &check; |
+|Waffle - circle | [View](https://onsvisual.github.io/Simple-charts/all-templates/icon-array) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/icon-array) | &cross; |
 
 ##### NB
 

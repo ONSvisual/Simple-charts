@@ -1,7 +1,7 @@
 {
   "essential": {
     "graphic_data_url": "data.csv",
-    "colour_palette": ["#206095", "#118C7B", "#003C57", "#A8BD3A", "27A0CC"],
+    "colour_palette": ["#206095", "#118C7B", "#003C57", "#A8BD3A", "#27A0CC"],
     "accessibleSummary":"Description of what the chart is showing....",
     "sourceText":["Office for National Statistics - Annual Population Survey"],
     "numberFormat":".0f",

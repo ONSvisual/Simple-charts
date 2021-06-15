@@ -230,40 +230,57 @@
             return x(d.mymax);
           });
 
+        function lineIsLong(selection) {
+          var arrow = d3.select(selection);
+          // only add an arrowhead if the x distance between start and end is greater than 15 pixels
+          if ( Math.abs(arrow.attr("x1") - arrow.attr("x2")) > 15 ) {
+            return true;
+          }
+        }
         // this code looks to draw arrows on the lines if specified in the
         if (dvc.essential.arrows == "start") {
-          d3.select("g.line").selectAll("line")
-            .attr("marker-start", "url(#triangleStart)")
+          d3.selectAll("g.line").selectAll("line")
+            .attr("marker-start", function(d) {
+              if (lineIsLong(this)) { return "url(#triangleStart)" }
+            })
         } else if (dvc.essential.arrows == "end") {
-          d3.select("g.line").selectAll("line")
-            .attr("marker-end", "url(#triangleEnd)")
+          d3.selectAll("g.line").selectAll("line")
+            .attr("marker-end", function(d) {
+              if (lineIsLong(this)) { return "url(#triangleEnd)" }
+            })
         } else if (dvc.essential.arrows == "both") {
           d3.select("g.line").selectAll("line")
-            .attr("marker-end", "url(#triangleEnd)")
-            .attr("marker-start", "url(#triangleStart)")
+          .attr("marker-start", function(d) {
+            if (lineIsLong(this)) { return "url(#triangleStart)" }
+          })
+          .attr("marker-end", function(d) {
+            if (lineIsLong(this)) { return "url(#triangleEnd)" }
+          })
         } else if (dvc.essential.arrows == "lowtohigh") {
           d3.selectAll('.line')
             .data(lines)
             .attr("marker-end", function(d) {
-              if (d.mymin < d.mymax) {
-                return "url(#triangleEnd)"
-              } else {
-                return "url(#triangleStart)"
+              if (lineIsLong(this)) {
+                if (d[varMin] < d[varMax]) {
+                  return "url(#triangleEnd)"
+                } else {
+                  return "url(#triangleStart)"
+                }
               }
             })
         } else if (dvc.essential.arrows == "hightolow") {
           d3.selectAll('.line')
             .data(lines)
             .attr("marker-end", function(d) {
-              if (d.mymin > d.mymax) {
-                return "url(#triangleEnd)"
-              } else {
-                return "url(#triangleStart)"
+              if (lineIsLong(this)) {
+                if (d[varMin] > d[varMax]) {
+                  return "url(#triangleEnd)"
+                } else {
+                  return "url(#triangleStart)"
+                }
               }
             })
         }
-
-
 
         svg.append('g').selectAll('.circle')
           .data(lines)

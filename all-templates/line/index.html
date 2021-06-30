@@ -230,7 +230,7 @@
 
 
 		    var line = d3.line()
-            .defined(function(d){return d.amt || d.amt !== '0';}) // nobody can tell me what this line actually does
+            .defined(function(d){return d.amt!=null;}) // Right you scallywags, I'm going to tell you what this line does. This means that the line will not be drawn between any points a data point is NaN, or whatever function you want
             .curve(d3.curveLinear)
 		        .x(function(d) { return x(d.date); })
 		        .y(function(d) { return y(d.amt); });
@@ -247,7 +247,6 @@
 		        });
 		    }
 
-
         // do some code to overwrite blanks with the last known point
         keys=d3.keys(lines)
         for(i=0;i<keys.length;i++){
@@ -258,9 +257,7 @@
               d.date=lines[keys[i]][counter].date
               d.amt=lines[keys[i]][counter].amt
             }
-
           })
-
         }
 
 
@@ -441,10 +438,9 @@
 					})
 				}
 
-
 				//create lines
 			    svg.append('g').selectAll('path')
-			        .data(d3.entries(lines).filter(line.defined()))
+			        .data(d3.entries(lines))
 			        .enter()
 			        .append('path')
 			            //.attr('class', 'line')

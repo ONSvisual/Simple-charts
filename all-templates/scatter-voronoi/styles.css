@@ -1,0 +1,54 @@
+body, tspan, label, text {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.y.axis path {
+  display: none;
+}
+
+.overlay {
+    fill: none;
+    stroke: none;
+    pointer-events: all;
+}
+
+.focusLine {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 0.5px;
+}
+
+.focusCircle {
+    fill: red;
+}
+
+.brush {
+  width: 500px;
+}
+
+.annotation-note-bg {
+  fill: #EAEAEA !important;
+  fill-opacity: 0.8 !important;
+}
+
+h6 {
+   font-size: 16px;
+   margin: 16px 0 8px 0;
+   font-weight: 700;
+   color:#323132;
+}
+
+.visuallyhidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px; width: 1px;
+  margin: -1px; padding: 0; border: 0;
+}

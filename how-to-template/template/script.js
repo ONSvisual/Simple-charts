@@ -13,7 +13,7 @@ function drawGraphic() {
 if (Modernizr.svg) {
   //load chart data
   console.log('get csv');
-  d3.csv(dvc.essential.graphic_data_url, function(error, data) {
+  d3.csv(dvc.optional.graphic_data_url, function(error, data) {
 
     graphic_data = data;
     console.log(graphic_data);

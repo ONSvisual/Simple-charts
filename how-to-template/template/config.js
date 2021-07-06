@@ -6,6 +6,7 @@ var dvc = {
   },
   // optional is for the rest
   optional: {
+    graphic_data_url: "data.csv",
     breakpoint_sm: 450, // mobile
     breakpoint_md: 600, // tablet
     margin: {

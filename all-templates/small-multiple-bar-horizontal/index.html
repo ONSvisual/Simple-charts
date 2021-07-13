@@ -215,7 +215,7 @@
       ycategories=d3.map(graphic_data,function(d){return d.ycategory}).keys()
       y.domain(ycategories)
 
-      x.domain(d3.extent(graphic_data.map(function(d) {return +d.value})))
+      x.domain([0,d3.max(graphic_data.map(function(d) {return +d.value}))])
 
 
       var xAxis = d3.axisBottom(x)

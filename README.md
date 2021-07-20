@@ -43,7 +43,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 |Quiz | [View](https://onsvisual.github.io/Simple-charts/all-templates/quiz) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/quiz) | &cross; |
 |Sankey | [View](https://onsvisual.github.io/Simple-charts/all-templates/sankey) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/sankey) | &cross; |
 |Scatter - canvas | [View](https://onsvisual.github.io/Simple-charts/all-templates/scatter-canvas) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-canvas) | &cross; |
-|Scatter - voronoi | [View](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-voronoi) | &cross; |
+|Scatter - voronoi | [View](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-voronoi) | &check; |
 |Scatter - voronoi - dropdown | [View](https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi-dropdown) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-voronoi-dropdown) | &cross; |
 |Scatter - groups | [View](https://onsvisual.github.io/Simple-charts/all-templates/scatter-with-groups) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-with-groups) | &cross; |
 |Slope | [View](https://onsvisual.github.io/Simple-charts/all-templates/slope) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/slope) | &cross; |

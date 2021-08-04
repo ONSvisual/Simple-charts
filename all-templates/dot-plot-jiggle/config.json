@@ -1,0 +1,64 @@
+{
+  "essential": {
+    "graphic_data_url": "data.csv",
+    "legendLabels": ["Urban","Rural","London"],
+    "colour_palette": ["#206095", "#871A5B", "#22D0B6"],
+    "sourceText": ["Office for National Statistics"],
+    "annotationChart": [
+
+    ],
+    "annotationBullet": [],
+    "annotationXY": [
+
+    ],
+    "annotationAlign": [
+
+    ],
+    "minmaxonly": false,
+    "arrows": "none",
+    "tooltip": false,
+    "xAxisLabel": "",
+    "yAxisLabel": "",
+    "xAxisScale": [-2,2],
+    "dotsize": 8
+  },
+  "optional": {
+    "margin": {
+      "sm": {
+        "top": 70,
+        "right": 20,
+        "bottom": 5,
+        "left": 250
+      },
+      "md": {
+        "top": 70,
+        "right": 20,
+        "bottom": 5,
+        "left": 250
+      },
+      "lg": {
+        "top": 70,
+        "right": 20,
+        "bottom": 5,
+        "left": 259
+      }
+    },
+
+    "aspectRatio": {
+      "sm": [10,30],
+      "md": [10,12],
+      "lg": [10,12]
+    },
+
+    "mobileBreakpoint": 510,
+    "middleBreakpoint": 600,
+    "x_num_ticks": {
+      "sm": 2,
+      "md": 4,
+      "lg": 4
+    },
+
+    "centre_line": true,
+    "centre_line_value": 0
+  }
+}

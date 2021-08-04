@@ -31,6 +31,7 @@ If you download the zip of the repo, you'll find a folder for every template. Th
 |Column and line | [View](https://onsvisual.github.io/Simple-charts/all-templates/bar-and-line/) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/bar-and-line) | &cross; |
 |Connected dot plot | [View](https://onsvisual.github.io/Simple-charts/all-templates/tie-fighter) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/tie-fighter) | &cross; |
 |Connected dot plot - buttons | [View](https://onsvisual.github.io/Simple-charts/all-templates/tiefighter-with-buttons) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/tiefighter-with-buttons) | &cross; |
+|Dot plot with jiggle | [View](https://onsvisual.github.io/Simple-charts/all-templates/dot-plot-jiggle) |[`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/dot-plot-jiggle) | &cross; |
 |Heatmap | [View](https://onsvisual.github.io/Simple-charts/all-templates/heatmap) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/heatmap) | &cross; |
 |Line | [View](https://onsvisual.github.io/Simple-charts/all-templates/line) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/line) | &cross; |
 |Line - small multiple | [View](https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-line) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiple-line) | &cross; |

@@ -1,61 +1,66 @@
 {
   "essential": {
     "graphic_data_url": "data.csv",
-    "legendLabels": ["Urban","Rural","London"],
-    "colour_palette": ["#206095", "#871A5B", "#22D0B6"],
-    "sourceText": ["Office for National Statistics"],
-    "annotationChart": [
+    "legendLabels": ["16 to 29", "30 to 49", "50 to 69"],
+    "colour_palette": ["#27A0CC","#206095","#002B3F"],
+    "sourceText": ["Office for National Statistics - Opinions and Lifestyle Survey (COVID-19 module)"],
 
+    "annotationChart": [
     ],
     "annotationBullet": [],
     "annotationXY": [
-
+      ["20", "London"],
+      ["60", "North East"]
     ],
     "annotationAlign": [
-
+      "middle",
+      "middle"
     ],
     "minmaxonly": false,
-    "arrows": "none",
+    "arrows": null,
     "tooltip": false,
-    "xAxisLabel": "",
+    "xAxisLabel": "Percentage points",
     "yAxisLabel": "",
-    "xAxisScale": [-2,2],
-    "dotsize": 8
+    "xAxisScale": [-50,50],
+    "dotsize": 6,
+    "dot_shift": 5,
+
+    "heightper": 40
   },
   "optional": {
     "margin": {
       "sm": {
-        "top": 70,
-        "right": 20,
-        "bottom": 5,
-        "left": 250
+        "top": 35,
+        "right": 158,
+        "bottom": 0,
+        "left": 0
       },
       "md": {
-        "top": 70,
-        "right": 20,
-        "bottom": 5,
-        "left": 250
+        "top": 30,
+        "right": 158,
+        "bottom": 0,
+        "left": 162
       },
       "lg": {
-        "top": 70,
-        "right": 20,
-        "bottom": 5,
-        "left": 259
+        "top": 25,
+        "right": 158,
+        "bottom": 0,
+        "left": 162
       }
     },
 
     "aspectRatio": {
-      "sm": [10,30],
-      "md": [10,12],
-      "lg": [10,12]
+      "sm": [4, 6],
+      "md": [3, 3],
+      "lg": [16, 10]
     },
 
-    "mobileBreakpoint": 510,
+    "mobileBreakpoint": 440,
     "middleBreakpoint": 600,
     "x_num_ticks": {
-      "sm": 2,
+      "sm": 6,
       "md": 4,
-      "lg": 4
+      "lg": 10
     },
 
     "centre_line": true,

@@ -3,7 +3,7 @@
 
 <head>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-  <title>Dot plot - worried</title>
+  <title>Dot plot</title>
 
   <meta name="description" content="">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -16,10 +16,6 @@
       background: #F5942F;
     }
 
-    body {
-      max-width: 700px;
-    }
-
     .background1 {
       background: #7BCAE2;
     }
@@ -29,7 +25,7 @@
     }
 
     .focusCircle {
-      fill: goldenrod;
+      fill: red;
     }
 
     h6 {
@@ -38,23 +34,21 @@
       font-weight: 700;
       color: #323132;
     }
-
-    .hovertext {
-      font-size: 16px;
-    }
   </style>
 </head>
 
 <body>
 
-  <div id="graphic">
-    <img src="fallback.png" alt="[Chart]" />
+  <h5 id="screenreadertext" class="visuallyhidden">A chart where each row shows an advantage or disadvantage of homeworking, showing what percentage of workers of different age groups place themselves along it. Younger workers were the only group that had more distractions when working from home</h5>
+
+  <div id="graphic" aria-hidden="true">
   </div>
+
+  <h6 id="source"></h6>
 
 
   <script src="https://cdn.ons.gov.uk/vendor/d3/4.13.0/d3.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.1.0/d3-annotation.js"
-    type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.1.0/d3-annotation.js" type="text/javascript"></script>
   <script src="../lib/modernizr.svg.min.js" type="text/javascript"></script>
   <script src="../lib/pym.js" type="text/javascript"></script>
   <script>
@@ -65,7 +59,7 @@
       var threshold_md = dvc.optional.middleBreakpoint;
       var threshold_sm = dvc.optional.mobileBreakpoint;
 
-      if (parseInt(graphic.style("width")) < threshold_sm) {
+      if(parseInt(graphic.style("width"))< threshold_sm){
         size = "sm";
       } else if (parseInt(graphic.style("width")) < threshold_md) {
         size = "md";
@@ -75,9 +69,10 @@
 
       var margin = dvc.optional.margin[size]
       var chart_width = parseInt(graphic.style("width")) - margin.left - margin.right;
-      var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
+      var height = dvc.essential.heightper * graphic_data.length
+      // var height = Math.ceil((chart_width * dvc.optional.aspectRatio[size][1]) / dvc.optional.aspectRatio[size][0]);
 
-      ball = dvc.essential.dotsize;
+      ball=dvc.essential.dotsize;
 
       // clear out existing graphics
       graphic.selectAll("*").remove();
@@ -87,19 +82,37 @@
 
       var y = d3.scalePoint()
         .range([0, height], .3);
-
-      y.domain(graphic_data.map(function (d) {
+      y.domain(graphic_data.map(function(d) {
         return d.name;
       }));
 
-      var yAxis = d3.axisLeft(y)
+      var yLeft = d3.scalePoint()
+        .range([0, height], .3);
+      yLeft.domain(graphic_data.map(function(d) {
+        return d.nameLeftwards;
+      }));
+
+      var yRight = d3.scalePoint()
+        .range([0, height], .3);
+      yRight.domain(graphic_data.map(function(d) {
+        return d.nameRightwards;
+      }));
+
+      var yAxisLeft = d3.axisLeft(yLeft).tickSize(0)
+        .tickValues(graphic_data.map(function(d) {
+          return d.nameLeftwards.slice(0,2) !== "na" ? d.nameLeftwards : "";
+        }));
+      var yAxisRight = d3.axisRight(yRight).tickSize(0)
+        .tickValues(graphic_data.map(function(d) {
+          return d.nameRightwards.slice(0,2) !== "na" ? d.nameRightwards : "";
+        }));
 
       var xAxis = d3.axisBottom(x);
 
       //specify number or ticks on x axis
       xAxis.ticks(dvc.optional.x_num_ticks[size])
 
-      lines = graphic_data.map(function (d, i) { //console.log(d + " " +i);
+      lines = graphic_data.map(function(d, i) { //console.log(d + " " +i);
         return {
           'name': d.name, // might not need since we mapped it in y.domain earlier
           'mymin': +d.imin, // + changes string to numeric.
@@ -108,26 +121,26 @@
         };
       });
 
-      var memax = d3.max(lines, function (d) {
+      var memax = d3.max(lines, function(d) {
         return d.mymax;
       });
 
-      var memin = d3.min(lines, function (d) {
+      var memin = d3.min(lines, function(d) {
         return d.mymin;
       });
 
       //x domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
       if (dvc.essential.xAxisScale == "auto_zero_max") {
-        var xDomain = [0, Math.ceil(d3.max(lines, function (d) {
+        var xDomain = [0, Math.ceil(d3.max(lines, function(d) {
           return d.mymax;
         }))];
       } else if (dvc.essential.xAxisScale == "auto_min_max") {
-        var xDomain = [Math.floor(d3.min(lines, function (d) {
-          return d.mymin;
-        })),
-        Math.ceil(d3.max(lines, function (d) {
-          return d.mymax;
-        }))
+        var xDomain = [Math.floor(d3.min(lines, function(d) {
+            return d.mymin;
+          })),
+          Math.ceil(d3.max(lines, function(d) {
+            return d.mymax;
+          }))
         ];
       } else {
         var xDomain = dvc.essential.xAxisScale;
@@ -161,31 +174,55 @@
       svg.append('g')
         .attr('class', 'x axis')
         .attr("transform", "translate(0, " + height + ")")
-        .call(xAxis.tickSize(-height, 0).tickPadding(15))
+        .call(xAxis.tickSize(-height - 20, 0).tickPadding(5))
         .selectAll("line")
         .style("stroke", "#E5E6E7");
 
       svg.select(".x.axis")
         .append("text")
-        .attr("y", 35)
+        .attr("y", 30)
         .attr("x", chart_width)
-        .attr("dy", ".71em")
+        // .attr("dy", ".71em")
         .style("text-anchor", "end")
         .text(dvc.essential.xAxisLabel);
 
       //create y axis
       svg.append('g')
-        .attr('class', 'y axis')
-        .call(yAxis)
-        .selectAll('text')
-        .call(wrap, 180);
+        .attr('class', 'y axis axisRight')
+        .attr("transform", "translate(" + x(50) + ",-10)")
+        .call(yAxisRight);
+      svg.append('g')
+        .attr('class', 'y axis axisLeft')
+        .attr("transform", "translate(" + x(-50) + ",-10)")
+        .call(yAxisLeft);
 
-      d3.select(".y.axis").selectAll("line").remove();
+      var position_data = [
+        {right: 41, left: 0, middle: true},
+        {right: 24, left: 0, middle: true},
+        {right: 14, left: 0, middle: true},
+        {right: 0.5, left: -0.5, middle: false},
+        {right: 0.5, left: -0.5, middle: false},
+        {right: 0, left: -0.5, middle: false},
+        {right: 0, left: -36, middle: true},
+      ]
+
+      // repositionYLabels('.axisRight', 'right')
+      // repositionYLabels('.axisLeft', 'left')
+
+      function repositionYLabels(className, position) {
+        d3.selectAll(className + ' g.tick text')
+          .attr("text-anchor", function(d,i) {
+            return position_data[i].middle ? "middle" : "center";
+          })
+          .attr("x", function(d,i) {
+            return x(position_data[i][position]) - x(0);
+          });
+      }
 
       svg.append("text")
         .attr('class', 'unit')
         .attr('transform', "translate(" + -margin.left + "," + -12 + ")") // + (lineNo+1)*20 or -10
-        .attr("font-size", "14px")
+        .attr("font-size", "12px")
         .attr("fill", "#666")
         .text(dvc.essential.yAxisLabel);
 
@@ -214,224 +251,187 @@
         .attr("markerHeight", 8)
         .attr("orient", "auto")
         .append("path")
-        .attr("d", "M 10 5 L 0 0 L 0 10 z")
-        .style("fill", "#BBBDBF");
+        .attr("d", "M 15 5 L 0 0 L 0 10 z")
+        .style("fill", "#aaa");
 
+      //create centre line if required
+      if (dvc.optional.centre_line == true) {
+        svg.append("line")
+          .attr("id", "centreline")
+          .attr('y1', -40)
+          .attr('y2', height)
+          .attr('x1', x(dvc.optional.centre_line_value))
+          .attr('x2', x(dvc.optional.centre_line_value));
+      }
+
+      var annotationg = svg.append("g")
+        .attr("class","annotation-g")
+        .style("font-size", "12px")
+        .style("fill", "#666")
+      annotationg.append("text")
+        .text("Advantage")
+        .attr("text-anchor", "start")
+        .attr("x", x(0) + 3)
+        .attr("y", -30);
+      annotationg.append("text")
+        .text("Disadvantage")
+        .style("text-anchor", "end")
+        .attr("x", x(0) - 3)
+        .attr("y", -30);
+      var annotationgText = annotationg.append("g")
+        .attr("class","annotation-g-text")
+        .attr("stroke", "#aaa")
+        .attr("stroke-width", "2px")
+      annotationgText.append("line")
+        .attr("x1", x(0) + 3)
+        .attr("x2", x(0) + 30)
+        .attr("y1", -22)
+        .attr("y2", -22)
+        .attr("marker-end", "url(#triangleEnd)");
+      annotationgText.append("line")
+        .attr("x1", x(0) - 3)
+        .attr("x2", x(0) - 30)
+        .attr("y1", -22)
+        .attr("y2", -22)
+        .attr("marker-end", "url(#triangleEnd)");
       tieFight();
 
       function tieFight() {
 
-        svg.append('g').attr("class", "line").selectAll('.line')
-          .data(lines) //  ["value"]
-          .enter()
-          .append('line')
-          .attr('class', 'tiefighter')
-          .style("stroke", "none")
-          .attr('y1', function (d, i) { //console.log("y1 "+i+" "+y(d.name));
-            return y(d.name);
-          })
-          .attr('y2', function (d) {
-            return y(d.name);
-          })
-          .attr('x1', function (d, i) { //console.log("x1 "+i+" "+x(d.mymin));
-            return x(d.mymin);
-          }) //d.mymin
-          .attr('x2', function (d) {
-            return x(d.mymax);
-          });
+        // svg.append('g').attr("class", "line").selectAll('.line')
+        //   .data(lines) //  ["value"]
+        //   .enter()
+        //   .append('line')
+        //   .attr('class', 'tiefighter')
+        //   .style("stroke", "#BBBDBF")
+        //   .attr('stroke-width','3px')
+        //   .attr('y1', function(d, i) { //console.log("y1 "+i+" "+y(d.name));
+        //     return y(d.name);
+        //   })
+        //   .attr('y2', function(d) {
+        //     return y(d.name);
+        //   })
+        //   .attr('x1', function(d, i) { //console.log("x1 "+i+" "+x(d.mymin));
+        //     return x(d.mymin);
+        //   }) //d.mymin
+        //   .attr('x2', function(d) {
+        //     return x(d.mymax);
+        //   });
 
         // this code looks to draw arrows on the lines if specified in the
-        if (dvc.essential.arrows == "start") {
-          d3.select("g.line").selectAll("line")
-            .attr("marker-start", "url(#triangleStart)")
-        } else if (dvc.essential.arrows == "end") {
-          d3.select("g.line").selectAll("line")
-            .attr("marker-end", "url(#triangleEnd)")
-        } else if (dvc.essential.arrows == "both") {
-          d3.select("g.line").selectAll("line")
-            .attr("marker-end", "url(#triangleEnd)")
-            .attr("marker-start", "url(#triangleStart)")
-        } else if (dvc.essential.arrows == "none") {
+        // if (dvc.essential.arrows == "start") {
+        //   d3.select("g.line").selectAll("line")
+        //     .attr("marker-start", "url(#triangleStart)")
+        // } else if (dvc.essential.arrows == "end") {
+        //   d3.select("g.line").selectAll("line")
+        //     .attr("marker-end", "url(#triangleEnd)")
+        // } else if (dvc.essential.arrows == "both") {
+        //   d3.select("g.line").selectAll("line")
+        //     .attr("marker-end", "url(#triangleEnd)")
+        //     .attr("marker-start", "url(#triangleStart)")
+        // } else if (dvc.essential.arrows == "lowtohigh") {
+        //   d3.selectAll('.line')
+        //     .data(lines)
+        //     .attr("marker-end", function(d) {
+        //       if (d.mymin < d.mymax) {
+        //         return "url(#triangleEnd)"
+        //       } else {
+        //         return "url(#triangleStart)"
+        //       }
+        //     })
+        // } else if (dvc.essential.arrows == "hightolow") {
+        //   d3.selectAll('.line')
+        //     .data(lines)
+        //     .attr("marker-end", function(d) {
+        //       if (d.mymin > d.mymax) {
+        //         return "url(#triangleEnd)"
+        //       } else {
+        //         return "url(#triangleStart)"
+        //       }
+        //     })
+        // }
 
-        } else if (dvc.essential.arrows == "lowtohigh") {
-          d3.selectAll('.line')
+        var circleg = svg.append("g")
+          .attr("id", "circle-group")
+          .attr("transform", "translate(0,-10)");
+
+        circleg.append('g').selectAll('.circle')
+          .data(lines)
+          .enter()
+          .append('circle')
+          .attr('class', "circlemin")
+          .attr("fill", dvc.essential.colour_palette[0])
+          .attr("stroke", "white")
+          .attr('cx', function(d, i) {
+            return x(d.mymin);
+          })
+          .attr('cy', function(d, i) {
+            return y(d.name) - dvc.essential.dot_shift;
+          })
+          .attr('r', ball);
+
+        // if only drawing two dots, make the second dot a different colour
+        if (dvc.essential.minmaxonly == true) {
+          circleg.append('g').selectAll('.circle')
             .data(lines)
-            .attr("marker-end", function (d) {
-              if (d.mymin < d.mymax) {
-                return "url(#triangleEnd)"
-              } else {
-                return "url(#triangleStart)"
-              }
-            })
-        } else if (dvc.essential.arrows == "hightolow") {
-          d3.selectAll('.line')
-            .data(lines)
-            .attr("marker-end", function (d) {
-              if (d.mymin > d.mymax) {
-                return "url(#triangleEnd)"
-              } else {
-                return "url(#triangleStart)"
-              }
-            })
-        }
-
-        //create centre line if required
-        if (dvc.optional.centre_line == true) {
-          svg.append("line")
-            .attr("id", "centreline")
-            .attr('y1', -58)
-            .attr('y2', height)
-            .attr('x1', x(dvc.optional.centre_line_value))
-            .attr('x2', x(dvc.optional.centre_line_value));
-        }
-
-        console.log(graphic_data)
-
-        //draw circles 
-
-        graphic_data.forEach(function (d, i) {
-          svg.append("circle")
-            .attr("class", "hovercircle urban")
-            .attr("fill", dvc.essential.colour_palette[0])
-            .attr('cx', x(graphic_data[i].imin))
-            .attr('cy', y(graphic_data[i].name))
-            .attr('r', ball)
-            .style("stroke", "white")
-            .style("stroke-width", 2)
-            .attr("tooltipdisplay", function (d) {
-              return "Urban, " + graphic_data[i].name + ": " + graphic_data[i].imin + " " + graphic_data[i].significanturb;
-            });
-
-          svg.append("circle")
-            .attr("class", "hovercircle rural")
+            .enter()
+            .append('circle')
+            .attr('class', "circlemax")
             .attr("fill", dvc.essential.colour_palette[1])
-            .attr('cx', x(graphic_data[i].imax))
-            .attr('cy', y(graphic_data[i].name))
-            .attr('r', ball)
-            .style("stroke", "white")
-            .style("stroke-width", 2)
-            .attr("tooltipdisplay", function (d) {
-              return "Rural, " + graphic_data[i].name + ": " + graphic_data[i].imax + " " + graphic_data[i].significantrur;
-            });
+            .attr('cx', function(d, i) {
+              return x(d.mymax);
+            })
+            .attr('cy', function(d, i) {
+              return y(d.name);
+            })
+            .attr('r', ball); // (1/lines.length)*40);
+        } else {
+          circleg.append('g').selectAll('.circle')
+            .data(lines)
+            .enter()
+            .append('circle')
+            .attr('class', "circlemax")
+            .attr("fill", dvc.essential.colour_palette[1])
+            .attr("stroke", "white")
+            .attr('cx', function(d, i) {
+              return x(d.mymax);
+            })
+            .attr('cy', function(d, i) {
+              return y(d.name);
+            })
+            .attr('r', ball); // (1/lines.length)*40);
+        }
 
-          svg.append("circle")
-            .attr("class", "hovercircle london")
+        //if not only drawing two dots, draw the median dot.
+        if (dvc.essential.minmaxonly != true) {
+          circleg.append('g').selectAll('.med')
+            .data(lines)
+            .enter()
+            .append('circle')
+            .attr("class", "circlemed")
+            .attr("stroke", "white")
             .attr("fill", dvc.essential.colour_palette[2])
-            .attr('cx', x(graphic_data[i].median))
-            .attr('cy', y(graphic_data[i].name))
-            .attr('r', ball)
-            .style("stroke", "white")
-            .style("stroke-width", 2)
-            .attr("tooltipdisplay", function (d) {
-              return "London, " + graphic_data[i].name + ": " + graphic_data[i].median + " " + graphic_data[i].significantlon;
-            });
-        })
-
-        d3.selectAll(".hovercircle")
-          .attr("id", function (d, i){
-            return "ball" + i;
-        })
-
-        d3.select("#ball9")
-        .attr("transform", "translate(0,5)")
-        
-        d3.select("#ball24")
-        .attr("transform", "translate(0,8)")
-
-        d3.select("#ball25")
-        .attr("transform", "translate(0,3)")
-
-        d3.select("#ball26")
-        .attr("transform", "translate(0,-3)")
-
-        d3.select("#ball30")
-        .attr("transform", "translate(0,-5)")
-
-        d3.select("#ball31")
-        .attr("transform", "translate(0,5)")
-
-        d3.select("#ball34")
-        .attr("transform", "translate(0,3)")
-
-        d3.select("#ball35")
-        .attr("transform", "translate(0,-3)")
-
-        d3.select("#ball46")
-        .attr("transform", "translate(0,3)")
-
-        d3.select("#ball47")
-        .attr("transform", "translate(0,-3)")
-
-        d3.select("#ball60")
-        .attr("transform", "translate(0,-8)")
-
-        d3.select("#ball61")
-        .attr("transform", "translate(0,3)")
-
-        d3.select("#ball62")
-        .attr("transform", "translate(0,-3)")
-
-        svg.append("text")
-          .text("")
-          .attr("class", "hovertext")
-          .attr('y', 200)
-          .attr('x', 250)
-          .attr("dy", "0.32em")
-          .attr("fill", "#666");
-
-
-        d3.selectAll(".hovercircle").on("mouseover", function (d, i) {
-          d3.select(".hovertext").text(d3.select(this).attr("tooltipdisplay")).call(wrap, 180)
-          d3.select(this).style("stroke", "orange").style("stroke-width", 3)
-        })
-
-        d3.selectAll(".hovercircle").on("mouseout", function (d, i) {
-          d3.select(".hovertext").text("")
-          d3.select(this).style("stroke", "white").style("stroke-width", 2)
-        })
-
-        //label the chart
-        svg.append("text")
-          .text("No change in happiness")
-          .attr('y', -82)
-          .attr('x', x(0))
-          .attr("dy", "0.32em")
-          .attr("text-anchor", "middle")
-          .style("fill", "#666")
-          .call(wrap, 110);
-
-        svg.append("text")
-          .text("Expected ◀ reduction in happiness")
-          .attr('y', -45)
-          .attr('x', x(0) - 5)
-          .attr("dy", "0.32em")
-          .attr("text-anchor", "end")
-          .style("fill", "#666")
-          .call(wrap, 110)
-          ;
-
-        svg.append("text")
-          .text("▶ Expected increase in happiness")
-          .attr('y', -45)
-          .attr('x', x(0) + 5)
-          .attr("dy", "0.32em")
-          .attr("text-anchor", "start")
-          .style("fill", "#666")
-          .call(wrap, 110)
-          ;
+            .attr('cx', function(d, i) {
+              return x(d.mymedian);
+            })
+            .attr('cy', function(d, i) {
+              return y(d.name) + dvc.essential.dot_shift;
+            })
+            .attr('r', ball);
+        }
 
         if (dvc.essential.tooltip == true) {
           //d3-annotations tooltips(from https://bl.ocks.org/Fil/17fc857c3ce36bf8e21ddefab8bc9af4/167bce6e2b706016004a3baf14f838203646a27a)
 
           // create a container for tooltips
-          tipg = svg.append("g")
+          tipg = circleg.append("g")
             .attr("class", "annotation-tip");
 
           // this function will call d3.annotation when a tooltip has to be drawn
           function tip(d) {
             annotationtip = d3.annotation()
               .type(d3.annotationLabel)
-              .annotations([d].map(function (d) {
+              .annotations([d].map(function(d) {
                 return {
                   data: {
                     x: d.data[1],
@@ -447,10 +447,10 @@
                 };
               }))
               .accessors({
-                x: function (d) {
+                x: function(d) {
                   return x(d.x)
                 },
-                y: function (d) {
+                y: function(d) {
                   return y(d.y)
                 }
               })
@@ -466,8 +466,8 @@
           function makedata() {
             var keys = Object.keys(graphic_data[0])
             var data = [];
-            if (dvc.essential.minmaxonly == true) { var looplength = keys.length - 1 }
-            else { var looplength = keys.length }
+            if(dvc.essential.minmaxonly==true){var looplength = keys.length-1}
+            else{ var looplength = keys.length}
 
             for (i = 0; i < graphic_data.length; i++) {
               for (j = 1; j < looplength; j++) {
@@ -479,17 +479,17 @@
 
           var vorData = d3.merge(makingdata)
           var voronoi = d3.voronoi()
-            .y(function (d) {
+            .y(function(d) {
               return y(d[0]);
             })
-            .x(function (d) {
+            .x(function(d) {
               return x(d[1]);
             })
             .size([chart_width, height])(vorData);
 
           var voronoiRadius = chart_width;
 
-          var focus = svg.append('g').style('display', 'none');
+          var focus = circleg.append('g').style('display', 'none');
 
           focus.append('circle')
             .attr('id', 'focusCircle')
@@ -502,14 +502,14 @@
             .attr("width", chart_width)
             .attr("height", height)
             .attr("opacity", 0)
-            .on('mouseover', function () {
+            .on('mouseover', function() {
               focus.style('display', null);
             })
-            .on('mouseout', function () {
+            .on('mouseout', function() {
               focus.style('display', 'none');
               tipg.selectAll("g").remove();
             })
-            .on('mousemove', function () {
+            .on('mousemove', function() {
 
               //var [mx, my] = d3.mouse(this); ES6 version
               var mx = d3.mouse(this)[0],
@@ -531,20 +531,13 @@
         } //end if tooltip
       } //end tieFight
 
-      d3.select("g.y.axis").selectAll("text").attr("class", function (d, i) { return "ticky" + i })
-      d3.select(".ticky0").attr("font-weight", "bold")
-      d3.select(".ticky5").attr("font-weight", "bold")
-      d3.select(".ticky9").attr("font-weight", "bold")
-      d3.select(".ticky13").attr("font-weight", "bold")
-      d3.select(".ticky17").attr("font-weight", "bold")
-
       writeAnnotation();
 
       function writeAnnotation() {
 
         if (parseInt(graphic.style("width")) < threshold_sm) {
 
-          dvc.essential.annotationBullet.forEach(function (d, i) {
+          dvc.essential.annotationBullet.forEach(function(d, i) {
 
             d3.select("#keypoints").append("svg")
               .attr("width", "20px")
@@ -553,7 +546,7 @@
               .append("circle")
               .attr("class", "annocirc" + (i))
               .attr("r", "2")
-              .attr('cy', "14px")
+              .attr('cy', "12px")
               .attr("cx", "10px");
 
             d3.select("#keypoints").append("p").text(dvc.essential.annotationBullet[i]);
@@ -561,7 +554,7 @@
           }) // end foreach
         } else {
 
-          dvc.essential.annotationChart.forEach(function (d, i) {
+          dvc.essential.annotationChart.forEach(function(d, i) {
 
             // draw annotation text based on content of var annotationArray ...
             svg.append("text")
@@ -585,7 +578,7 @@
 
               var words = el1.split('  ');
 
-              d3.select(this /*str*/).text('');
+              d3.select(this /*str*/ ).text('');
 
               for (var j = 0; j < words.length; j++) {
                 var tspan = d3.select(this).append('tspan').text(words[j]);
@@ -620,18 +613,18 @@
 
           var words = str.split('  ');
 
-          d3.select(this /*str*/).text('');
+          d3.select(this /*str*/ ).text('');
 
           for (var j = 0; j < words.length; j++) {
             var tspan = d3.select(this).append('tspan').text(words[j]);
             if (j > 0)
               tspan
-                .attr('x', -10)
-                .attr('dy', '1em');
+              .attr('x', -10)
+              .attr('dy', '1em');
           }
         };
 
-        // d3.selectAll(".y text").each(insertLinebreaksLabels)
+        d3.selectAll(".y text").each(insertLinebreaksLabels)
 
 
       } // end function writeAnnotation()
@@ -646,7 +639,7 @@
         lineNo = 0;
         var lineNoOld = 0;
 
-        dvc.essential.legendLabels.forEach(function (d, i) {
+        dvc.essential.legendLabels.forEach(function(d, i) {
 
           // draw legend text based on content of var legendLabels ...
           var_group = d3.select("#legend").append("g")
@@ -662,7 +655,7 @@
             .text(dvc.essential.legendLabels[i])
             .attr("class", "legend" + i)
             .attr("text-anchor", "start")
-            .style("font-size", "14px")
+            .style("font-size", "12px")
             .style("fill", "#666")
             .attr('y', 15)
             .attr('x', 0);
@@ -675,7 +668,7 @@
             var BBox = this.getBBox()
 
             d3.select(".legend" + (i))
-              .attr("y", function (d) {
+              .attr("y", function(d) {
                 if ((prevX + BBox.width + 50) > parseInt(graphic.style("width"))) {
                   lineNoOld = lineNo;
                   lineNo = lineNo + 1;
@@ -683,22 +676,23 @@
                 }
                 return eval((lineNo * 20) + 20);
               })
-              .attr("x", function (d) {
+              .attr("x", function(d) {
 
                 return prevX + 10;
               })
 
 
             d3.select(".circle" + (i))
-              .attr("cy", function (d) {
+              .attr("cy", function(d) {
                 if ((prevX + BBox.width + 50) > parseInt(graphic.style("width"))) {
                   lineNoOld = lineNo;
                   lineNo = lineNo + 1;
                   prevX = 10;
                 }
-                return eval((lineNo * 20) + 15);
+                  return eval((lineNo * 20) + 15);
               })
-              .attr("cx", function (d) {
+              .attr("cx", function(d) {
+                console.log(prevX)
                 return prevX;
               })
 
@@ -713,8 +707,8 @@
 
       d3.selectAll("text").attr("font-family", "'Open Sans', sans-serif");
 
-      d3.selectAll(".x text").attr("font-size", "14px").attr("fill", "#666");
-      d3.selectAll(".y text").attr("font-size", "14px").attr("fill", "#666");
+      d3.selectAll(".x text").attr("font-size", "12px").attr("fill", "#666");
+      d3.selectAll(".y text").attr("font-size", "12px").attr("fill", "#666");
 
       d3.selectAll(".y line")
         .attr("stroke", "#CCC")
@@ -725,31 +719,6 @@
       d3.select('#source')
         .text('Source: ' + dvc.essential.sourceText);
 
-      function wrap(text, width) {
-        text.each(function () {
-          var text = d3.select(this),
-            words = text.text().split(/\s+/).reverse(),
-            word,
-            line = [],
-            lineNumber = 0,
-            lineHeight = 1, // ems
-            y = text.attr("y"),
-            x = text.attr("x")
-          dy = parseFloat(text.attr("dy")),
-            tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
-          while (word = words.pop()) {
-            line.push(word);
-            tspan.text(line.join(" "));
-            if (tspan.node().getComputedTextLength() > width) {
-              line.pop();
-              tspan.text(line.join(" "));
-              line = [word];
-              tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-            }
-          }
-        });
-      }
-
       //use pym to calculate chart dimensions
       if (pymChild) {
         pymChild.sendHeight();
@@ -757,15 +726,14 @@
     }
 
 
-
     //check whether browser can cope with svg
     if (Modernizr.svg) {
       //load config
-      d3.json("config.json", function (error, config) {
+      d3.json("config.json", function(error, config) {
         dvc = config;
 
         //load chart data
-        d3.csv(dvc.essential.graphic_data_url, function (error, data) {
+        d3.csv(dvc.essential.graphic_data_url, function(error, data) {
           graphic_data = data;
 
           //use pym to create iframed chart dependent on specified variables

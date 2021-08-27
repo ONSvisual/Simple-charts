@@ -1,23 +1,8 @@
-﻿name,imin,significanturb,imax,significantrur,median,significantlon
-Loneliness,-1000,,-1000,,-1000,
-"Base Category: Occasionally, hardly ever or never",-1000,,-1000,,-1000,
- ,-1000,,-1000,,-1000,
-Often/always or some of the time,-1.487,,-1.602,,-1.286,
-  ,-1000,,-1000,,-1000,
-Comfort leaving home,-1000,,-1000,,-1000,
-Base Category: Very comfortable or comfortable,-1000,,-1000,,-1000,
-   ,-1000,,-1000,,-1000,
-Neither comfortable nor uncomfortable,-0.182,,-0.168,,-0.192,
-    ,-1000,,-1000,,-1000,
-Uncomfortable or very uncomfortable,-0.492,,-0.428,,-0.438,
-     ,-1000,,-1000,,-1000,
-           ,-1000,,-1000,,-1000,
-Special help,-1000,,-1000,,-1000,
-Base category: No,-1000,,-1000,,-1000,
-Yes,-0.08,,-0.414,,-0.441,
-      ,-1000,,-1000,,-1000,
-Enough information to protect yourself,-1000,,-1000,,-1000,
-       ,-1000,,-1000,,-1000,
-Base Category: Yes,-1000,,-1000,,-1000,
-No,-0.582,,-0.598,,-0.66,
-Not sure,-0.031,(not statistically significant),-0.728,,-0.202,(not statistically significant)
+﻿nameLeftwards,nameRightwards,name,imin,imax,median
+Reduced work life balance,Improved work life balance,Improved work life balance,36,46,48
+Slower to complete work,Quicker to complete work,Quicker to complete work,19,24,26
+Reduced wellbeing,Improved wellbeing ,Improved wellbeing,15,14,15
+More distractions,Fewer distractions,Fewer distractions,-10,14,27
+Harder to think of new ideas,Easier to think of new ideas,Easier to think of new ideas,-7,-2,1
+Fewer job opportunities,More job opportunities,More job opportunities,-12,-6,-5
+Harder to work with others,Easier to work with others,Easier to work with others,-45,-34,-27

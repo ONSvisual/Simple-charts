@@ -81,7 +81,7 @@
         .paddingInner(0.1);
 
       y.domain(graphic_data.map(function(d) {
-        return d[legendLabels[0]];
+        return d.category;
       }));
 
       var yAxis = d3.axisLeft(y)
@@ -93,45 +93,29 @@
       xAxis.ticks(dvc.optional.x_num_ticks[size])
 
       // parse data into columns
-      var bars = {};
-
-      for (var column in graphic_data[0]) {
-        legendLabels.push(column);
-        if (column == legendLabels[0]) continue;
-        bars[column] = graphic_data.map(function(d) {
-          return {
-            'name': d[legendLabels[0]],
-            'amt': d[column]
-          };
-        });
-      }
+      // var bars = {};
+      //
+      // for (var column in graphic_data[0]) {
+      //   legendLabels.push(column);
+      //   if (column == legendLabels[0]) continue;
+      //   bars[column] = graphic_data.map(function(d) {
+      //     return {
+      //       'name': d[legendLabels[0]],
+      //       'amt': d[column]
+      //     };
+      //   });
+      // }
 
       //y domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
       if (dvc.essential.xAxisScale == "auto_zero_max") {
         var xDomain = [
           0,
-          d3.max(d3.entries(bars), function(c) {
-            return d3.max(c.value, function(v) {
-              var n = v.amt;
-              return Math.ceil(n);
-            });
-          })
+          d3.max(graphic_data,function(d){return d.value})
         ];
       } else if (dvc.essential.xAxisScale == "auto_min_max") {
         var xDomain = [
-          d3.min(d3.entries(bars), function(c) {
-            return d3.min(c.value, function(v) {
-              var n = v.amt;
-              return Math.floor(n);
-            });
-          }),
-
-          d3.max(d3.entries(bars), function(c) {
-            return d3.max(c.value, function(v) {
-              var n = v.amt;
-              return Math.ceil(n);
-            });
-          })
+          d3.min(graphic_data,function(d){return d.value}),
+          d3.max(graphic_data,function(d){return d.value})
         ];
       } else {
         var xDomain = dvc.essential.xAxisScale;
@@ -148,12 +132,6 @@
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      svg.append("rect")
-        .attr("class", "svgRect")
-        .attr("width", chart_width)
-        .attr("height", height)
-        .attr("fill", "transparent")
-
       svg.append('g')
         .attr('class', 'x axis')
         .attr("transform", "translate(0, " + height + ")")
@@ -169,37 +147,31 @@
       //create y axis, if x axis doesn't start at 0 drop x axis accordingly
       svg.append('g')
         .attr('class', 'y axis')
-        .attr('transform', function(d) {
-          if (xDomain[0] != 0) {
-            return 'translate(' + (0) + ',0)'
-          } else {
-            return 'translate(' + 0 + ', 0)'
-          }
-        })
         .call(yAxis);
 
       d3.selectAll(".y .tick text")
           .call(wrap, margin.left-10);
 
       svg.append('g').attr("class", "bars").selectAll('rect')
-        .data(bars[legendLabels[1]])
+        .data(graphic_data)
         .enter()
         .append('rect')
+        .attr('class','bars')
         .attr("fill", function(d) {
-          if (d.amt > 0) {
+          if (d.value > 0) {
             return dvc.essential.colour_palette[0]
           } else {
             return dvc.essential.negative_colour
           }
         })
         .attr("width", function(d) {
-          return 0 + Math.abs(x(d.amt) - x(0));
+          return 0 + Math.abs(x(d.value) - x(0));
         })
         .attr("x", function(d) {
-          return x(Math.min(0, d.amt));
+          return x(Math.min(0, d.value));
         })
         .attr("y", function(d) {
-          return y(d.name);
+          return y(d.category);
         })
         .attr("height", y.bandwidth())
 
@@ -213,7 +185,6 @@
           .attr('x2', x(dvc.optional.centre_line_value))
 
       } else if (xDomain[0] < 0) {
-        svg.append("line")
         svg.append("line")
           .attr("id", "centreline")
           .attr('y1', 0)
@@ -449,7 +420,7 @@
         //load chart data
         d3.csv(dvc.essential.graphic_data_url, function(error, data) {
           graphic_data = data;
-          legendLabels = d3.keys(graphic_data[0])
+          // legendLabels = d3.keys(graphic_data[0])
           graphic_data.forEach(function(d) {
             d.value = +d.value
           });

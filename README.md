@@ -112,3 +112,28 @@ The primary and alternate palettes, with these adjustments for labelling applied
 ["#206095", "#27A0CC", "#003C57", "#118C7B", "#8A9B2E", "#871A5B", "#F66068", "#746CB1", "#1AA590"]
 
 ["#206095", "#27A0CC", "#871A5B", "#8A9B2E", "#F66068"]
+
+## Short category names
+
+Sometimes names for statistical categories are very technical or specific, and for good reason, because you need to be clear about what data represents. However, these names are often too wordy or difficult for the general public to comprehend and a short version communicates the numbers to the public more effectively.
+
+This is a place to put shortened names to avoid duplicating work plus, we should try to be consistent. If you think a name needs changing, they are always up for discussion.
+
+### Industries (SIC codes)
+
+SIC code name	|Short name
+--------------|----------
+Manufacturing	|Manufacturing
+Water Supply, Sewerage, Waste Management And Remediation Activities|	Water
+Construction|	Construction
+Wholesale And Retail Trade; Repair Of Motor Vehicles And Motorcycles|	Retail
+Transportation And Storage|	Transport and storage
+Accommodation And Food Service Activities|	Hospitality
+Information And Communication|	Information and communication
+Real Estate Activities|	Property
+Professional, Scientific And Technical Activities|	Professional and scientific
+Administrative And Support Service Activities|	Administration
+Education|	Education
+Human Health And Social Work Activities|	Health
+Arts, Entertainment And Recreation|	Arts and recreation
+Other Service Activities|	Other services

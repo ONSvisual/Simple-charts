@@ -117,7 +117,7 @@ The primary and alternate palettes, with these adjustments for labelling applied
 
 Sometimes names for statistical categories are very technical or specific, and for good reason, because you need to be clear about what data represents. However, these names are often too wordy or difficult for the general public to comprehend and a short version communicates the numbers to the public more effectively.
 
-This is a place to put shortened names to avoid duplicating work plus, we should try to be consistent. If you think a name needs changing, they are always up for discussion.
+This is a place to put shortened names to avoid duplicating work, plus we should try to be consistent. If you think a name needs changing, they are always up for discussion.
 
 ### Industries (SIC codes)
 

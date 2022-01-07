@@ -30,7 +30,7 @@
     "aspectRatio": {
       "sm": [16, 16],
       "md": [16, 16],
-      "lg": [16, 9]
+      "lg": [16, 16]
     },
 
     "middleBreakpoint": 550,

@@ -1,0 +1,58 @@
+{
+    "essential" : {
+            "positive_csv": "positive.csv",
+
+            "negative_csv": "negative.csv",
+
+            "sort_data": false,
+
+            "colour_palette": ["#206095", "#118C7B", "#003C57", "#A8BD3A", "#27A0CC"],
+
+            "dateFormat":"%d/%m/%Y",
+
+            "legendLabels" : ["Gas","Electricity","Water","Internet"],
+
+            "sourceText":"I made these numbers up",
+
+            "annotationChart": [
+
+            ],
+            "annotationBullet": [
+
+            ],
+            "annotationXY":[
+
+            ],
+            "annotationAlign":[
+
+            ],
+
+            "circles" : false,
+            "annotationCXCY":[
+
+            ],
+
+            "yAxisLabel":"%",
+            "yAxisScale":"auto_min_max",
+            "yAxisBreak": true,
+            "yAxisBreak_sm_md_lg": [65,65,65]
+    },
+    "optional" : {
+            "margin_sm": [20, 10, 35, 30],
+            "margin_md": [20, 10, 35, 30],
+            "margin_lg": [20, 10, 35, 30],
+
+            "aspectRatio_sm" : [16,13],
+            "aspectRatio_md" : [16,12],
+            "aspectRatio_lg" : [16,10],
+
+            "mobileBreakpoint" : 610,
+
+            "xAxisTextFormat_sm_md_lg" : ["%y", "%Y", "%b %y"],
+
+            "x_num_ticks_sm_md_lg" : [4,2,2],
+            "y_num_ticks_sm_md_lg" : [6,8,10],
+            "centre_line" : false,
+            "centre_line_value" : 0
+    }
+}

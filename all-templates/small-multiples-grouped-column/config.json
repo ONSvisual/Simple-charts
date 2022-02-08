@@ -1,0 +1,65 @@
+{
+  "essential": {
+    "graphic_data_url": "data.csv",
+    "colour_palette": [
+      {
+        "key": "Disabled people",
+        "colour": "#27A0CC"
+      },{
+        "key": "Non-disabled people",
+        "colour": "#206095"
+      }
+    ],
+    "categorySort": ["Cardiovascular disease","Metabolic","East","Respiratory","Cancer","Musculoskeletal","Renal","Renal","Mental/behavioural","Neurological"],
+    "sourceText": ["Office for National Statistics - Annual Population Survey"],
+    "xAxisLabel": "%",
+    "yAxisLabel": "Regions and Countries",
+    "yAxisScale": "auto_zero_max_total"
+  },
+  "optional": {
+    "margin": {
+      "sm": {
+        "top": 15,
+        "right": 15,
+        "bottom": 40,
+        "left": 20
+      },
+      "md": {
+        "top": 15,
+        "right": 20,
+        "bottom": 40,
+        "left": 20
+      },
+      "lg": {
+        "top": 15,
+        "right": 20,
+        "bottom": 40,
+        "left": 20
+      }
+    },
+    "margin_special_left":53,
+    "chart_every":{
+      "sm": 1,
+      "md": 2,
+      "lg": 3
+    },
+    "aspectRatio": {
+      "sm": [10, 8],
+      "md": [10, 8],
+      "lg": [10, 8]
+    },
+    "legendHeight":{
+      "sm": 45,
+      "md": 45,
+      "lg": 45
+    },
+
+    "mobileBreakpoint": 480,
+    "middleBreakpoint": 670,
+    "y_num_ticks":{
+        "sm":6,
+        "md":6,
+        "lg":6
+      }
+  }
+}

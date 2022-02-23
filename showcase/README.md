@@ -1,4 +1,4 @@
-A directory to generate a combinatory view list. 
+A directory to generate a combinatory view list. This can be viewed at http://onsvisual.github.io/Simple-charts/showcase/ 
 
 ## Structure 
 - makepage.py - the main file generation script 

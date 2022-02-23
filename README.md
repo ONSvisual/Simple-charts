@@ -10,6 +10,9 @@ The [wiki](https://github.com/ONSvisual/Simple-charts/wiki) instructions on how 
 If you download the zip of the repo, you'll find a folder for every template. These templates runs off core libraries in the folder `lib` and images in `images`. Each visualisation is customisable using the options in the `config.json` file. It reads data from a `data.csv` file.
 
 ## See them in action
+* [View all graphs in list](http://onsvisual.github.io/Simple-charts/showcase/) *
+
+  
 |Chart type | Graphic | Code | Accessible |
 |:--- |:--- |:--- |:--- |
 |Area - stacked | [View](https://onsvisual.github.io/Simple-charts/all-templates/stacked-area) | [`</>`](https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/stacked-area) | &cross; |

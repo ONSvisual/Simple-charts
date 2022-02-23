@@ -1,0 +1,290 @@
+{
+   "Area": [
+      {
+         "name": "stacked",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/stacked-area",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/stacked-area",
+         "id": 0
+      },
+      {
+         "name": "small multiple",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-stacked-area",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiple-stacked-area",
+         "id": 1
+      }
+   ],
+   "Bar": [
+      {
+         "name": "Bar",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/simple-bar-horizontal",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/simple-bar-horizontal",
+         "id": 2
+      },
+      {
+         "name": "small multiple",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-bar-horizontal",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiple-bar-horizontal",
+         "id": 3
+      },
+      {
+         "name": "grouped",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/clustered-bar-horizontal/",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/clustered-bar-horizontal",
+         "id": 4
+      },
+      {
+         "name": "small multiple",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-horizontal-clustered-bar-chart-confidence-intervals",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiple-horizontal-clustered-bar-chart-confidence-intervals",
+         "id": 5
+      },
+      {
+         "name": "stacked",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/stacked-bar-horizontal",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/stacked-bar-horizontal",
+         "id": 6
+      }
+   ],
+   "Bar and map": [
+      {
+         "name": "Bar and map",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/regional-map-bar",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/regional-map-bar",
+         "id": 7
+      }
+   ],
+   "Bump": [
+      {
+         "name": "Bump",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/bump-chart/",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/bump-chart/",
+         "id": 8
+      }
+   ],
+   "Circle": [
+      {
+         "name": "category",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/circle-category",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/circle-category/",
+         "id": 9
+      },
+      {
+         "name": "timeline",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/circle-timeline",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/circle-timeline",
+         "id": 10
+      }
+   ],
+   "Column": [
+      {
+         "name": "Column",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/simple-bar-vertical",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/simple-bar-vertical",
+         "id": 11
+      },
+      {
+         "name": "grouped",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/clustered-bar-vertical/",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/clustered-bar-vertical",
+         "id": 12
+      },
+      {
+         "name": "stacked",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/stacked-bar-vertical",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/stacked-bar-vertical",
+         "id": 13
+      },
+      {
+         "name": "small multiple",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-stacked-bar-vertical",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiple-stacked-bar-vertical",
+         "id": 14
+      },
+      {
+         "name": "small multiple",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/small-multiples-stacked-bar",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiples-stacked-bar",
+         "id": 15
+      }
+   ],
+   "Column and line": [
+      {
+         "name": "Column and line",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/bar-and-line/",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/bar-and-line",
+         "id": 16
+      }
+   ],
+   "Connected dot plot": [
+      {
+         "name": "Connected dot plot",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/tie-fighter",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/tie-fighter",
+         "id": 17
+      },
+      {
+         "name": "buttons",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/tiefighter-with-buttons",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/tiefighter-with-buttons",
+         "id": 18
+      }
+   ],
+   "Dot plot with jiggle": [
+      {
+         "name": "Dot plot with jiggle",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/dot-plot-jiggle",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/dot-plot-jiggle",
+         "id": 19
+      }
+   ],
+   "Heatmap": [
+      {
+         "name": "Heatmap",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/heatmap",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/heatmap",
+         "id": 20
+      }
+   ],
+   "Line": [
+      {
+         "name": "Line",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/line",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/line",
+         "id": 21
+      },
+      {
+         "name": "small multiple",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/small-multiple-line",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/small-multiple-line",
+         "id": 22
+      },
+      {
+         "name": "ordinal",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/line-ordinal",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/line-ordinal",
+         "id": 23
+      },
+      {
+         "name": "ordinal band",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/line-ordinal-band",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/line-ordinal-band",
+         "id": 24
+      },
+      {
+         "name": "shaded area",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/line-with-difference",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/line-with-difference",
+         "id": 25
+      },
+      {
+         "name": "stacked",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/stacked-lines",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/stacked-lines",
+         "id": 26
+      },
+      {
+         "name": "dropdown",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/line-with-dropdown",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/line-with-dropdown",
+         "id": 27
+      }
+   ],
+   "Marimekko": [
+      {
+         "name": "Marimekko",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/marimekko",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/marimekko",
+         "id": 28
+      }
+   ],
+   "Quiz": [
+      {
+         "name": "Quiz",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/quiz",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/quiz",
+         "id": 29
+      }
+   ],
+   "Sankey": [
+      {
+         "name": "Sankey",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/sankey",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/sankey",
+         "id": 30
+      }
+   ],
+   "Scatter": [
+      {
+         "name": "canvas",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/scatter-canvas",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-canvas",
+         "id": 31
+      },
+      {
+         "name": "voronoi",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-voronoi",
+         "id": 32
+      },
+      {
+         "name": "dropdown",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/scatter-voronoi-dropdown",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-voronoi-dropdown",
+         "id": 33
+      },
+      {
+         "name": "groups",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/scatter-with-groups",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/scatter-with-groups",
+         "id": 34
+      }
+   ],
+   "Slope": [
+      {
+         "name": "Slope",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/slope",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/slope",
+         "id": 35
+      },
+      {
+         "name": "small multiple",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/slope-multiple",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/slope-multiple",
+         "id": 36
+      },
+      {
+         "name": "voronoi",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/slope-voronoi",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/slope-voronoi",
+         "id": 37
+      }
+   ],
+   "Split bar": [
+      {
+         "name": "Split bar",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/split-bar",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/split-bar",
+         "id": 38
+      },
+      {
+         "name": "small multiple",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/split-bar-multiple",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/split-bar-multiple",
+         "id": 39
+      },
+      {
+         "name": "varied x scales",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/split-bar-varied-xscales",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/split-bar-varied-xscales",
+         "id": 40
+      }
+   ],
+   "Waffle": [
+      {
+         "name": "circle",
+         "url": "https://onsvisual.github.io/Simple-charts/all-templates/icon-array",
+         "code": "https://github.com/ONSvisual/Simple-charts/tree/master/all-templates/icon-array",
+         "id": 41
+      }
+   ]
+}

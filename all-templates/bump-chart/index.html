@@ -300,15 +300,25 @@
       svg.append('g').classed("circles", true)
       svg.append('g').classed("circletext", true)
       for(i=0;i<names.length;i++){
+        // Add a white circle behind each coloured circle to avoid the lines
+        // being visible through the circles when hovering.
+        d3.select(".circles").append('g')
+          .selectAll('circle')
+          .data(lines[names[i]])
+          .enter()
+          .append('circle')
+          .attr('cx',function(d,i){return x(d.date)})
+          .attr('cy',function(d){return y(d.rank)})
+          .attr('r',10)
+          .style('fill','white');
+
         d3.select(".circles").append('g').classed(names[i], true)
           .selectAll('circle')
           .data(lines[names[i]])
           .enter()
           .append('circle')
           .attr('class',names[i].replace(/\s/g, '') + " fadeThis")
-          .attr('cx',function(d,i){
-            return x(d.date)
-          })
+          .attr('cx',function(d,i){return x(d.date)})
           .attr('cy',function(d){return y(d.rank)})
           .attr('r',10)
           .style('fill',function(){ return interpolator(i/names.length)});

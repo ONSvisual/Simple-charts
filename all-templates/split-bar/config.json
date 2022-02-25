@@ -5,7 +5,7 @@
     "accessibleSummary":"Description of what the chart is showing....",
     "sourceText":["Office for National Statistics - Annual Population Survey"],
     "numberFormat":".0f",
-    "xAxisScale": [-20, 50],
+    "xAxisScale": [-25,100],
     "barHeight": {
       "sm": 30,
       "md": 30,

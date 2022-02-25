@@ -82,6 +82,7 @@
 
     .label2 {
       font-size: 12px;
+      font-weight: 700;
       fill: #4c4c4c;
     }
 
@@ -518,18 +519,19 @@
               d3.select(this)
                 .classed('label2--white', false)
                 .attr('x', xScale(0))
-                .attr('dx', 2);
+                .attr('dx', 5);
             } else {
               if (xValue < (0.4 * xMax)) {
                 d3.select(this)
                   .classed('label2--white', false)
                   .attr('x', xValue)
-                  .attr('dx', 2);
+                  .attr('dx', 5);
               } else {
                 d3.select(this)
                   .classed('label2--white', true)
-                  .attr('x', xScale(0))
-                  .attr('dx', 4);
+                  .attr('x', xValue)
+                  .attr('dx', -5)
+                  .attr('text-anchor','end');
               }
 
             }
@@ -558,14 +560,14 @@
             .attr('dy', '0.33em');
         }
 
-        gColumn.append('g').attr('class', 'labels')
-          .selectAll('.label').data(function(d) {
-            return d.values;
-          })
-          .enter().append('text')
-          .attr('class', 'label')
-          .text(function(d){return formatLabel(x(d))})
-          .each(positionLabel);
+        // gColumn.append('g').attr('class', 'labels')
+        //   .selectAll('.label').data(function(d) {
+        //     return d.values;
+        //   })
+        //   .enter().append('text')
+        //   .attr('class', 'label')
+        //   .text(function(d){return formatLabel(x(d))})
+        //   .each(positionLabel);
 
           gColumn.append('g').attr('class', 'labels2')
             .selectAll('.label2').data(function(d) {

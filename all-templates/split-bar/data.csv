@@ -1,25 +1,25 @@
 xcategory,ycategory,amount
 Degree,Associate professional and technical,1
 Higher,Associate professional and technical,7
-A-level,Associate professional and technical,3
+A-level,Associate professional and technical,13
 GCSE,Associate professional and technical,5
-Degree,Administrative and secretarial,7
+Degree,Administrative and secretarial,74
 Higher,Administrative and secretarial,3
 A-level,Administrative and secretarial,0
 GCSE,Administrative and secretarial,3
 Degree,Skilled trades,7
 Higher,Skilled trades,10
-A-level,Skilled trades,2
-GCSE,Skilled trades,4
+A-level,Skilled trades,23
+GCSE,Skilled trades,46
 Degree,Personal service,6
 Higher,Personal service,0
 A-level,Personal service,0
 GCSE,Personal service,2
 Degree,Sales and customer service,5
-Higher,Sales and customer service,25
+Higher,Sales and customer service,-25
 A-level,Sales and customer service,-5
 GCSE,Sales and customer service,-3
 Degree,"Process, plant and machine",6
-Higher,"Process, plant and machine",8
-A-level,"Process, plant and machine",7
+Higher,"Process, plant and machine",80
+A-level,"Process, plant and machine",79
 GCSE,"Process, plant and machine",4

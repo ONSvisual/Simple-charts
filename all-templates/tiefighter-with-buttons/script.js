@@ -252,8 +252,8 @@ function drawGraphic() {
 //check whether browser can cope with svg
 if (Modernizr.svg) {
   //load config
-  d3.json("config.json", function(error, config) {
-    dvc = config;
+  // d3.json("config.json", function(error, config) {
+  //   dvc = config;
 
     d3.queue()
       .defer(d3.csv, dvc.essential.graphic_data_url)
@@ -267,7 +267,7 @@ if (Modernizr.svg) {
         });
 
       });
-  })
+  // })
 
 } else {
   //use pym to create iframe containing fallback image (which is set as default)

@@ -138,7 +138,7 @@
         .range([0, chart_width])
         .padding(0.1);
 
-      var y = d3.scaleLinear()
+      y = d3.scaleLinear()
         .rangeRound([height, 0]);
 
       // colour scale
@@ -146,9 +146,9 @@
 
       var formatAsPercentage = d3.formatPrefix('%', 0);
 
-      x.domain(graphic_data.map(function(d) { return d.date; }).concat(graphic_data2.map(function(d){return d.date})).filter(function(d,i,a){return a.indexOf(d)==i}) );
+      x.domain(graphic_data.map(function(d) { return d.date; }));
 
-      z.domain(graphic_data.columns.slice(1).concat(graphic_data2.columns.slice(1)));
+      z.domain(graphic_data.columns.slice(1));
 
       var xAxis = d3.axisBottom(x)
         .tickFormat(function(d, i) {
@@ -212,10 +212,10 @@
       //y domain calculations	: zero to intelligent max choice, or intelligent min and max choice,  or interval chosen manually
       if (dvc.essential.yAxisScale == "auto_min_max") {
         var yDomain = [
-          -Math.ceil(d3.max(graphic_data2,function(d){return d.total})), Math.ceil(d3.max(graphic_data, function(d) { return d.total; }))
+          d3.min(graphic_data,function(d){return d.min}), d3.max(graphic_data, function(d) { return d.max; })
         ];
       } else if (dvc.essential.yAxisScale == "auto_zero_max") {
-        0, Math.ceil(d3.max(graphic_data, function(d) { return d.total; }))
+        0, Math.ceil(d3.max(graphic_data, function(d) { return d.max; }))
       } else {
         var yDomain = dvc.essential.yAxisScale;
       }
@@ -237,16 +237,10 @@
         .style("text-anchor", "end")
         .text(dvc.essential.yAxisLabel);
 
-      var stack = d3.stack();
+      var stack = d3.stack().offset(d3.stackOffsetDiverging);
 
       var group = svg.selectAll(".year")
         .data(stack.keys(graphic_data.columns.slice(1))(graphic_data))
-        .enter().append("g")
-        .attr("class", "g bars")
-        .attr("fill", function(d) { return z(d.key); });
-
-      var group2 = svg.selectAll(".year2")
-        .data(stack.keys(graphic_data2.columns.slice(1))(graphic_data2))
         .enter().append("g")
         .attr("class", "g bars")
         .attr("fill", function(d) { return z(d.key); });
@@ -265,19 +259,6 @@
 		   .attr("height", function(d) { return Math.abs(y(d[0]) - y(d[1])); })
        .style("opacity", 0.85);
 
-       group2.selectAll("rect")
-         .data(function(d) {
-           return d;
-         })
-         .enter().append("rect")
-         .attr("class", function(d, i) {
-           return "bar_neg-" + i
-         })
-         .attr("x", function(d) { return x(d.data.date); })
-         .attr("width", x.bandwidth())
-         .attr("y", function(d) { return y(-d[0]);})
-         .attr("height", function(d) { return Math.abs(y(d[0]) - y(d[1])); })
-         .style("opacity", 0.85);
 
       writeAnnotation();
 
@@ -426,28 +407,32 @@
       d3.json("config.json", function(error, config) {
         dvc = config
 
-        d3.csv(dvc.essential.positive_csv, type, function(error, data) {
+        d3.csv(dvc.essential.data_url, type, function(error, data) {
 
-            d3.csv(dvc.essential.negative_csv, type, function(error, data2) {
           graphic_data = data;
-          graphic_data2 = data2;
 
           // sort data
           if(dvc.essential.sort_data === true) {
             graphic_data.sort(function(a, b) { return b.total - a.total; });
-              graphic_data2.sort(function(a, b) { return b.total - a.total; });
           }
 
           pymChild = new pym.Child({ renderCallback: drawGraphic });
 
         })
-      });
   });
 
       // strings to numbers
-      function type(d, i, columns) {
-        for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-        d.total = t;
+      function type(d, j, columns) {
+        for (i = 1, tp = 0,tn=0; i < columns.length; ++i) {
+          if(d[columns[i]]>0){
+            tp=tp+(+d[columns[i]])
+          }else{
+            tn=tn-(-d[columns[i]])
+          }
+        }
+        d.min = tn;
+        d.max = tp;
+
         d.date = d3.timeParse(dvc.essential.dateFormat)(d.date)
         return d;
       }

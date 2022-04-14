@@ -1,8 +1,6 @@
 {
     "essential" : {
-            "positive_csv": "positive.csv",
-
-            "negative_csv": "negative.csv",
+            "data_url": "data.csv",
 
             "sort_data": false,
 
@@ -10,7 +8,7 @@
 
             "dateFormat":"%d/%m/%Y",
 
-            "legendLabels" : ["Gas","Electricity","Water","Internet"],
+            "legendLabels" : ["Gas","Electricity","Water"],
 
             "sourceText":"I made these numbers up",
 

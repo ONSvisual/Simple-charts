@@ -1,0 +1,85 @@
+{
+  "essential": {
+    "graphic_data_url": "regions.csv",
+    "dateFormat": "%d/%m/%Y",
+    "colour_palette": [
+      {
+        "key": "Factor 1",
+        "colour": "#A8BD3A"
+      },
+      {
+        "key": "Factor 2",
+        "colour": "#549E99"
+      },
+      {
+        "key": "Factor 3",
+        "colour": "#1E7F81"
+      }
+    ],
+    "categorySort": [
+      "Category 1",
+      "Category 2",
+      "Category 3"
+    ],
+    "sourceText": [
+      "Office for National Statistics –"
+    ],
+    "xAxisLabel": "X-Axis label",
+    "yAxisLabel": "",
+    "yAxisScale": "auto_zero_max_total",
+    "screenreadertext": "Screen reader text"
+  },
+  "optional": {
+    "margin": {
+      "sm": {
+        "top": 40,
+        "right": 20,
+        "bottom": 80,
+        "left": 8
+      },
+      "md": {
+        "top": 40,
+        "right": 20,
+        "bottom": 80,
+        "left": 8
+      },
+      "lg": {
+        "top": 40,
+        "right": 20,
+        "bottom": 80,
+        "left": 8
+      }
+    },
+    "margin_special_left": 180,
+    "chart_every": {
+      "sm": 1,
+      "md": 1,
+      "lg": 2
+    },
+    "aspectRatio": {
+      "sm": [
+        4,
+        12
+      ],
+      "md": [
+        16,
+        16
+      ],
+      "lg": [
+        16,
+        16
+      ]
+    },
+    "legendHeight": {
+      "sm": 120,
+      "md": 60,
+      "lg": 60
+    },
+    "mobileBreakpoint": 400,
+    "middleBreakpoint": 550,
+    "x_num_ticks_sm_md_lg": [
+      4,
+      4,
+      4]
+  }
+}

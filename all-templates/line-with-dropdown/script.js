@@ -258,7 +258,7 @@ function drawGraphic(width) {
     .enter()
     .append('path')
     .attr('class', function(d, i) {
-      return 'frontlines frontlines' + d.key.replace(/ /g, '');
+      return 'frontlines frontlines' + d.key.replace(/ |\+/g, '');
     })
     .attr("data-last", function(d) {
       return d.value[d.value.length - 1].amt
@@ -303,14 +303,14 @@ function drawGraphic(width) {
     d3.selectAll(".frontlines")
       .transition(t)
       .style("opacity", 0)
-    d3.select(".frontlines" + selection.replace(/ /g,""))
+    d3.select(".frontlines" + selection.replace(/ |\+/g,""))
       .raise()
       .transition(t)
       .style("opacity", 1)
 
 
-    current_value = d3.select(".frontlines" + selection.replace(/ /g,"")).node().getAttribute("data-last")
-    current_year = d3.select(".frontlines" + selection.replace(/ /g,"")).node().getAttribute("data-date")
+    current_value = d3.select(".frontlines" + selection.replace(/ |\+/g,"")).node().getAttribute("data-last")
+    current_year = d3.select(".frontlines" + selection.replace(/ |\+/g,"")).node().getAttribute("data-date")
     current_area = selection
 
     d3.select("#infohidden").text("On " + current_year + " in " + selection + " the most recent index value was " + current_value + ". The index is based on "+dvc.essential.yAxisLabel+".")

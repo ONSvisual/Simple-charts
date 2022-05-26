@@ -90,6 +90,7 @@
 
     .label2 {
       font-size: 12px;
+      font-weight: 700;
       fill: #4c4c4c;
     }
 
@@ -458,74 +459,76 @@
           });
         }
 
-        function positionLabel(d) {
-          var xValue = xScale(x(d));
-          var xMax = xScale.range()[1];
-          if (chartwidth > dvc.optional.mobileBreakpoint) {
-            if (d.amount <= 0) {
-              d3.select(this)
-                .classed('label--white', false)
-                .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
-                .attr('dx', 2);
-            } else {
-              if (xValue < (0.4 * xMax)) {
-                d3.select(this)
-                  .classed('label--white', false)
-                  .attr('x', function(d){return columnScale(d.xcategory)+xValue})
-                  .attr('dx', 2);
-              } else {
-                d3.select(this)
-                  .classed('label--white', true)
-                  .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
-                  .attr('dx', 4);
-              }
-
-            }
-          } else {
-            if (d.amount <= 0) {
-              d3.select(this)
-                .classed('label--white', false)
-                .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
-                .attr('dx', 2);
-            } else {
-              if (xValue < (0.4 * xMax)) {
-                d3.select(this)
-                  .classed('label--white', false)
-                  .attr('x', function(d){return columnScale(d.xcategory)+xValue})
-                  .attr('dx', 2);
-              } else {
-                d3.select(this)
-                  .classed('label--white', true)
-                  .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
-                  .attr('dx', 4);
-              }
-            }
-          }
-          d3.select(this)
-            .attr('y', function(d){return yScale[d.category](y(d)) + (yScale[d.category].bandwidth() / 2)})
-            .attr('dy', '0.33em');
-        }
+        // function positionLabel(d) {
+        //   var xValue = xScale(x(d));
+        //   var xMax = xScale.range()[1];
+        //   if (chartwidth > dvc.optional.mobileBreakpoint) {
+        //     if (d.amount <= 0) {
+        //       d3.select(this)
+        //         .classed('label--white', false)
+        //         .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
+        //         .attr('dx', 2);
+        //     } else {
+        //       if (xValue < (0.4 * xMax)) {
+        //         d3.select(this)
+        //           .classed('label--white', false)
+        //           .attr('x', function(d){return columnScale(d.xcategory)+xValue})
+        //           .attr('dx', 2);
+        //       } else {
+        //         d3.select(this)
+        //           .classed('label--white', true)
+        //           .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
+        //           .attr('dx', 4);
+        //       }
+        //
+        //     }
+        //   } else {
+        //     if (d.amount <= 0) {
+        //       d3.select(this)
+        //         .classed('label--white', false)
+        //         .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
+        //         .attr('dx', 2);
+        //     } else {
+        //       if (xValue < (0.4 * xMax)) {
+        //         d3.select(this)
+        //           .classed('label--white', false)
+        //           .attr('x', function(d){return columnScale(d.xcategory)+xValue})
+        //           .attr('dx', 2);
+        //       } else {
+        //         d3.select(this)
+        //           .classed('label--white', true)
+        //           .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
+        //           .attr('dx', 4);
+        //       }
+        //     }
+        //   }
+        //   d3.select(this)
+        //     .attr('y', function(d){return yScale[d.category](y(d)) + (yScale[d.category].bandwidth() / 2)})
+        //     .attr('dy', '0.33em');
+        // }
 
         function positionLabel2(d) {
           var xValue = xScale(x(d));
           var xMax = xScale.range()[1];
+
           if (chartwidth > dvc.optional.mobileBreakpoint) {
             if (d.amount <= 0) {
               d3.select(this)
                 .classed('label2--white', false)
                 .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
-                .attr('dx', 2);
+                .attr('dx', 5);
             } else {
-              if (xValue < (0.4 * xMax)) {
+              if ((xValue-xScale(0))<0.4*(xMax-xScale(0))) {
                 d3.select(this)
                   .classed('label2--white', false)
                   .attr('x', function(d){return columnScale(d.xcategory)+xValue})
-                  .attr('dx', 2);
+                  .attr('dx', 5);
               } else {
                 d3.select(this)
                   .classed('label2--white', true)
-                  .attr('x', function(d){return columnScale(d.xcategory)+xScale(0)})
-                  .attr('dx', 4);
+                  .attr('x', function(d){return columnScale(d.xcategory)+xValue})
+                  .attr('dx', -5)
+                  .attr('text-anchor','end');
               }
 
             }
@@ -554,14 +557,14 @@
             .attr('dy', '0.33em');
         }
 
-        gRow.append('g').attr('class', 'labels')
-          .selectAll('.label').data(function(d) {
-            return d.values;
-          })
-          .enter().append('text')
-          .attr('class', 'label')
-          .text(function(d){return formatLabel(x(d))})
-          .each(positionLabel);
+        // gRow.append('g').attr('class', 'labels')
+        //   .selectAll('.label').data(function(d) {
+        //     return d.values;
+        //   })
+        //   .enter().append('text')
+        //   .attr('class', 'label')
+        //   .text(function(d){return formatLabel(x(d))})
+        //   .each(positionLabel);
 
         gRow.append('g').attr('class', 'labels2')
           .selectAll('.label2').data(function(d) {

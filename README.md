@@ -135,12 +135,16 @@ Water Supply, Sewerage, Waste Management And Remediation Activities|	Water
 Construction|	Construction
 Wholesale And Retail Trade; Repair Of Motor Vehicles And Motorcycles|	Retail
 Transportation And Storage|	Transport and storage
+Financial and Insurance Activities | Finance
 Accommodation And Food Service Activities|	Hospitality
 Information And Communication|	Information and communication
 Real Estate Activities|	Property
 Professional, Scientific And Technical Activities|	Professional and scientific
 Administrative And Support Service Activities|	Administration
+Public admin and Defence; Compulsory Social Security | Public administration
 Education|	Education
 Human Health And Social Work Activities|	Health
 Arts, Entertainment And Recreation|	Arts and recreation
 Other Service Activities|	Other services
+
+As used in [this example](https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/articles/professionalandscientificindustrytheonlyonewherepaycontinuestomatchrisingprices/2022-11-23).

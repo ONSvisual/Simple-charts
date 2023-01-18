@@ -1,0 +1,31 @@
+ycategory,plot,value,valuehigh,series
+Q1,Total expenditure,48.2,54,Exports
+Q2,Total expenditure,57.8,62,Exports
+Q3,Total expenditure,64,68.6,Exports
+Q4,Total expenditure,71.5,74.8,Exports
+Q5,Total expenditure,77,86.6,Exports
+Q1,Food and drinks,48.2,54,Exports
+Q2,Food and drinks,57.8,62,Exports
+Q3,Food and drinks,64,68.6,Exports
+Q4,Food and drinks,71.5,74.8,Exports
+Q5,Food and drinks,77,86.6,Exports
+Q1,"Housing, fuel and power",70.2,71.5,Exports
+Q2,"Housing, fuel and power",76.4,78.9,Exports
+Q3,"Housing, fuel and power",82.4,85.1,Exports
+Q4,"Housing, fuel and power",87.5,82.5,Exports
+Q5,"Housing, fuel and power",98.4,105,Exports
+Q1,Transport,34.8,26.6,Exports
+Q2,Transport,55.4,40.4,Exports
+Q3,Transport,73.9,55.8,Exports
+Q4,Transport,102.2,81.1,Exports
+Q5,Transport,141.9,100.5,Exports
+Q1,Recreation and culture,36.1,24.1,Exports
+Q2,Recreation and culture,49.5,32.4,Exports
+Q3,Recreation and culture,66.6,45.9,Exports
+Q4,Recreation and culture,89.1,55.5,Exports
+Q5,Recreation and culture,132.7,69.8,Exports
+Q1,Restaurants and hotels,23.2,8.4,Exports
+Q2,Restaurants and hotels,31.6,10.5,Exports
+Q3,Restaurants and hotels,46.6,15.7,Exports
+Q4,Restaurants and hotels,69,23.8,Exports
+Q5,Restaurants and hotels,93.9,33.1,Exports

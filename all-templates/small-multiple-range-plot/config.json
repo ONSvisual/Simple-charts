@@ -1,0 +1,75 @@
+{
+  "essential": {
+    "screenreadertext": "Set of small bar charts",
+    "graphic_data_url": "data.csv",
+    "dateFormat": "%d/%m/%Y",
+
+    "colour_palette": {
+      "Exports": "#206095",
+      "Imports": "#003C57"
+    },
+    "categorySort": [
+      "Total Services",
+      "Technical, trade-related and other business services",
+      "Professional and management consulting services",
+      "Explicitly charged and other financial services",
+      "Intellectual Property",
+      "Personal Travel"
+    ],
+    "sourceText": ["Office for National Statistics"],
+    "xAxisLabel": "£",
+    "yAxisLabel": "Regions and Countries",
+    "yAxisScale": "auto_min_max_total"
+  },
+  "optional": {
+    "margin": {
+      "groupMargin": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 40
+      },
+      "sm": {
+        "top": 30,
+        "right": 23,
+        "bottom": 35,
+        "left": 20
+      },
+      "md": {
+        "top": 30,
+        "right": 23,
+        "bottom": 35,
+        "left": 20
+      },
+      "lg": {
+        "top": 30,
+        "right": 20,
+        "bottom": 35,
+        "left": 20
+      }
+    },
+    "chart_every":{
+      "sm": 1,
+      "md": 2,
+      "lg": 3
+    },
+    "aspectRatio": {
+      "sm": [16, 12],
+      "md": [16, 12],
+      "lg": [16, 12]
+    },
+    "legendHeight":{
+      "sm": 45,
+      "md": 30,
+      "lg": 30
+    },
+
+    "mobileBreakpoint": 400,
+    "middleBreakpoint": 600,
+    "x_ticks_num": {
+      "sm": 8,
+      "md": 8,
+      "lg": 8
+    }
+  }
+}

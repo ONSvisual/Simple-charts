@@ -1,7 +1,7 @@
 # Welcome to the ONS chart template repo :bar_chart: :chart_with_upwards_trend: :chart_with_downwards_trend:
 
 We also have a [maps repo](https://github.com/ONSvisual/maptemplates)
-and a [beeswarm repo](https://github.com/ONSvisual/beeswarm)
+and a [beeswarm repo](https://github.com/ONSvisual/beeswarm) and some [census charts](https://github.com/ONSvisual/census-charts) which is a work in progress. 
 
 ## Getting started
 

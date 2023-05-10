@@ -6933,7 +6933,7 @@ var precisionRound = function(step, max) {
 // Fast Robust Geometric Predicates, Discrete & Computational Geometry 18(3)
 // 305–363 (1997).
 // Code adapted from GeographicLib by Charles F. F. Karney,
-// http://geographiclib.sourceforge.net/
+// http://geographiclib-sc.sourceforge.net/
 
 var adder = function() {
   return new Adder;

@@ -504,7 +504,7 @@
  
     // # quantile
     // This is a population quantile, since we assume to know the entire
-    // dataset in this library. Thus I'm trying to follow the
+    // dataset in this lib-scrary. Thus I'm trying to follow the
     // [Quantiles of a Population](http://en.wikipedia.org/wiki/Quantile#Quantiles_of_a_population)
     // algorithm from wikipedia.
     //
@@ -646,7 +646,7 @@
     //
     // Implementations: [1](http://danieljlewis.org/files/2010/06/Jenks.pdf) (python),
     // [2](https://github.com/vvoovv/djeo-jenks/blob/master/main.js) (buggy),
-    // [3](https://github.com/simogeo/geostats/blob/master/lib/geostats.js#L407) (works)
+    // [3](https://github.com/simogeo/geostats/blob/master/lib-sc/geostats.js#L407) (works)
  
     ss.jenks = function(data, n_classes) {
  

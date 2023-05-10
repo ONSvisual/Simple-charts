@@ -1,6 +1,6 @@
 /*! pym.js - v1.3.2 - 2018-02-13 */
 /*
-* Pym.js is lib-scrary that resizes an iframe based on the width of the parent and the resulting height of the child.
+* Pym.js is library that resizes an iframe based on the width of the parent and the resulting height of the child.
 * Check out the docs at http://blog.apps.npr.org/pym.js/ or the readme at README.md for usage.
 */
 
@@ -17,7 +17,7 @@
 })(function() {
     var MESSAGE_DELIMITER = 'xPYMx';
 
-    var lib-sc = {};
+    var lib = {};
 
     /**
     * Create and dispatch a custom pym event
@@ -176,11 +176,11 @@
      * @inner
      */
     var _cleanAutoInitInstances = function() {
-        var length = lib-sc.autoInitInstances.length;
+        var length = lib.autoInitInstances.length;
 
         // Loop backwards to avoid index issues
         for (var idx = length - 1; idx >= 0; idx--) {
-            var instance = lib-sc.autoInitInstances[idx];
+            var instance = lib.autoInitInstances[idx];
             // If instance has been removed or is contentless then remove it
             if (instance.el.getElementsByTagName('iframe').length &&
                 instance.el.getElementsByTagName('iframe')[0].contentWindow) {
@@ -188,7 +188,7 @@
             }
             else {
                 // Remove the reference to the removed or orphan instance
-                lib-sc.autoInitInstances.splice(idx,1);
+                lib.autoInitInstances.splice(idx,1);
             }
         }
     };
@@ -199,7 +199,7 @@
      * @type Array
      * @default []
      */
-    lib-sc.autoInitInstances = [];
+    lib.autoInitInstances = [];
 
     /**
      * Initialize Pym for elements on page that have data-pym attributes.
@@ -208,7 +208,7 @@
      * @method autoInit
      * @param {Boolean} doNotRaiseEvents flag to avoid sending custom events
      */
-    lib-sc.autoInit = function(doNotRaiseEvents) {
+    lib.autoInit = function(doNotRaiseEvents) {
         var elements = document.querySelectorAll('[data-pym-src]:not([data-pym-auto-initialized])');
         var length = elements.length;
 
@@ -263,8 +263,8 @@
             }
 
             // Store references to autoinitialized pym instances
-            var parent = new lib-sc.Parent(element.id, src, config);
-            lib-sc.autoInitInstances.push(parent);
+            var parent = new lib.Parent(element.id, src, config);
+            lib.autoInitInstances.push(parent);
         }
 
         // Fire customEvent
@@ -272,7 +272,7 @@
             _raiseCustomEvent("pym-initialized");
         }
         // Return stored autoinitalized pym instances
-        return lib-sc.autoInitInstances;
+        return lib.autoInitInstances;
     };
 
     /**
@@ -296,7 +296,7 @@
      * @param {number} [config.scrollwait] - if passed it will set the throttle wait in order to fire scroll messaging. Defaults to 100 ms.
      * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe iFrame}
      */
-    lib-sc.Parent = function(id, url, config) {
+    lib.Parent = function(id, url, config) {
         /**
          * The id of the container element
          *
@@ -723,7 +723,7 @@
      * @param {number} [config.id] - parent container id used when navigating the child iframe to a new page but we want to keep it responsive.
      * @param {string} [config.parenturlparam] - if passed it will be override the default parentUrl query string parameter name expected on the iframe src
      */
-    lib-sc.Child = function(config) {
+    lib.Child = function(config) {
         /**
          * The initial width of the parent page
          *
@@ -1110,9 +1110,9 @@
     // Initialize elements with pym data attributes
     // if we are not in server configuration
     if(typeof document !== "undefined") {
-        lib-sc.autoInit(true);
+        lib.autoInit(true);
     }
 
-    return lib-sc;
+    return lib;
 });
 

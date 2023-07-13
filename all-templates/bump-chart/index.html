@@ -372,9 +372,8 @@
 
 
         svgElement
-          .on("mouseenter", mousemove)
           .on("mousemove", mousemove)
-    	    .on("mouseout", mouseout);
+          .on("mouseout", mouseout);
 
         var currentlyHighlighted = null;
         function mousemove(d) {
@@ -391,9 +390,12 @@
           var group = lineSegmentData[groupIndex];
           var bestKey = null;
           var bestYDistance = Infinity;
+          // xProportion is the horizontal distance from the start of a segment to
+          // the mouse position, as a proportion of the width of a segment
+          var xProportion = (coords[0] - group.xStart) / (group.xEnd - group.xStart);
           for (var lineSegment of group.lineSegments) {
-            var yPos = lineSegment.yStart +
-              (lineSegment.yEnd - lineSegment.yStart) * (coords[0] - group.xStart) / (group.xEnd - group.xStart);
+            var segmentHeight = lineSegment.yEnd - lineSegment.yStart;
+            var yPos = lineSegment.yStart + segmentHeight * xProportion;
             var yDistance = Math.abs(yPos - coords[1]);
             if (yDistance < bestYDistance) {
               bestYDistance = yDistance;

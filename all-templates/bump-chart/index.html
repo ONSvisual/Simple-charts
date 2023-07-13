@@ -17,8 +17,10 @@
   <link rel="stylesheet" href="../lib-sc/bootstrap-grid.css" />
 
   <style type="text/css">
-    .voronoi path {
-      fill: none;
+    svg#chart * {
+      pointer-events: none;
+    }
+    svg#chart {
       pointer-events: all;
     }
 
@@ -211,16 +213,18 @@
         })
       })
       console.log(voronoiData)
-      var svg = d3.select('#graphic').append('svg')
+      var svgElement = d3.select('#graphic').append('svg')
         .attr("id", "chart")
         .style("background-color", "#fff")
         .attr("width", chart_width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
+
+      var svg = svgElement
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-      svg.append("rect")
+        svg.append("rect")
         .style("fill", "#fff")
         .attr("width", chart_width)
         .attr("height", height);
@@ -255,6 +259,25 @@
        .attr("y", y(dvc.essential.yAxisBreak) + 5)
        .attr('fill',"#666")
        .html(dvc.essential.yAxisBreakText)
+    }
+
+    var lineEntries = d3.entries(lines);
+    var lineSegmentData = [];
+    for (var i=0; i<lineEntries[0].value.length-1; i++) {
+      var group = {
+        xStart: x(lineEntries[0].value[i].date),
+        xEnd: x(lineEntries[0].value[i + 1].date),
+        lineSegments: []
+      };
+      for (var j=0; j<lineEntries.length; j++) {
+        var entry = lineEntries[j].value;
+        group.lineSegments.push({
+          yStart: y(lineEntries[j].value[i].rank),
+          yEnd: y(lineEntries[j].value[i + 1].rank),
+          key: lineEntries[j].key
+        })
+      }
+      lineSegmentData.push(group);
     }
 
       //create lines
@@ -348,38 +371,47 @@
         .text("Country")
 
 
-      //voronoi stuff
-  	  var voronoi = d3.voronoi()
-  	    .x(function(d) {
-  	      return x(d.date);
-  	    })
-  	    .y(function(d) {
-  	      return y(+d.rank);
-  	    })
-  	    .extent([
-  	      [-margin.left, -10],
-  	      [chart_width + margin.right, height + margin.bottom]
-  	    ]);
+        svgElement
+          .on("mousemove", mousemove)
+          .on("mouseout", mouseout);
 
-        var voronoiGroup = svg.append("g")
-    	    .attr("class", "voronoi");
-
-        voronoiGroup.selectAll("path")
-    	    .data(voronoi.polygons(voronoiData))
-    	    .enter().append("path")
-    	    .attr("d", function(d) {
-    	      return d ? "M" + d.join("L") + "Z" : null;
-    	    })
-    	    .on("mouseover", mouseover)
-    	    .on("mouseout", mouseout);
-
-        function mouseover(d, i) {
-          d3.selectAll(".fadeThis").attr('opacity',0.2)
-          d3.selectAll("."+d.data.name.replace(/\s/g, '')).attr('opacity',1)
+        var currentlyHighlighted = null;
+        function mousemove(d) {
+          var coords = d3.mouse( svg.node() );
+          if (coords[0] < lineSegmentData[0].xStart) {
+            coords[0] = lineSegmentData[0].xStart;
+          } else if (coords[0] > lineSegmentData[lineSegmentData.length-1].xEnd) {
+            coords[0] = lineSegmentData[lineSegmentData.length-1].xEnd;
+          }
+          var groupIndex = 0;
+          while(coords[0] > lineSegmentData[groupIndex].xEnd) {
+            ++groupIndex;
+          }
+          var group = lineSegmentData[groupIndex];
+          var bestKey = null;
+          var bestYDistance = Infinity;
+          // xProportion is the horizontal distance from the start of a segment to
+          // the mouse position, as a proportion of the width of a segment
+          var xProportion = (coords[0] - group.xStart) / (group.xEnd - group.xStart);
+          for (var lineSegment of group.lineSegments) {
+            var segmentHeight = lineSegment.yEnd - lineSegment.yStart;
+            var yPos = lineSegment.yStart + segmentHeight * xProportion;
+            var yDistance = Math.abs(yPos - coords[1]);
+            if (yDistance < bestYDistance) {
+              bestYDistance = yDistance;
+              bestKey = lineSegment.key;
+            }
+          }
+          if (currentlyHighlighted !== bestKey) {
+            currentlyHighlighted = bestKey;
+            d3.selectAll(".fadeThis").attr('opacity',0.2)
+            d3.selectAll("."+bestKey.replace(/\s/g, '')).attr('opacity',1)
+          }
         }
 
-        function mouseout(d, i) {
+        function mouseout(d) {
           d3.selectAll(".fadeThis").attr('opacity',1)
+          currentlyHighlighted = null;
         }
 
       d3.select(".x.axis path.domain").remove()
